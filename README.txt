@@ -16,6 +16,9 @@ The project page is
 	or 
     http://zynaddsubfx.sourceforge.net
 
+The code can be found in a git repository located at
+	http://gitorious.org/zynaddsubfx/zynaddsubfx
+
 ZynAddSubFX is also available on many Internet sites like:
 	http://www-ccrma.stanford.edu/planetccrma/software/soundapps.html (Planet CCRMA)
 	http://www.hitsquad.com/smm/programs/ZynAddSubFX/
