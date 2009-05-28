@@ -81,18 +81,16 @@ add_subdirectory(Misc)
 add_subdirectory(Input)
 add_subdirectory(Output)
 add_subdirectory(Controls)
-#add_subdirectory(NewUI)
+add_subdirectory(NewUI)
 add_subdirectory(Synth)
 add_subdirectory(Seq)
 add_subdirectory(Effects)
 add_subdirectory(Params)
 add_subdirectory(DSP)
-add_subdirectory(UI)
 add_subdirectory(Samples)
 
 set(zynaddsubfxgui_SRCS
-	#main.cpp
-	main.C
+	main.cpp
 	)
 
 add_executable(zynaddsubfxgui 
