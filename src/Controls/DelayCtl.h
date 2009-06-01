@@ -11,8 +11,8 @@ class DelayCtl:public Control
         DelayCtl();
         ~DelayCtl(){};
         std::string getString() const;
-        void setmVal(char nval);
-        char getmVal() const;
+        void setValue(char nval);
+        char getValue() const;
         float getiVal() const;
     private:
         float value;

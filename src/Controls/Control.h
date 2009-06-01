@@ -13,10 +13,10 @@ class Control
         virtual std::string getString()const=0;
         /**Set the Control to the given value
          * @param nval A number 0-127*/
-        virtual void setmVal(char nval)=0;
+        virtual void setValue(char nval)=0;
         /**Return the midi value (aka the char)
          * @return the current value*/
-        virtual char getmVal()const=0;
+        virtual char getValue()const=0;
         /** Will lock the Control until it is ulocked
          *
          * Locking a Control will Stop it from having

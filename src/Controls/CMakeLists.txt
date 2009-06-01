@@ -1,5 +1,6 @@
 set(zynaddsubfxgui_controls_SRCS
 	Control.C
+	FloatControl.cpp
 	DelayCtl.C
 )
 

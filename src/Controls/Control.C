@@ -13,7 +13,7 @@ void Control::lock()
 void Control::ulock()
 {
     if(locked&&lockqueue>=0)
-        setmVal(lockqueue);
+        setValue(lockqueue);
     locked=false;
 }
 
