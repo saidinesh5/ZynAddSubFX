@@ -34,6 +34,7 @@
 #include "Dump.h"
 #include "../Seq/Sequencer.h"
 #include "XMLwrapper.h"
+#include "../Controls/CharControl.h"
 
 extern Dump dump;
 /** It sends Midi Messages to Parts, receives samples from parts,
@@ -77,8 +78,7 @@ class Master{
 	//void NRPN...
 	
 	
-        void ShutUp();
-	int shutup;
+	void ShutUp();
 
 	/**Audio Output*/
 	void AudioOut(REALTYPE *outl,REALTYPE *outr);
@@ -91,12 +91,6 @@ class Master{
 	/**parts \todo see if this can be made to be dynamic*/
 	Part *part[NUM_MIDI_PARTS];
 		
-	//parameters
-	unsigned char Pvolume;
-	unsigned char Pkeyshift;
-	unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
-	unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
-	
 	//parameters control
 	void setPvolume(char Pvolume_);
 	void setPkeyshift(char Pkeyshift_);
@@ -137,6 +131,17 @@ class Master{
 	pthread_mutex_t mutex;
 
     private:
+
+	CharControl Pvolume;
+	
+	//parameters
+	unsigned char Pvolume;
+	unsigned char Pkeyshift;
+	unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
+	unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
+
+	int shutup;
+
 	REALTYPE volume;	
 	REALTYPE sysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
 	REALTYPE sysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
