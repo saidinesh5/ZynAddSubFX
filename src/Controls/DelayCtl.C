@@ -2,7 +2,7 @@
 #include <sstream>
 
 DelayCtl::DelayCtl()
-    :Control(NULL, 64),value(64/127.0*1.5){} /**\todo finishme*/
+    :Control(ControlContainer::getRoot(), "Delay","Delay, from X to X seconds", 64),value(64/127.0*1.5){} /**\todo finishme*/
 
 std::string DelayCtl::getString() const
 {

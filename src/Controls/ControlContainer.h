@@ -3,18 +3,31 @@
 
 #include "Control.h"
 #include <vector>
+#include <string>
+
+typedef std::vector<class Control*>::const_iterator ControlIterator;
+typedef std::vector<class ControlContainer*>::const_iterator ContainerIterator;
 
 class ControlContainer
 {
 
 	public:
-		ControlContainer(ControlContainer *parent);
+		ControlContainer(ControlContainer *parent, std::string id);
 		static ControlContainer* getRoot();
-		const std::vector<ControlContainer*>& getControls();
+		const std::vector<Control*>& getControls();
+		
+		const std::string& getId();
+		const std::string& getAbsoluteId();
+		
+		Control* findControl(std::string id);
+		void addControl(Control* control);
+		void addControlContainer(ControlContainer* container);
 
 	private:
 		static ControlContainer* m_root;
-		std::vector<ControlContainer*> m_controls;
+		std::vector<Control*> m_controls;
+		std::vector<ControlContainer*> m_containers;
+		std::string m_id, m_absoluteId;
 
 
 };

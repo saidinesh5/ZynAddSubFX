@@ -2,9 +2,8 @@
 
 using std::string;
 
-CharControl::CharControl(ControlContainer *parent,string desc, char min, char max, char defaultValue) : 
-	Control(parent, 0),
-	m_desc(desc),
+CharControl::CharControl(ControlContainer *parent, string id, string description, char min, char max, char defaultValue) : 
+	Control(parent,id, description, 0),
 	m_max(max),
 	m_min(min),
 	m_default(defaultValue),
@@ -15,7 +14,7 @@ CharControl::CharControl(ControlContainer *parent,string desc, char min, char ma
 
 string CharControl::getString() const
 {
-	return m_desc;
+	return "lala";
 }
 
 char CharControl::getValue() const

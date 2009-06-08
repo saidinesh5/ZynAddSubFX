@@ -2,9 +2,8 @@
 
 using std::string;
 
-FloatControl::FloatControl(ControlContainer *parent,string desc, float min, float max, float defaultValue) : 
-	Control(parent, 0),
-	m_desc(desc),
+FloatControl::FloatControl(ControlContainer *parent,string id, string description, float min, float max, float defaultValue) : 
+	Control(parent, id, description, 0),
 	m_max(max),
 	m_min(min),
 	m_default(defaultValue),
@@ -15,7 +14,7 @@ FloatControl::FloatControl(ControlContainer *parent,string desc, float min, floa
 
 string FloatControl::getString() const
 {
-	return m_desc;
+	return "lala";
 }
 
 float FloatControl::toFloat(char val) const

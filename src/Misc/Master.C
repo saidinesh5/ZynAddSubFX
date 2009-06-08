@@ -31,7 +31,7 @@
 
 Master::Master()
 :
-	MasterVolume(ControlContainer::getRoot(), "units", 0, 127, 80)
+	MasterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 127, 80)
 {
 
 	MasterVolume.registerUser(this);

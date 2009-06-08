@@ -9,7 +9,7 @@
 class Control
 {
     public:
-        Control(class ControlContainer *parent, char ndefaultval);/**\todo create proper initialization list*/
+        Control(class ControlContainer *parent, std::string id, std::string name, char ndefaultval);/**\todo create proper initialization list*/
         ~Control(){};
         /**Return the string, which represents the internal value
          * @return a string representation of the current value*/
@@ -20,6 +20,9 @@ class Control
         /**Return the midi value (aka the char)
          * @return the current value*/
         virtual char getValue()const=0;
+
+		const std::string& getId();
+		const std::string& getAbsoluteId();
 
 		void registerUser(class ControlUser *user);
 
@@ -39,6 +42,8 @@ class Control
                          * and something attempts to update it*/
         bool locked;//upgrade this to a integer lock level if problems occur
 		std::vector<ControlUser*> m_users;
+		std::string m_id, m_absoluteId,m_description;
+		class ControlContainer *m_parent;
 };
 
 #endif
