@@ -10,8 +10,7 @@ class Dial : public QDial
 	Q_OBJECT
 	public:
 		Dial(QWidget *parent);
-		void setSource(unsigned char* source);
-		void setSource(REALTYPE* source);
+		void setControl(Control *control);
 
 	private slots:
 		void slotUpdateSource();
@@ -24,8 +23,6 @@ class Dial : public QDial
 
 		int m_originalMouseY;
 		int m_originalValueOnPress;
-		unsigned char *m_source;
-		REALTYPE *m_realtypeSource;
 
 };
 

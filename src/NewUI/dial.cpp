@@ -12,13 +12,13 @@ static int drawStyle = 1;
 
 Dial::Dial(QWidget *parent)
 	: QDial(parent),
-	m_originalMouseY(-1),
-	m_source(0),
-	m_realtypeSource(0)
+	m_originalMouseY(-1)
 {
 	setMouseTracking(false);
+
+	ControlHelper *helper = new ControlHelper(this);
 	connect(this, SIGNAL(valueChanged(int)),
-			this, SLOT(slotUpdateSource()));
+			helper, SLOT(setValue(int)));
 }
 
 void Dial::mousePressEvent(QMouseEvent* event)
@@ -109,26 +109,13 @@ void Dial::paintEvent(class QPaintEvent *event)
 
 }
 
-void Dial::setSource(unsigned char *source)
+void Dial::setControl(Control *control)
 {
-	m_source = source;
-	setValue(*source);
-	m_realtypeSource = NULL;
-}
-
-void Dial::setSource(REALTYPE *realtypeSource)
-{
-	m_realtypeSource = realtypeSource;
-	setValue((int)(*realtypeSource * 127.0));
-	m_source = NULL;
 }
 
 void Dial::slotUpdateSource()
 {
-	if (m_source) {
-		*m_source = (unsigned char)value();
-	} else if (m_realtypeSource)
-		*m_realtypeSource = (REALTYPE)(value() / 127.0);
+
 }
 
 #include "dial.moc"

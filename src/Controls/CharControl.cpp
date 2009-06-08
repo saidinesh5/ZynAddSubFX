@@ -1,4 +1,5 @@
 #include "CharControl.h"
+#include <iostream>
 
 using std::string;
 
@@ -24,5 +25,6 @@ char CharControl::getValue() const
 
 void CharControl::setValue(char nval)
 {
+	std::cout << "Value set to " << (int)nval << "\n";
 	m_value = nval;
 }

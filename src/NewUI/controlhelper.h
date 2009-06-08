@@ -9,9 +9,13 @@ class ControlHelper : public QObject, public ControlUser
 {
 	Q_OBJECT
 	public:
-		ControlHelper(QObject *parent, Control *control);
+		ControlHelper(QObject *parent);
 		void controlChanged(Control* control);
+		bool eventFilter ( QObject * watched, QEvent * event );
 
+	public slots:
+		void setValue(char value);
+		void setValue(int value);
 
 	private:
 		Control *m_control;

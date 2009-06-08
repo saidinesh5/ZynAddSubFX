@@ -129,6 +129,9 @@
         <property name="notchesVisible">
          <bool>true</bool>
         </property>
+        <property name="controlId" stdset="0">
+         <string>Master.Volume</string>
+        </property>
        </widget>
       </item>
       <item row="2" column="1">
@@ -231,6 +234,9 @@
            </property>
            <property name="notchesVisible">
             <bool>true</bool>
+           </property>
+           <property name="controlId" stdset="0">
+            <string>Part.Volume</string>
            </property>
           </widget>
          </item>
@@ -586,7 +592,7 @@
      <x>0</x>
      <y>0</y>
      <width>733</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

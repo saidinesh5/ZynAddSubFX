@@ -13,8 +13,12 @@ class ControlContainer
 
 	public:
 		ControlContainer(ControlContainer *parent, std::string id);
-		static ControlContainer* getRoot();
 		const std::vector<Control*>& getControls();
+
+		static ControlContainer* getRoot();
+		//convenience method
+		static inline Control *find(std::string id) { 
+			return ControlContainer::getRoot()->findControl(id); }
 		
 		const std::string& getId();
 		const std::string& getAbsoluteId();
