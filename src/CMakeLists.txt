@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 #in CMakeCache.txt
 SET (FFTW_VERSION 3 CACHE STRING "Version number of FFTW")
 SET (OutputModule jack CACHE STRING "Output module, either alsa, jack or portaudio")
-set (WANT_FLTK ON)
+set (WANT_FLTK OFF)
 
 
 if (OutputModule STREQUAL alsa)
