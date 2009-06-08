@@ -647,7 +647,7 @@ void Master::putalldata(char *data,int size){
     delete(xml);
 };
 
-int Master::saveXML(char *filename){
+int Master::saveXML(const char *filename){
     XMLwrapper *xml=new XMLwrapper();
 
     xml->beginbranch("MASTER");
@@ -661,7 +661,7 @@ int Master::saveXML(char *filename){
 
 
 
-int Master::loadXML(char *filename){
+int Master::loadXML(const char *filename){
     XMLwrapper *xml=new XMLwrapper();
     if (xml->loadXMLfile(filename)<0) {
 	delete(xml);
