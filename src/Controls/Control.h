@@ -1,12 +1,15 @@
-#include <string>
-
 #ifndef CONTROL_H
 #define CONTROL_H
+
+#include <string>
+#include <vector>
+#include "ControlContainer.h"
+
 /**A control for a parameter within the program*/
 class Control
 {
     public:
-        Control(char ndefaultval);/**\todo create proper initialization list*/
+        Control(class ControlContainer *parent, char ndefaultval);/**\todo create proper initialization list*/
         ~Control(){};
         /**Return the string, which represents the internal value
          * @return a string representation of the current value*/
@@ -17,6 +20,9 @@ class Control
         /**Return the midi value (aka the char)
          * @return the current value*/
         virtual char getValue()const=0;
+
+		void registerUser(class ControlUser *user);
+
         /** Will lock the Control until it is ulocked
          *
          * Locking a Control will Stop it from having
@@ -32,6 +38,7 @@ class Control
         char lockqueue; /**<The value is that is stored, while the Control is locked
                          * and something attempts to update it*/
         bool locked;//upgrade this to a integer lock level if problems occur
+		std::vector<ControlUser*> m_users;
 };
 
 #endif

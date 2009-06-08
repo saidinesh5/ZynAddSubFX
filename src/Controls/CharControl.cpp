@@ -2,8 +2,8 @@
 
 using std::string;
 
-CharControl::CharControl(string desc, char min, char max, char defaultValue) : 
-	Control(0),
+CharControl::CharControl(ControlContainer *parent,string desc, char min, char max, char defaultValue) : 
+	Control(parent, 0),
 	m_desc(desc),
 	m_max(max),
 	m_min(min),

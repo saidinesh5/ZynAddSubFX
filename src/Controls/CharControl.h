@@ -7,7 +7,7 @@
 class CharControl : public Control
 {
 	public:
-		CharControl(std::string desc, char min, char max, char defaultValue);
+		CharControl(ControlContainer *parent,std::string desc, char min, char max, char defaultValue);
 
         virtual std::string getString()const;
 

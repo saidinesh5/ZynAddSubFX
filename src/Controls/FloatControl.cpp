@@ -2,8 +2,8 @@
 
 using std::string;
 
-FloatControl::FloatControl(string desc, float min, float max, float defaultValue) : 
-	Control(0),
+FloatControl::FloatControl(ControlContainer *parent,string desc, float min, float max, float defaultValue) : 
+	Control(parent, 0),
 	m_desc(desc),
 	m_max(max),
 	m_min(min),

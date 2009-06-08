@@ -35,11 +35,12 @@
 #include "../Seq/Sequencer.h"
 #include "XMLwrapper.h"
 #include "../Controls/CharControl.h"
+#include "../Controls/ControlUser.h"
 
 extern Dump dump;
 /** It sends Midi Messages to Parts, receives samples from parts,
  *  process them with system/insertion effects and mix them */
-class Master{
+class Master : public ControlUser{
     public:
         /** Constructor*/
 	Master();
@@ -55,6 +56,7 @@ class Master{
 
 	void defaults();
 
+	virtual void controlChanged(Control* control);
 
 	/**loads all settings from a XML file
 	 * @return 0 for ok or -1 if there is an error*/
@@ -132,7 +134,7 @@ class Master{
 
     private:
 
-	CharControl Pvolume;
+	CharControl MasterVolume;
 	
 	//parameters
 	unsigned char Pvolume;

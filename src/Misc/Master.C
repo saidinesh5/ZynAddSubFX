@@ -29,7 +29,13 @@
 
 #include <unistd.h>
 
-Master::Master(){
+Master::Master()
+:
+	MasterVolume(ControlContainer::getRoot(), "units", 0, 127, 80)
+{
+
+	MasterVolume.registerUser(this);
+
     swaplr=0;
     
     pthread_mutex_init(&mutex,NULL);
@@ -733,6 +739,9 @@ void Master::getfromXML(XMLwrapper *xml){
 	
 };
 
-
-
+void Master::controlChanged(Control *control)
+{
+	if (control == &MasterVolume)
+		setPvolume(MasterVolume.getValue());
+}
 

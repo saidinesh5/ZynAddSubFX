@@ -3,6 +3,7 @@
 
 #include <QDial>
 #include "../globals.h"
+#include "controlhelper.h"
 
 class Dial : public QDial
 {
