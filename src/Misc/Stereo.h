@@ -23,6 +23,10 @@ template <class T>
 class Stereo{
     public:
         Stereo(const T &left,const T &right);
+
+        /**Initializes Stereo with left and right set to val
+         * @param val the value for both channels*/
+        Stereo(const T &val);
         ~Stereo(){};
 
         void operator=(const Stereo<T> &smp);
@@ -35,6 +39,6 @@ class Stereo{
         T rightChannel;
 
 };
+#include "Stereo.C"
 #endif
 
-#include "Stereo.C"
