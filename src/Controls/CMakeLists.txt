@@ -1,6 +1,7 @@
 set(zynaddsubfxgui_controls_SRCS
 	Control.C
 	ControlContainer.cpp
+	InstrumentContainer.cpp
 	FloatControl.cpp
 	CharControl.cpp
 	DelayCtl.C

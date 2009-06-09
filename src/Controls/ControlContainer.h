@@ -27,6 +27,13 @@ class ControlContainer
 		void addControl(Control* control);
 		void addControlContainer(ControlContainer* container);
 
+		virtual std::string createControlContainer(int type);
+		std::string createControlContainer(std::string name);
+		const std::vector<std::string> getTypes();
+			
+	protected:
+		std::vector<std::string> m_types;
+
 	private:
 		static ControlContainer* m_root;
 		std::vector<Control*> m_controls;

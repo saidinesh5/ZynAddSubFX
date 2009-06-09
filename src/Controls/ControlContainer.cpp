@@ -74,3 +74,22 @@ const std::string& ControlContainer::getAbsoluteId()
 {
 	return m_absoluteId;
 }
+
+const std::vector<std::string> ControlContainer::getTypes()
+{
+	return m_types;
+}
+
+std::string ControlContainer::createControlContainer(int type)
+{
+	return "";
+}
+
+std::string ControlContainer::createControlContainer(std::string name)
+{
+	//convenience function
+	//TODO: implement, this should just look for the name and use the
+	//createControlContainer(int) function
+	return "";
+}
+
