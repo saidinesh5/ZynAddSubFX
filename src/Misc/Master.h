@@ -36,6 +36,7 @@
 #include "XMLwrapper.h"
 #include "../Controls/CharControl.h"
 #include "../Controls/ControlUser.h"
+#include "../Controls/InstrumentContainer.h"
 
 extern Dump dump;
 /** It sends Midi Messages to Parts, receives samples from parts,
@@ -134,7 +135,8 @@ class Master : public ControlUser{
 
     private:
 
-	CharControl MasterVolume;
+	CharControl masterVolume;
+	InstrumentContainer instrumentContainer;
 	
 	//parameters
 	unsigned char Pvolume;

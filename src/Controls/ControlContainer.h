@@ -27,17 +27,19 @@ class ControlContainer
 		void addControl(Control* control);
 		void addControlContainer(ControlContainer* container);
 
+		//children-spawning methods
 		virtual std::string createControlContainer(int type);
 		std::string createControlContainer(std::string name);
+		void clear();
 		const std::vector<std::string> getTypes();
 			
 	protected:
 		std::vector<std::string> m_types;
+		std::vector<ControlContainer*> m_containers;
 
 	private:
 		static ControlContainer* m_root;
 		std::vector<Control*> m_controls;
-		std::vector<ControlContainer*> m_containers;
 		std::string m_id, m_absoluteId;
 
 

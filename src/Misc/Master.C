@@ -31,10 +31,11 @@
 
 Master::Master()
 :
-	MasterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 127, 80)
+	masterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 127, 80),
+	instrumentContainer(NULL, "Instruments", this)
 {
 
-	MasterVolume.registerUser(this);
+	masterVolume.registerUser(this);
 
     swaplr=0;
     
@@ -87,6 +88,10 @@ void Master::defaults(){
 		part[npart]->defaults();
 		part[npart]->Prcvchn=npart%NUM_MIDI_CHANNELS;
 	};
+
+	//create an instrument
+	instrumentContainer.clear();
+	instrumentContainer.createControlContainer(0);
 
 	partonoff(0,1);//enable the first part
 
@@ -741,7 +746,7 @@ void Master::getfromXML(XMLwrapper *xml){
 
 void Master::controlChanged(Control *control)
 {
-	if (control == &MasterVolume)
-		setPvolume(MasterVolume.getValue());
+	if (control == &masterVolume)
+		setPvolume(masterVolume.getValue());
 }
 

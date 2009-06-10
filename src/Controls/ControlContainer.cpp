@@ -88,8 +88,15 @@ std::string ControlContainer::createControlContainer(int type)
 std::string ControlContainer::createControlContainer(std::string name)
 {
 	//convenience function
-	//TODO: implement, this should just look for the name and use the
-	//createControlContainer(int) function
+	for (int i = 0; i < m_types.size(); ++i) {
+		if (m_types.at(i) == name)
+			return createControlContainer(i);
+	}
 	return "";
+}
+
+void ControlContainer::clear()
+{
+	m_containers.clear();
 }
 
