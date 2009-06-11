@@ -5,7 +5,6 @@ Control::Control(ControlContainer *parent, std::string id, std::string descripti
 	lockqueue(-1),
 	locked(false),
 	m_id(id),
-	m_absoluteId(parent->getAbsoluteId() + "." + id),
 	m_description(description),
 	m_parent(parent)
 {
@@ -37,6 +36,6 @@ const std::string& Control::getId()
 
 const std::string& Control::getAbsoluteId()
 {
-	return m_absoluteId;
+	return parent->getAbsoluteId() + "." + id;
 }
 

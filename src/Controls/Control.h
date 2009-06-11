@@ -42,7 +42,7 @@ class Control
                          * and something attempts to update it*/
         bool locked;//upgrade this to a integer lock level if problems occur
 		std::vector<ControlUser*> m_users;
-		std::string m_id, m_absoluteId,m_description;
+		std::string m_id, m_description;
 		class ControlContainer *m_parent;
 };
 
