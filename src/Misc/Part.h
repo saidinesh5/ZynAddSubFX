@@ -37,11 +37,14 @@
 #include "../DSP/FFTwrapper.h"
 #include "../Effects/EffectMgr.h"
 #include "XMLwrapper.h"
+#include "../Controls/ControlUser.h"
+#include "../Controls/CharControl.h"
+#include "../Controls/FloatControl.h"
 
 #include <list> // For the monomemnotes list.
 
 /** Part implementation*/
-class Part{
+class Part : public ControlUser{
 
     public:
       /**Constructor
@@ -137,7 +140,9 @@ class Part{
 
       enum NoteStatus{KEY_OFF,KEY_PLAYING,KEY_RELASED_AND_SUSTAINED,KEY_RELASED};
 
-      REALTYPE volume,oldvolumel,oldvolumer;//this is applied by Master
+      REALTYPE oldvolumel,oldvolumer;//this is applied by Master
+	  FloatControl partVolume;
+	  
       REALTYPE panning;//this is applied by Master, too
       
       Controller ctl;//Part controllers
@@ -150,8 +155,16 @@ class Part{
       pthread_mutex_t *mutex;
       
       int lastnote;      
+
+	  void controlChanged(Control* control);
+	  ControlContainer container;
+	  //CharControl Volume;/**<part volume*/
       
     private:
+	  void enablePart();
+	  void disablePart();
+
+
       void KillNotePos(int pos); 
       void RelaseNotePos(int pos);      
       void MonoMemRenote(); // MonoMem stuff.

@@ -118,7 +118,7 @@ void Echo::setpanning(const unsigned char & Ppanning){
 }
 
 void Echo::setdelay(const unsigned char & Pdelay){
-    delay.setmVal(Pdelay);
+    delay.setValue(Pdelay);
     //this->Pdelay=Pdelay;
     //delay=1+(int)(Pdelay/127.0*SAMPLE_RATE*1.5);//0 .. 1.5 sec
     initdelays();
@@ -205,7 +205,7 @@ unsigned char Echo::getpar(const int & npar)const{
                 break;
         case 1: return(Ppanning);
                 break;
-        case 2: return(delay.getmVal());
+        case 2: return(delay.getValue());
                 break;
         case 3: return(Plrdelay);
                 break;

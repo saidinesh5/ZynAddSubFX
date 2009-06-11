@@ -29,7 +29,14 @@
 
 #include <unistd.h>
 
-Master::Master(){
+Master::Master()
+:
+	masterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 127, 80),
+	instrumentContainer(ControlContainer::getRoot(), "Parts", this)
+{
+
+	masterVolume.registerUser(this);
+
     swaplr=0;
     
     pthread_mutex_init(&mutex,NULL);
@@ -81,6 +88,10 @@ void Master::defaults(){
 		part[npart]->defaults();
 		part[npart]->Prcvchn=npart%NUM_MIDI_CHANNELS;
 	};
+
+	//create an instrument
+	//instrumentContainer.clear();
+	//instrumentContainer.createControlContainer(0);
 
 	partonoff(0,1);//enable the first part
 
@@ -275,8 +286,8 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr){
     for (npart=0;npart<NUM_MIDI_PARTS;npart++){
 	if (part[npart]->Penabled==0)  continue; 
 
-	REALTYPE newvol_l=part[npart]->volume;
-	REALTYPE newvol_r=part[npart]->volume;
+	REALTYPE newvol_l=part[npart]->partVolume.getValue();
+	REALTYPE newvol_r=part[npart]->partVolume.getValue();
 	REALTYPE oldvol_l=part[npart]->oldvolumel;
 	REALTYPE oldvol_r=part[npart]->oldvolumer;
 	REALTYPE pan=part[npart]->panning;
@@ -733,6 +744,9 @@ void Master::getfromXML(XMLwrapper *xml){
 	
 };
 
-
-
+void Master::controlChanged(Control *control)
+{
+	if (control == &masterVolume)
+		setPvolume(masterVolume.getValue());
+}
 

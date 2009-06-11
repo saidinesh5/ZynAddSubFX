@@ -34,11 +34,14 @@
 #include "Dump.h"
 #include "../Seq/Sequencer.h"
 #include "XMLwrapper.h"
+#include "../Controls/CharControl.h"
+#include "../Controls/ControlUser.h"
+#include "../Controls/InstrumentContainer.h"
 
 extern Dump dump;
 /** It sends Midi Messages to Parts, receives samples from parts,
  *  process them with system/insertion effects and mix them */
-class Master{
+class Master : public ControlUser{
     public:
         /** Constructor*/
 	Master();
@@ -54,6 +57,7 @@ class Master{
 
 	void defaults();
 
+	virtual void controlChanged(Control* control);
 
 	/**loads all settings from a XML file
 	 * @return 0 for ok or -1 if there is an error*/
@@ -77,8 +81,7 @@ class Master{
 	//void NRPN...
 	
 	
-        void ShutUp();
-	int shutup;
+	void ShutUp();
 
 	/**Audio Output*/
 	void AudioOut(REALTYPE *outl,REALTYPE *outr);
@@ -91,12 +94,6 @@ class Master{
 	/**parts \todo see if this can be made to be dynamic*/
 	Part *part[NUM_MIDI_PARTS];
 		
-	//parameters
-	unsigned char Pvolume;
-	unsigned char Pkeyshift;
-	unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
-	unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
-	
 	//parameters control
 	void setPvolume(char Pvolume_);
 	void setPkeyshift(char Pkeyshift_);
@@ -136,7 +133,19 @@ class Master{
 	FFTwrapper *fft;
 	pthread_mutex_t mutex;
 
+	CharControl masterVolume;
+	InstrumentContainer instrumentContainer;
+
     private:
+	
+	//parameters
+	unsigned char Pvolume;
+	unsigned char Pkeyshift;
+	unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
+	unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
+
+	int shutup;
+
 	REALTYPE volume;	
 	REALTYPE sysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
 	REALTYPE sysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];

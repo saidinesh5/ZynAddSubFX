@@ -1,6 +1,7 @@
 
 set(zynaddsubfxguilib_SRCS
 	dial.cpp
+	controlhelper.cpp
 	bankui.C
 	masterui.C
 	addnoteui.C
