@@ -8,12 +8,10 @@ using std::string;
 ControlContainer* ControlContainer::m_root = new ControlContainer(NULL, "Master");
 
 ControlContainer::ControlContainer(ControlContainer* parent, string id)
-	: m_id(id)
+	: m_id(id),
+	m_parent(parent)
 {
-	if (parent)
-		m_absoluteId = parent->getAbsoluteId() + "." + id;
-	else
-		m_absoluteId = id;
+	rename(id);
 }
 
 ControlContainer* ControlContainer::getRoot()
@@ -100,3 +98,28 @@ void ControlContainer::clear()
 	m_containers.clear();
 }
 
+void ControlContainer::moveToParent(ControlContainer *parent)
+{
+	if (m_parent) {
+		for (vector<ControlContainer*>::iterator it = m_parent->m_containers.begin(); it != m_parent->m_containers.end(); it++) {
+			if (*it == this) {
+				m_parent->m_containers.erase(it);
+				break;
+			}
+		}
+	}
+
+	m_parent = parent;
+	rename(m_id);
+
+	m_parent->addControlContainer(this);
+}
+
+void ControlContainer::rename(std::string newName)
+{
+	m_id = newName;
+	if (m_parent)
+		m_absoluteId = m_parent->getAbsoluteId() + "." + m_id;
+	else
+		m_absoluteId = m_id;
+}

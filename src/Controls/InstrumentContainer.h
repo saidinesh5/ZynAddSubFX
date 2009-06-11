@@ -3,6 +3,7 @@
 
 #include "ControlContainer.h"
 #include <string>
+#include <vector>
 
 class InstrumentContainer : public ControlContainer
 {
@@ -12,6 +13,12 @@ class InstrumentContainer : public ControlContainer
 
 	private:
 		class Master *m_master;
+
+		int nextChildIndex;
+
+		//TODO* this should be replaced with a dynamic mechanism
+		std::vector<int> allocatedInstruments;
+		int nextFakeIndex;
 };
 
 #endif /* ifndef _INSTRUMENTCONTAINER_H_ */

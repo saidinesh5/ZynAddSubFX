@@ -133,10 +133,10 @@ class Master : public ControlUser{
 	FFTwrapper *fft;
 	pthread_mutex_t mutex;
 
-    private:
-
 	CharControl masterVolume;
 	InstrumentContainer instrumentContainer;
+
+    private:
 	
 	//parameters
 	unsigned char Pvolume;

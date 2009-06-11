@@ -21,7 +21,16 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
 
 	qDebug() << "Trying to find control Master.Volume";
 	qDebug() << "Returned " << ControlContainer::getRoot()->findControl("Master.Volume");
+
+	qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createControlContainer(0));
 	
+	qDebug() << "Searching for controls...";
+	for (it = ControlContainer::getRoot()->getControls().begin();
+			it != ControlContainer::getRoot()->getControls().end();
+			it++) {
+		qDebug() << "Found control: " << QString::fromStdString((*it)->getAbsoluteId());
+	}
+
 	setupUi(this);
 
 

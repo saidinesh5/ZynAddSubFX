@@ -36,3 +36,8 @@ void FloatControl::setValue(char nval)
 {
 	m_value = toFloat(nval);
 }
+
+float FloatControl::getFloat() const
+{
+	return m_value;
+}

@@ -32,7 +32,7 @@
 Master::Master()
 :
 	masterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 127, 80),
-	instrumentContainer(NULL, "Instruments", this)
+	instrumentContainer(ControlContainer::getRoot(), "Parts", this)
 {
 
 	masterVolume.registerUser(this);
@@ -90,8 +90,8 @@ void Master::defaults(){
 	};
 
 	//create an instrument
-	instrumentContainer.clear();
-	instrumentContainer.createControlContainer(0);
+	//instrumentContainer.clear();
+	//instrumentContainer.createControlContainer(0);
 
 	partonoff(0,1);//enable the first part
 
@@ -286,8 +286,8 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr){
     for (npart=0;npart<NUM_MIDI_PARTS;npart++){
 	if (part[npart]->Penabled==0)  continue; 
 
-	REALTYPE newvol_l=part[npart]->volume;
-	REALTYPE newvol_r=part[npart]->volume;
+	REALTYPE newvol_l=part[npart]->partVolume.getValue();
+	REALTYPE newvol_r=part[npart]->partVolume.getValue();
 	REALTYPE oldvol_l=part[npart]->oldvolumel;
 	REALTYPE oldvol_r=part[npart]->oldvolumer;
 	REALTYPE pan=part[npart]->panning;

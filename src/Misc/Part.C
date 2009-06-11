@@ -26,7 +26,11 @@
 #include <stdio.h>
 #include <string.h>
 
-Part::Part(Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_){
+Part::Part(Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
+	:container(NULL, "Part"),
+	partVolume(&container, "Volume", "Part Volume", 0, 40, 30)
+{
+	//container.registerUser(this);
     microtonal=microtonal_;    
     fft=fft_;
     mutex=mutex_;
@@ -501,7 +505,7 @@ void Part::SetController(unsigned int type,int par){
 	case C_fmamp:ctl.setfmamp(par);
 			  break;
 	case C_volume:ctl.setvolume(par);
-   		      if (ctl.volume.receive!=0) volume=ctl.volume.volume;
+   		      if (ctl.volume.receive!=0) partVolume.setValue(ctl.volume.volume);
 		        else setPvolume(Pvolume);
 			  break;
 	case C_sustain:ctl.setsustain(par);
@@ -512,7 +516,7 @@ void Part::SetController(unsigned int type,int par){
 	case C_resetallcontrollers:
 			  ctl.resetall();
 			  RelaseSustainedKeys();
-   		          if (ctl.volume.receive!=0) volume=ctl.volume.volume;
+   		          if (ctl.volume.receive!=0) partVolume.setValue(ctl.volume.volume);
 		        	else setPvolume(Pvolume);
 			  setPvolume(Pvolume);//update the volume
 			  setPpanning(Ppanning);//update the panning
@@ -796,7 +800,7 @@ void Part::ComputePartSmps(){
  */
 void Part::setPvolume(char Pvolume_){
     Pvolume=Pvolume_;
-    volume=dB2rap((Pvolume-96.0)/96.0*40.0)*ctl.expression.relvolume;
+    partVolume.setValue(dB2rap((Pvolume-96.0)/96.0*40.0)*ctl.expression.relvolume);
 };
 
 void Part::setPpanning(char Ppanning_){
@@ -1073,5 +1077,19 @@ void Part::getfromXML(XMLwrapper *xml){
 
 };
 
+void Part::controlChanged(Control* control)
+{
 
+}
 
+void Part::enablePart()
+{
+	//if (Penabled) return;
+	//Penabled = true;
+}
+
+void Part::disablePart()
+{
+	//if (!Penabled) return;
+	//Penabled = false;
+}

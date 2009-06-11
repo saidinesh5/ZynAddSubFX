@@ -13,19 +13,21 @@ class ControlContainer
 
 	public:
 		ControlContainer(ControlContainer *parent, std::string id);
-		const std::vector<Control*>& getControls();
-
-		static ControlContainer* getRoot();
-		//convenience method
-		static inline Control *find(std::string id) { 
-			return ControlContainer::getRoot()->findControl(id); }
 		
 		const std::string& getId();
 		const std::string& getAbsoluteId();
-		
+		const std::vector<Control*>& getControls();
+		static ControlContainer* getRoot();
+
+		//convenience method
+		static inline Control *find(std::string id) { 
+			return ControlContainer::getRoot()->findControl(id); }
 		Control* findControl(std::string id);
+		
 		void addControl(Control* control);
 		void addControlContainer(ControlContainer* container);
+		void moveToParent(ControlContainer *parent);
+		void rename(std::string newName);
 
 		//children-spawning methods
 		virtual std::string createControlContainer(int type);
@@ -39,6 +41,7 @@ class ControlContainer
 
 	private:
 		static ControlContainer* m_root;
+		class ControlContainer *m_parent;
 		std::vector<Control*> m_controls;
 		std::string m_id, m_absoluteId;
 

@@ -22,7 +22,7 @@ class Control
         virtual char getValue()const=0;
 
 		const std::string& getId();
-		const std::string& getAbsoluteId();
+		const std::string getAbsoluteId();
 
 		void registerUser(class ControlUser *user);
 

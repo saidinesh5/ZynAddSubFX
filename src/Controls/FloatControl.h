@@ -19,6 +19,8 @@ class FloatControl : public Control
          * @return the current value*/
         virtual char getValue()const;
 
+		float getFloat() const;
+
 	private:
 		inline float toFloat(char val) const;
 		inline char toChar(float val) const;

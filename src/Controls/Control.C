@@ -34,8 +34,9 @@ const std::string& Control::getId()
 	return m_id;
 }
 
-const std::string& Control::getAbsoluteId()
+const std::string Control::getAbsoluteId()
 {
-	return parent->getAbsoluteId() + "." + id;
+	return m_parent->getAbsoluteId() + "." + m_id;
+
 }
 
