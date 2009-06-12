@@ -63,6 +63,28 @@ Control* ControlContainer::findControl(std::string id)
 	return ret;
 }
 
+ControlContainer* ControlContainer::findContainer(std::string id)
+{
+	ControlContainer *ret = NULL;
+	for (ContainerIterator it = m_containers.begin();
+			it != m_containers.end();
+			it++)
+	{
+
+		if (id == (*it)->getAbsoluteId()) return *it;
+
+		//see if the absolute id of the container matches with the
+		//beginning of the id being searched for.
+		int pos = id.find((*it)->getAbsoluteId());
+		//pos == 0 is a match. if no match, continue.
+		if (pos) continue; 
+
+		ret = (*it)->findContainer(id);
+		if (ret) return ret;
+	}
+	return ret;
+}
+
 const std::string& ControlContainer::getId()
 {
 	return m_id;

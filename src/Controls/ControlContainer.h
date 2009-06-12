@@ -23,6 +23,7 @@ class ControlContainer
 		static inline Control *find(std::string id) { 
 			return ControlContainer::getRoot()->findControl(id); }
 		Control* findControl(std::string id);
+		ControlContainer* findContainer(std::string id);
 		
 		void addControl(Control* control);
 		void addControlContainer(ControlContainer* container);
