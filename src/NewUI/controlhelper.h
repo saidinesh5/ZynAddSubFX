@@ -17,6 +17,9 @@ class ControlHelper : public QObject, public ControlUser
 		void setValue(char value);
 		void setValue(int value);
 
+	signals:
+		void valueChanged(int value);
+
 	private:
 		Control *m_control;
 };

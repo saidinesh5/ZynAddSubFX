@@ -26,6 +26,7 @@ bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
 			if (m_control) {
 				m_control->registerUser(this);
 				qDebug() << "Assigning " << this << " to " << newControl;
+				emit valueChanged(m_control->getValue());
 			}
 			else
 				qDebug() << "Could not find a control named " << newControl;
@@ -38,7 +39,7 @@ bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
 
 void ControlHelper::controlChanged(Control* control)
 {
-
+	emit valueChanged(control->getValue());
 }
 
 void ControlHelper::setValue(char value)

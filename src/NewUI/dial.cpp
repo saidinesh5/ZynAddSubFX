@@ -19,6 +19,8 @@ Dial::Dial(QWidget *parent)
 	ControlHelper *helper = new ControlHelper(this);
 	connect(this, SIGNAL(valueChanged(int)),
 			helper, SLOT(setValue(int)));
+	connect(helper, SIGNAL(valueChanged(int)),
+			this, SLOT(setValue(int)));
 }
 
 void Dial::mousePressEvent(QMouseEvent* event)
