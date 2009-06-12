@@ -31,11 +31,12 @@
 
 Master::Master()
 :
-	masterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 127, 80),
+	masterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 50, 30),
 	instrumentContainer(ControlContainer::getRoot(), "Parts", this)
 {
 
 	masterVolume.registerUser(this);
+	masterVolume.setDb2rapConversion(true);
 
     swaplr=0;
     

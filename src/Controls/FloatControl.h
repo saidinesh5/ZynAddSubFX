@@ -21,11 +21,15 @@ class FloatControl : public Control
 
 		float getFloat() const;
 
+		void setDb2rapConversion(bool value);
+
 	private:
 		inline float toFloat(char val) const;
 		inline char toChar(float val) const;
 		float m_max, m_min, m_default, m_value;
 		std::string m_desc;
+
+		bool m_db2rapConversion;
 
 };
 
