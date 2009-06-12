@@ -80,8 +80,7 @@ Master::Master()
 };
 
 void Master::defaults(){
-	volume=1.0;
-	setPvolume(80);
+	masterVolume.setValue(80);
 	setPkeyshift(64);
 
 	for (int npart=0;npart<NUM_MIDI_PARTS;npart++){
@@ -379,8 +378,8 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr){
 
     //Master Volume
     for (i=0;i<SOUND_BUFFER_SIZE;i++) {
-        outl[i]*=volume;
-        outr[i]*=volume;
+        outl[i]*=masterVolume.getFloat();
+        outr[i]*=masterVolume.getFloat();
     };
 
     //Peak computation (for vumeters)
@@ -412,7 +411,7 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr){
 		REALTYPE tmp=fabs(outl[i]+outr[i]);
     		if (tmp>vuoutpeakpart[npart]) vuoutpeakpart[npart]=tmp;
 	    };
-	    vuoutpeakpart[npart]*=volume;
+	    vuoutpeakpart[npart]*=masterVolume.getFloat();
 	} else {
 	    if (fakepeakpart[npart]>1) fakepeakpart[npart]--;
 	};
@@ -511,8 +510,8 @@ Master::~Master(){
  * Parameter control
  */
 void Master::setPvolume(char Pvolume_){
-    Pvolume=Pvolume_;
-    volume=dB2rap((Pvolume-96.0)/96.0*40.0);
+    //Pvolume=Pvolume_;
+    //volume=dB2rap((Pvolume-96.0)/96.0*40.0);
 };
 
 void Master::setPkeyshift(char Pkeyshift_){
@@ -564,7 +563,7 @@ void Master::applyparameters(){
 };
 
 void Master::add2XML(XMLwrapper *xml){
-    xml->addpar("volume",Pvolume);
+    xml->addpar("volume",masterVolume.getValue());
     xml->addpar("key_shift",Pkeyshift);
     xml->addparbool("nrpn_receive",ctl.NRPN.receive);
 
@@ -682,7 +681,8 @@ int Master::loadXML(const char *filename){
 };
 
 void Master::getfromXML(XMLwrapper *xml){
-    setPvolume(xml->getpar127("volume",Pvolume));
+	//TODO: make this work again
+    //masterVolume.setValue(xml->getpar127("volume",Pvolume));
     setPkeyshift(xml->getpar127("key_shift",Pkeyshift));
     ctl.NRPN.receive=xml->getparbool("nrpn_receive",ctl.NRPN.receive);
 	
@@ -746,7 +746,7 @@ void Master::getfromXML(XMLwrapper *xml){
 
 void Master::controlChanged(Control *control)
 {
-	if (control == &masterVolume)
-		setPvolume(masterVolume.getValue());
+	//if (control == &masterVolume)
+		//masterVolume.setValue(masterVolume.getValue());
 }
 

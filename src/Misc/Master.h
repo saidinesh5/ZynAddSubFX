@@ -133,20 +133,18 @@ class Master : public ControlUser{
 	FFTwrapper *fft;
 	pthread_mutex_t mutex;
 
-	CharControl masterVolume;
+	FloatControl masterVolume;
 	InstrumentContainer instrumentContainer;
 
     private:
 	
 	//parameters
-	unsigned char Pvolume;
 	unsigned char Pkeyshift;
 	unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
 	unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
 
 	int shutup;
 
-	REALTYPE volume;	
 	REALTYPE sysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
 	REALTYPE sysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
 
