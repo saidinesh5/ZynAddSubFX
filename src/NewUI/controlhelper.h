@@ -13,6 +13,8 @@ class ControlHelper : public QObject, public ControlUser
 		void controlChanged(Control* control);
 		bool eventFilter ( QObject * watched, QEvent * event );
 		QString getControlId();
+		void setControl(QString absoluteId);
+		QString relativeControlId() const;
 
 	public slots:
 		void setValue(char value);
@@ -23,6 +25,7 @@ class ControlHelper : public QObject, public ControlUser
 
 	private:
 		Control *m_control;
+		QString m_relativeControlId;
 };
 
 #endif /* ifndef _CONTROLHELPER_H_ */

@@ -13,8 +13,12 @@ class SiblingBar : public QTabBar
 		void addControlWidgets(QWidget *widget);
 		void setChildrenContainer(class ControlContainer* container);
 
+	private slots:
+		void updateFoundControls();
+
 	private:
-		QSet<class ControlHelper*> foundControls;
+		QSet<class ControlHelper*> m_foundControls;
+		class ControlContainer* m_childContainer;
 
 };
 

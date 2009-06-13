@@ -22,19 +22,27 @@ bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
 		Q_ASSERT(ev);
 		if (ev->propertyName() == "controlId") {
 			QString newControl = watched->property("controlId").toString();
-			m_control = ControlContainer::find(newControl.toStdString());
-			if (m_control) {
-				m_control->registerUser(this);
-				qDebug() << "Assigning " << this << " to " << newControl;
-				emit valueChanged(m_control->getValue());
-			}
-			else
-				qDebug() << "Could not find a control named " << newControl;
+			setControl(newControl);
 			return true;
 		}
-		//TODO: didn't find the control. perhaps do something?
+		if (ev->propertyName() == "relativeControlId") {
+			m_relativeControlId = watched->property("relativeControlId").toString();
+			return true;
+		}
 	} 
 	return false;
+}
+
+void ControlHelper::setControl(QString absoluteId)
+{
+	m_control = ControlContainer::find(absoluteId.toStdString());
+	if (m_control) {
+		m_control->registerUser(this);
+		qDebug() << "Assigning " << this << " to " << absoluteId;
+		emit valueChanged(m_control->getValue());
+	}
+	else
+		qDebug() << "Could not find a control named " << absoluteId;
 }
 
 void ControlHelper::controlChanged(Control* control)
@@ -61,5 +69,11 @@ QString ControlHelper::getControlId()
 	else
 		return "Undefined";
 }
+
+QString ControlHelper::relativeControlId() const
+{ 
+	return m_relativeControlId;
+}
+
 
 #include "controlhelper.moc"

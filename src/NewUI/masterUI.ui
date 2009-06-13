@@ -238,8 +238,8 @@
            <property name="notchesVisible">
             <bool>true</bool>
            </property>
-           <property name="controlId" stdset="0">
-            <string>Part.Volume</string>
+           <property name="relativeControlId" stdset="0">
+            <string>Volume</string>
            </property>
           </widget>
          </item>

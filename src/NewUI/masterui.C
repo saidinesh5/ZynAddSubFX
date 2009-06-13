@@ -11,14 +11,6 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
 	m_bankUI(NULL)
 
 {
-	qDebug() << "Searching for controls...";
-	ControlIterator it;
-	for (it = ControlContainer::getRoot()->getControls().begin();
-			it != ControlContainer::getRoot()->getControls().end();
-			it++) {
-		qDebug() << "Found control: " << QString::fromStdString((*it)->getAbsoluteId());
-	}
-
 	qDebug() << "Trying to find control Master.Volume";
 	qDebug() << "Returned " << ControlContainer::getRoot()->findControl("Master.Volume");
 
@@ -30,6 +22,8 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
 
 	partBar->addControlWidgets(partFrame);
 	partBar->setChildrenContainer(ControlContainer::getRoot()->findContainer("Master.Parts"));
+
+	ControlContainer::getRoot()->printTree();
 }
 
 void MasterUI::on_partSelector_valueChanged(int value)
