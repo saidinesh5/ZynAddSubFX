@@ -36,6 +36,7 @@ const std::string& Control::getId()
 
 const std::string Control::getAbsoluteId()
 {
+	if (!m_parent) return getId();
 	return m_parent->getAbsoluteId() + "." + m_id;
 
 }

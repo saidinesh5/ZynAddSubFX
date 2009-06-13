@@ -36,6 +36,8 @@ class ControlContainer
 		std::string createControlContainer(std::string name);
 		void clear();
 		const std::vector<std::string> getTypes();
+
+		void printTree();
 			
 	protected:
 		std::vector<std::string> m_types;

@@ -12,10 +12,9 @@ ControlContainer::ControlContainer(ControlContainer* parent, string id)
 	: m_id(id),
 	m_parent(parent)
 {
+	rename(id);
 	if (m_parent)
 		m_parent->addControlContainer(this);
-	rename(id);
-	std::cout << "Created container at " << getAbsoluteId() << std::endl;
 }
 
 ControlContainer* ControlContainer::getRoot()
@@ -70,6 +69,27 @@ Control* ControlContainer::findControl(std::string id)
 		if (ret) return ret;
 	}
 	return ret;
+}
+
+void ControlContainer::printTree()
+{
+	std::cout << "Container " << getAbsoluteId() << std::endl;
+
+	for (ControlIterator it = m_controls.begin();
+			it != m_controls.end();
+			it++)
+	{
+		std::cout << "Control " << (*it)->getAbsoluteId() << std::endl;
+	}
+
+
+	Control *ret = NULL;
+	for (ContainerIterator it = m_containers.begin();
+			it != m_containers.end();
+			it++)
+	{
+		(*it)->printTree();
+	}
 }
 
 ControlContainer* ControlContainer::findContainer(std::string id)
