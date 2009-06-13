@@ -1,6 +1,7 @@
 #include "ControlContainer.h"
 
 #include <string>
+#include <iostream>
 
 using std::vector;
 using std::string;
@@ -11,7 +12,10 @@ ControlContainer::ControlContainer(ControlContainer* parent, string id)
 	: m_id(id),
 	m_parent(parent)
 {
+	if (m_parent)
+		m_parent->addControlContainer(this);
 	rename(id);
+	std::cout << "Created container at " << getAbsoluteId() << std::endl;
 }
 
 ControlContainer* ControlContainer::getRoot()
@@ -23,6 +27,11 @@ ControlContainer* ControlContainer::getRoot()
 const vector<Control*>& ControlContainer::getControls()
 {
 	return m_controls;
+}
+
+const vector<ControlContainer*>& ControlContainer::getContainers()
+{
+	return m_containers;
 }
 
 void ControlContainer::addControl(Control* control)

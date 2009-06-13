@@ -17,6 +17,7 @@ class ControlContainer
 		const std::string& getId();
 		const std::string& getAbsoluteId();
 		const std::vector<Control*>& getControls();
+		const std::vector<ControlContainer*>& getContainers();
 		static ControlContainer* getRoot();
 
 		//convenience method
