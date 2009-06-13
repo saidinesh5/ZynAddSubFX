@@ -27,8 +27,8 @@
 #include <string.h>
 
 Part::Part(Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
-	:container(NULL, "Part"),
-	partVolume(&container, "Volume", "Part Volume", 0, 40, 30)
+	:partVolume(&container, "Volume", "Part Volume", 0, 40, 30),
+	container(NULL, "Part")
 {
 	//container.registerUser(this);
     microtonal=microtonal_;    

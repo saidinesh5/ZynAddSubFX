@@ -101,6 +101,7 @@ class Part : public ControlUser{
         PADnoteParameters *padpars;
       } kit[NUM_KIT_ITEMS];
 
+	  ControlContainer container;
       
       //Part parameters
       void setkeylimit(unsigned char Pkeylimit);
@@ -157,7 +158,6 @@ class Part : public ControlUser{
       int lastnote;      
 
 	  void controlChanged(Control* control);
-	  ControlContainer container;
 	  //CharControl Volume;/**<part volume*/
       
     private:
