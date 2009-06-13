@@ -14,7 +14,7 @@ class MasterUI : public QMainWindow, Ui::MainWindow
 
 	private slots:
 		void on_action_Quit_triggered();
-
+		void on_partSelector_valueChanged(int value);
 	private:
 
 		int *Pexitprogram;

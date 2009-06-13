@@ -1,6 +1,7 @@
 
 set(zynaddsubfxguilib_SRCS
 	dial.cpp
+	siblingbar.cpp
 	controlhelper.cpp
 	bankui.C
 	masterui.C
@@ -17,6 +18,7 @@ SET( zynaddsubfxguilib_MOC_HDRS
 	unitbox.h
 	lfobox.h
 	envelopebox.h
+	siblingbar.h
 )
 
 SET( zynaddsubfxguilib_UIS

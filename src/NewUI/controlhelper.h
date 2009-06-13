@@ -12,6 +12,7 @@ class ControlHelper : public QObject, public ControlUser
 		ControlHelper(QObject *parent);
 		void controlChanged(Control* control);
 		bool eventFilter ( QObject * watched, QEvent * event );
+		QString getControlId();
 
 	public slots:
 		void setValue(char value);

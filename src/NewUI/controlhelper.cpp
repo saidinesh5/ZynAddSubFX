@@ -54,4 +54,12 @@ void ControlHelper::setValue(int value)
 	setValue(char(qBound(0, value, 127)));
 }
 
+QString ControlHelper::getControlId()
+{
+	if (m_control)
+		return QString::fromStdString(m_control->getAbsoluteId());
+	else
+		return "Undefined";
+}
+
 #include "controlhelper.moc"
