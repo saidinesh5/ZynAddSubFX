@@ -12,6 +12,7 @@ class SiblingBar : public QTabBar
 		SiblingBar(QWidget *parent=NULL);
 		void addControlWidgets(QWidget *widget);
 		void setChildrenContainer(class ControlContainer* container);
+		void mouseReleaseEvent(class QMouseEvent *event);
 
 	private slots:
 		void updateFoundControls();
