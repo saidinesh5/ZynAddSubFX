@@ -30,6 +30,8 @@ Part::Part(Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
 	:partVolume(&container, "Volume", "Part Volume", 0, 40, 30),
 	container(NULL, "Part")
 {
+
+	partVolume.setDb2rapConversion(true);
 	//container.registerUser(this);
     microtonal=microtonal_;    
     fft=fft_;

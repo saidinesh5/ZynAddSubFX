@@ -12,8 +12,8 @@ InstrumentContainer::InstrumentContainer(class ControlContainer *parent, std::st
 
 std::string InstrumentContainer::createControlContainer(int type)
 {
-	nextFakeIndex++;
 	Part* fakeCreatedPart = m_master->part[nextFakeIndex];
+	nextFakeIndex++;
 
 	//create a child name
 	std::stringstream ss;
