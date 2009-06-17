@@ -1,6 +1,7 @@
 #include "FloatControl.h"
 #include "../globals.h"
 #include "math.h"
+#include "Event.h"
 
 using std::string;
 
@@ -39,6 +40,7 @@ char FloatControl::getValue() const
 
 void FloatControl::setValue(char nval)
 {
+    Event::push(new HelloWorldEvent());
 	m_value = toFloat(nval);
 }
 

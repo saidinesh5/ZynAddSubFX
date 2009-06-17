@@ -28,6 +28,7 @@
 #include <sys/types.h>
 
 #include <unistd.h>
+#include "../Controls/Event.h"
 
 Master::Master()
 :
@@ -41,6 +42,8 @@ Master::Master()
     swaplr=0;
     
     pthread_mutex_init(&mutex,NULL);
+    Event::initializeMutex();
+
     fft=new FFTwrapper(OSCIL_SIZE);
 
     tmpmixl=new REALTYPE[SOUND_BUFFER_SIZE];
@@ -434,6 +437,12 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr){
 
     if (HDDRecorder.recording()) HDDRecorder.recordbuffer(outl,outr);
     dump.inctick();
+
+    Event *event = NULL;
+    while (event = Event::pop()) {
+        event->exec();
+        delete event;
+    }
 };
 
 void Master::GetAudioOutSamples(int nsamples,int samplerate,REALTYPE *outl,REALTYPE *outr){
@@ -489,6 +498,7 @@ void Master::GetAudioOutSamples(int nsamples,int samplerate,REALTYPE *outl,REALT
 	    };
 	};
     };
+
 };
 
 

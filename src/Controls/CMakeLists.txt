@@ -1,5 +1,6 @@
 set(zynaddsubfxgui_controls_SRCS
 	Control.C
+    Event.cpp
 	ControlContainer.cpp
 	InstrumentContainer.cpp
 	FloatControl.cpp
