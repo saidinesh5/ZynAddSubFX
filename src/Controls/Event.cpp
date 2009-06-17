@@ -26,7 +26,6 @@ Event* Event::pop()
 
 void Event::push(Event* event)
 {
-    std::cout << "Pushing " << event << std::endl;
     pthread_mutex_lock(&mutex);
     events.push_back(event);
     pthread_mutex_unlock(&mutex);

@@ -38,10 +38,25 @@ char FloatControl::getValue() const
 	return toChar(m_value);
 }
 
+class SetFloatEvent : public Event
+{
+    private:
+        float* m_source, m_value;
+    public:
+        SetFloatEvent(float* source, float value)
+            : m_source(source), m_value(value)
+        {}
+        void exec()
+        {
+            *m_source = m_value;
+            std::cout << "set " << m_source << " to " << m_value << std::endl;
+        }
+};
+
 void FloatControl::setValue(char nval)
 {
-    Event::push(new HelloWorldEvent());
-	m_value = toFloat(nval);
+    Event::push(new SetFloatEvent(&m_value, toFloat(nval)));
+	//m_value = toFloat(nval);
 }
 
 float FloatControl::getFloat() const
