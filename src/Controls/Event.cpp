@@ -31,10 +31,12 @@ void Event::handleEvents()
         bool finished = event->exec();
 
         if (event->isWaitingForSignal) {
-
             pthread_mutex_lock(&mutex);
             pthread_cond_broadcast(&event->eventExecuted);
             pthread_mutex_unlock(&mutex);
+            continue; //NOTE: this implies that the event is _not_ deleted
+            //automatically if isWaitingForSignal (iow pushAndWait) is used.
+            //whether this is good practice or not we will have to decide
         }
         if (finished) {
             delete event;
@@ -50,6 +52,7 @@ void Event::handleEvents()
             }
             it++;
         }
+        delete event;
     }
 }
 
