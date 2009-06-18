@@ -1,14 +1,17 @@
 #include "Event.h"
+#include <pthread.h>
 
 using std::list;
 
-bool Event::mutex_inited = false;
 list<Event*> Event::events;
 list<EventUser*> Event::users;
 pthread_mutex_t Event::mutex;
 
 Event::Event()
+      : isWaitingForSignal(false)
 {
+    //eventExecuted = PTHREAD_COND_INITIALIZER;
+    pthread_cond_init(&eventExecuted, NULL);
 }
 
 void Event::registerUser(EventUser *user)
@@ -27,6 +30,12 @@ void Event::handleEvents()
         //deleted.
         bool finished = event->exec();
 
+        if (event->isWaitingForSignal) {
+
+            pthread_mutex_lock(&mutex);
+            pthread_cond_broadcast(&event->eventExecuted);
+            pthread_mutex_unlock(&mutex);
+        }
         if (finished) {
             delete event;
             continue;
@@ -39,6 +48,7 @@ void Event::handleEvents()
                 finished = true;
                 break;
             }
+            it++;
         }
     }
 }
@@ -69,11 +79,26 @@ void Event::push(Event* event)
     pthread_mutex_unlock(&mutex);
 }
 
+bool Event::pushAndWait(Event* event)
+{
+    pthread_mutex_lock(&mutex);
+
+    event->isWaitingForSignal = true;
+    events.push_back(event);
+
+    pthread_cond_wait(&event->eventExecuted, &mutex);
+    //execution now finished
+
+    pthread_mutex_unlock(&mutex);
+}
+
 void Event::initializeMutex()
 {
+    static bool mutex_inited = false;
     if (!mutex_inited) {
         pthread_mutex_init(&mutex,NULL);
         mutex_inited = true;
     }
 }
+
 // vim: sw=4 sts=4 et tw=100

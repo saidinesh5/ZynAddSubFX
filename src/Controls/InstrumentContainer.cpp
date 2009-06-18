@@ -3,11 +3,10 @@
 
 class InstrumentAdd : public ChildAdded
 {
-    private:
+    public:
         Part* m_fakePart;
         std::string m_newName;
 
-    public:
         InstrumentAdd(Part* fakeCreatedPart, std::string newName, class ControlContainer *parentContainer, int type)
             : ChildAdded(parentContainer, type)
               , m_fakePart(fakeCreatedPart)
@@ -49,7 +48,8 @@ std::string InstrumentContainer::createControlContainer(int type)
     ss << nextChildIndex;
     nextChildIndex++;
 
-    Event::push(new InstrumentAdd(fakeCreatedPart, ss.str(), this, type));
+    InstrumentAdd* add = new InstrumentAdd(fakeCreatedPart, ss.str(), this, type);
+    Event::pushAndWait(add);
 
-    return fakeCreatedPart->container.getAbsoluteId();
+    return add->m_newName;
 }
