@@ -174,3 +174,16 @@ void ControlContainer::rename(std::string newName)
 	else
 		m_absoluteId = m_id;
 }
+
+ChildAdded::ChildAdded(class ControlContainer *parentContainer, int type)
+    : m_parentContainer(parentContainer),
+    m_type(type)
+{
+
+}
+
+std::string ChildAdded::getChildId()
+{
+    return m_childId;
+}
+

@@ -76,5 +76,4 @@ void Event::initializeMutex()
         mutex_inited = true;
     }
 }
-
 // vim: sw=4 sts=4 et tw=100

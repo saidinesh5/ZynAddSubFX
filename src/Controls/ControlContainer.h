@@ -2,11 +2,24 @@
 #define _CONTROLCONTAINER_H_
 
 #include "Control.h"
+#include "Event.h"
 #include <vector>
 #include <string>
 
 typedef std::vector<class Control*>::const_iterator ControlIterator;
 typedef std::vector<class ControlContainer*>::const_iterator ContainerIterator;
+
+class ChildAdded : public Event
+{
+    public:
+        ChildAdded(class ControlContainer *parentContainer, int type);
+        std::string getChildId();
+
+    protected:
+        class ControlContainer* m_parentContainer;
+        int m_type;
+        std::string m_childId;
+};
 
 class ControlContainer
 {

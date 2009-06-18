@@ -8,7 +8,7 @@
 class EventUser
 {
     public:
-        virtual bool eventFilter(class Event *event);
+        virtual bool eventFilter(class Event *event) = 0;
 };
 
 class Event

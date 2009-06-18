@@ -1,6 +1,34 @@
 #include "InstrumentContainer.h"
 #include "../Misc/Master.h"
 
+class InstrumentAdd : public ChildAdded
+{
+    private:
+        Part* m_fakePart;
+        std::string m_newName;
+
+    public:
+        InstrumentAdd(Part* fakeCreatedPart, std::string newName, class ControlContainer *parentContainer, int type)
+            : ChildAdded(parentContainer, type)
+              , m_fakePart(fakeCreatedPart)
+              , m_newName(newName)
+        {
+
+        }
+
+        virtual bool exec()
+        {
+            m_fakePart->container.moveToParent(m_parentContainer);
+            m_fakePart->container.rename(m_newName);
+
+            m_childId = m_fakePart->container.getAbsoluteId();
+            return false; //false, because we want this event to be bounced back to anyone interested in it
+
+        }
+    private:
+        class Master* m_master;
+};
+
 InstrumentContainer::InstrumentContainer(class ControlContainer *parent, std::string id, Master* master)
 	: ControlContainer(parent, id),
 	m_master(master),
@@ -12,17 +40,16 @@ InstrumentContainer::InstrumentContainer(class ControlContainer *parent, std::st
 
 std::string InstrumentContainer::createControlContainer(int type)
 {
-	Part* fakeCreatedPart = m_master->part[nextFakeIndex];
-	nextFakeIndex++;
+    Part* fakeCreatedPart = m_master->part[nextFakeIndex];
+    nextFakeIndex++;
 
-	//create a child name
-	std::stringstream ss;
-	ss << fakeCreatedPart->container.getId();
-	ss << nextChildIndex;
-	nextChildIndex++;
+    //create a child name
+    std::stringstream ss;
+    ss << fakeCreatedPart->container.getId();
+    ss << nextChildIndex;
+    nextChildIndex++;
 
-	fakeCreatedPart->container.moveToParent(this);
-	fakeCreatedPart->container.rename(ss.str());
+    Event::push(new InstrumentAdd(fakeCreatedPart, ss.str(), this, type));
 
-	return fakeCreatedPart->container.getAbsoluteId();
+    return fakeCreatedPart->container.getAbsoluteId();
 }
