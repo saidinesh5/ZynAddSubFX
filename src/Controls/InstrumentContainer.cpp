@@ -21,7 +21,7 @@ class InstrumentAdd : public ChildAdded
             m_fakePart->container.rename(m_newName);
 
             m_childId = m_fakePart->container.getAbsoluteId();
-            return false; //false, because we want this event to be bounced back to anyone interested in it
+            return false; //false, because we want to delete this event ourselves
 
         }
     private:
@@ -51,5 +51,5 @@ std::string InstrumentContainer::createControlContainer(int type)
     InstrumentAdd* add = new InstrumentAdd(fakeCreatedPart, ss.str(), this, type);
     Event::pushAndWait(add);
 
-    return add->m_newName;
+    return add->getChildId();
 }
