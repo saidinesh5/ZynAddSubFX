@@ -3,6 +3,7 @@ set(zynaddsubfxguilib_SRCS
 	dial.cpp
 	siblingbar.cpp
 	controlhelper.cpp
+    eventhelper.cpp
 	bankui.C
 	masterui.C
 	addnoteui.C
@@ -13,6 +14,7 @@ set(zynaddsubfxguilib_SRCS
 
 SET( zynaddsubfxguilib_MOC_HDRS
 	masterui.h
+    eventhelper.h
 	bankui.h
 	addnoteui.h
 	unitbox.h

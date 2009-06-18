@@ -2,6 +2,7 @@
 #include "bankui.h"
 #include "addnoteui.h"
 #include "../Controls/ControlContainer.h"
+#include "eventhelper.h"
 #include <QtDebug>
 
 MasterUI::MasterUI(Master *master_,int *exitprogram_)
@@ -19,6 +20,7 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
 	qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createControlContainer(0));
 
 	setupUi(this);
+    EventHelper::getInstance();
 
 	partBar->addControlWidgets(partFrame);
 	partBar->setChildrenContainer(ControlContainer::getRoot()->findContainer("Master.Parts"));

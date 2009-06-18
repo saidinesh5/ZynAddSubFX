@@ -187,3 +187,7 @@ std::string ChildAdded::getChildId()
     return m_childId;
 }
 
+ControlContainer* ChildAdded::getParentContainer()
+{
+    return m_parentContainer;
+}

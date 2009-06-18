@@ -14,6 +14,7 @@ class ChildAdded : public Event
     public:
         ChildAdded(class ControlContainer *parentContainer, int type);
         std::string getChildId();
+        class ControlContainer* getParentContainer();
 
     protected:
         class ControlContainer* m_parentContainer;

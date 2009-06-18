@@ -50,7 +50,7 @@ class SetFloatEvent : public Event
         {
             *m_source = m_value;
             std::cout << "set " << m_source << " to " << m_value << std::endl;
-            return true;
+            return false;
         }
 };
 

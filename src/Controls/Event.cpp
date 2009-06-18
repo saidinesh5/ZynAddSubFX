@@ -2,6 +2,7 @@
 #include <pthread.h>
 
 using std::list;
+using std::cout;
 
 list<Event*> Event::events;
 list<EventUser*> Event::users;
@@ -34,9 +35,6 @@ void Event::handleEvents()
             pthread_mutex_lock(&mutex);
             pthread_cond_broadcast(&event->eventExecuted);
             pthread_mutex_unlock(&mutex);
-            continue; //NOTE: this implies that the event is _not_ deleted
-            //automatically if isWaitingForSignal (iow pushAndWait) is used.
-            //whether this is good practice or not we will have to decide
         }
         if (finished) {
             delete event;
@@ -52,7 +50,9 @@ void Event::handleEvents()
             }
             it++;
         }
-        delete event;
+
+        if (!event->isWaitingForSignal)
+            delete event;
     }
 }
 
