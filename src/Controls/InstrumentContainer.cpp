@@ -51,5 +51,8 @@ std::string InstrumentContainer::createControlContainer(int type)
     InstrumentAdd* add = new InstrumentAdd(fakeCreatedPart, ss.str(), this, type);
     Event::pushAndWait(add);
 
-    return add->getChildId();
+    std::string childId = add->getChildId();
+    delete add;
+
+    return childId;
 }
