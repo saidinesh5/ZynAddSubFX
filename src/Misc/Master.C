@@ -36,13 +36,14 @@ Master::Master()
 	instrumentContainer(ControlContainer::getRoot(), "Parts", this)
 {
 
-	masterVolume.registerUser(this);
 	masterVolume.setDb2rapConversion(true);
 
     swaplr=0;
     
     pthread_mutex_init(&mutex,NULL);
+
     Event::initializeMutex();
+    Event::registerUser(this);
 
     fft=new FFTwrapper(OSCIL_SIZE);
 
@@ -82,6 +83,11 @@ Master::Master()
     
     defaults();
 };
+
+bool Master::eventFilter(Event *event)
+{
+    return false;
+}
 
 void Master::defaults(){
 	masterVolume.setValue(80);
@@ -438,11 +444,7 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr){
     if (HDDRecorder.recording()) HDDRecorder.recordbuffer(outl,outr);
     dump.inctick();
 
-    Event *event = NULL;
-    while (event = Event::pop()) {
-        event->exec();
-        delete event;
-    }
+    Event::handleEvents();
 };
 
 void Master::GetAudioOutSamples(int nsamples,int samplerate,REALTYPE *outl,REALTYPE *outr){
@@ -754,10 +756,4 @@ void Master::getfromXML(XMLwrapper *xml){
 	
 	
 };
-
-void Master::controlChanged(Control *control)
-{
-	//if (control == &masterVolume)
-		//masterVolume.setValue(masterVolume.getValue());
-}
 

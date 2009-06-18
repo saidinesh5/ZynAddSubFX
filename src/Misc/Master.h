@@ -35,13 +35,13 @@
 #include "../Seq/Sequencer.h"
 #include "XMLwrapper.h"
 #include "../Controls/CharControl.h"
-#include "../Controls/ControlUser.h"
+#include "../Controls/Event.h"
 #include "../Controls/InstrumentContainer.h"
 
 extern Dump dump;
 /** It sends Midi Messages to Parts, receives samples from parts,
  *  process them with system/insertion effects and mix them */
-class Master : public ControlUser{
+class Master : public EventUser{
     public:
         /** Constructor*/
 	Master();
@@ -57,7 +57,7 @@ class Master : public ControlUser{
 
 	void defaults();
 
-	virtual void controlChanged(Control* control);
+    bool eventFilter(Event *event);
 
 	/**loads all settings from a XML file
 	 * @return 0 for ok or -1 if there is an error*/

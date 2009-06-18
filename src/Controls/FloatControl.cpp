@@ -46,10 +46,11 @@ class SetFloatEvent : public Event
         SetFloatEvent(float* source, float value)
             : m_source(source), m_value(value)
         {}
-        void exec()
+        bool exec()
         {
             *m_source = m_value;
             std::cout << "set " << m_source << " to " << m_value << std::endl;
+            return true;
         }
 };
 
