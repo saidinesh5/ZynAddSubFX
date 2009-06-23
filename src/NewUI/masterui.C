@@ -28,6 +28,11 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
     ControlContainer::getRoot()->printTree();
 }
 
+void MasterUI::refresh_master_ui()
+{
+    //TODO: do something here! right now this is only here because it is called from main.C
+}
+
 void MasterUI::on_partSelector_valueChanged(int value)
 {
     //npart = value;

@@ -11,6 +11,7 @@ class MasterUI : public QMainWindow, Ui::MainWindow
 
 public:
     MasterUI(Master *master_,int *exitprogram_);
+    void refresh_master_ui();
 
 private slots:
     void on_action_Quit_triggered();

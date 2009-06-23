@@ -1,5 +1,5 @@
 
-set(zynaddsubfxguilib_SRCS
+set(zynaddsubfx_gui_SRCS
 	dial.cpp
 	siblingbar.cpp
 	controlhelper.cpp
@@ -12,7 +12,7 @@ set(zynaddsubfxguilib_SRCS
 	envelopebox.C
 	)
 
-SET( zynaddsubfxguilib_MOC_HDRS
+SET( zynaddsubfx_gui_MOC_HDRS
 	masterui.h
     eventhelper.h
 	bankui.h
@@ -23,19 +23,19 @@ SET( zynaddsubfxguilib_MOC_HDRS
 	siblingbar.h
 )
 
-SET( zynaddsubfxguilib_UIS
+SET( zynaddsubfx_gui_UIS
 	masterUI.ui
 	addnoteui.ui
 	lfobox.ui
 	envelopebox.ui
 )
 
-qt4_wrap_ui(zynaddsubfxguilib_UIS_HDRS ${zynaddsubfxguilib_UIS} )
-qt4_automoc(${zynaddsubfxguilib_SRCS})
+qt4_wrap_ui(zynaddsubfx_gui_UIS_HDRS ${zynaddsubfx_gui_UIS} )
+qt4_automoc(${zynaddsubfx_gui_SRCS})
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-add_library(zynaddsubfxguilib STATIC
-	${zynaddsubfxguilib_SRCS}
-	${zynaddsubfxguilib_UIS}
+add_library(zynaddsubfx_gui STATIC
+	${zynaddsubfx_gui_SRCS}
+	${zynaddsubfx_gui_UIS}
 	)
-target_link_libraries(zynaddsubfxguilib)
+target_link_libraries(zynaddsubfx_gui)
