@@ -6,20 +6,20 @@
 
 class SiblingBar : public QTabBar
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
-		SiblingBar(QWidget *parent=NULL);
-		void addControlWidgets(QWidget *widget);
-		void setChildrenContainer(class ControlContainer* container);
-		void mouseReleaseEvent(class QMouseEvent *event);
+public:
+    SiblingBar(QWidget *parent=NULL);
+    void addControlWidgets(QWidget *widget);
+    void setChildrenContainer(class ControlContainer* container);
+    void mouseReleaseEvent(class QMouseEvent *event);
 
-	private slots:
-		void updateFoundControls();
+private slots:
+    void updateFoundControls();
 
-	private:
-		QSet<class ControlHelper*> m_foundControls;
-		class ControlContainer* m_childContainer;
+private:
+    QSet<class ControlHelper*> m_foundControls;
+    class ControlContainer* m_childContainer;
 
 };
 

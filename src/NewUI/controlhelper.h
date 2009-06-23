@@ -7,25 +7,25 @@
 
 class ControlHelper : public QObject, public ControlUser
 {
-	Q_OBJECT
-	public:
-		ControlHelper(QObject *parent);
-		void controlChanged(Control* control);
-		bool eventFilter ( QObject * watched, QEvent * event );
-		QString getControlId();
-		void setControl(QString absoluteId);
-		QString relativeControlId() const;
+    Q_OBJECT
+public:
+    ControlHelper(QObject *parent);
+    void controlChanged(Control* control);
+    bool eventFilter ( QObject * watched, QEvent * event );
+    QString getControlId();
+    void setControl(QString absoluteId);
+    QString relativeControlId() const;
 
-	public slots:
-		void setValue(char value);
-		void setValue(int value);
+public slots:
+    void setValue(char value);
+    void setValue(int value);
 
-	signals:
-		void valueChanged(int value);
+signals:
+    void valueChanged(int value);
 
-	private:
-		Control *m_control;
-		QString m_relativeControlId;
+private:
+    Control *m_control;
+    QString m_relativeControlId;
 };
 
 #endif /* ifndef _CONTROLHELPER_H_ */

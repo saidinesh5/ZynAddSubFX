@@ -7,11 +7,11 @@
 
 class EnvelopeBox : public UnitBox, Ui::EnvelopeBox
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
-		EnvelopeBox(QWidget *parent=NULL);
-		void setSources(EnvelopeParams* params);
+public:
+    EnvelopeBox(QWidget *parent=NULL);
+    void setSources(EnvelopeParams* params);
 
 };
 

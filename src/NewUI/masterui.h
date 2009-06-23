@@ -7,20 +7,20 @@
 
 class MasterUI : public QMainWindow, Ui::MainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
-		MasterUI(Master *master_,int *exitprogram_);
+public:
+    MasterUI(Master *master_,int *exitprogram_);
 
-	private slots:
-		void on_action_Quit_triggered();
-		void on_partSelector_valueChanged(int value);
-	private:
+private slots:
+    void on_action_Quit_triggered();
+    void on_partSelector_valueChanged(int value);
+private:
 
-		int *Pexitprogram;
-		Master *master;
+    int *Pexitprogram;
+    Master *master;
 
-		class BankUI *m_bankUI;
+    class BankUI *m_bankUI;
 };
 
 

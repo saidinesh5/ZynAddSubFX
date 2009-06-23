@@ -9,7 +9,7 @@ list<EventUser*> Event::users;
 pthread_mutex_t Event::mutex;
 
 Event::Event()
-      : isWaitingForSignal(false)
+        : isWaitingForSignal(false)
 {
     //eventExecuted = PTHREAD_COND_INITIALIZER;
     pthread_cond_init(&eventExecuted, NULL);

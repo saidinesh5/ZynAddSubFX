@@ -6,24 +6,24 @@
 
 class BankUI : public QDialog
 {
-	Q_OBJECT
-	public:
-		BankUI(QWidget *parent, Master *master, int *npart);
-		virtual ~BankUI();
+    Q_OBJECT
+public:
+    BankUI(QWidget *parent, Master *master, int *npart);
+    virtual ~BankUI();
 
 
-	private slots:
-		void slotCurrentCellChanged(int, int, int row, int column);
-		void refreshCurrentBank();
+private slots:
+    void slotCurrentCellChanged(int, int, int row, int column);
+    void refreshCurrentBank();
 
-	signals:
-		void changedInstrument();
+signals:
+    void changedInstrument();
 
-	private:
-		int *npart;
-		Master *master;
-		Bank *currentBank;
-		class QTableWidget *table;
+private:
+    int *npart;
+    Master *master;
+    Bank *currentBank;
+    class QTableWidget *table;
 
 };
 

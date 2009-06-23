@@ -5,10 +5,10 @@
 
 class UnitBox : public QGroupBox
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
-		UnitBox(QWidget *parent=NULL);
+public:
+    UnitBox(QWidget *parent=NULL);
 
 };
 

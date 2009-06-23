@@ -7,22 +7,22 @@
 
 class Dial : public QDial
 {
-	Q_OBJECT
-	public:
-		Dial(QWidget *parent);
-		void setControl(Control *control);
+    Q_OBJECT
+public:
+    Dial(QWidget *parent);
+    void setControl(Control *control);
 
-	private slots:
-		void slotUpdateSource();
+private slots:
+    void slotUpdateSource();
 
-	private:
-		void mousePressEvent(class QMouseEvent* event);
-		void mouseReleaseEvent(class QMouseEvent* event);
-		void mouseMoveEvent(class QMouseEvent* event);
-		void paintEvent(class QPaintEvent *event);
+private:
+    void mousePressEvent(class QMouseEvent* event);
+    void mouseReleaseEvent(class QMouseEvent* event);
+    void mouseMoveEvent(class QMouseEvent* event);
+    void paintEvent(class QPaintEvent *event);
 
-		int m_originalMouseY;
-		int m_originalValueOnPress;
+    int m_originalMouseY;
+    int m_originalValueOnPress;
 
 };
 

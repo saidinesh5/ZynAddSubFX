@@ -8,16 +8,16 @@ class EventHelper : public QObject, public EventUser
 {
     Q_OBJECT
 
-    public:
-        EventHelper(QObject *parent);
-        bool eventFilter(Event *event);
-        static class EventHelper* getInstance();
+public:
+    EventHelper(QObject *parent);
+    bool eventFilter(Event *event);
+    static class EventHelper* getInstance();
 
-    signals:
-        //void childAdded
+signals:
+    //void childAdded
 
-    private:
-        static class EventHelper *theInstance;
+private:
+    static class EventHelper *theInstance;
 
 };
 

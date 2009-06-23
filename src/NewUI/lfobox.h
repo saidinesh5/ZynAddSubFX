@@ -7,11 +7,11 @@
 
 class LFOBox : public UnitBox, Ui::LFOBox
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
-		LFOBox(QWidget *parent=NULL);
-		void setSources(LFOParams* params);
+public:
+    LFOBox(QWidget *parent=NULL);
+    void setSources(LFOParams* params);
 
 };
 

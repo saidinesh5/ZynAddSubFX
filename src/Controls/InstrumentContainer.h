@@ -7,18 +7,18 @@
 
 class InstrumentContainer : public ControlContainer
 {
-	public:
-		InstrumentContainer(class ControlContainer* parent, std::string id, class Master *master);
-		virtual std::string createControlContainer(int type);
+public:
+    InstrumentContainer(class ControlContainer* parent, std::string id, class Master *master);
+    virtual std::string createControlContainer(int type);
 
-	private:
-		class Master *m_master;
+private:
+    class Master *m_master;
 
-		int nextChildIndex;
+    int nextChildIndex;
 
-		//TODO* this should be replaced with a dynamic mechanism
-		std::vector<int> allocatedInstruments;
-		int nextFakeIndex;
+    //TODO* this should be replaced with a dynamic mechanism
+    std::vector<int> allocatedInstruments;
+    int nextFakeIndex;
 };
 
 #endif /* ifndef _INSTRUMENTCONTAINER_H_ */
