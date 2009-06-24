@@ -1,11 +1,11 @@
 set(zynaddsubfx_controls_SRCS
-	Control.C
+	Control.cpp
     Event.cpp
 	ControlContainer.cpp
 	InstrumentContainer.cpp
 	FloatControl.cpp
 	CharControl.cpp
-	DelayCtl.C
+	DelayCtl.cpp
 )
 
 add_library(zynaddsubfx_controls STATIC

@@ -6,7 +6,6 @@ SET (FFTW_VERSION 3 CACHE STRING "Version number of FFTW")
 SET (OutputModule jack CACHE STRING "Output module, either alsa, jack or portaudio")
 SET (GuiModule qt CACHE STRING "GUI module, either fltk, qt or off")
 
-
 # Now, handle the incoming settings and set define flags/variables based
 # on this
 
@@ -86,6 +85,11 @@ if(FltkGui) # Check for FLTK
 
     message(STATUS "Will build fltk gui")
 
+	include_directories(
+			${CMAKE_CURRENT_SOURCE_DIR}/UI
+			${CMAKE_CURRENT_BINARY_DIR}/UI
+			)
+
 	add_subdirectory(UI)
 endif()
 
@@ -129,7 +133,7 @@ add_subdirectory(DSP)
 add_subdirectory(Samples)
 
 set(zynaddsubfx_SRCS
-	main.C
+	main.cpp
 	)
 
 add_executable(zynaddsubfx 

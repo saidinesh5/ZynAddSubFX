@@ -4,12 +4,12 @@ set(zynaddsubfx_gui_SRCS
 	siblingbar.cpp
 	controlhelper.cpp
     eventhelper.cpp
-	bankui.C
-	masterui.C
-	addnoteui.C
-	unitbox.C
-	lfobox.C
-	envelopebox.C
+	bankui.cpp
+	masterui.cpp
+	addnoteui.cpp
+	unitbox.cpp
+	lfobox.cpp
+	envelopebox.cpp
 	)
 
 SET( zynaddsubfx_gui_MOC_HDRS
