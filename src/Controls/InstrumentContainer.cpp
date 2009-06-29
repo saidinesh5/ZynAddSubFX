@@ -38,6 +38,7 @@ InstrumentContainer::InstrumentContainer(class Node *parent, std::string id, Mas
 
 std::string InstrumentContainer::doCreateChild(int type)
 {
+
     Part* fakeCreatedPart = m_master->part[nextFakeIndex];
     nextFakeIndex++;
 
@@ -46,6 +47,7 @@ std::string InstrumentContainer::doCreateChild(int type)
     ss << fakeCreatedPart->container.getId();
     ss << nextChildIndex;
     nextChildIndex++;
+
 
     InstrumentAdd* add = new InstrumentAdd(fakeCreatedPart, ss.str(), this, type);
     Event::pushAndWait(add);

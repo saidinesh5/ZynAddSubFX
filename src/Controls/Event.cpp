@@ -30,9 +30,11 @@ void Event::handleEvents()
         //first, run the events exec function. if it returns true then this event is done and can be
         //deleted.
         bool finished = event->exec();
+        bool wasWaitingForSignal = false;
 
         if (event->isWaitingForSignal) {
             pthread_mutex_lock(&mutex);
+            wasWaitingForSignal = true;
             pthread_cond_broadcast(&event->eventExecuted);
             pthread_mutex_unlock(&mutex);
         }
@@ -41,18 +43,21 @@ void Event::handleEvents()
             continue;
         }
 
-        list<EventUser*>::const_iterator it = users.begin();
-        //now, broadcast the event to all eventusers
-        while (it != users.end()) {
-            if ((*it)->eventFilter(event)) {
-                finished = true;
-                break;
-            }
-            it++;
-        }
+        if (!wasWaitingForSignal) {
 
-        if (!event->isWaitingForSignal)
+            list<EventUser*>::const_iterator it = users.begin();
+            //now, broadcast the event to all eventusers
+            while (it != users.end()) {
+                if ((*it)->eventFilter(event)) {
+                    finished = true;
+                    break;
+                }
+                it++;
+            }
+
+            std::cout << event << "Deleting event\n";
             delete event;
+        }
     }
 }
 
@@ -87,6 +92,7 @@ bool Event::pushAndWait(Event* event)
     pthread_mutex_lock(&mutex);
 
     event->isWaitingForSignal = true;
+    std::cout << event << "set to true";
     events.push_back(event);
 
     pthread_cond_wait(&event->eventExecuted, &mutex);
