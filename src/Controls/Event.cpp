@@ -43,17 +43,18 @@ void Event::handleEvents()
             continue;
         }
 
-        if (!wasWaitingForSignal) {
-
-            list<EventUser*>::const_iterator it = users.begin();
-            //now, broadcast the event to all eventusers
-            while (it != users.end()) {
-                if ((*it)->eventFilter(event)) {
-                    finished = true;
-                    break;
-                }
-                it++;
+        list<EventUser*>::const_iterator it = users.begin();
+        //now, broadcast the event to all eventusers
+        while (it != users.end()) {
+            if ((*it)->eventFilter(event)) {
+                finished = true;
+                break;
             }
+            it++;
+        }
+
+
+        if (!wasWaitingForSignal) {
 
             std::cout << event << "Deleting event\n";
             delete event;
