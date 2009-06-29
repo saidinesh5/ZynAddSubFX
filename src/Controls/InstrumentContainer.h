@@ -1,17 +1,17 @@
 #ifndef _INSTRUMENTCONTAINER_H_
 #define _INSTRUMENTCONTAINER_H_
 
-#include "ControlContainer.h"
+#include "Node.h"
 #include <string>
 #include <vector>
 
-class InstrumentContainer : public ControlContainer
+class InstrumentContainer : public Node
 {
 public:
-    InstrumentContainer(class ControlContainer* parent, std::string id, class Master *master);
-    virtual std::string createControlContainer(int type);
+    InstrumentContainer(class Node* parent, std::string id, class Master *master);
 
 private:
+    virtual std::string doCreateChild(int type);
     class Master *m_master;
 
     int nextChildIndex;

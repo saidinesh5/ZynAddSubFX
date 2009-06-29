@@ -5,7 +5,7 @@
 
 using std::string;
 
-FloatControl::FloatControl(ControlContainer *parent,string id, string description, float min, float max, float defaultValue) :
+FloatControl::FloatControl(Node *parent,string id, string description, float min, float max, float defaultValue) :
         Control(parent, id, description, 0),
         m_max(max),
         m_min(min),

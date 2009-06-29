@@ -32,8 +32,8 @@
 
 Master::Master()
         :
-        masterVolume(ControlContainer::getRoot(), "Volume", "Master Volume", 0, 50, 30),
-        instrumentContainer(ControlContainer::getRoot(), "Parts", this)
+        masterVolume(Node::getRoot(), "Volume", "Master Volume", 0, 50, 30),
+        instrumentContainer(Node::getRoot(), "Parts", this)
 {
 
     masterVolume.setDb2rapConversion(true);
@@ -102,7 +102,7 @@ void Master::defaults()
 
     //create an instrument
     //instrumentContainer.clear();
-    //instrumentContainer.createControlContainer(0);
+    //instrumentContainer.createNode(0);
 
     partonoff(0,1);//enable the first part
 

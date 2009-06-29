@@ -3,7 +3,7 @@
 
 using std::string;
 
-CharControl::CharControl(ControlContainer *parent, string id, string description, char min, char max, char defaultValue) :
+CharControl::CharControl(Node *parent, string id, string description, char min, char max, char defaultValue) :
         Control(parent,id, description, 0),
         m_max(max),
         m_min(min),

@@ -1,6 +1,6 @@
 #include "eventhelper.h"
 #include <QEvent>
-#include "../Controls/ControlContainer.h"
+#include "../Controls/Node.h"
 #include <QtDebug>
 
 EventHelper* EventHelper::theInstance = NULL;

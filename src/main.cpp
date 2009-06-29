@@ -340,7 +340,9 @@ void initprogram()
     Midi=new NULLMidiIn();
 #endif
 #ifndef DISABLE_GUI
+#ifdef FLTK_GUI
     ui=new MasterUI(master,&Pexitprogram);
+#endif //FLTK_GUI
 #endif
 };
 

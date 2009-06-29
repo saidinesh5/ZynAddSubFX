@@ -1,7 +1,7 @@
 #include "masterui.h"
 #include "bankui.h"
 #include "addnoteui.h"
-#include "../Controls/ControlContainer.h"
+#include "../Controls/Node.h"
 #include "eventhelper.h"
 #include <QtDebug>
 
@@ -13,19 +13,19 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
 
 {
     qDebug() << "Trying to find control Master.Volume";
-    qDebug() << "Returned " << ControlContainer::getRoot()->findControl("Master.Volume");
+    //qDebug() << "Returned " << Node::getRoot()->findControl("Master.Volume");
 
-    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createControlContainer(0));
-    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createControlContainer(0));
-    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createControlContainer(0));
+    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createChild(0));
+    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createChild(0));
+    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createChild(0));
 
     setupUi(this);
     EventHelper::getInstance();
 
     partBar->addControlWidgets(partFrame);
-    partBar->setChildrenContainer(ControlContainer::getRoot()->findContainer("Master.Parts"));
+    partBar->setNode(Node::find("Master.Parts"));
 
-    ControlContainer::getRoot()->printTree();
+    Node::getRoot()->printTree();
 }
 
 void MasterUI::refresh_master_ui()

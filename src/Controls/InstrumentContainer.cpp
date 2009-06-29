@@ -1,5 +1,6 @@
 #include "InstrumentContainer.h"
 #include "../Misc/Master.h"
+#include "EventClasses.h"
 
 class InstrumentAdd : public ChildAdded
 {
@@ -7,7 +8,7 @@ public:
     Part* m_fakePart;
     std::string m_newName;
 
-    InstrumentAdd(Part* fakeCreatedPart, std::string newName, class ControlContainer *parentContainer, int type)
+    InstrumentAdd(Part* fakeCreatedPart, std::string newName, class Node *parentContainer, int type)
             : ChildAdded(parentContainer, type)
             , m_fakePart(fakeCreatedPart)
             , m_newName(newName) {
@@ -26,8 +27,8 @@ private:
     class Master* m_master;
 };
 
-InstrumentContainer::InstrumentContainer(class ControlContainer *parent, std::string id, Master* master)
-        : ControlContainer(parent, id),
+InstrumentContainer::InstrumentContainer(class Node *parent, std::string id, Master* master)
+        : Node(parent, id),
         m_master(master),
         nextChildIndex(0),
         nextFakeIndex(0)
@@ -35,7 +36,7 @@ InstrumentContainer::InstrumentContainer(class ControlContainer *parent, std::st
     m_types.push_back("Part");
 }
 
-std::string InstrumentContainer::createControlContainer(int type)
+std::string InstrumentContainer::doCreateChild(int type)
 {
     Part* fakeCreatedPart = m_master->part[nextFakeIndex];
     nextFakeIndex++;

@@ -1,7 +1,8 @@
 set(zynaddsubfx_controls_SRCS
 	Control.cpp
     Event.cpp
-	ControlContainer.cpp
+    Node.cpp
+    #ControlContainer.cpp
 	InstrumentContainer.cpp
 	FloatControl.cpp
 	CharControl.cpp

@@ -7,7 +7,7 @@
 class FloatControl : public Control
 {
 public:
-    FloatControl(ControlContainer *parent, std::string id, std::string description, float min, float max, float defaultValue);
+    FloatControl(Node *parent, std::string id, std::string description, float min, float max, float defaultValue);
 
     virtual std::string getString()const;
 

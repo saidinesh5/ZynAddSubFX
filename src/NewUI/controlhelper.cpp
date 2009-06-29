@@ -35,7 +35,8 @@ bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
 
 void ControlHelper::setControl(QString absoluteId)
 {
-    m_control = ControlContainer::find(absoluteId.toStdString());
+    Node *node = Node::find(absoluteId.toStdString());
+    m_control = dynamic_cast<Control*>(node);
     if (m_control) {
         m_control->registerUser(this);
         qDebug() << "Assigning " << this << " to " << absoluteId;

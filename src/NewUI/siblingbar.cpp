@@ -1,6 +1,6 @@
 #include "siblingbar.h"
 #include <QEvent>
-#include "../Controls/ControlContainer.h"
+#include "../Controls/Node.h"
 #include "controlhelper.h"
 #include <QSet>
 #include <QtDebug>
@@ -30,15 +30,15 @@ void SiblingBar::addControlWidgets(QWidget *widget)
     }
 }
 
-void SiblingBar::setChildrenContainer(ControlContainer* container)
+void SiblingBar::setNode(Node* container)
 {
     if (!container) {
         qDebug() << "NULL-container, returning";
         return;
     }
 
-    ContainerIterator it = container->getContainers().begin();
-    while (it != container->getContainers().end()) {
+    NodeIterator it = container->getChildren().begin();
+    while (it != container->getChildren().end()) {
         addTab(QString::fromStdString((*it)->getId()));
         it++;
     }
@@ -52,7 +52,7 @@ void SiblingBar::updateFoundControls()
 
     if (!m_childContainer) return;
 
-    QString childAbsoluteId = QString::fromStdString(m_childContainer->getContainers().at(currentIndex())->getAbsoluteId());
+    QString childAbsoluteId = QString::fromStdString(m_childContainer->getChildren().at(currentIndex())->getAbsoluteId());
 
     for (QSet<ControlHelper*>::const_iterator it = m_foundControls.constBegin();
             it != m_foundControls.constEnd(); ++it) {
@@ -60,7 +60,7 @@ void SiblingBar::updateFoundControls()
         if ((*it)->relativeControlId().isEmpty()) continue;
 
         (*it)->setControl(childAbsoluteId + "." + (*it)->relativeControlId());
-        //qDebug() << "Control " << *it << " changed to " << (*it)->getControlId();
+        qDebug() << "Control " << *it << " changed to " << (*it)->getControlId();
 
     }
 
@@ -101,10 +101,10 @@ void SiblingBar::mouseReleaseEvent(QMouseEvent *event)
 
     int typeIndex = typeActions.indexOf(response);
     if (typeIndex != -1) {
-        std::string stdChild = m_childContainer->createControlContainer(typeIndex);
+        std::string stdChild = m_childContainer->createChild(typeIndex);
         QString childId = QString::fromStdString(stdChild);
         if (!childId.isEmpty()) {
-            ControlContainer *newContainer = ControlContainer::getRoot()->findContainer(stdChild);
+            Node *newContainer = Node::find(stdChild);
             addTab(QString::fromStdString(newContainer->getId()));
         }
         qDebug() << "Created child at " << childId;

@@ -102,7 +102,7 @@ public:
         PADnoteParameters *padpars;
     } kit[NUM_KIT_ITEMS];
 
-    ControlContainer container;
+    Node container;
 
     //Part parameters
     void setkeylimit(unsigned char Pkeylimit);
