@@ -4,6 +4,12 @@
 #include <string>
 #include "Control.h"
 
+class CharValueFunctor
+{
+    public:
+        virtual void valueSet(char value) {}
+};
+
 class CharControl : public Control
 {
 public:
@@ -19,7 +25,10 @@ public:
      * @return the current value*/
     virtual char getValue()const;
 
+    void setFunctor(CharValueFunctor functor);
+
 private:
+    CharValueFunctor functor;
     char m_max, m_min, m_default, m_value;
     std::string m_desc;
 

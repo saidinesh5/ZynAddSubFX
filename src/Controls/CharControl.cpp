@@ -1,5 +1,6 @@
 #include "CharControl.h"
 #include <iostream>
+#include "Event.h"
 
 using std::string;
 
@@ -23,8 +24,30 @@ char CharControl::getValue() const
     return m_value;
 }
 
+class SetCharEvent : public Event
+{
+public:
+    char* m_source, m_value;
+    CharValueFunctor functor;
+
+    bool exec() {
+        *m_source = m_value;
+        functor.valueSet(m_value);
+        std::cout << "set " << m_source << " to " << m_value << std::endl;
+        return false;
+    }
+};
+
 void CharControl::setValue(char nval)
 {
-    std::cout << "Value set to " << (int)nval << "\n";
-    m_value = nval;
+    SetCharEvent *event = new SetCharEvent;
+    event->m_source = &m_value;
+    event->m_value = nval;
+    event->functor = functor;
+    Event::push(event);
+}
+
+void CharControl::setFunctor(CharValueFunctor functor)
+{
+    this->functor = functor;
 }
