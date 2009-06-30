@@ -9,17 +9,18 @@ class RealFunctor
 public:
     virtual inline float operator()(unsigned char x)=0;
     virtual inline unsigned char operator()(float x)=0;
-}
+};
 
 class LinFunctor: public RealFunctor
 {
 public:
-    LinFunctor(float min,float max):b(min),m((max-min)/127)
-    virtual float operator()(unsigned char x){m*x+b}
-    virtual unsigned char operator()(float x){(char)((x-b)/m)}
+    LinFunctor(float min,float max):
+        b(min),m((max-min)/127){};
+    float operator()(unsigned char x){return(m*x+b);};
+    unsigned char operator()(float x){return((char)((x-b)/m));};
 private:
-    float m,b;
-}
+    float b,m;
+};
 
 class CharValueFunctor
 {
