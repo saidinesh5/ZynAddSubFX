@@ -5,7 +5,7 @@
 using std::vector;
 using std::string;
 
-Node* Node::m_root = new Node(NULL, "Master");
+Node* Node::m_root = NULL;
 
 Node::Node(Node* parent, std::string id)
     : m_parent(parent)
@@ -123,6 +123,30 @@ void Node::printTree()
 
         (*it)->printTree();
     }
+}
+
+void Node::handleEvent(Event &event)
+{
+    vector<Redirection>::iterator it;
+    for (it = m_rules.begin(); it != m_rules.end(); it++) {
+
+        //TODO: handle multiple filters here if needed
+        if ((*it).filter.filterEvent(event)) {
+            continue; //event was filtered out
+        }
+
+        //event passed the filter, so
+        //pass it on to the next node
+        (*it).destination->handleEvent(event);
+
+    }
+
+}
+
+void Node::addRedirection(NodeUser *destination, RedirectFilter filter)
+{
+    Redirection re = {destination, filter};
+    m_rules.push_back(re);
 }
 
 // vim: sw=4 sts=4 et tw=100

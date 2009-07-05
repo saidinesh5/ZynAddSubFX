@@ -1,6 +1,6 @@
 #include "CharControl.h"
 #include <iostream>
-#include "Event.h"
+#include "Job.h"
 
 using std::string;
 
@@ -24,27 +24,26 @@ char CharControl::getValue() const
     return m_value;
 }
 
-class SetCharEvent : public Event
+class SetCharJob : public Job
 {
 public:
     char* m_source, m_value;
     CharValueFunctor functor;
 
-    bool exec() {
+    void exec() {
         *m_source = m_value;
         functor.valueSet(m_value);
         std::cout << "set " << m_source << " to " << m_value << std::endl;
-        return false;
     }
 };
 
 void CharControl::setValue(char nval)
 {
-    SetCharEvent *event = new SetCharEvent;
+    SetCharJob *event = new SetCharJob;
     event->m_source = &m_value;
     event->m_value = nval;
     event->functor = functor;
-    Event::push(event);
+    Job::push(event);
 }
 
 void CharControl::setFunctor(CharValueFunctor functor)

@@ -42,6 +42,7 @@ public:
      * @return the current value*/
     virtual char getValue()const=0;
 
+    void handleEvent(Event *ev){};
     void registerUser(class ControlUser *user);
 
     /** Will lock the Control until it is ulocked

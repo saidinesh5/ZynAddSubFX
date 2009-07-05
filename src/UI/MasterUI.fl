@@ -273,8 +273,9 @@ labelfont(1);
 labelsize(10);
 align(FL_ALIGN_TOP);
 
-value(master->Psysefxsend[neff1][neff2]);
-char tmp[20];snprintf(tmp,20,"%d->%d",neff1+1,neff2+1);this->label(strdup(tmp));} {}
+value(master->getPsysefxsend(neff1,neff2));
+char tmp[20];snprintf(tmp,20,"%d->%d",neff1+1,neff2+1);this->label(strdup(tmp));} {selected
+    }
   }
   Function {~SysEffSend()} {} {
     code {hide();} {}
@@ -425,7 +426,7 @@ if (fl_choice("Exit and leave the unsaved data?","No","Yes",NULL)) {
     *exitprogram=1;
 };
 \#endif}
-      xywh {31 206 390 465} type Double xclass zynaddsubfx visible
+      xywh {727 332 390 465} type Double xclass zynaddsubfx visible
     } {
       Fl_Menu_Bar mastermenu {
         xywh {-5 0 690 25}
@@ -1758,8 +1759,7 @@ pthread_mutex_unlock(&master->mutex);
 if (result<0) fl_alert("Error: Could not save the file.");
 	else setfilelabel(filename);
 
-updatepanel();} {selected
-    }
+updatepanel();} {}
   }
   Function {refresh_master_ui()} {} {
     code {ninseff=0;

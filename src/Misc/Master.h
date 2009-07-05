@@ -34,14 +34,14 @@
 #include "Dump.h"
 #include "../Seq/Sequencer.h"
 #include "XMLwrapper.h"
+#include "../Controls/Node.h"
 #include "../Controls/CharControl.h"
-#include "../Controls/Event.h"
 #include "../Controls/InstrumentContainer.h"
 
 extern Dump dump;
 /** It sends Midi Messages to Parts, receives samples from parts,
  *  process them with system/insertion effects and mix them */
-class Master : public EventUser
+class Master : public Node
 {
 public:
     /** Constructor*/
@@ -57,8 +57,6 @@ public:
     void add2XML(XMLwrapper *xml);
 
     void defaults();
-
-    bool eventFilter(Event *event);
 
     /**loads all settings from a XML file
      * @return 0 for ok or -1 if there is an error*/
@@ -101,6 +99,10 @@ public:
     void setPsysefxvol(int Ppart,int Pefx,char Pvol);
     void setPsysefxsend(int Pefxfrom,int Pefxto,char Pvol);
 
+    //parameter reading
+    inline char getPsysefxvol(int Ppart,int Pefx)const;
+    inline char getPsysefxsend(int Pefxfrom,int Pefxto)const;
+
     //effects
     EffectMgr *sysefx[NUM_SYS_EFX];//system
     EffectMgr *insefx[NUM_INS_EFX];//insertion
@@ -133,6 +135,8 @@ public:
 
     FFTwrapper *fft;
     pthread_mutex_t mutex;
+
+    Node eventsNode;
 
     FloatControl masterVolume;
     InstrumentContainer instrumentContainer;

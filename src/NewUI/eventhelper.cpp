@@ -8,13 +8,10 @@ EventHelper* EventHelper::theInstance = NULL;
 EventHelper::EventHelper(QObject *parent)
         : QObject(parent)
 {
-    qDebug() << "Registering at event";
-    Event::registerUser(this);
 }
 
-bool EventHelper::eventFilter(Event *event)
+void EventHelper::handleEvent(Event &event)
 {
-    qDebug() << event;
 }
 
 EventHelper* EventHelper::getInstance()

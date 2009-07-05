@@ -1,16 +1,16 @@
 #ifndef EVENTHELPER_H
 #define EVENTHELPER_H
 
-#include "../Controls/Event.h"
+#include "../Controls/Node.h"
 #include <QObject>
 
-class EventHelper : public QObject, public EventUser
+class EventHelper : public QObject, public NodeUser
 {
     Q_OBJECT
 
 public:
     EventHelper(QObject *parent);
-    bool eventFilter(Event *event);
+    void handleEvent(Event &event);
     static class EventHelper* getInstance();
 
 signals:

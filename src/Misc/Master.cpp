@@ -28,13 +28,15 @@
 #include <sys/types.h>
 
 #include <unistd.h>
-#include "../Controls/Event.h"
+#include "../Controls/Job.h"
 
 Master::Master()
-        :
-        masterVolume(Node::getRoot(), "Volume", "Master Volume", 0, 50, 30),
-        instrumentContainer(Node::getRoot(), "Parts", this)
+        : Node(NULL, "Master"),
+        masterVolume(this, "Volume", "Master Volume", 0, 50, 30),
+        instrumentContainer(this, "Parts", this),
+        eventsNode(this, "Events")
 {
+    Node::setRoot(this);
 
     masterVolume.setDb2rapConversion(true);
 
@@ -42,8 +44,7 @@ Master::Master()
 
     pthread_mutex_init(&mutex,NULL);
 
-    Event::initializeMutex();
-    Event::registerUser(this);
+    Job::initialize();
 
     fft=new FFTwrapper(OSCIL_SIZE);
 
@@ -84,11 +85,6 @@ Master::Master()
 
     defaults();
 };
-
-bool Master::eventFilter(Event *event)
-{
-    return false;
-}
 
 void Master::defaults()
 {
@@ -465,7 +461,7 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
     if (HDDRecorder.recording()) HDDRecorder.recordbuffer(outl,outr);
     dump.inctick();
 
-    Event::handleEvents();
+    Job::handleJobs();
 };
 
 void Master::GetAudioOutSamples(int nsamples,int samplerate,REALTYPE *outl,REALTYPE *outr)
@@ -570,6 +566,15 @@ void Master::setPsysefxsend(int Pefxfrom,int Pefxto,char Pvol)
     sysefxsend[Pefxfrom][Pefxto]=pow(0.1,(1.0-Pvol/96.0)*2.0);
 };
 
+char Master::getPsysefxvol(int Ppart,int Pefx)const
+{
+    return(Psysefxvol[Pefx][Ppart]);
+};
+
+char Master::getPsysefxsend(int Pefxfrom,int Pefxto)const
+{
+    return(Psysefxsend[Pefxfrom][Pefxto]);
+};
 
 /*
  * Panic! (Clean up all parts and effects)

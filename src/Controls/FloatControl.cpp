@@ -1,7 +1,7 @@
 #include "FloatControl.h"
 #include "../globals.h"
 #include "math.h"
-#include "Event.h"
+#include "Job.h"
 
 using std::string;
 
@@ -38,23 +38,22 @@ char FloatControl::getValue() const
     return toChar(m_value);
 }
 
-class SetFloatEvent : public Event
+class SetFloatJob : public Job
 {
 private:
     float* m_source, m_value;
 public:
-    SetFloatEvent(float* source, float value)
+    SetFloatJob(float* source, float value)
             : m_source(source), m_value(value) {}
-    bool exec() {
+    void exec() {
         *m_source = m_value;
         std::cout << "set " << m_source << " to " << m_value << std::endl;
-        return false;
     }
 };
 
 void FloatControl::setValue(char nval)
 {
-    Event::push(new SetFloatEvent(&m_value, toFloat(nval)));
+    Job::push(new SetFloatJob(&m_value, toFloat(nval)));
     //m_value = toFloat(nval);
 }
 
@@ -66,4 +65,9 @@ float FloatControl::getFloat() const
 void FloatControl::setDb2rapConversion(bool value)
 {
     m_db2rapConversion = value;
+}
+
+void FloatControl::handleSyncEvent(Event &event)
+{
+
 }

@@ -1,7 +1,9 @@
 set(zynaddsubfx_controls_SRCS
 	Control.cpp
     Event.cpp
+    EventClasses.cpp
     Node.cpp
+    Job.cpp
     #ControlContainer.cpp
 	InstrumentContainer.cpp
 	FloatControl.cpp

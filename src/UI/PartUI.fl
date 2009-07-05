@@ -42,20 +42,20 @@ decl {\#include "../Misc/Master.h"} {public
 decl {\#include "../Misc/Part.h"} {public
 } 
 
-class PartSysEffSend {open : {public Fl_Group}
+class PartSysEffSend {: {public Fl_Group}
 } {
-  Function {make_window()} {open private
+  Function {make_window()} {private
   } {
     Fl_Window syseffsend {
-      private xywh {584 83 90 35} type Double hide
-      class Fl_Group
+      private xywh {584 83 90 35} type Double
+      class Fl_Group visible
     } {
       Fl_Dial {} {
         label 01
         callback {master->setPsysefxvol(npart,neff,(int) o->value());} selected
         xywh {0 0 25 25} box ROUND_UP_BOX labelfont 1 labelsize 10 align 130 maximum 127 step 1
         code0 {o->size(25,25);}
-        code1 {o->value(master->Psysefxvol[neff][npart]);}
+        code1 {o->value(master->getPsysefxvol(neff,npart));}
         code2 {char tmp[10];snprintf(tmp,10,"%d",neff+1);o->label(strdup(tmp));}
         class WidgetPDial
       }
@@ -274,9 +274,9 @@ end();} {}
   decl {PartUI_ *partui;} {}
 } 
 
-class PartUI {open : {public Fl_Group,PartUI_}
+class PartUI {: {public Fl_Group,PartUI_}
 } {
-  Function {make_window()} {open private
+  Function {make_window()} {private
   } {
     Fl_Window partgroup {
       private xywh {424 178 385 180} type Double hide

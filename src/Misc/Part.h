@@ -40,6 +40,7 @@
 #include "../Controls/ControlUser.h"
 #include "../Controls/CharControl.h"
 #include "../Controls/FloatControl.h"
+#include "../Controls/Node.h"
 
 #include <list> // For the monomemnotes list.
 

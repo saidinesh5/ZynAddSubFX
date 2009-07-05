@@ -11,6 +11,8 @@ public:
 
     virtual std::string getString()const;
 
+    void handleEvent(class Event *ev){};
+
     /**Set the Control to the given value
      * @param nval A number 0-127*/
     virtual void setValue(char nval);
@@ -22,6 +24,8 @@ public:
     float getFloat() const;
 
     void setDb2rapConversion(bool value);
+
+    virtual void handleSyncEvent(Event &event);
 
 private:
     inline float toFloat(char val) const;
