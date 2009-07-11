@@ -80,6 +80,8 @@ public:
     //void NRPN...
 
 
+    /**Places a queue in place for shutup*/
+    void queueShutUp(){shutup=1;};
     void ShutUp();
 
     /**Audio Output*/
@@ -100,8 +102,10 @@ public:
     void setPsysefxsend(int Pefxfrom,int Pefxto,char Pvol);
 
     //parameter reading
-    inline char getPsysefxvol(int Ppart,int Pefx)const;
-    inline char getPsysefxsend(int Pefxfrom,int Pefxto)const;
+    char getPvolume()const;
+    char getPkeyshift()const;
+    char getPsysefxvol(int Ppart,int Pefx)const;
+    char getPsysefxsend(int Pefxfrom,int Pefxto)const;
 
     //effects
     EffectMgr *sysefx[NUM_SYS_EFX];//system

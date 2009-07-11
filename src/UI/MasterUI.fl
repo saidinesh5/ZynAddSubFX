@@ -274,8 +274,7 @@ labelsize(10);
 align(FL_ALIGN_TOP);
 
 value(master->getPsysefxsend(neff1,neff2));
-char tmp[20];snprintf(tmp,20,"%d->%d",neff1+1,neff2+1);this->label(strdup(tmp));} {selected
-    }
+char tmp[20];snprintf(tmp,20,"%d->%d",neff1+1,neff2+1);this->label(strdup(tmp));} {}
   }
   Function {~SysEffSend()} {} {
     code {hide();} {}
@@ -426,7 +425,7 @@ if (fl_choice("Exit and leave the unsaved data?","No","Yes",NULL)) {
     *exitprogram=1;
 };
 \#endif}
-      xywh {727 332 390 465} type Double xclass zynaddsubfx visible
+      xywh {479 158 390 465} type Double hide xclass zynaddsubfx
     } {
       Fl_Menu_Bar mastermenu {
         xywh {-5 0 690 25}
@@ -657,7 +656,7 @@ if (result!=0) fl_alert("Error: Could not save the file.");}
         label {M.Vol}
         callback {master->setPvolume((int) o->value());}
         tooltip {Master Volume} xywh {5 30 30 30} box ROUND_UP_BOX labelfont 1 labelsize 11 align 130 maximum 127 step 1
-        code0 {o->value(master->Pvolume);}
+        code0 {o->value(master->getPvolume());}
         class WidgetPDial
       }
       Fl_Counter masterkeyshiftcounter {
@@ -665,13 +664,13 @@ if (result!=0) fl_alert("Error: Could not save the file.");}
         callback {master->setPkeyshift((int) o->value()+64);}
         xywh {45 31 90 20} labelsize 11 minimum -64 maximum 64 step 1
         code0 {o->lstep(12);}
-        code1 {o->value(master->Pkeyshift-64);}
+        code1 {o->value(master->getPkeyshift()-64);}
       }
       Fl_Button {} {
         label {Panic!}
         callback {virkeyboard->relaseallkeys();
 pthread_mutex_lock(&master->mutex);
-master->shutup=1;
+master->queueShutUp();
 pthread_mutex_unlock(&master->mutex);}
         xywh {293 29 92 31} box PLASTIC_UP_BOX color 231 labelfont 1
       }
@@ -1509,21 +1508,21 @@ pthread_mutex_unlock(&master->mutex);}
         label {Master Volume}
         callback {master->setPvolume((int) o->value());}
         tooltip {Master Volume} xywh {10 35 40 40} box ROUND_UP_BOX labelfont 1 labelsize 11 align 130 maximum 127 step 1
-        code0 {o->value(master->Pvolume);}
+        code0 {o->value(master->getPvolume());}
         class WidgetPDial
       }
       Fl_Counter simplemasterkeyshiftcounter {
         label {Master KeyShift}
-        callback {master->setPkeyshift((int) o->value()+64);}
+        callback {master->setPkeyshift((int) o->value()+64);} selected
         xywh {25 110 90 20} labelsize 11 minimum -64 maximum 64 step 1
         code0 {o->lstep(12);}
-        code1 {o->value(master->Pkeyshift-64);}
+        code1 {o->value(master->getPkeyshift()-64);}
       }
       Fl_Button {} {
         label {Stop ALL sounds!}
         callback {virkeyboard->relaseallkeys();
 pthread_mutex_lock(&master->mutex);
-master->shutup=1;
+master->queueShutUp();
 pthread_mutex_unlock(&master->mutex);}
         xywh {5 149 115 31} box PLASTIC_UP_BOX color 231 labelfont 1 labelsize 11
       }
@@ -1604,7 +1603,7 @@ config.cfg.UserInterfaceMode=2;}
   Function {updatesendwindow()} {} {
     code {for (int neff1=0;neff1<NUM_SYS_EFX;neff1++) 
   for (int neff2=neff1+1;neff2<NUM_SYS_EFX;neff2++)
-    syseffsend[neff1][neff2]->value(master->Psysefxsend[neff1][neff2]);} {}
+    syseffsend[neff1][neff2]->value(master->getPsysefxsend(neff1,neff2));} {}
   }
   Function {updatepanel()} {} {
     code {for (int npart=0;npart<NUM_MIDI_PARTS;npart++){
@@ -1685,7 +1684,7 @@ simpleminkcounter->value(master->part[npart]->Pminkey);
 simplemaxkcounter->value(master->part[npart]->Pmaxkey);
 
 simplepartkeyshiftcounter->value(master->part[npart]->Pkeyshift-64);
-simplesyseffsend->value(master->Psysefxvol[nsyseff][npart]);} {}
+simplesyseffsend->value(master->getPsysefxvol(nsyseff,npart));} {}
   }
   Function {do_new_master()} {} {
     code {if (fl_choice("Clear *ALL* the parameters ?","No","Yes",NULL)){
@@ -1770,8 +1769,8 @@ npart=0;
 npartcounter->do_callback();
 syseffnocounter->do_callback();
 inseffnocounter->do_callback();
-masterkeyshiftcounter->value(master->Pkeyshift-64);
-mastervolumedial->value(master->Pvolume);    
+masterkeyshiftcounter->value(master->getPkeyshift()-64);
+mastervolumedial->value(master->getPvolume());    
 globalfinedetuneslider->value(master->microtonal.Pglobalfinedetune);   
 microtonalui=new MicrotonalUI(&master->microtonal);
 nrpnbutton->value(master->ctl.NRPN.receive);
@@ -1785,8 +1784,8 @@ simpleinseffnocounter->value(1);
 simplenpartcounter->do_callback();
 simplesyseffnocounter->do_callback();
 simpleinseffnocounter->do_callback();
-simplemasterkeyshiftcounter->value(master->Pkeyshift-64);
-simplemastervolumedial->value(master->Pvolume);    
+simplemasterkeyshiftcounter->value(master->getPkeyshift()-64);
+simplemastervolumedial->value(master->getPvolume());    
 simpleglobalfinedetuneslider->value(master->microtonal.Pglobalfinedetune);
 virkeys->midich=master->part[npart]->Prcvchn;
 

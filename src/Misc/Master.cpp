@@ -543,6 +543,7 @@ Master::~Master()
  */
 void Master::setPvolume(char Pvolume_)
 {
+    masterVolume.setValue(Pvolume_);
     //Pvolume=Pvolume_;
     //volume=dB2rap((Pvolume-96.0)/96.0*40.0);
 };
@@ -564,6 +565,16 @@ void Master::setPsysefxsend(int Pefxfrom,int Pefxto,char Pvol)
 {
     Psysefxsend[Pefxfrom][Pefxto]=Pvol;
     sysefxsend[Pefxfrom][Pefxto]=pow(0.1,(1.0-Pvol/96.0)*2.0);
+};
+
+char Master::getPvolume()const
+{
+    return(masterVolume.getValue());
+};
+
+char Master::getPkeyshift()const
+{
+    return(Pkeyshift);
 };
 
 char Master::getPsysefxvol(int Ppart,int Pefx)const
