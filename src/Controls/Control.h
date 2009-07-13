@@ -37,14 +37,16 @@ class Control:public GenControl
 public:
     Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> &nfunc,enum controlType type)
         :GenControl(parent,id,type),value(defaultval),defaultval(defaultval),func(nfunc){};
-    char getValue() const {return func(value);};
 
     inline T operator()() const {return value;};//It seems to make sense for a control to just return its value when this is called
     std::string getString() const {return "hm, this should get implemented, but not yet :p";};
+
     void handleEvent(Event &ev) {}
     void handleSyncEvent(Event &ev);
     void setValue(const T &val);
     void setValue(char val);
+
+    inline T getValue() const { return value; }
 
 private:
     T value;

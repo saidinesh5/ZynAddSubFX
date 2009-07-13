@@ -33,26 +33,12 @@ public:
         Real, Char, Int, Bool
     };
     virtual void setValue(char val)=0;
-    virtual char getValue() const=0;
     virtual std::string getString() const=0;
     enum controlType getType(){return type;};
 protected:
     GenControl(Node *parent, std::string id,enum controlType ntype)
         :Node(parent,id),type(ntype)
     {};
-    //Control(Node *parent, std::string id);
-    //Control(Node *parent, std::string id,  REALTYPE minval, REALTYPE defaultval, REALTYPE maxval);
-    //Control(Node *parent, std::string id, char minval, char defaultval, char maxval);
-    //Control(Node *parent, std::string id, int minval, int defaultval, int maxval);
-    //Control(Node *parent, std::string id, bool defaultval);
-//
-    //void setValue(REALTYPE val);
-    //void setValue(bool val);
-    //void setValue(int val);
-//
-    //REALTYPE getReal() const;
-    //bool getBool() const;
-    //int getInt() const;
 
 private:
     enum controlType type;

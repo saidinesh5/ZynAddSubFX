@@ -40,7 +40,7 @@ void ControlHelper::setControl(QString absoluteId)
     if (m_control) {
         //m_control->registerUser(this);
         qDebug() << "Assigning " << this << " to " << absoluteId;
-        emit valueChanged(m_control->getValue());
+        //emit valueChanged(m_control->getValue());
     } else
         qDebug() << "Could not find a control named " << absoluteId;
 }
