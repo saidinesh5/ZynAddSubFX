@@ -5,16 +5,20 @@
 #include "../Controls/ControlUser.h"
 #include <QObject>
 
-class ControlHelper : public QObject, public ControlUser
+class ControlHelper : public QObject, public NodeUser
 {
     Q_OBJECT
 public:
     ControlHelper(QObject *parent);
-    //void controlChanged(Control* control);
     bool eventFilter ( QObject * watched, QEvent * event );
     QString getControlId();
     void setControl(QString absoluteId);
     QString relativeControlId() const;
+
+    void requestValue();
+
+    //reimplemented from nodeuser
+    void handleEvent(Event &event);
 
 public slots:
     void setValue(char value);

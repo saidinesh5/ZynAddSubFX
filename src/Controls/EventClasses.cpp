@@ -8,6 +8,16 @@ UpdateEvent::UpdateEvent()
     :Event(Event::UpdateEvent)
 {};
 
+RequestValueEvent::RequestValueEvent()
+    :Event(Event::RequestValueEvent)
+{};
+
+
+NewValueEvent::NewValueEvent(char val)
+    :Event(Event::NewValueEvent),
+    val(val)
+{};
+
 CreateNodeEvent::CreateNodeEvent(unsigned int ntype)
     :Event(Event::CreateNodeEvent),type(ntype)
 {};

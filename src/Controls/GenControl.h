@@ -35,6 +35,8 @@ public:
     virtual void setValue(char val)=0;
     virtual std::string getString() const=0;
     enum controlType getType(){return type;};
+
+    virtual void requestValue()=0;
 protected:
     GenControl(Node *parent, std::string id,enum controlType ntype)
         :Node(parent,id),type(ntype)

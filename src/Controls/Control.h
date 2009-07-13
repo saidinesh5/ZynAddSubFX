@@ -46,6 +46,8 @@ public:
     void setValue(const T &val);
     void setValue(char val);
 
+    void requestValue();
+
     inline T getValue() const { return value; }
 
 private:

@@ -17,10 +17,14 @@ Dial::Dial(QWidget *parent)
     setMouseTracking(false);
 
     ControlHelper *helper = new ControlHelper(this);
+
     connect(this, SIGNAL(valueChanged(int)),
             helper, SLOT(setValue(int)));
     connect(helper, SIGNAL(valueChanged(int)),
             this, SLOT(setValue(int)));
+
+    helper->requestValue();
+
 }
 
 void Dial::mousePressEvent(QMouseEvent* event)

@@ -36,6 +36,20 @@ public:
     UpdateEvent();
 };
 
+class NewValueEvent : public Event
+{
+    public:
+        NewValueEvent(char val = -1);
+        const char val;
+};
+
+
+class RequestValueEvent : public Event
+{
+    public:
+        RequestValueEvent();
+};
+
 /**Event for Child creation*/
 class CreateNodeEvent: public Event
 {

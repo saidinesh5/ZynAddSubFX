@@ -23,20 +23,38 @@
 template <class T>
 void Control<T>::handleSyncEvent(Event &ev)
 {
+    std::cout << "Control::handleSyncEvent: ";
+
+    //this is when the control value is to be changed to
+    //something else
     if (ev.type() == Event::ChangeEvent) {
+        std::cout << "changeevent";
         value = func(static_cast<ChangeEvent&>(ev).getVal());
+        forward(NewValueEvent(static_cast<ChangeEvent&>(ev).getVal()));
+
+        //and this is for reading the value of the control
+    } else if (ev.type() == Event::RequestValueEvent) {
+        std::cout << "requestvalueevent";
+        forward(NewValueEvent(func(value)));
     }
-}
+    std::cout << "\n";
+ }
 
 template <class T>
 void Control<T>::setValue(const T &val)
 {
     value = val;
-    Job::pushAndWait(new NodeJob(*this, ChangeEvent(val)));
+    forward(NewValueEvent(func(value)));
 }
 
 template <class T>
 void Control<T>::setValue(char val)
 {
-    setValue(func(val)); 
+    Job::push(new NodeJob(*this, ChangeEvent(val)));
+}
+
+template <class T>
+void Control<T>::requestValue()
+{
+    Job::push(new NodeJob(*this, RequestValueEvent()));
 }
