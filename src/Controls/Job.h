@@ -27,7 +27,7 @@ class Job
          * has been finished. NOTE: When using this method, the event will NOT be deleted
          * automatically after being executed.
          */
-        static bool pushAndWait(Job* event);
+        static bool pushAndWait(Job* job);
         /**
          * Pop an event from the event list. Will return NULL if there is no event available.
          */

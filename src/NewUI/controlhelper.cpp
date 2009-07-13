@@ -36,19 +36,19 @@ bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
 void ControlHelper::setControl(QString absoluteId)
 {
     Node *node = Node::find(absoluteId.toStdString());
-    m_control = dynamic_cast<Control*>(node);
+    m_control = dynamic_cast<GenControl*>(node);
     if (m_control) {
-        m_control->registerUser(this);
+        //m_control->registerUser(this);
         qDebug() << "Assigning " << this << " to " << absoluteId;
         emit valueChanged(m_control->getValue());
     } else
         qDebug() << "Could not find a control named " << absoluteId;
 }
 
-void ControlHelper::controlChanged(Control* control)
-{
-    emit valueChanged(control->getValue());
-}
+//void ControlHelper::controlChanged(Control* control)
+//{
+    //emit valueChanged(control->getValue());
+//}
 
 void ControlHelper::setValue(char value)
 {

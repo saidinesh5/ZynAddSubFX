@@ -10,7 +10,7 @@ class ControlHelper : public QObject, public ControlUser
     Q_OBJECT
 public:
     ControlHelper(QObject *parent);
-    void controlChanged(Control* control);
+    //void controlChanged(Control* control);
     bool eventFilter ( QObject * watched, QEvent * event );
     QString getControlId();
     void setControl(QString absoluteId);
@@ -24,7 +24,7 @@ signals:
     void valueChanged(int value);
 
 private:
-    Control *m_control;
+    GenControl *m_control;
     QString m_relativeControlId;
 };
 

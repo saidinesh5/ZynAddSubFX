@@ -7,6 +7,26 @@ using std::string;
 
 Node* Node::m_root = NULL;
 
+void Node::forward(Event event) const
+{
+    vector<Redirection>::const_iterator it;
+    for (it = m_rules.begin(); it != m_rules.end(); it++) {
+
+        //TODO: handle multiple filters here if needed
+        //RETODO: I think it might be better to have one smart filter
+        //        rather than a filter chain
+        if ((*it).filter.filterEvent(event)) {
+            continue; //event was filtered out
+        }
+
+        //event passed the filter, so
+        //pass it on to the next node
+        (*it).destination->handleEvent(event);
+
+    }
+
+}
+
 Node::Node(Node* parent, std::string id)
     : m_parent(parent)
 {
@@ -131,6 +151,8 @@ void Node::handleEvent(Event &event)
     for (it = m_rules.begin(); it != m_rules.end(); it++) {
 
         //TODO: handle multiple filters here if needed
+        //RETODO: I think it might be better to have one smart filter
+        //        rather than a filter chain
         if ((*it).filter.filterEvent(event)) {
             continue; //event was filtered out
         }

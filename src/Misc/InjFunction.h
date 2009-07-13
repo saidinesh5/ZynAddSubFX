@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  Control.cpp - Control template
+  InjFunction.h - Functions Utility Classes
   Copyright (C) 2009-2009 Mark McCurry
   Author: Mark McCurry
 
@@ -19,24 +19,20 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
+#ifndef _INJFUNCTION_H
+#define _INJFUNCTION_H
+/**Injective Function
+ *
+ * This means that the object contains a function that will translate
+ * from type A to type B using a one-to-one function and its inverse
+ * Note: type A cannot be equal to type B */
 
-template <class T>
-void Control<T>::handleSyncEvent(Event &ev)
+template <class A,class B>
+class InjFunction
 {
-    if (ev.type() == Event::ChangeEvent) {
-        value = func(static_cast<ChangeEvent&>(ev).getVal());
-    }
-}
+public:
+    virtual B operator()(const A &x)const { return (B)x; }
+    virtual A operator()(const B &x)const { return (A)x; }
+};
+#endif
 
-template <class T>
-void Control<T>::setValue(const T &val)
-{
-    value = val;
-    Job::pushAndWait(new NodeJob(*this, ChangeEvent(val)));
-}
-
-template <class T>
-void Control<T>::setValue(char val)
-{
-    setValue(func(val)); 
-}

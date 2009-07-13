@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  Control.cpp - Control template
+  Function.h - Functions Utility Classes
   Copyright (C) 2009-2009 Mark McCurry
   Author: Mark McCurry
 
@@ -19,24 +19,21 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
+#ifndef _LININJFUNC_H
+#define _LININJFUNC_H
+#include "InjFunction.h"
 
 template <class T>
-void Control<T>::handleSyncEvent(Event &ev)
+class LinInjFunc:public InjFunction<char,T>
 {
-    if (ev.type() == Event::ChangeEvent) {
-        value = func(static_cast<ChangeEvent&>(ev).getVal());
-    }
-}
+public:
+    LinInjFunc(T min,T max):
+        b(min),m((max-min)/127){};
+    inline T operator()(const char &x)const{return(m*x+b);};
+    inline char operator()(const T &x)const{return((char)((x-b)/m));};
+private:
+    T b,m;
+};
 
-template <class T>
-void Control<T>::setValue(const T &val)
-{
-    value = val;
-    Job::pushAndWait(new NodeJob(*this, ChangeEvent(val)));
-}
+#endif
 
-template <class T>
-void Control<T>::setValue(char val)
-{
-    setValue(func(val)); 
-}

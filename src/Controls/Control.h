@@ -23,47 +23,38 @@
 #define CONTROL_H
 
 #include <string>
-#include <vector>
-#include "Node.h"
+#include "GenControl.h"
+#include "EventClasses.h"
+#include "../Misc/InjFunction.h"
+#include "JobClasses.h"
 
-/**A control for a parameter within the program*/
-class Control : public Node
+/**A control for a parameter within the program
+ *
+ * \todo add some bounds checking for sanity*/
+template <class T> //please do not define this to be char as InjFunction should have a difficult time
+class Control:public GenControl
 {
 public:
-    Control(class Node *parent, std::string id, std::string name, char ndefaultval);/**\todo create proper initialization list*/
-    ~Control() {};
-    /**Return the string, which represents the internal value
-     * @return a string representation of the current value*/
-    virtual std::string getString()const=0;
-    /**Set the Control to the given value
-     * @param nval A number 0-127*/
-    virtual void setValue(char nval)=0;
-    /**Return the midi value (aka the char)
-     * @return the current value*/
-    virtual char getValue()const=0;
+    Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> &nfunc,enum controlType type)
+        :GenControl(parent,id,type),value(defaultval),defaultval(defaultval),func(nfunc){};
+    char getValue() const {return func(value);};
 
-    void handleEvent(Event *ev){};
-    void registerUser(class ControlUser *user);
+    inline T operator()() const {return value;};//It seems to make sense for a control to just return its value when this is called
+    std::string getString() const {return "hm, this should get implemented, but not yet :p";};
+    void handleEvent(Event &ev) {}
+    void handleSyncEvent(Event &ev);
+    void setValue(const T &val);
+    void setValue(char val);
 
-    /** Will lock the Control until it is ulocked
-     *
-     * Locking a Control will Stop it from having
-     * its internal data altered*/
-    void lock();
-    /** Will unlock the Control
-     *
-     * This will also update the Control
-     * if something attempted to update it while it was locked*/
-    void ulock();
 private:
-    char defaultval;/**<Default value of the Control*/
-    char lockqueue; /**<The value is that is stored, while the Control is locked
-                         * and something attempts to update it*/
-    bool locked;//upgrade this to a integer lock level if problems occur
-    std::vector<ControlUser*> m_users;
-    std::string m_description;
-    class Node *m_parent;
+    T value;
+    T defaultval;
+
+    /**The transformation function for the control*/
+    const InjFunction<char,T> func;
 };
+
+#include "Control.cpp"
 
 #endif
 

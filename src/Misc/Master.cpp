@@ -29,16 +29,17 @@
 
 #include <unistd.h>
 #include "../Controls/Job.h"
+#include "db2rapInjFunc.h"
 
 Master::Master()
         : Node(NULL, "Master"),
-        masterVolume(this, "Volume", "Master Volume", 0, 50, 30),
+        masterVolume(this, "Volume", 30.0,db2rapInjFunc<REALTYPE>(0.0, 50.0),GenControl::Real),
         instrumentContainer(this, "Parts", this),
         eventsNode(this, "Events")
 {
     Node::setRoot(this);
 
-    masterVolume.setDb2rapConversion(true);
+    //masterVolume.setDb2rapConversion(true);
 
     swaplr=0;
 
@@ -88,7 +89,7 @@ Master::Master()
 
 void Master::defaults()
 {
-    masterVolume.setValue(80);
+    masterVolume.setValue((char)80);
     setPkeyshift(64);
 
     for (int npart=0;npart<NUM_MIDI_PARTS;npart++) {
@@ -403,8 +404,8 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
 
     //Master Volume
     for (i=0;i<SOUND_BUFFER_SIZE;i++) {
-        outl[i]*=masterVolume.getFloat();
-        outr[i]*=masterVolume.getFloat();
+        outl[i]*=masterVolume();
+        outr[i]*=masterVolume();
     };
 
     //Peak computation (for vumeters)
@@ -438,7 +439,7 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
                 REALTYPE tmp=fabs(outl[i]+outr[i]);
                 if (tmp>vuoutpeakpart[npart]) vuoutpeakpart[npart]=tmp;
             };
-            vuoutpeakpart[npart]*=masterVolume.getFloat();
+            vuoutpeakpart[npart]*=masterVolume();
         } else {
             if (fakepeakpart[npart]>1) fakepeakpart[npart]--;
         };

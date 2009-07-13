@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  Control.cpp - Control template
+  db2rapInjFunc.h - Functions Utility Classes
   Copyright (C) 2009-2009 Mark McCurry
   Author: Mark McCurry
 
@@ -19,24 +19,23 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
+#ifndef _DB2RAPINJFUNC_H
+#define _DB2RAPINJFUNC_H
+#include "InjFunction.h"
+#include "../globals.h"
 
 template <class T>
-void Control<T>::handleSyncEvent(Event &ev)
+class db2rapInjFunc:public InjFunction<char,T>
 {
-    if (ev.type() == Event::ChangeEvent) {
-        value = func(static_cast<ChangeEvent&>(ev).getVal());
-    }
-}
+public:
+    db2rapInjFunc(T min,T max):
+        b(min),m((max-min)/127.0){};
+    
+    inline T operator()(const char &x)const{return(dB2rap(b+m*x/127));};
+    inline char operator()(const T &x)const{return((char)rap2dB((x-b)/m));};
+private:
+    T b,m;
+};
 
-template <class T>
-void Control<T>::setValue(const T &val)
-{
-    value = val;
-    Job::pushAndWait(new NodeJob(*this, ChangeEvent(val)));
-}
+#endif
 
-template <class T>
-void Control<T>::setValue(char val)
-{
-    setValue(func(val)); 
-}

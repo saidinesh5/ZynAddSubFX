@@ -111,7 +111,7 @@ void Dial::paintEvent(class QPaintEvent *event)
 
 }
 
-void Dial::setControl(Control *control)
+void Dial::setControl(GenControl *control)
 {
 }
 

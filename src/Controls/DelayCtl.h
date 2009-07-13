@@ -1,3 +1,5 @@
+// This class is depreciated
+
 /*
   ZynAddSubFX - a software synthesizer
 

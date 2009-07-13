@@ -38,8 +38,9 @@
 #include "../Effects/EffectMgr.h"
 #include "XMLwrapper.h"
 #include "../Controls/ControlUser.h"
-#include "../Controls/CharControl.h"
-#include "../Controls/FloatControl.h"
+#include "../Controls/Control.h"
+//#include "../Controls/CharControl.h"
+//#include "../Controls/FloatControl.h"
 #include "../Controls/Node.h"
 
 #include <list> // For the monomemnotes list.
@@ -144,7 +145,7 @@ public:
     enum NoteStatus {KEY_OFF,KEY_PLAYING,KEY_RELASED_AND_SUSTAINED,KEY_RELASED};
 
     REALTYPE oldvolumel,oldvolumer;//this is applied by Master
-    FloatControl partVolume;
+    Control<REALTYPE> partVolume;
 
     REALTYPE panning;//this is applied by Master, too
 
@@ -159,7 +160,7 @@ public:
 
     int lastnote;
 
-    void controlChanged(Control* control);
+    void controlChanged(GenControl* control); //hm, not quite too sure what this does
     //CharControl Volume;/**<part volume*/
 
 private:

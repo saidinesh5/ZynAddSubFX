@@ -22,16 +22,17 @@
 
 #include "Part.h"
 #include "Microtonal.h"
+#include "db2rapInjFunc.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 Part::Part(Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
-        :partVolume(&container, "Volume", "Part Volume", 0, 40, 30),
+        :partVolume(&container, "Volume",30,db2rapInjFunc<REALTYPE>(0, 40),GenControl::Real),
         container(NULL, "Part")
 {
 
-    partVolume.setDb2rapConversion(true);
+    //partVolume.setDb2rapConversion(true);
     //container.registerUser(this);
     microtonal=microtonal_;
     fft=fft_;
@@ -849,7 +850,7 @@ void Part::ComputePartSmps()
 void Part::setPvolume(char Pvolume_)
 {
     Pvolume=Pvolume_;
-    partVolume.setValue(dB2rap((Pvolume-96.0)/96.0*40.0)*ctl.expression.relvolume);
+    partVolume.setValue((REALTYPE)dB2rap((Pvolume-96.0)/96.0*40.0)*ctl.expression.relvolume);
 };
 
 void Part::setPpanning(char Ppanning_)
@@ -1138,7 +1139,7 @@ void Part::getfromXML(XMLwrapper *xml)
 
 };
 
-void Part::controlChanged(Control* control)
+void Part::controlChanged(GenControl* control)
 {
 
 }

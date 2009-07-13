@@ -2,6 +2,7 @@
 #define EVENTCLASSES_H
 
 #include "Event.h"
+#include "GenControl.h"
 
 //class AddChild : public Job
 //{
@@ -22,10 +23,10 @@ class ChangeEvent: public Event
 {
 
 public:
-    ChangeEvent(unsigned char nval);
+    ChangeEvent(char nval);
     char getVal() const {return val;};
 private:
-    const unsigned char val;
+    const char val;
 };
 
 /**Notification Event*/

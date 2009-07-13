@@ -37,6 +37,9 @@ class Node: public NodeUser
 {
     protected:
         virtual std::string doCreateChild(int type);
+        /**Funciton used by subclasses to forward events to registered
+         * NodeUsers*/
+        void forward(Event event)const;
 
         std::vector<std::string> m_types;
 

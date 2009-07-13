@@ -35,7 +35,8 @@
 #include "../Seq/Sequencer.h"
 #include "XMLwrapper.h"
 #include "../Controls/Node.h"
-#include "../Controls/CharControl.h"
+#include "../Controls/Control.h"
+#include "LinInjFunc.h"
 #include "../Controls/InstrumentContainer.h"
 
 extern Dump dump;
@@ -142,7 +143,7 @@ public:
 
     Node eventsNode;
 
-    FloatControl masterVolume;
+    Control<REALTYPE> masterVolume;
     InstrumentContainer instrumentContainer;
 
 private:

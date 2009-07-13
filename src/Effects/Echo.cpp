@@ -23,15 +23,41 @@
 #include <cmath>
 #include <iostream>
 #include "Echo.h"
+#include "../Misc/LinInjFunc.h"
+#include <string> //temporary
 
+//temporary (NOTE: this is broken, but it is being used temporarially) 
+//just in case this is overlooked:
+//DO NOT LET THIS INTO PRODUCTION LEVEL CODE!!!!
+class TmpFunc:public InjFunction<char,REALTYPE>
+{
+public:
+    
+    inline REALTYPE operator()(const char &x)const{return(pow(2,(fabs(x-64.0)/64.0*9)-1.0)/1000.0*(x<64 ? -1 : 1));};
+    inline char operator()(const REALTYPE &x)const{return((char)5);}; /**\todo actually implement this*/
+};
+
+typedef LinInjFunc<REALTYPE> Linear;
 Echo::Echo(const int & insertion_,REALTYPE *const efxoutl_,REALTYPE *const efxoutr_)
         : Effect(insertion_,efxoutl_,efxoutr_,NULL,0),
-        Pvolume(50),Ppanning(64),//Pdelay(60),
-        Plrdelay(100),Plrcross(100),Pfb(40),Phidamp(60),
-        lrdelay(0),delaySample(1),old(0.0)
+        Pvolume(50),//Ppanning(64),
+        /**Note: random panning is not working here \todo match old panning exactly*/
+        panning(NULL,"panning",      0.5,       Linear(0,1.0),   GenControl::Real),
+        delay(  NULL,"delay",        0.70866,   Linear(0,1.5),   GenControl::Real),
+        lrdelay(NULL,"L/R delay",    0.01670838,TmpFunc(),       GenControl::Real),
+        lrcross(NULL,"L/R crossover",0.5,       Linear(0.0,1.0), GenControl::Real),
+        fb(     NULL,"Feedback",     0.313,     Linear(0,0.9922),GenControl::Real),
+        hidamp( NULL,"Dampening",    0.528,     Linear(1.0,0),   GenControl::Real),
+        //Pdelay(60),
+        //Plrdelay(100),Plrcross(100),Pfb(40),Phidamp(60),
+        //lrdelay(0),
+        delaySample(1),old(0.0)
 {
-    setpreset(Ppreset);
-    cleanup();
+    delay.addRedirection(this);
+    lrdelay.addRedirection(this);
+    //setpreset(Ppreset);
+    //cleanup();
+    initdelays();
 }
 
 Echo::~Echo() {}
@@ -41,8 +67,8 @@ Echo::~Echo() {}
  */
 void Echo::cleanup()
 {
-    delaySample.left().clear();
-    delaySample.right().clear();
+    delaySample.l().clear();
+    delaySample.r().clear();
     old=Stereo<REALTYPE>(0.0);
 }
 
@@ -55,13 +81,13 @@ void Echo::initdelays()
     /**\todo make this adjust insted of destroy old delays*/
     kl=0;
     kr=0;
-    dl=(int)(1+delay.getiVal()*SAMPLE_RATE-lrdelay);
+    dl=(int)(1+(delay()-lrdelay())*SAMPLE_RATE);//check validity
     if (dl<1) dl=1;
-    dr=(int)(1+delay.getiVal()*SAMPLE_RATE+lrdelay);
+    dr=(int)(1+(delay()+lrdelay())*SAMPLE_RATE);//check validity
     if (dr<1) dr=1;
 
-    delaySample.left()=AuSample(dl);
-    delaySample.right()=AuSample(dr);
+    delaySample.l()=AuSample(dl);
+    delaySample.r()=AuSample(dr);
 
     cleanup();
 }
@@ -75,11 +101,11 @@ void Echo::out(REALTYPE *const smpsl,REALTYPE *const smpsr)
     REALTYPE l,r,ldl,rdl;/**\todo move l+r->? ldl+rdl->?*/
     Stereo<AuSample> input(AuSample(smpsl,SOUND_BUFFER_SIZE),AuSample(smpsr,SOUND_BUFFER_SIZE));
 
-    for (int i=0;i<input.left().size();i++) {
-        ldl=delaySample.left()[kl];
-        rdl=delaySample.right()[kr];
-        l=ldl*(1.0-lrcross)+rdl*lrcross;
-        r=rdl*(1.0-lrcross)+ldl*lrcross;
+    for (int i=0;i<input.l().size();i++) {
+        ldl=delaySample.l()[kl];
+        rdl=delaySample.r()[kr];
+        l=ldl*(1.0-lrcross())+rdl*lrcross();
+        r=rdl*(1.0-lrcross())+ldl*lrcross();
         ldl=l;
         rdl=r;
 
@@ -87,14 +113,14 @@ void Echo::out(REALTYPE *const smpsl,REALTYPE *const smpsr)
         efxoutr[i]=rdl*2.0;
 
 
-        ldl=input.left()[i]*panning-ldl*fb;
-        rdl=input.right()[i]*(1.0-panning)-rdl*fb;
+        ldl=input.l()[i]*panning()-ldl*fb();
+        rdl=input.r()[i]*(1.0-panning())-rdl*fb();
 
         //LowPass Filter
-        delaySample.left()[kl]=ldl=ldl*hidamp+old.left()*(1.0-hidamp);
-        delaySample.right()[kr]=rdl=rdl*hidamp+old.right()*(1.0-hidamp);
-        old.left()=ldl;
-        old.right()=rdl;
+        delaySample.l()[kl]=ldl=ldl*hidamp()+old.l()*(1.0-hidamp());
+        delaySample.r()[kr]=rdl=rdl*hidamp()+old.r()*(1.0-hidamp());
+        old.l()=ldl;
+        old.r()=rdl;
 
         if (++kl>=dl) kl=0;
         if (++kr>=dr) kr=0;
@@ -106,7 +132,7 @@ void Echo::out(REALTYPE *const smpsl,REALTYPE *const smpsr)
 /*
  * Parameter control
  */
-void Echo::setvolume(const unsigned char & Pvolume)
+void Echo::setvolume(char Pvolume)
 {
     this->Pvolume=Pvolume;
 
@@ -120,47 +146,47 @@ void Echo::setvolume(const unsigned char & Pvolume)
 
 }
 
-void Echo::setpanning(const unsigned char & Ppanning)
-{
-    this->Ppanning=Ppanning;
-    panning=(Ppanning+0.5)/127.0;
-}
+//void Echo::setpanning(char Ppanning)
+//{
+    //this->Ppanning=Ppanning;
+    //panning = (Ppanning+0.5)/127.0;
+//}
 
-void Echo::setdelay(const unsigned char & Pdelay)
-{
-    delay.setValue(Pdelay);
+//void Echo::setdelay(char Pdelay)
+//{
+//    delay.setValue(Pdelay);
     //this->Pdelay=Pdelay;
     //delay=1+(int)(Pdelay/127.0*SAMPLE_RATE*1.5);//0 .. 1.5 sec
-    initdelays();
-}
+//    initdelays();
+//}
 
-void Echo::setlrdelay(const unsigned char & Plrdelay)
-{
-    REALTYPE tmp;
-    this->Plrdelay=Plrdelay;
-    tmp=(pow(2,fabs(Plrdelay-64.0)/64.0*9)-1.0)/1000.0*SAMPLE_RATE;
-    if (Plrdelay<64.0) tmp=-tmp;
-    lrdelay=(int) tmp;
-    initdelays();
-}
+//void Echo::setlrdelay(char Plrdelay)
+//{
+//    REALTYPE tmp;
+//    this->Plrdelay=Plrdelay;
+//    tmp=(pow(2,fabs(Plrdelay-64.0)/64.0*9)-1.0)/1000.0*SAMPLE_RATE;
+//    if (Plrdelay<64.0) tmp=-tmp;
+//    lrdelay=(int) tmp;
+//    initdelays();
+//}
 
-void Echo::setlrcross(const unsigned char & Plrcross)
-{
-    this->Plrcross=Plrcross;
-    lrcross=Plrcross/127.0*1.0;
-}
+//void Echo::setlrcross(char Plrcross)
+//{
+    //this->Plrcross=Plrcross;
+    //lrcross=Plrcross/127.0*1.0;
+//}
 
-void Echo::setfb(const unsigned char & Pfb)
-{
-    this->Pfb=Pfb;
-    fb=Pfb/128.0;
-}
+//void Echo::setfb(char Pfb)
+//{
+    //this->Pfb=Pfb;
+    //fb=Pfb/128.0;
+//}
 
-void Echo::sethidamp(const unsigned char & Phidamp)
-{
-    this->Phidamp=Phidamp;
-    hidamp=1.0-Phidamp/127.0;
-}
+//void Echo::sethidamp(char Phidamp)
+//{
+    //this->Phidamp=Phidamp;
+    //hidamp=1.0-Phidamp/127.0;
+//}
 
 void Echo::setpreset(unsigned char npreset)
 {
@@ -196,58 +222,64 @@ void Echo::setpreset(unsigned char npreset)
 }
 
 
-void Echo::changepar(const int & npar,const unsigned char & value)
+void Echo::changepar(const int &npar,const unsigned char &value)
 {
+    char tmp=value;//hack until removal of unsigned
     switch (npar) {
     case 0:
         setvolume(value);
         break;
     case 1:
-        setpanning(value);
+        panning.setValue(tmp);
         break;
     case 2:
-        setdelay(value);
+        delay.setValue(tmp);
         break;
     case 3:
-        setlrdelay(value);
+        lrdelay.setValue(tmp);
         break;
     case 4:
-        setlrcross(value);
+        lrcross.setValue(tmp);
         break;
     case 5:
-        setfb(value);
+        fb.setValue(tmp);
         break;
     case 6:
-        sethidamp(value);
+        hidamp.setValue(tmp);
         break;
     };
 }
 
-unsigned char Echo::getpar(const int & npar)const
+unsigned char Echo::getpar(const int &npar)const
 {
     switch (npar) {
     case 0:
         return(Pvolume);
         break;
     case 1:
-        return(Ppanning);
+        return(panning.getValue());
         break;
     case 2:
         return(delay.getValue());
         break;
     case 3:
-        return(Plrdelay);
+        return(lrdelay.getValue());
         break;
     case 4:
-        return(Plrcross);
+        return(lrcross.getValue());
         break;
     case 5:
-        return(Pfb);
+        return(fb.getValue());
         break;
     case 6:
-        return(Phidamp);
+        return(hidamp.getValue());
         break;
     };
     return(0);// in case of bogus parameter number
 }
 
+void Echo::handleEvent(Event &ev)
+{
+    if(ev.type()==Event::UpdateEvent)
+        initdelays();
+}
