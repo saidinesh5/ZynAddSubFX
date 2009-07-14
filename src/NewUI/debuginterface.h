@@ -4,7 +4,19 @@
 #include <QDialog>
 #include "../Controls/Node.h"
 
-class DebugInterface : public QDialog, public NodeUser
+class EventReceiver : public QObject, public NodeUser
+{
+    Q_OBJECT
+    public:
+        EventReceiver(Node *node);
+        void handleEvent(Event &event);
+        Node *registeredNode;
+
+    signals:
+        void newEvent(Node *node, QString info);
+};
+
+class DebugInterface : public QDialog
 {
     Q_OBJECT
 
@@ -13,12 +25,15 @@ class DebugInterface : public QDialog, public NodeUser
         void handleEvent(Event &event);
 
     signals:
-        void newEvent(QString info);
+        void newEvent(Node *node, QString info);
 
     private slots:
-        void receiveEvent(QString info);
+        void receiveEvent(Node* node, QString info);
 
     private:
+
+        void createEventReceivers(class Node *parent);
+
         class Master *master;
         class QTextEdit *text;
         class Tree *tree;

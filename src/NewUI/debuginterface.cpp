@@ -6,14 +6,35 @@
 #include <QScrollBar>
 #include "../Misc/Master.h"
 
+EventReceiver::EventReceiver(Node *node)
+    : registeredNode(node)
+{
+    registeredNode->addRedirection(this);
+}
+
+void EventReceiver::handleEvent(Event &event)
+{
+    //this is the place to make it print actual useful info about the event
+    QString info;
+
+    if (event.type() == Event::ChangeEvent) {
+        info += "(ChangeEvent) ";
+        info += "val:" + QString::number(static_cast<ChangeEvent&>(event).getVal());
+    } else if (event.type() == Event::NewValueEvent) {
+        info += "(NewValueEvent) ";
+    } else {
+        info += "(Unknown event type: " + int(event.type()) + QString(")");
+    }
+    emit newEvent(registeredNode, info);
+}
+
 class Tree : public QTreeWidget
 {
     public:
         NodeUser *user;
-        
-        Tree(QWidget *parent, NodeUser *user)
-            : QTreeWidget(parent),
-            user(user)
+
+        Tree(QWidget *parent)
+            : QTreeWidget(parent)
         {
             setColumnCount(1);
 
@@ -24,7 +45,6 @@ class Tree : public QTreeWidget
                 QTreeWidgetItem *item = new QTreeWidgetItem(this);
                 item->setText(0, QString::fromStdString((*i)->getId()));
                 addChildren(*i, item);
-                (*i)->addRedirection(user);
             }
 
         }
@@ -39,7 +59,6 @@ class Tree : public QTreeWidget
                 QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                 item->setText(0, QString::fromStdString((*i)->getId()));
                 addChildren(*i, item);
-                (*i)->addRedirection(user);
             }
 
         }
@@ -55,7 +74,7 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
     QVBoxLayout *layout = new QVBoxLayout(this);
     setLayout(layout);
 
-    tree = new Tree(this, this);
+    tree = new Tree(this);
 
     layout->addWidget(tree);
 
@@ -63,30 +82,32 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
 
     layout->addWidget(text);
 
-    connect(this, SIGNAL(newEvent(QString)),
-            this, SLOT(receiveEvent(QString)));
+    connect(this, SIGNAL(newEvent(Node*,QString)),
+            this, SLOT(receiveEvent(Node*,QString)));
+
+    createEventReceivers(Node::getRoot());
 
 }
 
-void DebugInterface::handleEvent(Event &event)
+void DebugInterface::createEventReceivers(class Node *parent)
 {
-    //this is the place to make it print actual useful info about the event
-    QString info;
-
-    if (event.type() == Event::ChangeEvent) {
-        info += "(ChangeEvent) ";
-        info += "val:" + QString::number(static_cast<ChangeEvent&>(event).getVal());
-    } else if (event.type() == Event::NewValueEvent) {
-        info += "(NewValueEvent) ";
-    } else {
-        info += "(Unknown event type: " + int(event.type()) + QString(")");
+    for (NodeIterator i = parent->getChildren().begin();
+            i != parent->getChildren().end();
+            ++i)
+    {
+        EventReceiver *receiver = new EventReceiver(*i);
+        connect(receiver, SIGNAL(newEvent(Node*,QString)),
+                this, SIGNAL(newEvent(Node*,QString)));
+        createEventReceivers(*i);
     }
-    emit newEvent(info);
+
 }
 
-void DebugInterface::receiveEvent(QString info)
+void DebugInterface::receiveEvent(Node* node, QString info)
 {
-    text->append(info);
+    static int counter = 0;
+    counter++;
+    text->append(QString::number(counter) + "] " + QString::fromStdString(node->getAbsoluteId()) + ": " + info);
     text->verticalScrollBar()->setValue(text->verticalScrollBar()->maximum());
 }
 
