@@ -10,6 +10,7 @@ set(zynaddsubfx_gui_SRCS
 	unitbox.cpp
 	lfobox.cpp
 	envelopebox.cpp
+    debuginterface.cpp
 	)
 
 SET( zynaddsubfx_gui_MOC_HDRS

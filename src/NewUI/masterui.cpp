@@ -4,6 +4,7 @@
 #include "../Controls/Node.h"
 #include "eventhelper.h"
 #include <QtDebug>
+#include "debuginterface.h"
 
 MasterUI::MasterUI(Master *master_,int *exitprogram_)
         : QMainWindow(NULL),
@@ -26,6 +27,8 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
     partBar->setNode(Node::find("Master.Parts"));
 
     Node::getRoot()->printTree();
+
+    (new DebugInterface(NULL, master))->show();
 }
 
 void MasterUI::refresh_master_ui()
