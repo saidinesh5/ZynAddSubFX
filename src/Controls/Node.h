@@ -11,16 +11,16 @@ class NodeUser
 public:
     /**Handle given event
      * @param event the pointer to the given event*/
-    virtual void handleEvent(Event &event) = 0;
+    virtual void handleEvent(Event *event) = 0;
     /**Handle given event durring the Sync time
      * @param event the pointer to the given event*/
-    virtual void handleSyncEvent(Event &event){handleEvent(event);};
+    virtual void handleSyncEvent(Event *event){handleEvent(event);};
 };
 
 class RedirectFilter
 {
 public:
-    virtual bool filterEvent(class Event& event) const
+    virtual bool filterEvent(class Event * event) const
         { return false; }
         //perhaps this would work better with a doFilter method
         //It would pass it on to the next filter (which could be an
@@ -39,7 +39,7 @@ class Node: public NodeUser
         virtual std::string doCreateChild(int type);
         /**Funciton used by subclasses to forward events to registered
          * NodeUsers*/
-        void forward(Event event)const;
+        void forward(Event *event)const;
 
         std::vector<std::string> m_types;
 
@@ -61,7 +61,7 @@ class Node: public NodeUser
                                         //to be misleading 
         const std::vector<std::string> getTypes();
 
-        virtual void handleEvent(Event &ev);//you might want this to stay
+        virtual void handleEvent(Event *ev);//you might want this to stay
                                              //pure virtual
         void addRedirection(NodeUser *destination, RedirectFilter filter = RedirectFilter());
 

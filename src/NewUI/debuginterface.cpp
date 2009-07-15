@@ -12,18 +12,18 @@ EventReceiver::EventReceiver(Node *node)
     registeredNode->addRedirection(this);
 }
 
-void EventReceiver::handleEvent(Event &event)
+void EventReceiver::handleEvent(Event *event)
 {
     //this is the place to make it print actual useful info about the event
     QString info;
 
-    if (event.type() == Event::ChangeEvent) {
+    if (event->type() == Event::ChangeEvent) {
         info += "(ChangeEvent) ";
-        info += "val:" + QString::number(static_cast<ChangeEvent&>(event).getVal());
-    } else if (event.type() == Event::NewValueEvent) {
+        info += "val:" + QString::number(static_cast<ChangeEvent*>(event)->getVal());
+    } else if (event->type() == Event::NewValueEvent) {
         info += "(NewValueEvent) ";
     } else {
-        info += "(Unknown event type: " + int(event.type()) + QString(")");
+        info += "(Unknown event type: " + int(event->type()) + QString(")");
     }
     emit newEvent(registeredNode, info);
 }

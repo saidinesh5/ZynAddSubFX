@@ -9,7 +9,8 @@
 
 ControlHelper::ControlHelper(QObject *parent)
         : QObject(parent),
-        m_control(NULL)
+        m_control(NULL),
+        expectedValueEvents(0)
 {
     parent->installEventFilter(this);
 }
@@ -33,12 +34,26 @@ bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
     return false;
 }
 
-void ControlHelper::handleEvent(Event &event)
+void ControlHelper::handleEvent(Event *event)
 {
-    if (event.type() == Event::NewValueEvent) {
-        qDebug() << "New value " << int(static_cast<NewValueEvent&>(event).val);
-        emit valueChanged(static_cast<NewValueEvent&>(event).val);
+    //will be called from the engine thread, so be careful (threadwise)
+    //and efficient about all processing in this function
+
+    if (event->type() == Event::NewValueEvent) {
+
+        //the logic here is: if we are expecting an event about a new value, then we will ignore it
+        //to avoid infinite loops
+        expectedEventMutex.lock();
+        if (expectedValueEvents > 0) {
+            expectedValueEvents--;
+            expectedEventMutex.unlock();
+            return;
+        }
+        expectedEventMutex.unlock();
+
+        emit valueChanged(static_cast<NewValueEvent*>(event)->val);
     }
+
 }
 
 void ControlHelper::setControl(QString absoluteId)
@@ -46,6 +61,7 @@ void ControlHelper::setControl(QString absoluteId)
     Node *node = Node::find(absoluteId.toStdString());
     m_control = dynamic_cast<GenControl*>(node);
     if (m_control) {
+        expectedValueEvents = 0;
         m_control->addRedirection(this);
         qDebug() << "Assigning " << this << " to " << absoluteId;
         m_control->requestValue();
@@ -55,9 +71,13 @@ void ControlHelper::setControl(QString absoluteId)
 
 void ControlHelper::setValue(char value)
 {
-    qDebug() << "set to " << (int)value << " but control: " << m_control;
-    if (m_control)
+    if (m_control) {
         m_control->setValue(value);
+
+        expectedEventMutex.lock();
+        expectedValueEvents++;
+        expectedEventMutex.unlock();
+    }
 }
 
 void ControlHelper::setValue(int value)

@@ -37,9 +37,9 @@ InstrumentContainer::InstrumentContainer(class Node *parent, std::string id, Mas
     m_types.push_back("Part");
 }
 
-void InstrumentContainer::handleEvent(Event& ev)
+void InstrumentContainer::handleEvent(Event * ev)
 {
-    if(ev.type()==Event::CreateNodeEvent) {
+    if(ev->type()==Event::CreateNodeEvent) {
     }
     else {
         std::cerr << "Unknown Event Received InstrumentContainer::handleEvent(Event)"
@@ -47,10 +47,10 @@ void InstrumentContainer::handleEvent(Event& ev)
     }
 }
 
-void InstrumentContainer::handleSyncEvent(Event& ev)
+void InstrumentContainer::handleSyncEvent(Event * ev)
 {
     cout << "sync event " << &ev << "\n";
-    if (ev.type()==Event::CreateNodeEvent) {
+    if (ev->type()==Event::CreateNodeEvent) {
         Part* fakeCreatedPart = m_master->part[nextFakeIndex];
         nextFakeIndex++;
 
@@ -76,7 +76,7 @@ std::string InstrumentContainer::doCreateChild(int type)
 {
     createdChild.clear();
 
-    Job *job = new NodeJob(*this, CreateNodeEvent(type));
+    Job *job = new NodeJob(*this, new CreateNodeEvent(type));
     Job::pushAndWait(job);
 
     return createdChild;

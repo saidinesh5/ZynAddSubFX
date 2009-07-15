@@ -67,7 +67,7 @@ void FloatControl::setDb2rapConversion(bool value)
     m_db2rapConversion = value;
 }
 
-void FloatControl::handleSyncEvent(Event &event)
+void FloatControl::handleSyncEvent(Event *event)
 {
 
 }

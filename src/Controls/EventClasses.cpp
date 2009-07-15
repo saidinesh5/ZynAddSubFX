@@ -1,8 +1,9 @@
 #include "EventClasses.h"
-    
+
 ChangeEvent::ChangeEvent(char nval)
     :Event(Event::ChangeEvent),val(nval) 
-{};
+{
+};
 
 UpdateEvent::UpdateEvent()
     :Event(Event::UpdateEvent)

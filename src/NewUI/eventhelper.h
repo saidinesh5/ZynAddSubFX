@@ -10,7 +10,7 @@ class EventHelper : public QObject, public NodeUser
 
 public:
     EventHelper(QObject *parent);
-    void handleEvent(Event &event);
+    void handleEvent(Event *event);
     static class EventHelper* getInstance();
 
 signals:

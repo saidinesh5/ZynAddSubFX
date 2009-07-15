@@ -21,40 +21,36 @@
 */
 
 template <class T>
-void Control<T>::handleSyncEvent(Event &ev)
+void Control<T>::handleSyncEvent(Event *ev)
 {
-    std::cout << "Control::handleSyncEvent: ";
-
     //this is when the control value is to be changed to
     //something else
-    if (ev.type() == Event::ChangeEvent) {
-        std::cout << "changeevent";
-        value = func(static_cast<ChangeEvent&>(ev).getVal());
-        forward(NewValueEvent(static_cast<ChangeEvent&>(ev).getVal()));
+    if (ev->type() == Event::ChangeEvent) {
+        char charval = static_cast<ChangeEvent*>(ev)->getVal();
+        value = func(charval);
+        forward(new NewValueEvent(charval));
 
         //and this is for reading the value of the control
-    } else if (ev.type() == Event::RequestValueEvent) {
-        std::cout << "requestvalueevent";
-        forward(NewValueEvent(func(value)));
+    } else if (ev->type() == Event::RequestValueEvent) {
+        forward(new NewValueEvent(func(value)));
     }
-    std::cout << "\n";
  }
 
 template <class T>
 void Control<T>::setValue(const T &val)
 {
     value = val;
-    forward(NewValueEvent(func(value)));
+    forward(new NewValueEvent(func(value)));
 }
 
 template <class T>
 void Control<T>::setValue(char val)
 {
-    Job::push(new NodeJob(*this, ChangeEvent(val)));
+    Job::push(new NodeJob(*this, new ChangeEvent(val)));
 }
 
 template <class T>
 void Control<T>::requestValue()
 {
-    Job::push(new NodeJob(*this, RequestValueEvent()));
+    Job::push(new NodeJob(*this, new RequestValueEvent()));
 }

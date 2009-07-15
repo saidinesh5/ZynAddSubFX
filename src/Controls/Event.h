@@ -19,15 +19,19 @@ class Event
     friend class RequestValueEvent;
     friend class CreateNodeEvent;
     friend class NewNodeEvent;
+    friend class Node;
 
 public:
     enum ev_type {ChangeEvent,UpdateEvent,CreateNodeEvent,
     NewNodeEvent, NewValueEvent, RequestValueEvent};
     virtual ev_type type() const {return internalType;};
+    virtual ~Event();
 
 private:
-    Event(enum ev_type ntype):internalType(ntype) {};
+    Event(enum ev_type ntype);
     enum ev_type internalType;
+    bool isOwned;
+    static int ref;
 };
 
 

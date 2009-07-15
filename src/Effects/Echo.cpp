@@ -278,8 +278,8 @@ unsigned char Echo::getpar(const int &npar)const
     return(0);// in case of bogus parameter number
 }
 
-void Echo::handleEvent(Event &ev)
+void Echo::handleEvent(Event *ev)
 {
-    if(ev.type()==Event::UpdateEvent)
+    if(ev->type()==Event::UpdateEvent)
         initdelays();
 }

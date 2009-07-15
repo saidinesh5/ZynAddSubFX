@@ -25,7 +25,7 @@ public:
 
     void setDb2rapConversion(bool value);
 
-    virtual void handleSyncEvent(Event &event);
+    virtual void handleSyncEvent(Event *event);
 
 private:
     inline float toFloat(char val) const;

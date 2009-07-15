@@ -98,7 +98,7 @@ public:
      */
     unsigned char getpar(const int &npar)const;
 
-    void handleEvent(Event &ev);
+    void handleEvent(Event *ev);
 
     /**\todo see if this needs to get implemented*/
     int getnumparams()const;

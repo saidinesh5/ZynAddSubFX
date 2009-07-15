@@ -7,8 +7,15 @@ using std::string;
 
 Node* Node::m_root = NULL;
 
-void Node::forward(Event event) const
+void Node::forward(Event *event) const
 {
+    bool deleteIt = false;
+
+    if (!event->isOwned) {
+        event->isOwned = true;
+        deleteIt = true;
+    }
+
     vector<Redirection>::const_iterator it;
     for (it = m_rules.begin(); it != m_rules.end(); it++) {
 
@@ -23,6 +30,10 @@ void Node::forward(Event event) const
         //pass it on to the next node
         (*it).destination->handleEvent(event);
 
+    }
+
+    if (deleteIt) {
+        delete event;
     }
 
 }
@@ -145,7 +156,7 @@ void Node::printTree()
     }
 }
 
-void Node::handleEvent(Event &event)
+void Node::handleEvent(Event *event)
 {
     vector<Redirection>::iterator it;
     for (it = m_rules.begin(); it != m_rules.end(); it++) {

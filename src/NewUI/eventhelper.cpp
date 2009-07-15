@@ -10,7 +10,7 @@ EventHelper::EventHelper(QObject *parent)
 {
 }
 
-void EventHelper::handleEvent(Event &event)
+void EventHelper::handleEvent(Event *event)
 {
 }
 

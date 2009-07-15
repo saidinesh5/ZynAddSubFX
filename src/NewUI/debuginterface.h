@@ -9,7 +9,7 @@ class EventReceiver : public QObject, public NodeUser
     Q_OBJECT
     public:
         EventReceiver(Node *node);
-        void handleEvent(Event &event);
+        void handleEvent(Event *event);
         Node *registeredNode;
 
     signals:
@@ -22,7 +22,7 @@ class DebugInterface : public QDialog
 
     public:
         DebugInterface(QWidget *parent = NULL, class Master *master = NULL);
-        void handleEvent(Event &event);
+        void handleEvent(Event *event);
 
     signals:
         void newEvent(Node *node, QString info);

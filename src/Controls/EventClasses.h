@@ -36,6 +36,7 @@ public:
     UpdateEvent();
 };
 
+/** Emitted from the node when its value has changed **/
 class NewValueEvent : public Event
 {
     public:
@@ -43,7 +44,7 @@ class NewValueEvent : public Event
         const char val;
 };
 
-
+/** Used for requesting a node to emit its value (ie. a NewValueEvent */
 class RequestValueEvent : public Event
 {
     public:

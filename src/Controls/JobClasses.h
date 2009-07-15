@@ -7,15 +7,18 @@
 class NodeJob : public Job
 {
 public:
-    NodeJob(NodeUser &nnode, class Event nev) 
+    NodeJob(NodeUser &nnode, class Event *nev) 
         : node(nnode),ev(nev) {};
-    class Event getEvent()const{return ev;};
+    class Event* getEvent()const{return ev;};
     NodeUser& getNodeUser()const{return node;};
-    void exec(){node.handleSyncEvent(ev);};
+    void exec(){
+        node.handleSyncEvent(ev);
+        delete ev;
+    }
 
 protected:
     NodeUser &node;
-    class Event ev;
+    class Event *ev;
 };
 
 #endif

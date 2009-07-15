@@ -4,6 +4,7 @@
 #include "../Controls/Control.h"
 #include "../Controls/ControlUser.h"
 #include <QObject>
+#include <QMutex>
 
 class ControlHelper : public QObject, public NodeUser
 {
@@ -18,7 +19,7 @@ public:
     void requestValue();
 
     //reimplemented from nodeuser
-    void handleEvent(Event &event);
+    void handleEvent(Event *event);
 
 public slots:
     void setValue(char value);
@@ -30,6 +31,8 @@ signals:
 private:
     GenControl *m_control;
     QString m_relativeControlId;
+    int expectedValueEvents;
+    QMutex expectedEventMutex;
 };
 
 #endif /* ifndef _CONTROLHELPER_H_ */

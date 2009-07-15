@@ -11,8 +11,8 @@ class InstrumentContainer : public Node
 {
 public:
     InstrumentContainer(class Node* parent, std::string id, class Master *master);
-    void handleEvent(Event& ev);
-    void handleSyncEvent(Event& ev);
+    void handleEvent(Event * ev);
+    void handleSyncEvent(Event * ev);
 
 private:
     virtual std::string doCreateChild(int type);
