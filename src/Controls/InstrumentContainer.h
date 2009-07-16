@@ -16,6 +16,7 @@ public:
 
 private:
     virtual std::string doCreateChild(int type);
+    virtual void doRemoveChild(std::string name);
     class Master *m_master;
 
     int nextChildIndex;

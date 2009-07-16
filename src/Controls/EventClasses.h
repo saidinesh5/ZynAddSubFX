@@ -65,6 +65,16 @@ private:
     const unsigned int type;
 };
 
+/* Notification that a node is about to be removed */
+class RemovalEvent : public Event
+{
+    public:
+        RemovalEvent(Node *node);
+        Node * getNode() const { return node; }
+    private:
+        Node* node;
+};
+
 /**Event for notification of the creation of a new node*/
 class NewNodeEvent: public Event
 {

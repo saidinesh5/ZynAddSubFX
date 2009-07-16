@@ -9,6 +9,7 @@ class CreateNodeEvent;
 class NewNodeEvent;
 class NewValueEvent;
 class RequestValueEvent;
+class RemovalEvent;
 
 /**General Event messager class*/
 class Event
@@ -19,11 +20,13 @@ class Event
     friend class RequestValueEvent;
     friend class CreateNodeEvent;
     friend class NewNodeEvent;
+    friend class RemovalEvent;
     friend class Node;
 
 public:
     enum ev_type {ChangeEvent,UpdateEvent,CreateNodeEvent,
-    NewNodeEvent, NewValueEvent, RequestValueEvent};
+        RemovalEvent, NewNodeEvent, NewValueEvent,
+        RequestValueEvent};
     virtual ev_type type() const {return internalType;};
     virtual ~Event();
 

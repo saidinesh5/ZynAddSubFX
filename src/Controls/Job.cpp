@@ -17,13 +17,17 @@ void Job::handleJobs()
     Job *job = NULL;
     while (job = Job::pop()) {
 
+        //this must be cached, since the job might be deleted
+        //during the function that's waiting for the job (ie pushAndWait)
+        bool isWaitingForSignal = job->isWaitingForSignal;
+
         job->exec();
         if (job->isWaitingForSignal) {
             pthread_mutex_lock(&mutex);
             pthread_cond_broadcast(&job->jobExecuted);
             pthread_mutex_unlock(&mutex);
         }
-        if (!job->isWaitingForSignal)
+        if (!isWaitingForSignal)
             delete job;
     }
 }

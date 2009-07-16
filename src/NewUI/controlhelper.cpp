@@ -52,12 +52,22 @@ void ControlHelper::handleEvent(Event *event)
         expectedEventMutex.unlock();
 
         emit valueChanged(static_cast<NewValueEvent*>(event)->val);
+    } else if (event->type() == Event::RemovalEvent) {
+        
     }
-
 }
 
 void ControlHelper::setControl(QString absoluteId)
 {
+
+    if (absoluteId.isEmpty()) {
+        if (m_control) {
+            m_control->removeRedirections(this);
+            m_control = NULL;
+        }
+        return;
+    }
+
     Node *node = Node::find(absoluteId.toStdString());
     m_control = dynamic_cast<GenControl*>(node);
     if (m_control) {

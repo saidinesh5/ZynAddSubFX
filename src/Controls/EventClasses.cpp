@@ -26,3 +26,9 @@ CreateNodeEvent::CreateNodeEvent(unsigned int ntype)
 NewNodeEvent::NewNodeEvent(class Node *nnode)
     :Event(Event::NewNodeEvent),node(nnode)
 {};
+
+RemovalEvent::RemovalEvent(Node *node)
+    : Event(Event::RemovalEvent), node(node)
+{
+
+}

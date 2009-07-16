@@ -1,11 +1,35 @@
 #include "Node.h"
 
 #include <iostream>
+#include "EventClasses.h"
 
 using std::vector;
 using std::string;
 
 Node* Node::m_root = NULL;
+
+
+Node::Node(Node* parent, std::string id)
+    : m_parent(parent)
+{
+    rename(id);
+    if (m_parent)
+        m_parent->addChild(this);
+}
+
+Node::~Node()
+{
+
+
+
+    //if (m_parent) {
+        //forward(new RemovalEvent(this));
+    //}
+
+    for (vector<Node*>::iterator it = m_children.begin(); it != m_children.end(); it++) {
+        delete (*it);
+    }
+}
 
 void Node::forward(Event *event) const
 {
@@ -38,13 +62,6 @@ void Node::forward(Event *event) const
 
 }
 
-Node::Node(Node* parent, std::string id)
-    : m_parent(parent)
-{
-    rename(id);
-    if (m_parent)
-        m_parent->addChild(this);
-}
 
 const std::string& Node::getId()
 {
@@ -66,6 +83,7 @@ void Node::rename(std::string newName)
 void Node::addChild(Node* node)
 {
     m_children.push_back(node);
+    node->addRedirection(this, TypeFilter(Event::RemovalEvent));
 }
 
 bool Node::hasChildren()
@@ -123,6 +141,11 @@ string Node::doCreateChild(int type)
     return string();
 }
 
+void Node::doRemoveChild(std::string name)
+{
+
+}
+
 const std::vector<std::string> Node::getTypes()
 {
     return m_types;
@@ -131,6 +154,11 @@ const std::vector<std::string> Node::getTypes()
 string Node::createChild(int type)
 {
     return doCreateChild(type);
+}
+
+void Node::removeChild(std::string name)
+{
+    doRemoveChild(name);
 }
 
 string Node::createChild(string name)
@@ -158,22 +186,7 @@ void Node::printTree()
 
 void Node::handleEvent(Event *event)
 {
-    vector<Redirection>::iterator it;
-    for (it = m_rules.begin(); it != m_rules.end(); it++) {
-
-        //TODO: handle multiple filters here if needed
-        //RETODO: I think it might be better to have one smart filter
-        //        rather than a filter chain
-        if ((*it).filter.filterEvent(event)) {
-            continue; //event was filtered out
-        }
-
-        //event passed the filter, so
-        //pass it on to the next node
-        (*it).destination->handleEvent(event);
-
-    }
-
+    forward(event);
 }
 
 void Node::addRedirection(NodeUser *destination, RedirectFilter filter)
@@ -181,5 +194,15 @@ void Node::addRedirection(NodeUser *destination, RedirectFilter filter)
     Redirection re = {destination, filter};
     m_rules.push_back(re);
 }
+
+void Node::removeRedirections(NodeUser *destination)
+{
+    vector<Redirection>::iterator it;
+    for (it = m_rules.begin(); it != m_rules.end(); it++) {
+        if ((*it).destination == destination)
+            m_rules.erase(it);
+    }
+}
+
 
 // vim: sw=4 sts=4 et tw=100

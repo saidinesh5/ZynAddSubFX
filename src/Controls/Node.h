@@ -31,12 +31,27 @@ public:
         //list/chain
 };
 
+class TypeFilter : public RedirectFilter
+{
+    public:
+        TypeFilter(Event::ev_type type) : type(type) {}
+
+        bool filterEvent(class Event * event) const
+        {
+            if (event->type() == type) return true;
+            return false;
+        }
+    private:
+        Event::ev_type type;
+};
+
 typedef std::vector<class Node*>::const_iterator NodeIterator;
 
 class Node: public NodeUser
 {
     protected:
         virtual std::string doCreateChild(int type);
+        virtual void doRemoveChild(std::string name);
         /**Funciton used by subclasses to forward events to registered
          * NodeUsers*/
         void forward(Event *event)const;
@@ -45,6 +60,7 @@ class Node: public NodeUser
 
     public:
         Node(Node* parent, std::string id);
+        virtual ~Node();
         const std::string& getId();
         const std::string getAbsoluteId();
         void printTree();
@@ -56,6 +72,7 @@ class Node: public NodeUser
         void addChild(Node* node);
         std::string createChild(int type);
         std::string createChild(std::string name);
+        void removeChild(std::string name);
         void clearChildren();
         Node* findChild(std::string id);//should be getChild(string) find seems
                                         //to be misleading 
@@ -64,6 +81,7 @@ class Node: public NodeUser
         virtual void handleEvent(Event *ev);//you might want this to stay
                                              //pure virtual
         void addRedirection(NodeUser *destination, RedirectFilter filter = RedirectFilter());
+        void removeRedirections(NodeUser *destination);
 
         static inline Node* getRoot() { return m_root; }
         static void setRoot(Node* root) { m_root = root; }

@@ -52,10 +52,22 @@ void SiblingBar::updateFoundControls()
 
     if (!m_childContainer) return;
 
-    QString childAbsoluteId = QString::fromStdString(m_childContainer->getChildren().at(currentIndex())->getAbsoluteId());
+    QString childAbsoluteId;
+
+    if (m_childContainer->getChildren().size()) {
+        childAbsoluteId = QString::fromStdString(m_childContainer->getChildren().at(currentIndex())->getAbsoluteId());
+    } else {
+        childAbsoluteId = QString();
+    }
 
     for (QSet<ControlHelper*>::const_iterator it = m_foundControls.constBegin();
             it != m_foundControls.constEnd(); ++it) {
+
+        if (childAbsoluteId.isEmpty()) {
+            (*it)->setControl(QString()); //clear out the current control
+            qDebug() << "Cleared out control";
+            continue;
+        }
 
         if ((*it)->relativeControlId().isEmpty()) continue;
 
@@ -96,7 +108,11 @@ void SiblingBar::mouseReleaseEvent(QMouseEvent *event)
     if (response == duplicate) {
 
     } else if (response == deleteAction) {
-
+        QString tabname = tabText(tabIndex);
+        removeTab(tabIndex);
+        updateFoundControls();
+        m_childContainer->removeChild(tabname.toStdString());
+        return;
     }
 
     int typeIndex = typeActions.indexOf(response);

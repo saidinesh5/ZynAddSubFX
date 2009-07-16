@@ -4,30 +4,6 @@
 #include "JobClasses.h"
 #include <iostream>
 
-//class InstrumentAdd : public AddChild
-//{
-//public:
-    //Part* m_fakePart;
-    //std::string m_newName;
-
-    //InstrumentAdd(Part* fakeCreatedPart, std::string newName, class Node *parentContainer, int type)
-            //: AddChild(parentContainer, type)
-            //, m_fakePart(fakeCreatedPart)
-            //, m_newName(newName) {
-
-    //}
-
-    //virtual void exec() {
-        //m_fakePart->container.moveToParent(m_parentContainer);
-        //m_fakePart->container.rename(m_newName);
-
-        //m_childId = m_fakePart->container.getAbsoluteId();
-
-    //}
-//private:
-    //class Master* m_master;
-//};
-
 InstrumentContainer::InstrumentContainer(class Node *parent, std::string id, Master* master)
         : Node(parent, id),
         m_master(master),
@@ -49,7 +25,6 @@ void InstrumentContainer::handleEvent(Event * ev)
 
 void InstrumentContainer::handleSyncEvent(Event * ev)
 {
-    cout << "sync event " << &ev << "\n";
     if (ev->type()==Event::CreateNodeEvent) {
         Part* fakeCreatedPart = m_master->part[nextFakeIndex];
         nextFakeIndex++;
@@ -64,8 +39,9 @@ void InstrumentContainer::handleSyncEvent(Event * ev)
         fakeCreatedPart->container.rename(ss.str());
 
         createdChild = fakeCreatedPart->container.getAbsoluteId();
-    }
-    else {
+    } else if (ev->type() == Event::RemovalEvent) {
+        //for this "faked" deletion, nothing to do here
+    } else {
         std::cerr << "Unknown Event Received InstrumentContainer::"
             << "handleSyncEvent(Event)" << std::endl;
     }
@@ -81,4 +57,14 @@ std::string InstrumentContainer::doCreateChild(int type)
 
     return createdChild;
 
+}
+void InstrumentContainer::doRemoveChild(std::string name)
+{
+    Node *node = Node::find(getAbsoluteId() + "." + name);
+    std::cout << "Finding " << name << " returned " << node << "\n";
+
+    if (!node) return;
+
+    Job *job = new NodeJob(*this, new RemovalEvent(node));
+    Job::pushAndWait(job);
 }

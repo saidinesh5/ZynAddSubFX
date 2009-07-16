@@ -41,6 +41,7 @@ protected:
     GenControl(Node *parent, std::string id,enum controlType ntype)
         :Node(parent,id),type(ntype)
     {};
+    virtual ~GenControl() {}
 
 private:
     enum controlType type;
