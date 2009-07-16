@@ -3,12 +3,14 @@
 
 #include <QDialog>
 #include "../Controls/Node.h"
+#include <QList>
 
 class EventReceiver : public QObject, public NodeUser
 {
     Q_OBJECT
     public:
         EventReceiver(Node *node);
+        virtual ~EventReceiver();
         void handleEvent(Event *event);
         Node *registeredNode;
 
@@ -30,11 +32,11 @@ class DebugInterface : public QDialog
     private slots:
         void receiveEvent(Node* node, QString info);
         void refreshTree();
+        void createEventReceivers(class Node *parent);
 
     private:
 
-        void createEventReceivers(class Node *parent);
-
+        QList<EventReceiver*> receivers;
         class Master *master;
         class QTextEdit *text;
         class Tree *tree;

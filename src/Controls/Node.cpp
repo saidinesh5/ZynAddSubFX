@@ -198,9 +198,12 @@ void Node::addRedirection(NodeUser *destination, RedirectFilter filter)
 void Node::removeRedirections(NodeUser *destination)
 {
     vector<Redirection>::iterator it;
-    for (it = m_rules.begin(); it != m_rules.end(); it++) {
+    it = m_rules.begin();
+    while (it != m_rules.end()) {
         if ((*it).destination == destination)
-            m_rules.erase(it);
+            it = m_rules.erase(it);
+        else 
+            it++;
     }
 }
 

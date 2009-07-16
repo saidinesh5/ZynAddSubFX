@@ -38,8 +38,8 @@ class TypeFilter : public RedirectFilter
 
         bool filterEvent(class Event * event) const
         {
-            if (event->type() == type) return true;
-            return false;
+            if (event->type() == type) return false;
+            return true;
         }
     private:
         Event::ev_type type;

@@ -63,8 +63,9 @@ void SiblingBar::updateFoundControls()
     for (QSet<ControlHelper*>::const_iterator it = m_foundControls.constBegin();
             it != m_foundControls.constEnd(); ++it) {
 
+        (*it)->setControl(QString()); //clear out the current control
+
         if (childAbsoluteId.isEmpty()) {
-            (*it)->setControl(QString()); //clear out the current control
             qDebug() << "Cleared out control";
             continue;
         }

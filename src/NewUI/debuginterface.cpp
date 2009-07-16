@@ -13,6 +13,11 @@ EventReceiver::EventReceiver(Node *node)
     registeredNode->addRedirection(this);
 }
 
+EventReceiver::~EventReceiver()
+{
+    registeredNode->removeRedirections(this);
+}
+
 void EventReceiver::handleEvent(Event *event)
 {
     //this is the place to make it print actual useful info about the event
@@ -133,6 +138,7 @@ void DebugInterface::createEventReceivers(class Node *parent)
             ++i)
     {
         EventReceiver *receiver = new EventReceiver(*i);
+        receivers.append(receiver);
         connect(receiver, SIGNAL(newEvent(Node*,QString)),
                 this, SIGNAL(newEvent(Node*,QString)));
         createEventReceivers(*i);
@@ -151,6 +157,11 @@ void DebugInterface::receiveEvent(Node* node, QString info)
 void DebugInterface::refreshTree()
 {
     tree->refresh();
+    foreach (EventReceiver *receiver, receivers) {
+        delete receiver;
+    }
+    receivers.clear();
+    createEventReceivers(Node::getRoot());
 }
 
 
