@@ -29,6 +29,7 @@ class DebugInterface : public QDialog
 
     private slots:
         void receiveEvent(Node* node, QString info);
+        void refreshTree();
 
     private:
 

@@ -49,6 +49,10 @@ typedef std::vector<class Node*>::const_iterator NodeIterator;
 
 class Node: public NodeUser
 {
+    //these are both debug classes
+    friend class DebugInterface;
+    friend class Tree;
+
     protected:
         virtual std::string doCreateChild(int type);
         virtual void doRemoveChild(std::string name);
