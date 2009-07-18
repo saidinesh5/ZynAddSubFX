@@ -129,4 +129,12 @@ void SiblingBar::mouseReleaseEvent(QMouseEvent *event)
 
 }
 
+QString SiblingBar::getCurrentChild()
+{
+    if (!m_childContainer) return QString();
+    if (!m_childContainer->getChildren().size()) return QString();
+
+    return QString::fromStdString(m_childContainer->getChildren().at(currentIndex())->getAbsoluteId());
+}
+
 #include "siblingbar.moc"

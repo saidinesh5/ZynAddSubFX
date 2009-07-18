@@ -10,14 +10,13 @@ class AddNoteUi : public QDialog, Ui::addnoteui
     Q_OBJECT
 
 public:
-    AddNoteUi(Master *master, int partIndex, int kitIndex);
+    AddNoteUi(QString id);
 
 private slots:
     //void simpleRefresh();
 
 private:
-    int *Pexitprogram;
-    Master *master;
+    QString id;
 };
 
 

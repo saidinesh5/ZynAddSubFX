@@ -13,6 +13,7 @@ public:
     void addControlWidgets(QWidget *widget);
     void setNode(class Node* container);
     void mouseReleaseEvent(class QMouseEvent *event);
+    QString getCurrentChild();
 
 private slots:
     void updateFoundControls();

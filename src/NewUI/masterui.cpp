@@ -41,6 +41,12 @@ void MasterUI::on_partSelector_valueChanged(int value)
     //npart = value;
 }
 
+void MasterUI::on_editInstrument_clicked()
+{
+    QString id = partBar->getCurrentChild();
+    if (!id.isEmpty()) (new AddNoteUi(id))->show();
+}
+
 void MasterUI::on_action_Quit_triggered()
 {
     *Pexitprogram = 1;
