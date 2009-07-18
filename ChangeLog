@@ -871,3 +871,9 @@
 20 Iun 2009 (Paul Nasca)
 	    - Bugfix: WAV export of PADsynth
 	    
+10 Iul 2009 (Paul Nasca)
+	    - Update copyright info
+
+11 Jul 2009 (Mark McCurry)
+	    - Added Proportinal Portamento
+	    - Replaced Docbook with AsciiDoc

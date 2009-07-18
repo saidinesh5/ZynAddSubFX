@@ -1,7 +1,7 @@
 ZynAddSubFX
 -----------
 It is a realtime software synthesizer for Linux and Windows with many features. Please see the docs for details.
-Copyright (c) 2002-2006 Nasca Octavian Paul and others contributors
+Copyright (c) 2002-2009 Nasca Octavian Paul and others contributors
 e-mail: zynaddsubfx AT yahoo D0T com
 ZynAddSubFX is free program and is distributed WITH NO WARRANTY. It is licensed under GNU General Public License version 2 (and only version 2) - see the file COPYING.
 
@@ -31,9 +31,9 @@ Requirements:
 -------------
                - a fast computer
                - Linux (tested with RedHat 7.2,7.3,etc.) or Windows
-               - FFTW 2.x.x (tested with fftw 2.0.5, 2.1.3) - necessary for
+               - FFTW 2.x.x or 3.x.x (tested with fftw 2.0.5, 2.1.3, and 3.1.3) - necessary for
   Fast Fourier computations
-	       - MXML-2.2 library from http://www.easysw.com/~mike/mxml/
+	       - MXML-2.5 library from www.minixml.org
 	       - zlib library from http://www.zlib.org - this exists in most Linux distributions
                - (for Linux) OpenSoundSystem (OSS) (if you don't have ALSA, only)
 	       - (for Windows) pthreads, portaudio
@@ -95,4 +95,4 @@ Please send me instruments,banks,master settings,songs(midi+...xmz files) done w
 
 Have fun! :-)
 
-
+--The ZynAddSubFX team
