@@ -3,6 +3,7 @@ find_package(zlib REQUIRED)
 find_package(fftw REQUIRED)
 find_package(MXML REQUIRED)
 #find_package(pthread REQUIRED)
+FIND_PACKAGE(Qt4)
 find_package(Alsa)
 find_package(JACK)
 find_package(PortAudio)
@@ -20,8 +21,10 @@ SET (GuiModule fltk CACHE STRING "GUI module, either fltk, qt or off")
 # on this
 
 if (GuiModule STREQUAL qt AND QT_FOUND)
+	message(STATUS "Using qt gui")
 	set (QtGui TRUE)
 elseif(GuiModule STREQUAL fltk AND FLTK_FOUND)
+	message(STATUS "Using fltk gui")
 	set (FltkGui TRUE)
 elseif(GuiModule STREQUAL off)
         add_definitions(-DDISABLE_GUI)
@@ -105,7 +108,6 @@ endif()
 
 
 if (QtGui)
-	FIND_PACKAGE(Qt4)
 	INCLUDE(${QT_USE_FILE})
 	include_directories(
 	${CMAKE_CURRENT_BINARY_DIR}/NewUI
@@ -114,9 +116,6 @@ if (QtGui)
 
     add_definitions(-DQT_GUI)
 
-	set(GUI_LIBRARIES
-		zynaddsubfx_gui
-		)
 
 	add_subdirectory(NewUI)
 endif()

@@ -39,4 +39,11 @@ add_library(zynaddsubfx_gui STATIC
 	${zynaddsubfx_gui_SRCS}
 	${zynaddsubfx_gui_UIS}
 	)
+
+set(GUI_LIBRARIES
+    ${QT_LIBRARIES}
+    zynaddsubfx_gui
+    PARENT_SCOPE
+    )
+
 target_link_libraries(zynaddsubfx_gui)
