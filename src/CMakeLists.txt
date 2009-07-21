@@ -169,6 +169,7 @@ set(NONGUI_LIBRARIES
     )
 
 set(CXXTEST_LINK_LIBS ${NONGUI_LIBRARIES})
+set(MIDIINPUT_LIBRARIES "")
 
 add_subdirectory(Misc)
 add_subdirectory(Input)
@@ -197,5 +198,6 @@ target_link_libraries(zynaddsubfx
         ${fftw_LIBRARIES}
         ${MXML_LIBRARIES}
         ${AUDIO_LIBRARIES}
+        ${MIDIINPUT_LIBRARIES}
 	)
 

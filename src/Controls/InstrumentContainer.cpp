@@ -31,14 +31,14 @@ void InstrumentContainer::handleSyncEvent(Event * ev)
 
         //create a child name
         std::stringstream ss;
-        ss << fakeCreatedPart->container.getId();
+        ss << fakeCreatedPart->getId();
         ss << nextChildIndex;
         nextChildIndex++;
 
-        fakeCreatedPart->container.moveToParent(this);
-        fakeCreatedPart->container.rename(ss.str());
+        fakeCreatedPart->moveToParent(this);
+        fakeCreatedPart->rename(ss.str());
 
-        createdChild = fakeCreatedPart->container.getAbsoluteId();
+        createdChild = fakeCreatedPart->getAbsoluteId();
     } else if (ev->type() == Event::RemovalEvent) {
         //for this "faked" deletion, nothing to do here
     } else {

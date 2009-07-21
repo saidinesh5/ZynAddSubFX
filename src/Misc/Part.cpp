@@ -28,9 +28,10 @@
 #include <string.h>
 
 Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
-        :partVolume(&container, "Volume",30,db2rapInjFunc<REALTYPE>(0, 40),GenControl::Real),
-        container(NULL, "Part"),
-        Node(parent, "Part")
+        :Node(parent, "Part"),
+        partVolume(this, "Volume",30,db2rapInjFunc<REALTYPE>(0, 40),GenControl::Real),
+        instrument(this, "Instrument"),
+        instrumentKit(&instrument, "InstrumentKit")
 {
 
     //partVolume.setDb2rapConversion(true);

@@ -103,7 +103,8 @@ public:
         PADnoteParameters *padpars;
     } kit[NUM_KIT_ITEMS];
 
-    Node container;
+    Node instrument;
+    Node instrumentKit;
 
     //Part parameters
     void setkeylimit(unsigned char Pkeylimit);
