@@ -27,9 +27,10 @@
 #include <stdio.h>
 #include <string.h>
 
-Part::Part(Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
+Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
         :partVolume(&container, "Volume",30,db2rapInjFunc<REALTYPE>(0, 40),GenControl::Real),
-        container(NULL, "Part")
+        container(NULL, "Part"),
+        Node(parent, "Part")
 {
 
     //partVolume.setDb2rapConversion(true);

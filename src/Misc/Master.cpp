@@ -70,7 +70,7 @@ Master::Master()
     };
 
     for (int npart=0;npart<NUM_MIDI_PARTS;npart++)
-        part[npart]=new Part(&microtonal,fft,&mutex);
+        part[npart]=new Part(this, &microtonal,fft,&mutex);
 
 
 

@@ -37,7 +37,6 @@
 #include "../DSP/FFTwrapper.h"
 #include "../Effects/EffectMgr.h"
 #include "XMLwrapper.h"
-#include "../Controls/ControlUser.h"
 #include "../Controls/Control.h"
 //#include "../Controls/CharControl.h"
 //#include "../Controls/FloatControl.h"
@@ -46,7 +45,7 @@
 #include <list> // For the monomemnotes list.
 
 /** Part implementation*/
-class Part : public ControlUser
+class Part : public Node
 {
 
 public:
@@ -54,7 +53,7 @@ public:
      * @param microtonal_ Pointer to the microtonal object
      * @param fft_ Pointer to the FFTwrapper
      * @param mutex_ Pointer to the master pthread_mutex_t*/
-    Part(Microtonal *microtonal_,FFTwrapper *fft_,pthread_mutex_t *mutex_);
+    Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_,pthread_mutex_t *mutex_);
     /**Destructor*/
     ~Part();
 
