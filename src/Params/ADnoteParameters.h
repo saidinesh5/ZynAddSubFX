@@ -34,6 +34,7 @@
 #include "../Misc/XMLwrapper.h"
 #include "../DSP/FFTwrapper.h"
 #include "Presets.h"
+#include "../Controls/Control.h"
 
 enum FMTYPE {NONE,MORPH,RING_MOD,PHASE_MOD,FREQ_MOD,PITCH_MOD};
 
@@ -255,11 +256,13 @@ struct ADnoteVoiceParam {
     EnvelopeParams *FMAmpEnvelope;
 };
 
-class ADnoteParameters:public Presets
+class ADnoteParameters:public Presets, public Node
 {
 public:
-    ADnoteParameters(FFTwrapper *fft_);
+    ADnoteParameters(Node *parent, FFTwrapper *fft_);
     ~ADnoteParameters();
+
+    Control<REALTYPE> volume;
 
     ADnoteGlobalParam GlobalPar;
     ADnoteVoiceParam VoicePar[NUM_VOICES];

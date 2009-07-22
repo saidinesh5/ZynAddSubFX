@@ -25,8 +25,24 @@
 #include <math.h>
 
 #include "ADnoteParameters.h"
+#include "../Misc/db2rapInjFunc.h"
 
-ADnoteParameters::ADnoteParameters(FFTwrapper *fft_):Presets()
+class VolumeConv : public InjFunction<char, REALTYPE>
+{
+    public:
+        inline REALTYPE operator()(const char &x) const
+        {return( 4.0 * pow(0.1 , 3.0* (1.0-x/96.0)));};
+
+        inline char operator()(const REALTYPE &x) const
+        { return(char( 96 * (1 - (1/(3 * log(0.1))) * (log(x) - log(4)))));};
+
+};
+
+ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_):
+    Presets(),
+    Node(parent, "ADnoteParameters"),
+    volume(this, "Volume", 10, new VolumeConv, GenControl::Real)
+    //note: the original convertion functon is found in ADnote.cpp:337
 {
     setpresettype("Padsyth");
     fft=fft_;
@@ -64,6 +80,8 @@ void ADnoteParameters::defaults()
 
     /* Amplitude Global Parameters */
     GlobalPar.PVolume=90;
+    volume.resetDefault();
+
     GlobalPar.PPanning=64;//center
     GlobalPar.PAmpVelocityScaleFunction=64;
     GlobalPar.AmpEnvelope->defaults();
@@ -373,7 +391,8 @@ void ADnoteParameters::add2XML(XMLwrapper *xml)
     xml->addparbool("stereo",GlobalPar.PStereo);
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
-    xml->addpar("volume",GlobalPar.PVolume);
+    //xml->addpar("volume",GlobalPar.PVolume);
+    xml->addpar("volume",volume.getCharValue());
     xml->addpar("panning",GlobalPar.PPanning);
     xml->addpar("velocity_sensing",GlobalPar.PAmpVelocityScaleFunction);
     xml->addpar("punch_strength",GlobalPar.PPunchStrength);
@@ -443,7 +462,8 @@ void ADnoteParameters::getfromXML(XMLwrapper *xml)
     GlobalPar.PStereo=xml->getparbool("stereo",GlobalPar.PStereo);
 
     if (xml->enterbranch("AMPLITUDE_PARAMETERS")) {
-        GlobalPar.PVolume=xml->getpar127("volume",GlobalPar.PVolume);
+        //GlobalPar.PVolume=xml->getpar127("volume",GlobalPar.PVolume);
+        volume.setCharValue(char(xml->getpar127("volume",volume.getCharValue())));
         GlobalPar.PPanning=xml->getpar127("panning",GlobalPar.PPanning);
         GlobalPar.PAmpVelocityScaleFunction=xml->getpar127("velocity_sensing",GlobalPar.PAmpVelocityScaleFunction);
 

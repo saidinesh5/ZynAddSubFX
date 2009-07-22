@@ -21,26 +21,44 @@
 */
 
 template <class T>
+Control<T>::Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> *nfunc,enum controlType type)
+    :GenControl(parent,id,type),value(defaultval),defaultval(defaultval),func(nfunc)
+{
+    char c = 10;
+    T v = (*func)(c);
+    if (char((*func)(v)) != c) {
+        std::cerr << "Warning: function is not reflective\n";
+    }
+}
+
+template <class T>
+Control<T>::~Control()
+{
+    delete func;
+}
+
+template <class T>
 void Control<T>::handleSyncEvent(Event *ev)
 {
     //this is when the control value is to be changed to
     //something else
     if (ev->type() == Event::ChangeEvent) {
         char charval = static_cast<ChangeEvent*>(ev)->getVal();
-        value = func(charval);
+        value = (*func)(charval);
+        std::cout << "Received charval: " << int(charval) << " and new value " << value << "\n";
         forward(new NewValueEvent(charval));
 
         //and this is for reading the value of the control
     } else if (ev->type() == Event::RequestValueEvent) {
-        forward(new NewValueEvent(func(value)));
+        forward(new NewValueEvent((*func)(value)));
     }
- }
+}
 
 template <class T>
 void Control<T>::setValue(const T &val)
 {
     value = val;
-    forward(new NewValueEvent(func(value)));
+    forward(new NewValueEvent((*func)(value)));
 }
 
 template <class T>
@@ -53,4 +71,10 @@ template <class T>
 void Control<T>::requestValue()
 {
     Job::push(new NodeJob(*this, new RequestValueEvent()));
+}
+
+template <class T>
+void Control<T>::resetDefault()
+{
+    setValue(defaultval);
 }

@@ -29,7 +29,7 @@
 
 Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
         :Node(parent, "Part"),
-        partVolume(this, "Volume",30,db2rapInjFunc<REALTYPE>(0, 40),GenControl::Real),
+        partVolume(this, "Volume",30,new db2rapInjFunc<REALTYPE>(0, 40),GenControl::Real),
         instrument(this, "Instrument"),
         instrumentKit(&instrument, "InstrumentKit")
 {
@@ -51,7 +51,7 @@ Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex
         kit[n].padpars=NULL;
     };
 
-    kit[0].adpars=new ADnoteParameters(fft);
+    kit[0].adpars=new ADnoteParameters(&instrumentKit, fft);
     kit[0].subpars=new SUBnoteParameters();
     kit[0].padpars=new PADnoteParameters(fft,mutex);
 //    ADPartParameters=kit[0].adpars;
@@ -886,7 +886,7 @@ void Part::setkititemstatus(int kititem,int Penabled_)
         kit[kititem].padpars=NULL;
         kit[kititem].Pname[0]='\0';
     } else {
-        if (kit[kititem].adpars==NULL) kit[kititem].adpars=new ADnoteParameters(fft);
+        if (kit[kititem].adpars==NULL) kit[kititem].adpars=new ADnoteParameters(&instrumentKit, fft);
         if (kit[kititem].subpars==NULL) kit[kititem].subpars=new SUBnoteParameters();
         if (kit[kititem].padpars==NULL) kit[kititem].padpars=new PADnoteParameters(fft,mutex);
     };

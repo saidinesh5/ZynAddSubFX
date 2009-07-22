@@ -31,8 +31,8 @@ template <class A,class B>
 class InjFunction
 {
 public:
-    virtual B operator()(const A &x)const { return (B)x; }
-    virtual A operator()(const B &x)const { return (A)x; }
+    virtual B operator()(const A &x)const = 0;
+    virtual A operator()(const B &x)const = 0;
 };
 #endif
 

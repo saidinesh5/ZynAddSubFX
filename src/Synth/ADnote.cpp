@@ -334,7 +334,8 @@ void ADnote::ADlegatonote(REALTYPE freq, REALTYPE velocity, int portamento_, int
 
     int nvoice,i,tmp[NUM_VOICES];
 
-    NoteGlobalPar.Volume=4.0*pow(0.1,3.0*(1.0-partparams->GlobalPar.PVolume/96.0))//-60 dB .. 0 dB
+    //NoteGlobalPar.Volume=4.0*pow(0.1,3.0*(1.0-partparams->GlobalPar.PVolume/96.0))//-60 dB .. 0 dB
+    NoteGlobalPar.Volume=partparams->volume()
                          *VelF(velocity,partparams->GlobalPar.PAmpVelocityScaleFunction);//velocity sensing
 
     globalnewamplitude=NoteGlobalPar.Volume*NoteGlobalPar.AmpEnvelope->envout_dB()*NoteGlobalPar.AmpLfo->amplfoout();
@@ -512,7 +513,7 @@ void ADnote::initparameters()
     NoteGlobalPar.AmpEnvelope=new Envelope(partparams->GlobalPar.AmpEnvelope,basefreq);
     NoteGlobalPar.AmpLfo=new LFO(partparams->GlobalPar.AmpLfo,basefreq);
 
-    NoteGlobalPar.Volume=4.0*pow(0.1,3.0*(1.0-partparams->GlobalPar.PVolume/96.0))//-60 dB .. 0 dB
+    NoteGlobalPar.Volume=partparams->volume()
                          *VelF(velocity,partparams->GlobalPar.PAmpVelocityScaleFunction);//velocity sensing
 
     NoteGlobalPar.AmpEnvelope->envout_dB();//discard the first envelope output

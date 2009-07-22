@@ -43,7 +43,7 @@ public:
         //phew, glad to get thouse out of my way. took me a lot of sweat and gdb to get this far...
 
         //prepare the default settings
-        ADnoteParameters *defaultPreset = new ADnoteParameters(new FFTwrapper(OSCIL_SIZE));
+        ADnoteParameters *defaultPreset = new ADnoteParameters(NULL, new FFTwrapper(OSCIL_SIZE));
         XMLwrapper *wrap = new XMLwrapper();
         wrap->loadXMLfile("src/Tests/guitar-adnote.xmz");
         TS_ASSERT(wrap->enterbranch("MASTER"));

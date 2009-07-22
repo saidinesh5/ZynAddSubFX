@@ -23,6 +23,7 @@
 #define CONTROL_H
 
 #include <string>
+#include <iostream>
 #include "GenControl.h"
 #include "EventClasses.h"
 #include "../Misc/InjFunction.h"
@@ -35,29 +36,36 @@ template <class T> //please do not define this to be char as InjFunction should 
 class Control:public GenControl
 {
 public:
-    Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> &nfunc,enum controlType type)
-        :GenControl(parent,id,type),value(defaultval),defaultval(defaultval),func(nfunc){};
-
-    virtual ~Control() {}
+    Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> *nfunc,enum controlType type);
+    virtual ~Control();
 
     inline T operator()() const {return value;};//It seems to make sense for a control to just return its value when this is called
     std::string getString() const {return "hm, this should get implemented, but not yet :p";};
 
     void handleEvent(Event *ev) {}
     void handleSyncEvent(Event *ev);
-    void setValue(const T &val);
-    void setValue(char val);
+
+
+    void setValue(const T &val); //async
+    inline T getValue() const { return value; } //async
+
+    void setCharValue(char val) { value = (*func)(val); } //async
+    char getCharValue() const { return (*func)(value); } //async
+
+    void setValue(char val);     //sync, overridden
+
+    void resetDefault();
 
     void requestValue();
 
-    inline T getValue() const { return value; }
+
 
 private:
     T value;
     T defaultval;
 
     /**The transformation function for the control*/
-    const InjFunction<char,T> func;
+    const InjFunction<char,T> *func;
 };
 
 #include "Control.cpp"
