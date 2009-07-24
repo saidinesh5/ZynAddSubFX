@@ -1,6 +1,7 @@
 #include "masterui.h"
 #include "bankui.h"
 #include "addnoteui.h"
+#include "voicelist.h"
 #include "../Controls/Node.h"
 #include "eventhelper.h"
 #include <QtDebug>
@@ -43,6 +44,8 @@ void MasterUI::on_partSelector_valueChanged(int value)
 
 void MasterUI::on_editInstrument_clicked()
 {
+    (new VoiceList())->show();
+    return;
     QString id = partBar->getCurrentChild();
     if (!id.isEmpty()) (new AddNoteUi(id))->show();
 }
