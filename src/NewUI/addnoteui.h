@@ -1,11 +1,11 @@
 #include <QDialog>
 #include "../Misc/Master.h"
-#include "ui_addnoteui.h"
+#include "ui_newaddnote.h"
 
 #ifndef _ADDNOTEUI_H_
 #define _ADDNOTEUI_H_
 
-class AddNoteUi : public QDialog, Ui::addnoteui
+class AddNoteUi : public QDialog, Ui::AddNoteUi
 {
     Q_OBJECT
 

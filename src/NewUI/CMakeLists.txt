@@ -26,7 +26,8 @@ SET( zynaddsubfx_gui_MOC_HDRS
 
 SET( zynaddsubfx_gui_UIS
 	masterUI.ui
-	addnoteui.ui
+    #addnoteui.ui
+    newaddnote.ui
 	lfobox.ui
 	envelopebox.ui
 )
