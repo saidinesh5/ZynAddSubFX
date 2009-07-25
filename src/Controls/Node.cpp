@@ -105,7 +105,8 @@ void Node::moveToParent(Node *parent)
     m_parent = parent;
     rename(m_id);
 
-    m_parent->addChild(this);
+    if (m_parent)
+        m_parent->addChild(this);
 }
 
 Node* Node::findChild(std::string id)

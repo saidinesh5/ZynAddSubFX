@@ -7,6 +7,7 @@ set(zynaddsubfx_controls_SRCS
     Job.cpp
     #ControlContainer.cpp
     InstrumentContainer.cpp
+    FakeChildFactory.cpp
     #FloatControl.cpp
     #CharControl.cpp
     #DelayCtl.cpp

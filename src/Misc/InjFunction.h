@@ -21,6 +21,9 @@
 */
 #ifndef _INJFUNCTION_H
 #define _INJFUNCTION_H
+
+#include "../globals.h"
+
 /**Injective Function
  *
  * This means that the object contains a function that will translate
@@ -33,6 +36,10 @@ class InjFunction
 public:
     virtual B operator()(const A &x)const = 0;
     virtual A operator()(const B &x)const = 0;
+
+    char round(REALTYPE val) {
+        return char(val + 0.5);
+    }
 };
 #endif
 

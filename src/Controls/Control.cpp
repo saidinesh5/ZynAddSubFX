@@ -24,10 +24,13 @@ template <class T>
 Control<T>::Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> *nfunc,enum controlType type)
     :GenControl(parent,id,type),value(defaultval),defaultval(defaultval),func(nfunc)
 {
-    char c = 10;
-    T v = (*func)(c);
-    if (char((*func)(v)) != c) {
-        std::cerr << "Warning: function is not reflective\n";
+    for (char c = 0; c < 127; ++c) {
+        T v = (*func)(c);
+        char backval = char((*func)(v));
+        if (backval != c) {
+            std::cerr << " Warning: (" << int(c) << " != " << int(backval) << ") function is not reflective\n";
+            break;
+        }
     }
 }
 
@@ -45,7 +48,7 @@ void Control<T>::handleSyncEvent(Event *ev)
     if (ev->type() == Event::ChangeEvent) {
         char charval = static_cast<ChangeEvent*>(ev)->getVal();
         value = (*func)(charval);
-        std::cout << "Received charval: " << int(charval) << " and new value " << value << "\n";
+        std::cout << getAbsoluteId() << "Received charval: " << int(charval) << " and new value " << value << "\n";
         forward(new NewValueEvent(charval));
 
         //and this is for reading the value of the control

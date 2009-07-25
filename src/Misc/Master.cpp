@@ -34,7 +34,7 @@
 Master::Master()
         : Node(NULL, "Master"),
         masterVolume(this, "Volume", 30.0,new db2rapInjFunc<REALTYPE>(0.0, 50.0),GenControl::Real),
-        instrumentContainer(this, "Parts", this),
+        parts(this, "Parts"),
         eventsNode(this, "Events")
 {
     Node::setRoot(this);
@@ -69,8 +69,12 @@ Master::Master()
         audiooutr[i]=0.0;
     };
 
-    for (int npart=0;npart<NUM_MIDI_PARTS;npart++)
-        part[npart]=new Part(this, &microtonal,fft,&mutex);
+    parts.addType("Part");
+    for (int npart=0;npart<NUM_MIDI_PARTS;npart++) {
+        Part *p = new Part(NULL, &microtonal,fft,&mutex);
+        part[npart]=p;
+        parts << p;
+    }
 
 
 
@@ -96,10 +100,6 @@ void Master::defaults()
         part[npart]->defaults();
         part[npart]->Prcvchn=npart%NUM_MIDI_CHANNELS;
     };
-
-    //create an instrument
-    //instrumentContainer.clear();
-    //instrumentContainer.createNode(0);
 
     partonoff(0,1);//enable the first part
 

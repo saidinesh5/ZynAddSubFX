@@ -37,7 +37,7 @@
 #include "../Controls/Node.h"
 #include "../Controls/Control.h"
 #include "LinInjFunc.h"
-#include "../Controls/InstrumentContainer.h"
+#include "../Controls/FakeChildFactory.h"
 
 extern Dump dump;
 /** It sends Midi Messages to Parts, receives samples from parts,
@@ -144,7 +144,7 @@ public:
     Node eventsNode;
 
     Control<REALTYPE> masterVolume;
-    InstrumentContainer instrumentContainer;
+    FakeChildFactory parts;
 
 private:
 

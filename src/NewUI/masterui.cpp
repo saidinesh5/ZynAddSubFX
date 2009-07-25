@@ -16,9 +16,9 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
     qDebug() << "Trying to find control Master.Volume";
     //qDebug() << "Returned " << Node::getRoot()->findControl("Master.Volume");
 
-    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createChild(0));
-    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createChild(0));
-    qDebug() << "Got new child at " << QString::fromStdString(master->instrumentContainer.createChild(0));
+    qDebug() << "Got new child at " << QString::fromStdString(master->parts.createChild(0));
+    qDebug() << "Got new child at " << QString::fromStdString(master->parts.createChild(0));
+    qDebug() << "Got new child at " << QString::fromStdString(master->parts.createChild(0));
 
     setupUi(this);
     EventHelper::getInstance();
