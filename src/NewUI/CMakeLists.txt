@@ -11,6 +11,8 @@ set(zynaddsubfx_gui_SRCS
 	lfobox.cpp
 	envelopebox.cpp
     debuginterface.cpp
+    collapsableframe.cpp
+    voicelist.cpp
 	)
 
 SET( zynaddsubfx_gui_MOC_HDRS
@@ -22,13 +24,18 @@ SET( zynaddsubfx_gui_MOC_HDRS
 	lfobox.h
 	envelopebox.h
 	siblingbar.h
+    collapsableframe.h
+    voicelist.h
 )
 
 SET( zynaddsubfx_gui_UIS
 	masterUI.ui
-	addnoteui.ui
+    #addnoteui.ui
+    newaddnote.ui
 	lfobox.ui
 	envelopebox.ui
+    collapsableframe.ui
+    voicelist.ui
 )
 
 qt4_wrap_ui(zynaddsubfx_gui_UIS_HDRS ${zynaddsubfx_gui_UIS} )
