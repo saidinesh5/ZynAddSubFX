@@ -34,8 +34,7 @@
 Master::Master()
         : Node(NULL, "Master"),
         masterVolume(this, "Volume", -6.66,new db2rapInjFunc<REALTYPE>(-40, 12.91666),GenControl::Real),
-        parts(this, "Parts"),
-        eventsNode(this, "Events")
+        parts(this, "Parts")
 {
     Node::setRoot(this);
 

@@ -141,8 +141,6 @@ public:
     FFTwrapper *fft;
     pthread_mutex_t mutex;
 
-    Node eventsNode;
-
     Control<REALTYPE> masterVolume;
     FakeChildFactory parts;
 
