@@ -29,7 +29,7 @@
 
 Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
         :Node(parent, "Part"),
-        partVolume(this, "Volume",30,new db2rapInjFunc<REALTYPE>(0, 40),GenControl::Real),
+        partVolume(this, "Volume",30,new db2rapInjFunc<REALTYPE>(-40, 12.91666),GenControl::Real),
         instrument(this, "Instrument"),
         instrumentKit(&instrument, "InstrumentKit")
 {

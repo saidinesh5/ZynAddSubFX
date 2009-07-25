@@ -33,7 +33,7 @@
 
 Master::Master()
         : Node(NULL, "Master"),
-        masterVolume(this, "Volume", 30.0,new db2rapInjFunc<REALTYPE>(0.0, 50.0),GenControl::Real),
+        masterVolume(this, "Volume", -6.66,new db2rapInjFunc<REALTYPE>(-40, 12.91666),GenControl::Real),
         parts(this, "Parts"),
         eventsNode(this, "Events")
 {
