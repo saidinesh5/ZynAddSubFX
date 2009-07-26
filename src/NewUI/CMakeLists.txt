@@ -13,6 +13,7 @@ set(zynaddsubfx_gui_SRCS
     debuginterface.cpp
     collapsableframe.cpp
     voicelist.cpp
+    voicewidget.cpp
 	)
 
 SET( zynaddsubfx_gui_MOC_HDRS
@@ -26,6 +27,7 @@ SET( zynaddsubfx_gui_MOC_HDRS
 	siblingbar.h
     collapsableframe.h
     voicelist.h
+    voicewidget.h
 )
 
 SET( zynaddsubfx_gui_UIS
@@ -36,6 +38,8 @@ SET( zynaddsubfx_gui_UIS
 	envelopebox.ui
     collapsableframe.ui
     voicelist.ui
+    voicewidgetcollapsed.ui
+    voicewidgetexpanded.ui
 )
 
 qt4_wrap_ui(zynaddsubfx_gui_UIS_HDRS ${zynaddsubfx_gui_UIS} )
