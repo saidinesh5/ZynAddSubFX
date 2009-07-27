@@ -44,6 +44,9 @@ void SiblingBar::setNode(Node* container)
     }
 
     m_childContainer = container;
+
+    updateFoundControls();
+
 }
 
 void SiblingBar::updateFoundControls()
