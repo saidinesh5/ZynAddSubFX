@@ -73,9 +73,9 @@ void SiblingBar::updateFoundControls()
             continue;
         }
 
-        if ((*it)->relativeControlId().isEmpty()) continue;
+        if ((*it)->controlId().isEmpty()) continue;
 
-        (*it)->setControl(childAbsoluteId + "." + (*it)->relativeControlId());
+        (*it)->setControl(childAbsoluteId + "." + (*it)->controlId());
         qDebug() << "Control " << *it << " changed to " << (*it)->getControlId();
 
     }

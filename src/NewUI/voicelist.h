@@ -6,7 +6,7 @@
 class VoiceList : public QDialog, public Ui::VoiceList
 {
     public:
-        VoiceList(QWidget *parent = NULL);
+        VoiceList(QString partPath, QWidget *parent = NULL);
 };
 
 #endif // VOICELIST_H

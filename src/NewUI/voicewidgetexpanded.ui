@@ -48,6 +48,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="controlId" stdset="0">
+      <string>Volume</string>
+     </property>
     </widget>
    </item>
    <item row="5" column="0">
@@ -100,6 +103,9 @@
        <widget class="QSlider" name="horizontalSlider">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="controlId" stdset="0">
+         <string>heidu</string>
         </property>
        </widget>
       </item>

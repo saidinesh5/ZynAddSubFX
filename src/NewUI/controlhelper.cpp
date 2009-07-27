@@ -21,13 +21,13 @@ bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
         QDynamicPropertyChangeEvent *ev =
             (QDynamicPropertyChangeEvent*)event;
         Q_ASSERT(ev);
-        if (ev->propertyName() == "controlId") {
-            QString newControl = watched->property("controlId").toString();
+        if (ev->propertyName() == "absoluteControlId") {
+            QString newControl = watched->property("absoluteControlId").toString();
             setControl(newControl);
             return true;
         }
-        if (ev->propertyName() == "relativeControlId") {
-            m_relativeControlId = watched->property("relativeControlId").toString();
+        if (ev->propertyName() == "controlId") {
+            m_controlId = watched->property("controlId").toString();
             return true;
         }
     }
@@ -103,9 +103,9 @@ QString ControlHelper::getControlId()
         return "Undefined";
 }
 
-QString ControlHelper::relativeControlId() const
+QString ControlHelper::controlId() const
 {
-    return m_relativeControlId;
+    return m_controlId;
 }
 
 void ControlHelper::requestValue()

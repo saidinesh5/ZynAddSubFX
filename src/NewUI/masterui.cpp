@@ -44,7 +44,7 @@ void MasterUI::on_partSelector_valueChanged(int value)
 
 void MasterUI::on_editInstrument_clicked()
 {
-    (new VoiceList())->show();
+    (new VoiceList(partBar->getCurrentChild()))->show();
     return;
     QString id = partBar->getCurrentChild();
     if (!id.isEmpty()) (new AddNoteUi(id))->show();

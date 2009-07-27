@@ -133,7 +133,6 @@ class MidiLearnNode : public Node
             } else {
 
                 if (learnedchan == mid->chan && learnedtype == mid->type) {
-                    std::cout << mid->par << "\n";
                     parent->setValue(char(mid->par));
                 }
 

@@ -46,7 +46,7 @@ class ControlHelper : public QObject, public NodeUser
          * @return The absoluteid for the control, as derived from the qt property of the parent
          * control. This is typically a value that is set directly in the qt designer.
          */
-        QString relativeControlId() const;
+        QString controlId() const;
 
         /** 
          * @brief Tell the connected control to send an event with its current value. Usually this
@@ -88,7 +88,7 @@ class ControlHelper : public QObject, public NodeUser
 
     private:
         GenControl *m_control;
-        QString m_relativeControlId;
+        QString m_controlId;
         int expectedValueEvents;
         QMutex expectedEventMutex;
 };
