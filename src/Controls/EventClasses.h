@@ -75,6 +75,13 @@ class RemovalEvent : public Event
         Node* node;
 };
 
+class MidiEvent : public Event
+{
+    public:
+        MidiEvent(unsigned char chan, unsigned int type, int par);
+        int chan, type, par;
+};
+
 /**Event for notification of the creation of a new node*/
 class NewNodeEvent: public Event
 {

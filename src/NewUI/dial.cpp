@@ -1,4 +1,5 @@
 #include "dial.h"
+#include <QMenu>
 #include <QMouseEvent>
 #include <QtDebug>
 #include <QPaintEvent>
@@ -18,10 +19,13 @@ Dial::Dial(QWidget *parent)
 
     ControlHelper *helper = new ControlHelper(this);
 
-    connect(this, SIGNAL(valueChanged(int)),
+    connect(this, SIGNAL(sliderMoved(int)),
             helper, SLOT(setValue(int)));
     connect(helper, SIGNAL(valueChanged(int)),
             this, SLOT(setValue(int)));
+
+    connect(this, SIGNAL(MIDILearn()),
+            helper, SLOT(MIDILearn()));
 
     helper->requestValue();
 
@@ -29,27 +33,43 @@ Dial::Dial(QWidget *parent)
 
 void Dial::mousePressEvent(QMouseEvent* event)
 {
-    m_originalMouseY = event->y();
-    m_originalValueOnPress = value();
-    //event->accept();
+    if ((event->button() == Qt::LeftButton)) {
+        m_originalMouseY = event->y();
+        m_originalValueOnPress = value();
+        event->accept();
+    }
     //QDial::mousePressEvent(event);
 }
 
 void Dial::mouseReleaseEvent(QMouseEvent* event)
 {
-    //event->accept();
+    if ((event->button() == Qt::RightButton)) {
+        QMenu menu(this);
+        menu.addAction("Connect to midi");
+        QAction *response = menu.exec(event->globalPos());
+
+        if (response) {
+
+            emit MIDILearn();
+
+        }
+        event->accept();
+    }else {
+        m_originalMouseY = -1;
+    }
     //QDial::mouseReleaseEvent(event);
 }
 
 void Dial::mouseMoveEvent(QMouseEvent* event)
 {
-    event->accept();
     if (m_originalMouseY != -1) {
         setValue(m_originalValueOnPress +
-                 float( m_originalMouseY - event->y())
-                 * 0.5
+                float( m_originalMouseY - event->y())
+                * 0.5
                 );
+        event->accept();
     }
+    //QDial::mouseMoveEvent(event);
 }
 
 void Dial::paintEvent(class QPaintEvent *event)

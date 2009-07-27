@@ -77,9 +77,8 @@ public:
     //Midi IN
     void NoteOn(unsigned char chan,unsigned char note,unsigned char velocity);
     void NoteOff(unsigned char chan,unsigned char note);
-    void SetController(unsigned char chan,unsigned int type,int par);
+    void SetController(unsigned char chan,unsigned int type,int par, int rawtype);
     //void NRPN...
-
 
     /**Places a queue in place for shutup*/
     void queueShutUp(){shutup=1;};
@@ -159,7 +158,6 @@ private:
     //Temporary mixing samples for part samples which is sent to system effect
     REALTYPE *tmpmixl;
     REALTYPE *tmpmixr;
-
 
     int keyshift;
 

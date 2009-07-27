@@ -28,6 +28,12 @@ void EventReceiver::handleEvent(Event *event)
         info += "val:" + QString::number(static_cast<ChangeEvent*>(event)->getVal());
     } else if (event->type() == Event::NewValueEvent) {
         info += "(NewValueEvent) ";
+    } else if (event->type() == Event::MidiEvent) {
+        MidiEvent *mid = static_cast<MidiEvent*>(event);
+        info += "(MidiEvent) ";
+        info += QString::number(mid->chan) + ", ";
+        info += QString::number(mid->type) + ", ";
+        info += QString::number(mid->par);
     } else {
         info += "(Unknown event type: " + int(event->type()) + QString(")");
     }
@@ -128,6 +134,10 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
             this, SLOT(receiveEvent(Node*,QString)));
 
     createEventReceivers(Node::getRoot());
+    EventReceiver *receiver = new EventReceiver(Node::getRoot());
+    receivers.append(receiver);
+    connect(receiver, SIGNAL(newEvent(Node*,QString)),
+            this, SIGNAL(newEvent(Node*,QString)));
 
 }
 

@@ -58,6 +58,8 @@ public:
 
     void requestValue();
 
+    virtual bool MIDILearn();
+
 
 
 private:

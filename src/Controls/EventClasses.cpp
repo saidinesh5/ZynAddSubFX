@@ -32,3 +32,12 @@ RemovalEvent::RemovalEvent(Node *node)
 {
 
 }
+
+MidiEvent::MidiEvent(unsigned char chan, unsigned int type, int par) :
+    Event(Event::MidiEvent),
+    chan(chan),
+    type(type),
+    par(par)
+{
+
+}

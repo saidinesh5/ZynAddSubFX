@@ -140,7 +140,7 @@ void *thread1(void *arg)
 
         if ((cmdtype==MidiNoteON)&&(note!=0)) master->NoteOn(cmdchan,note,vel);
         if ((cmdtype==MidiNoteOFF)&&(note!=0)) master->NoteOff(cmdchan,note);
-        if (cmdtype==MidiController) master->SetController(cmdchan,cmdparams[0],cmdparams[1]);
+        if (cmdtype==MidiController) master->SetController(cmdchan,cmdparams[0],cmdparams[1], cmdparams[2]);
 
         pthread_mutex_unlock(&master->mutex);
     };

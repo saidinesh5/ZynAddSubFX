@@ -65,6 +65,7 @@ void ALSAMidiIn::getmidicmd(MidiCmdType &cmdtype,unsigned char &cmdchan,int *cmd
     snd_seq_event_input(midi_handle,&midievent);
 
     if (midievent==NULL) return;
+
     switch (midievent->type) {
     case SND_SEQ_EVENT_NOTEON:
         cmdtype=MidiNoteON;
@@ -88,6 +89,7 @@ void ALSAMidiIn::getmidicmd(MidiCmdType &cmdtype,unsigned char &cmdchan,int *cmd
         cmdchan=midievent->data.control.channel;
         cmdparams[0]=getcontroller(midievent->data.control.param);
         cmdparams[1]=midievent->data.control.value;
+        cmdparams[2]=midievent->data.control.param;
         //fprintf(stderr,"t=%d val=%d\n",midievent->data.control.param,midievent->data.control.value);
         break;
 

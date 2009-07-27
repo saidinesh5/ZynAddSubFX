@@ -115,4 +115,11 @@ void ControlHelper::requestValue()
     }
 }
 
+void ControlHelper::MIDILearn()
+{
+    if (m_control) {
+        bool result = m_control->MIDILearn();
+    }
+}
+
 #include "controlhelper.moc"

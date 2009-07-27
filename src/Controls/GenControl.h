@@ -25,6 +25,7 @@
 #include <string>
 #include "Node.h"
 
+
 /**A control for a parameter within the program*/
 class GenControl : public Node
 {
@@ -36,15 +37,18 @@ public:
     virtual std::string getString() const=0;
     enum controlType getType(){return type;};
 
+    virtual bool MIDILearn()=0;
+
     virtual void requestValue()=0;
 protected:
     GenControl(Node *parent, std::string id,enum controlType ntype)
-        :Node(parent,id),type(ntype)
+        :Node(parent,id),type(ntype),midichan(0), miditype(0)
     {};
     virtual ~GenControl() {}
 
 private:
     enum controlType type;
+    int midichan, miditype;
 
     //std::string m_description;
 };

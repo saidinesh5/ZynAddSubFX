@@ -30,6 +30,7 @@
 #include <unistd.h>
 #include "../Controls/Job.h"
 #include "db2rapInjFunc.h"
+#include <../Controls/Event.h>
 
 Master::Master()
         : Node(NULL, "Master"),
@@ -178,11 +179,14 @@ void Master::noteoff(unsigned char chan,unsigned char note)
 /*
  * Controllers
  */
-void Master::SetController(unsigned char chan,unsigned int type,int par)
+void Master::SetController(unsigned char chan,unsigned int type,int par, int rawtype)
 {
     dump.dumpcontroller(chan,type,par);
 
     setcontroller(chan,type,par);
+
+    forward(new MidiEvent(chan, rawtype, par));
+
 };
 
 /*

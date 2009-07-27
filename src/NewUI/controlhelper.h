@@ -24,6 +24,7 @@ public:
 public slots:
     void setValue(char value);
     void setValue(int value);
+    void MIDILearn();
 
 signals:
     void valueChanged(int value);

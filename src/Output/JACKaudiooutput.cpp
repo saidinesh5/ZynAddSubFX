@@ -140,12 +140,12 @@ void JACKhandlemidi(unsigned long frames)
             break;
 
         case 0xB0: /* controller */
-            jackmaster->SetController(chan, midi_data[1], midi_data[2]);
+            jackmaster->SetController(chan, midi_data[1], midi_data[2], 0);
             break;
 
         case 0xE0: /* pitch bend */
             jackmaster->SetController(chan, C_pitchwheel,
-                                      ((midi_data[2] << 7) | midi_data[1]));
+                                      ((midi_data[2] << 7) | midi_data[1]), 0);
             break;
 
             /* XXX TODO: handle MSB/LSB controllers and RPNs and NRPNs */
