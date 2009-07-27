@@ -46,7 +46,7 @@ void Node::forward(Event *event) const
         //TODO: handle multiple filters here if needed
         //RETODO: I think it might be better to have one smart filter
         //        rather than a filter chain
-        if ((*it).filter.filterEvent(event)) {
+        if ((*it).filter->filterEvent(event)) {
             continue; //event was filtered out
         }
 
@@ -83,7 +83,7 @@ void Node::rename(std::string newName)
 void Node::addChild(Node* node)
 {
     m_children.push_back(node);
-    node->addRedirection(this, TypeFilter(Event::RemovalEvent));
+    node->addRedirection(this, new TypeFilter(Event::RemovalEvent));
 }
 
 bool Node::hasChildren()
@@ -190,7 +190,7 @@ void Node::handleEvent(Event *event)
     forward(event);
 }
 
-void Node::addRedirection(NodeUser *destination, RedirectFilter filter)
+void Node::addRedirection(NodeUser *destination, RedirectFilter *filter)
 {
     Redirection re = {destination, filter};
     m_rules.push_back(re);
@@ -201,10 +201,12 @@ void Node::removeRedirections(NodeUser *destination)
     vector<Redirection>::iterator it;
     it = m_rules.begin();
     while (it != m_rules.end()) {
-        if ((*it).destination == destination)
+        if ((*it).destination == destination) {
+            delete (*it).filter;
             it = m_rules.erase(it);
-        else 
+        } else {
             it++;
+        }
     }
 }
 

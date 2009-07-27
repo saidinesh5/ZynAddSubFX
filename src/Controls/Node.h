@@ -84,7 +84,7 @@ class Node: public NodeUser
 
         virtual void handleEvent(Event *ev);//you might want this to stay
                                              //pure virtual
-        void addRedirection(NodeUser *destination, RedirectFilter filter = RedirectFilter());
+        void addRedirection(NodeUser *destination, RedirectFilter *filter = new RedirectFilter());
         void removeRedirections(NodeUser *destination);
 
         static inline Node* getRoot() { return m_root; }
@@ -96,7 +96,7 @@ class Node: public NodeUser
         struct Redirection
         {
             NodeUser *destination;
-            RedirectFilter filter;
+            RedirectFilter *filter;
         };
 
         std::vector<Redirection> m_rules;
