@@ -16,6 +16,9 @@ Dial::Dial(QWidget *parent)
         m_originalMouseY(-1)
 {
     setMouseTracking(false);
+    setMinimum(0);
+    setMaximum(127);
+    setPageStep(32);
 
     ControlHelper *helper = new ControlHelper(this);
 
@@ -37,6 +40,7 @@ void Dial::mousePressEvent(QMouseEvent* event)
         m_originalMouseY = event->y();
         m_originalValueOnPress = value();
         event->accept();
+        setSliderDown(true);
     }
     //QDial::mousePressEvent(event);
 }
@@ -56,13 +60,14 @@ void Dial::mouseReleaseEvent(QMouseEvent* event)
         event->accept();
     }else {
         m_originalMouseY = -1;
+        setSliderDown(false);
     }
     //QDial::mouseReleaseEvent(event);
 }
 
 void Dial::mouseMoveEvent(QMouseEvent* event)
 {
-    if (m_originalMouseY != -1) {
+    if (isSliderDown()) {
         setValue(m_originalValueOnPress +
                 float( m_originalMouseY - event->y())
                 * 0.5
@@ -133,6 +138,12 @@ void Dial::paintEvent(class QPaintEvent *event)
 
     }
 
+}
+
+void Dial::wheelEvent(class QWheelEvent *event)
+{
+    QDial::wheelEvent(event);
+    emit sliderMoved(value());
 }
 
 void Dial::setControl(GenControl *control)
