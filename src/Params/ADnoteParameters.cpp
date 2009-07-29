@@ -49,7 +49,7 @@ class VoiceVolumeConv : public InjFunction<char, REALTYPE>
 
 ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
     : Node(parent, id),
-    volume(this, "Volume", 10, new VoiceVolumeConv, GenControl::Real)
+    volume(this, "Volume", 0.23, new VoiceVolumeConv, GenControl::Real)
 {
 
 }
@@ -141,7 +141,7 @@ void ADnoteParameters::defaults(int n)
     VoicePar[nvoice]->Poscilphase=64;
     VoicePar[nvoice]->PFMoscilphase=64;
     VoicePar[nvoice]->PDelay=0;
-    VoicePar[nvoice]->PVolume=100;
+    //VoicePar[nvoice]->PVolume=100;
     VoicePar[nvoice]->PVolumeminus=0;
     VoicePar[nvoice]->PPanning=64;//center
     VoicePar[nvoice]->PDetune=8192;//8192=0
@@ -308,7 +308,7 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml,int n)
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
     xml->addpar("panning",VoicePar[nvoice]->PPanning);
-    xml->addpar("volume",VoicePar[nvoice]->PVolume);
+    xml->addpar("volume",VoicePar[nvoice]->volume.getCharValue());
     xml->addparbool("volume_minus",VoicePar[nvoice]->PVolumeminus);
     xml->addpar("velocity_sensing",VoicePar[nvoice]->PAmpVelocityScaleFunction);
 
@@ -588,7 +588,7 @@ void ADnoteParameters::getfromXMLsection(XMLwrapper *xml,int n)
 
     if (xml->enterbranch("AMPLITUDE_PARAMETERS")) {
         VoicePar[nvoice]->PPanning=xml->getpar127("panning",VoicePar[nvoice]->PPanning);
-        VoicePar[nvoice]->PVolume=xml->getpar127("volume",VoicePar[nvoice]->PVolume);
+        VoicePar[nvoice]->volume.setCharValue(xml->getpar127("volume",VoicePar[nvoice]->volume.getCharValue()));
         VoicePar[nvoice]->PVolumeminus=xml->getparbool("volume_minus",VoicePar[nvoice]->PVolumeminus);
         VoicePar[nvoice]->PAmpVelocityScaleFunction=xml->getpar127("velocity_sensing",VoicePar[nvoice]->PAmpVelocityScaleFunction);
 

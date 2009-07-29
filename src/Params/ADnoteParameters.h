@@ -185,7 +185,7 @@ class ADnoteVoiceParam : public Node{
     unsigned char PPanning;
 
     /* Voice Volume */
-    unsigned char PVolume;
+    //unsigned char PVolume;
     Control<REALTYPE> volume;
 
     /* If the Volume negative */

@@ -352,7 +352,7 @@ void ADnote::ADlegatonote(REALTYPE freq, REALTYPE velocity, int portamento_, int
 
         NoteVoicePar[nvoice].noisetype=partparams->VoicePar[nvoice]->Type;
         /* Voice Amplitude Parameters Init */
-        NoteVoicePar[nvoice].Volume=pow(0.1,3.0*(1.0-partparams->VoicePar[nvoice]->PVolume/127.0)) // -60 dB .. 0 dB
+        NoteVoicePar[nvoice].Volume=partparams->VoicePar[nvoice]->volume() // -60 dB .. 0 dB
                                     *VelF(velocity,partparams->VoicePar[nvoice]->PAmpVelocityScaleFunction);//velocity
 
         if (partparams->VoicePar[nvoice]->PVolumeminus!=0) NoteVoicePar[nvoice].Volume=-NoteVoicePar[nvoice].Volume;
@@ -536,7 +536,7 @@ void ADnote::initparameters()
 
         NoteVoicePar[nvoice].noisetype=partparams->VoicePar[nvoice]->Type;
         /* Voice Amplitude Parameters Init */
-        NoteVoicePar[nvoice].Volume=pow(0.1,3.0*(1.0-partparams->VoicePar[nvoice]->PVolume/127.0)) // -60 dB .. 0 dB
+        NoteVoicePar[nvoice].Volume=partparams->VoicePar[nvoice]->volume() // -60 dB .. 0 dB
                                     *VelF(velocity,partparams->VoicePar[nvoice]->PAmpVelocityScaleFunction);//velocity
 
         if (partparams->VoicePar[nvoice]->PVolumeminus!=0) NoteVoicePar[nvoice].Volume=-NoteVoicePar[nvoice].Volume;
