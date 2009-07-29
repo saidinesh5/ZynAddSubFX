@@ -28,7 +28,7 @@ Control<T>::Control(Node *parent, std::string id, T defaultval, const InjFunctio
         T v = (*func)(c);
         char backval = char((*func)(v));
         if (backval != c) {
-            std::cerr << " Warning: (" << int(c) << " != " << int(backval) << ") function is not reflective\n";
+            std::cerr << " Warning (Control.cpp:" << __LINE__ << "): (" << int(c) << " != " << int(backval) << ") function is not reflective\n";
             break;
         }
     }

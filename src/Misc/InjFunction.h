@@ -37,7 +37,7 @@ public:
     virtual B operator()(const A &x)const = 0;
     virtual A operator()(const B &x)const = 0;
 
-    char round(REALTYPE val) {
+    char round(REALTYPE val) const {
         return char(val + 0.5);
     }
 };

@@ -35,6 +35,8 @@
 #include "../DSP/FFTwrapper.h"
 #include "Presets.h"
 #include "../Controls/Control.h"
+#include "../Controls/FakeChildFactory.h"
+#include <vector>
 
 enum FMTYPE {NONE,MORPH,RING_MOD,PHASE_MOD,FREQ_MOD,PITCH_MOD};
 
@@ -111,7 +113,10 @@ struct ADnoteGlobalParam {
 /***********************************************************/
 /*                    VOICE PARAMETERS                     */
 /***********************************************************/
-struct ADnoteVoiceParam {
+class ADnoteVoiceParam : public Node{
+    public:
+
+    ADnoteVoiceParam(Node *parent, std::string id);
 
     /** If the voice is enabled */
     unsigned char Enabled;
@@ -181,6 +186,7 @@ struct ADnoteVoiceParam {
 
     /* Voice Volume */
     unsigned char PVolume;
+    Control<REALTYPE> volume;
 
     /* If the Volume negative */
     unsigned char PVolumeminus;
@@ -264,8 +270,10 @@ public:
 
     Control<REALTYPE> volume;
 
+    FakeChildFactory voices;
+
     ADnoteGlobalParam GlobalPar;
-    ADnoteVoiceParam VoicePar[NUM_VOICES];
+    std::vector<ADnoteVoiceParam*> VoicePar;
 
     void defaults();
     void add2XML(XMLwrapper *xml);
