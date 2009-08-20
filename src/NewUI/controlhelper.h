@@ -24,6 +24,12 @@ class ControlHelper : public QObject, public NodeUser
          */
         ControlHelper(QObject *parent);
 
+        /**
+         * A special variant of the controlhelper that monitors all events for property changes in
+         * order to let the controlId property mechanism working
+         */
+        ControlHelper(class QCoreApplication *app);
+
         /** 
          * @brief The Qt event handler, reimplementedfor watching the parent widget for property
          * changes that would change the current control etc.
@@ -42,11 +48,6 @@ class ControlHelper : public QObject, public NodeUser
          */
         void setControl(QString absoluteId);
 
-        /** 
-         * @return The absoluteid for the control, as derived from the qt property of the parent
-         * control. This is typically a value that is set directly in the qt designer.
-         */
-        QString controlId() const;
 
         /** 
          * @brief Tell the connected control to send an event with its current value. Usually this
@@ -78,6 +79,11 @@ class ControlHelper : public QObject, public NodeUser
          * TODO: make it show in the gui what its doing
          */
         void MIDILearn();
+
+        /** 
+         * @brief Recurse up the parent chain and set control according to qt properties
+         */
+        void updateControlId();
 
     signals:
         /** 

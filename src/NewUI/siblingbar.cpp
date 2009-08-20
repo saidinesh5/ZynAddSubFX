@@ -9,25 +9,16 @@
 
 SiblingBar::SiblingBar(QWidget *parent)
         : QTabBar(parent),
-        m_childContainer(NULL)
+        m_childContainer(NULL),
+        m_controlsWidget(NULL)
 {
     connect(this, SIGNAL(currentChanged(int)),
             this, SLOT(updateFoundControls()));
 }
 
-void SiblingBar::addControlWidgets(QWidget *widget)
+void SiblingBar::setControlsWidget(QWidget *widget)
 {
-    QSet<ControlHelper*> newWidgets = widget->findChildren<ControlHelper*>().toSet();
-
-
-    //add all children controls that arent already in the set/list
-    m_foundControls.unite(newWidgets);
-
-    //qDebug() << "We now have total controlwidgets " << m_foundControls;
-    for (QSet<ControlHelper*>::const_iterator it = m_foundControls.constBegin();
-            it != m_foundControls.constEnd(); ++it) {
-        qDebug() << "Control " << *it << " has id " << (*it)->getControlId();
-    }
+    m_controlsWidget = widget;
 }
 
 void SiblingBar::setNode(Node* container)
@@ -53,7 +44,7 @@ void SiblingBar::updateFoundControls()
 {
     qDebug() << "updateFoundControls";
 
-    if (!m_childContainer) return;
+    if (!m_childContainer || !m_controlsWidget) return;
 
     QString childAbsoluteId;
 
@@ -62,23 +53,7 @@ void SiblingBar::updateFoundControls()
     } else {
         childAbsoluteId = QString();
     }
-
-    for (QSet<ControlHelper*>::const_iterator it = m_foundControls.constBegin();
-            it != m_foundControls.constEnd(); ++it) {
-
-        (*it)->setControl(QString()); //clear out the current control
-
-        if (childAbsoluteId.isEmpty()) {
-            qDebug() << "Cleared out control";
-            continue;
-        }
-
-        if ((*it)->controlId().isEmpty()) continue;
-
-        (*it)->setControl(childAbsoluteId + "." + (*it)->controlId());
-        qDebug() << "Control " << *it << " changed to " << (*it)->getControlId();
-
-    }
+    m_controlsWidget->setProperty("absoluteControlId", childAbsoluteId);
 
 }
 

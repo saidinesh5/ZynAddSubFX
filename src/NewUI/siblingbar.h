@@ -10,7 +10,7 @@ class SiblingBar : public QTabBar
 
 public:
     SiblingBar(QWidget *parent=NULL);
-    void addControlWidgets(QWidget *widget);
+    void setControlsWidget(QWidget *widget);
     void setNode(class Node* container);
     void mouseReleaseEvent(class QMouseEvent *event);
     QString getCurrentChild();
@@ -21,6 +21,7 @@ private slots:
 private:
     QSet<class ControlHelper*> m_foundControls;
     class Node* m_childContainer;
+    QWidget *m_controlsWidget;
 
 };
 

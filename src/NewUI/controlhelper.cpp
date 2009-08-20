@@ -1,5 +1,7 @@
 #include "controlhelper.h"
+#include <QCoreApplication>
 #include <QDynamicPropertyChangeEvent>
+#include <QStack>
 #include <QVariant>
 #include <QtDebug>
 
@@ -12,23 +14,28 @@ ControlHelper::ControlHelper(QObject *parent)
         m_control(NULL),
         expectedValueEvents(0)
 {
-    parent->installEventFilter(this);
 }
 
-bool ControlHelper::eventFilter ( QObject * watched, QEvent * event )
+
+ControlHelper::ControlHelper(QCoreApplication *app)
+    : QObject(app)
 {
+    app->installEventFilter(this);
+}
+
+bool ControlHelper::eventFilter ( QObject * object, QEvent * event )
+{
+    //remember that this functions is called for _all_ events
+
     if (event->type() == QEvent::QEvent::DynamicPropertyChange) {
         QDynamicPropertyChangeEvent *ev =
-            (QDynamicPropertyChangeEvent*)event;
-        Q_ASSERT(ev);
-        if (ev->propertyName() == "absoluteControlId") {
-            QString newControl = watched->property("absoluteControlId").toString();
-            setControl(newControl);
-            return true;
-        }
-        if (ev->propertyName() == "controlId") {
-            m_controlId = watched->property("controlId").toString();
-            return true;
+            static_cast<QDynamicPropertyChangeEvent*>(event);
+        if ((ev->propertyName() == "absoluteControlId") ||
+                (ev->propertyName() == "controlId")) {
+            QList<ControlHelper*> controlHelpers = object->findChildren<ControlHelper*>();
+            foreach (ControlHelper* helper, controlHelpers) {
+                helper->updateControlId();
+            }
         }
     }
     return false;
@@ -59,12 +66,12 @@ void ControlHelper::handleEvent(Event *event)
 
 void ControlHelper::setControl(QString absoluteId)
 {
+    if (m_control) {
+        m_control->removeRedirections(this);
+        m_control = NULL;
+    }
 
     if (absoluteId.isEmpty()) {
-        if (m_control) {
-            m_control->removeRedirections(this);
-            m_control = NULL;
-        }
         return;
     }
 
@@ -103,11 +110,6 @@ QString ControlHelper::getControlId()
         return "Undefined";
 }
 
-QString ControlHelper::controlId() const
-{
-    return m_controlId;
-}
-
 void ControlHelper::requestValue()
 {
     if (m_control) {
@@ -119,6 +121,46 @@ void ControlHelper::MIDILearn()
 {
     if (m_control) {
         bool result = m_control->MIDILearn();
+    }
+}
+
+void ControlHelper::updateControlId()
+{
+    QString fullid = parent()->property("absoluteControlId").toString();
+
+    if (!fullid.isEmpty()) {
+        //alright, we already have what we wanted
+        setControl(fullid);
+        return;
+    }
+
+    QObject *p = parent(); //this is the object that created the controlhelper
+    fullid = p->property("controlId").toString();
+    if (fullid.isEmpty()) {
+        //the parent has no controlId set, so theres no reason to recurse any further for what its
+        //full path would be.
+        return;
+    }
+
+    while (true) {
+        p = p->parent();
+        if (!p) {
+            //we've reached the end of the hierarchy without finding any absolute id. bail out
+            return;
+        }
+
+        QString id = p->property("controlId").toString();
+        QString absid = p->property("absoluteControlId").toString();
+
+        if (!id.isEmpty()) {
+            //just append the relative id and continue recursion
+            fullid.prepend(id + ".");
+        } else if (!absid.isEmpty()) {
+            //this appears to be the absolute id we've been looking for.
+            fullid.prepend(absid + ".");
+            setControl(fullid);
+            return;
+        } 
     }
 }
 

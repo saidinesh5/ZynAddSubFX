@@ -14,6 +14,9 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
         m_bankUI(NULL)
 
 {
+    //this instance will monitor all dynamic event property changes
+    new ControlHelper(QCoreApplication::instance());
+
     qDebug() << "Trying to find control Master.Volume";
     //qDebug() << "Returned " << Node::getRoot()->findControl("Master.Volume");
 
@@ -24,7 +27,7 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
     setupUi(this);
     EventHelper::getInstance();
 
-    partBar->addControlWidgets(partFrame);
+    partBar->setControlsWidget(partFrame);
     partBar->setNode(Node::find("Master.Parts"));
 
     Node::getRoot()->printTree();
@@ -44,7 +47,10 @@ void MasterUI::on_partSelector_valueChanged(int value)
 
 void MasterUI::on_editInstrument_clicked()
 {
-    (new VoiceList(partBar->getCurrentChild()))->show();
+    QWidget *w = new VoiceList();
+    w->setProperty("absoluteControlId", partBar->getCurrentChild());
+    w->show();
+
     return;
     QString id = partBar->getCurrentChild();
     if (!id.isEmpty()) (new AddNoteUi(id))->show();
