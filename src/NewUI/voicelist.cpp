@@ -13,10 +13,8 @@ VoiceList::VoiceList(QWidget *parent)
 
     QLayout *lay = new QVBoxLayout(mainWidget);
 
-    //lay->setSizeConstraint(QLayout::SetMinAndMaxSize);
-
     for (int i = 0; i < 6; ++i) {
-        CollapsableFrame *f = new CollapsableFrame(this, new VoiceWidget(), new CollapsedVoiceWidget());
+        CollapsableFrame *f = new CollapsableFrame(this, new VoiceWidget());
         lay->addWidget(f);
     }
 

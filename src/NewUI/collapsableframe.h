@@ -9,7 +9,7 @@ class CollapsableFrame : public QFrame, public Ui::CollapsableFrame
     Q_OBJECT
 
     public:
-        CollapsableFrame(QWidget *parent, QWidget *expanded, QWidget *collapsed);
+        CollapsableFrame(QWidget *parent, QWidget *expanded);
         void setExpandedWidget(QWidget *widget);
         void setCollapsedWidget(QWidget *widget);
 
@@ -17,7 +17,9 @@ class CollapsableFrame : public QFrame, public Ui::CollapsableFrame
         void toggleCollapsed();
 
     private:
-        QWidget *expanded, *collapsed;
+        QWidget *expanded;
+        QList<QWidget*> showOnExpand;
+        QList<QWidget*> hideOnExpand;
 
 };
 

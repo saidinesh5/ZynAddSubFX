@@ -38,7 +38,6 @@ SET( zynaddsubfx_gui_UIS
 	envelopebox.ui
     collapsableframe.ui
     voicelist.ui
-    voicewidgetcollapsed.ui
     voicewidgetexpanded.ui
 )
 
