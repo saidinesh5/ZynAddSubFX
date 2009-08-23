@@ -5,6 +5,7 @@ using std::cout;
 
 pthread_mutex_t Job::mutex;
 list<Job*> Job::jobs;
+pthread_t Job::engineThread;
 
 Job::Job()
         : isWaitingForSignal(false)
@@ -53,8 +54,15 @@ void Job::push(Job* event)
     pthread_mutex_unlock(&mutex);
 }
 
-bool Job::pushAndWait(Job* job)
+void Job::pushAndWait(Job* job)
 {
+    if (pthread_equal(pthread_self(), engineThread)) {
+        //this is called from the engine thread. just execute the job directly from here
+        job->exec();
+        delete job;
+        return;
+    }
+
     pthread_mutex_lock(&mutex);
 
     job->isWaitingForSignal = true;
@@ -72,11 +80,9 @@ void Job::initialize()
     static bool inited = false;
     if (!inited) {
         pthread_mutex_init(&mutex,NULL);
+        engineThread = pthread_self();
         inited = true;
     }
-
-
-
 }
 
 

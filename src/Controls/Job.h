@@ -24,10 +24,9 @@ class Job
         static void push(Job* event);
         /**
          * Like Job::push, except this function will not return until the function's exec function
-         * has been finished. NOTE: When using this method, the event will NOT be deleted
-         * automatically after being executed.
+         * has been finished.
          */
-        static bool pushAndWait(Job* job);
+        static void pushAndWait(Job* job);
         /**
          * Pop an event from the event list. Will return NULL if there is no event available.
          */
@@ -43,6 +42,7 @@ class Job
         bool isWaitingForSignal;
         static pthread_mutex_t mutex;
         static std::list<Job*> jobs;
+        static pthread_t engineThread;
 
 };
 
