@@ -64,6 +64,8 @@ ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_):
     setpresettype("Padsyth");
     fft=fft_;
 
+    voices.addType("Voice");
+
     GlobalPar.FreqEnvelope=new EnvelopeParams(0,0);
     GlobalPar.FreqEnvelope->ASRinit(64,50,64,60);
     GlobalPar.FreqLfo=new LFOParams(70,0,64,0,0,0,0,0);
@@ -192,9 +194,10 @@ void ADnoteParameters::defaults(int n)
  */
 void ADnoteParameters::EnableVoice(int nvoice)
 {
-    VoicePar.push_back(new ADnoteVoiceParam(this, "VoiceParam"));
+    VoicePar.push_back(new ADnoteVoiceParam(NULL, "VoiceParam"));
 
     voices << VoicePar[nvoice];
+    voices.createChild("Voice");
 
     VoicePar[nvoice]->OscilSmp=new OscilGen(fft,GlobalPar.Reson);
     VoicePar[nvoice]->FMSmp=new OscilGen(fft,NULL);
