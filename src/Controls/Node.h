@@ -81,6 +81,7 @@ class Node: public NodeUser
         Node* findChild(std::string id);//should be getChild(string) find seems
                                         //to be misleading 
         const std::vector<std::string> getTypes();
+        bool removeFromParent();
 
         virtual void handleEvent(Event *ev);//you might want this to stay
                                              //pure virtual

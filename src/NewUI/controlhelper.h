@@ -85,6 +85,16 @@ class ControlHelper : public QObject, public NodeUser
          */
         void updateControlId();
 
+        /** 
+         * @brief Find the absolute control id for this widget, if there is one
+         * 
+         * @param widget the widget to start recursion from
+         * 
+         * @return the absolute control id of the widget, or an empty string if there was no id
+         * found
+         */
+        static QString findComponentPath(QObject *object);
+
     signals:
         /** 
          * @brief This signal is emitted from the controlhelper when the value of the controls value

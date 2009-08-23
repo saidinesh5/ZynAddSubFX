@@ -1,4 +1,5 @@
 #include "collapsableframe.h"
+#include "controlhelper.h"
 
 CollapsableFrame::CollapsableFrame(QWidget *parent, QWidget *expanded)
     : QFrame(parent),
@@ -7,6 +8,8 @@ CollapsableFrame::CollapsableFrame(QWidget *parent, QWidget *expanded)
     setupUi(this);
     connect(collapseButton, SIGNAL(clicked()),
             this, SLOT(toggleCollapsed()));
+    connect(deleteButton, SIGNAL(clicked()),
+            this, SLOT(deleteMe()));
 
     layout()->addWidget(expanded);
     QList<QWidget*> childs = expanded->findChildren<QWidget*>();
@@ -43,6 +46,30 @@ void CollapsableFrame::toggleCollapsed()
         foreach (QWidget *child, hideOnExpand) {
             child->show();
         }
+    }
+}
+
+void CollapsableFrame::deleteMe()
+{
+    if (!expanded) return;
+
+    QString id = ControlHelper::findComponentPath(expanded);
+    if (id.isEmpty()) return;
+
+    Node *node = Node::find(id.toStdString());
+    if (!node) return;
+
+    node->removeFromParent();
+}
+
+void CollapsableFrame::on_enabledCheck_stateChanged(int state)
+{
+    if (!expanded) return;
+
+    if (state == Qt::Checked) {
+        expanded->setEnabled(true);
+    } else if (state == Qt::Unchecked) {
+        expanded->setEnabled(false);
     }
 }
 

@@ -210,5 +210,14 @@ void Node::removeRedirections(NodeUser *destination)
     }
 }
 
+bool Node::removeFromParent()
+{
+    if (!m_parent) {
+        return false;
+    }
+
+    m_parent->removeChild(getId());
+    return true;
+}
 
 // vim: sw=4 sts=4 et tw=100

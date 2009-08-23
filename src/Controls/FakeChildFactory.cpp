@@ -35,6 +35,7 @@ std::string FakeChildFactory::doCreateChild(int type)
 
 void FakeChildFactory::doRemoveChild(std::string name)
 {
+    //TODO: using Node::find here might be thread-unsafe. should be checked
     Node *node = Node::find(getAbsoluteId() + "." + name);
     std::cout << "Finding " << name << " returned " << node << "\n";
 

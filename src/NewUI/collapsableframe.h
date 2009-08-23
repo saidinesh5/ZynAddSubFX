@@ -15,6 +15,8 @@ class CollapsableFrame : public QFrame, public Ui::CollapsableFrame
 
     public slots:
         void toggleCollapsed();
+        void deleteMe();
+        void on_enabledCheck_stateChanged(int state);
 
     private:
         QWidget *expanded;

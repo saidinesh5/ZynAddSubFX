@@ -47,8 +47,7 @@ void MasterUI::on_partSelector_valueChanged(int value)
 
 void MasterUI::on_editInstrument_clicked()
 {
-    QWidget *w = new VoiceList();
-    w->setProperty("absoluteControlId", partBar->getCurrentChild());
+    QWidget *w = new VoiceList(partBar->getCurrentChild() + ".Instrument.InstrumentKit.ADnoteParameters.Voices");
     w->show();
 
     return;

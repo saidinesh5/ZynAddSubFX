@@ -126,27 +126,33 @@ void ControlHelper::MIDILearn()
 
 void ControlHelper::updateControlId()
 {
-    QString fullid = parent()->property("absoluteControlId").toString();
+    QString fullid = findComponentPath(parent());
+    if (fullid.isEmpty()) return;
+    setControl(fullid);
+}
+
+QString ControlHelper::findComponentPath(QObject *object)
+{
+    QString fullid = object->property("absoluteControlId").toString();
 
     if (!fullid.isEmpty()) {
         //alright, we already have what we wanted
-        setControl(fullid);
-        return;
+        return fullid;
     }
 
-    QObject *p = parent(); //this is the object that created the controlhelper
+    QObject *p = object;
     fullid = p->property("controlId").toString();
     if (fullid.isEmpty()) {
-        //the parent has no controlId set, so theres no reason to recurse any further for what its
+        //the object has no controlId set, so theres no reason to recurse any further for what its
         //full path would be.
-        return;
+        return QString();
     }
 
     while (true) {
         p = p->parent();
         if (!p) {
             //we've reached the end of the hierarchy without finding any absolute id. bail out
-            return;
+            return QString();
         }
 
         QString id = p->property("controlId").toString();
@@ -158,10 +164,10 @@ void ControlHelper::updateControlId()
         } else if (!absid.isEmpty()) {
             //this appears to be the absolute id we've been looking for.
             fullid.prepend(absid + ".");
-            setControl(fullid);
-            return;
-        } 
+            return fullid;
+        }
     }
+    return QString();
 }
 
 #include "controlhelper.moc"
