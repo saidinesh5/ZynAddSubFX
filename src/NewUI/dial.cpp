@@ -9,6 +9,7 @@
 
 //drawstyles: 0 - piechart
 //            1 - rotated dial
+//            2 - rectangular
 static int drawStyle = 1;
 
 Dial::Dial(QWidget *parent)
@@ -136,6 +137,12 @@ void Dial::paintEvent(class QPaintEvent *event)
 
         //p.drawEllipse(QPoint(0, r.height() / 3), 4, 4);
 
+    } else if (drawStyle == 2) {
+        r = rect();
+        p.drawRect(r);
+        //p.setBrush(palette().alternateBase());
+        p.setBrush(QColor(Qt::white));
+        p.drawRect(r.x(), r.height() + r.y() - v * r.height(), r.width(), v * r.height());
     }
 
 }
