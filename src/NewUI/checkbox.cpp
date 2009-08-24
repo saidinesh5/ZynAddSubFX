@@ -1,0 +1,24 @@
+#include "checkbox.h"
+#include "controlhelper.h"
+
+CheckBox::CheckBox(QWidget *parent)
+    : QCheckBox(parent)
+{
+    ControlHelper *helper = new ControlHelper(this);
+
+    connect(this, SIGNAL(clicked(bool)),
+            helper, SLOT(setValue(bool)));
+    connect(helper, SIGNAL(valueChanged(int)),
+            this, SLOT(setChecked(int)));
+
+    helper->requestValue();
+}
+
+void CheckBox::setChecked(int val)
+{
+    setChecked(bool(val));
+}
+
+#include "checkbox.moc"
+
+// vim: sw=4 sts=4 et tw=100

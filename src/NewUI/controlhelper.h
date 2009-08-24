@@ -75,6 +75,12 @@ class ControlHelper : public QObject, public NodeUser
         void setValue(int value);
 
         /** 
+        * @brief Convenience function for checkboxes. Will just
+        * call setValue(char)
+        */
+        void setValue(bool value);
+
+        /** 
          * @brief Tell the control in the backend to start MIDI learning.
          * TODO: make it show in the gui what its doing
          */

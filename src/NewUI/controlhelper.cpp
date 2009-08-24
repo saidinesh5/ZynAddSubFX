@@ -102,6 +102,11 @@ void ControlHelper::setValue(int value)
     setValue(char(qBound(0, value, 127)));
 }
 
+void ControlHelper::setValue(bool value)
+{
+    setValue(char(value));
+}
+
 QString ControlHelper::getControlId()
 {
     if (m_control)
