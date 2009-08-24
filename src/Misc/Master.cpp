@@ -145,7 +145,7 @@ void Master::noteon(unsigned char chan,unsigned char note,unsigned char velocity
         for (npart=0;npart<NUM_MIDI_PARTS;npart++) {
             if (chan==part[npart]->Prcvchn) {
                 fakepeakpart[npart]=velocity*2;
-                if (part[npart]->Penabled!=0) part[npart]->NoteOn(note,velocity,keyshift);
+                if (part[npart]->enabled()) part[npart]->NoteOn(note,velocity,keyshift);
             };
         };
     } else {
@@ -171,7 +171,7 @@ void Master::noteoff(unsigned char chan,unsigned char note)
 {
     int npart;
     for (npart=0;npart<NUM_MIDI_PARTS;npart++) {
-        if ((chan==part[npart]->Prcvchn) && (part[npart]->Penabled!=0))
+        if ((chan==part[npart]->Prcvchn) && (part[npart]->enabled()))
             part[npart]->NoteOff(note);
     };
 };
@@ -217,7 +217,7 @@ void Master::setcontroller(unsigned char chan,unsigned int type,int par)
         };
     } else {//other controllers
         for (int npart=0;npart<NUM_MIDI_PARTS;npart++) {//Send the controller to all part assigned to the channel
-            if ((chan==part[npart]->Prcvchn) && (part[npart]->Penabled!=0))
+            if ((chan==part[npart]->Prcvchn) && (part[npart]->enabled()))
                 part[npart]->SetController(type,par);
         };
 
@@ -241,7 +241,7 @@ void Master::partonoff(int npart,int what)
     if (npart>=NUM_MIDI_PARTS) return;
     if (what==0) {//disable part
         fakepeakpart[npart]=0;
-        part[npart]->Penabled=0;
+        part[npart]->enabled.setValue(false);
         part[npart]->cleanup();
         for (int nefx=0;nefx<NUM_INS_EFX;nefx++) {
             if (Pinsparts[nefx]==npart) {
@@ -249,7 +249,7 @@ void Master::partonoff(int npart,int what)
             };
         };
     } else {//enabled
-        part[npart]->Penabled=1;
+        part[npart]->enabled.setValue(true);
         fakepeakpart[npart]=0;
     };
 };
@@ -298,13 +298,13 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
 
     //Compute part samples and store them part[npart]->partoutl,partoutr
     for (npart=0;npart<NUM_MIDI_PARTS;npart++)
-        if (part[npart]->Penabled!=0) part[npart]->ComputePartSmps();
+        if (part[npart]->enabled()) part[npart]->ComputePartSmps();
 
     //Insertion effects
     for (nefx=0;nefx<NUM_INS_EFX;nefx++) {
         if (Pinsparts[nefx]>=0) {
             int efxpart=Pinsparts[nefx];
-            if (part[efxpart]->Penabled!=0)
+            if (part[efxpart]->enabled())
                 insefx[nefx]->out(part[efxpart]->partoutl,part[efxpart]->partoutr);
         };
     };
@@ -312,7 +312,7 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
 
     //Apply the part volumes and pannings (after insertion effects)
     for (npart=0;npart<NUM_MIDI_PARTS;npart++) {
-        if (part[npart]->Penabled==0)  continue;
+        if (part[npart]->enabled()==0)  continue;
 
         REALTYPE newvol_l=part[npart]->partVolume.getValue();
         REALTYPE newvol_r=part[npart]->partVolume.getValue();
@@ -359,7 +359,7 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
             if (Psysefxvol[nefx][npart]==0) continue;
 
             //skip if the part is disabled
-            if (part[npart]->Penabled==0) continue;
+            if (part[npart]->enabled()==0) continue;
 
             //the output volume of each part to system effect
             REALTYPE vol=sysefxvol[nefx][npart];
@@ -435,7 +435,7 @@ void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
     //Part Peak computation (for Part vumeters or fake part vumeters)
     for (npart=0;npart<NUM_MIDI_PARTS;npart++) {
         vuoutpeakpart[npart]=1.0e-12;
-        if (part[npart]->Penabled!=0) {
+        if (part[npart]->enabled()) {
             REALTYPE *outl=part[npart]->partoutl,
                            *outr=part[npart]->partoutr;
             for (i=0;i<SOUND_BUFFER_SIZE;i++) {
@@ -759,7 +759,7 @@ void Master::getfromXML(XMLwrapper *xml)
     ctl.NRPN.receive=xml->getparbool("nrpn_receive",ctl.NRPN.receive);
 
 
-    part[0]->Penabled=0;
+    part[0]->enabled.setValue(false);
     for (int npart=0;npart<NUM_MIDI_PARTS;npart++) {
         if (xml->enterbranch("PART",npart)==0) continue;
         part[npart]->getfromXML(xml);

@@ -110,7 +110,6 @@ public:
     void setkeylimit(unsigned char Pkeylimit);
     void setkititemstatus(int kititem,int Penabled_);
 
-    unsigned char Penabled;/**<if the part is enabled*/
     unsigned char Pvolume;/**<part volume*/
     unsigned char Pminkey;/**<the minimum key that the part receives noteon messages*/
     unsigned char Pmaxkey;//the maximum key that the part receives noteon messages
@@ -146,6 +145,7 @@ public:
 
     REALTYPE oldvolumel,oldvolumer;//this is applied by Master
     Control<REALTYPE> partVolume;
+    Control<bool> enabled;
 
     REALTYPE panning;//this is applied by Master, too
 

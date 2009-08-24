@@ -30,6 +30,7 @@
 Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
         :Node(parent, "Part"),
         partVolume(this, "Volume",30,new db2rapInjFunc<REALTYPE>(-40, 12.91666),GenControl::Real),
+        enabled(this, "Enabled",false,NULL,GenControl::Bool),
         instrument(this, "Instrument"),
         instrumentKit(&instrument, "InstrumentKit")
 {
@@ -98,7 +99,7 @@ Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex
 
 void Part::defaults()
 {
-    Penabled=0;
+    enabled.resetDefault();
     Pminkey=0;
     Pmaxkey=127;
     Pnoteon=1;
@@ -128,6 +129,7 @@ void Part::defaultsinstrument()
 
     for (int n=0;n<NUM_KIT_ITEMS;n++) {
         kit[n].Penabled=0;
+        //kit[n].enabled.setValue(false);
         kit[n].Pmuted=0;
         kit[n].Pminkey=0;
         kit[n].Pmaxkey=127;
@@ -139,6 +141,7 @@ void Part::defaultsinstrument()
         if (n!=0) setkititemstatus(n,0);
     };
     kit[0].Penabled=1;
+    //kit[0].enabled.setValue(true);
     kit[0].Padenabled=1;
     kit[0].adpars->defaults();
     kit[0].subpars->defaults();
@@ -967,8 +970,8 @@ void Part::add2XMLinstrument(XMLwrapper *xml)
 void Part::add2XML(XMLwrapper *xml)
 {
     //parameters
-    xml->addparbool("enabled",Penabled);
-    if ((Penabled==0)&&(xml->minimal)) return;
+    xml->addparbool("enabled",enabled.getCharValue());
+    if ((enabled())&&(xml->minimal)) return;
 
     xml->addpar("volume",Pvolume);
     xml->addpar("panning",Ppanning);
@@ -1110,7 +1113,7 @@ void Part::getfromXMLinstrument(XMLwrapper *xml)
 
 void Part::getfromXML(XMLwrapper *xml)
 {
-    Penabled=xml->getparbool("enabled",Penabled);
+    enabled.setCharValue(xml->getparbool("enabled",enabled.getCharValue()));
 
     setPvolume(xml->getpar127("volume",Pvolume));
     setPpanning(xml->getpar127("panning",Ppanning));

@@ -16,7 +16,7 @@ CheckBox::CheckBox(QWidget *parent)
 
 void CheckBox::setChecked(int val)
 {
-    setChecked(bool(val));
+    QAbstractButton::setChecked(bool(val));
 }
 
 #include "checkbox.moc"
