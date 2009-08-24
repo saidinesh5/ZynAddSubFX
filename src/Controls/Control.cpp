@@ -21,15 +21,27 @@
 */
 
 template <class T>
+class defaultInjFunc:public InjFunction<char,T>
+{
+public:
+    inline T operator()(const char &x)const{return ((T)x); };
+    inline char operator()(const T &x)const{return (char(x)); }
+};
+
+template <class T>
 Control<T>::Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> *nfunc,enum controlType type)
     :GenControl(parent,id,type),value(defaultval),defaultval(defaultval),func(nfunc)
 {
-    for (char c = 0; c < 127; ++c) {
-        T v = (*func)(c);
-        char backval = char((*func)(v));
-        if (backval != c) {
-            std::cerr << " Warning (Control.cpp:" << __LINE__ << "): (" << int(c) << " != " << int(backval) << ") function is not reflective\n";
-            break;
+    if (!func) {
+        func = new defaultInjFunc<T>;
+    } else {
+        for (char c = 0; c < 127; ++c) {
+            T v = (*func)(c);
+            char backval = char((*func)(v));
+            if (backval != c) {
+                std::cerr << " Warning (Control.cpp:" << __LINE__ << "): (" << int(c) << " != " << int(backval) << ") function is not reflective\n";
+                break;
+            }
         }
     }
 }
