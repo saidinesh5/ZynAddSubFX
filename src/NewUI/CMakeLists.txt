@@ -2,6 +2,7 @@
 set(zynaddsubfx_gui_SRCS
 	dial.cpp
     checkbox.cpp
+    combobox.cpp
 	siblingbar.cpp
 	controlhelper.cpp
     eventhelper.cpp
@@ -21,6 +22,7 @@ SET( zynaddsubfx_gui_MOC_HDRS
 	masterui.h
     eventhelper.h
     checkbox.h
+    combobox.h
     dial.h
 	bankui.h
 	addnoteui.h

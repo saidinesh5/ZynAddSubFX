@@ -80,6 +80,13 @@ void ControlHelper::setControl(QString absoluteId)
     if (m_control) {
         expectedValueEvents = 0;
         m_control->addRedirection(this);
+        if (m_control->numOptions()) {
+            QStringList options;
+            for (int i = 0; i < m_control->numOptions(); ++i) {
+                options << QString::fromStdString(m_control->getOption(i));
+            }
+            emit optionsChanged(options);
+        }
         qDebug() << "Assigning " << this << " to " << absoluteId;
         m_control->requestValue();
     } else

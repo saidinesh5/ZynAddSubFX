@@ -5,6 +5,7 @@
 #include "../Controls/ControlUser.h"
 #include <QObject>
 #include <QMutex>
+#include <QStringList>
 
 /**
  * This class is the glue between the GUI and the Control tree. It will send out qt events whenever
@@ -107,6 +108,13 @@ class ControlHelper : public QObject, public NodeUser
          * has changed. should be connected to a slot that changes the value in the gui.
          */
         void valueChanged(int value);
+
+        /** 
+         * @brief For controls that have a set of string describing the values (options), this
+         * signal will be emitted with a list of them when the controlhelper has connected to a new
+         * control
+         */
+        void optionsChanged(QStringList options);
 
     private:
         GenControl *m_control;
