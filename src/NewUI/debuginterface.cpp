@@ -65,7 +65,7 @@ class Tree : public QTreeWidget
                 if (node)
                     connections += QString::fromStdString(node->getAbsoluteId()) + ", ";
                 else
-                    connections += QString::number(int(user)) + ", ";
+                    connections += QString::number((long int)(user)) + ", ";
             }
             return connections;
 
