@@ -23,11 +23,14 @@
 #define CONTROL_H
 
 #include <string>
+#include <vector>
 #include <iostream>
 #include "GenControl.h"
 #include "EventClasses.h"
 #include "../Misc/InjFunction.h"
 #include "JobClasses.h"
+
+typedef std::vector<std::string> StringVector;
 
 /**A control for a parameter within the program
  *
@@ -41,6 +44,10 @@ public:
 
     inline T operator()() const {return value;};//It seems to make sense for a control to just return its value when this is called
     std::string getString() const {return "hm, this should get implemented, but not yet :p";};
+
+    virtual std::string getOption(int index) const;
+    virtual int numOptions() const;
+    void addOption(std::string option) { options.push_back(option); }
 
     void handleEvent(Event *ev) {}
     void handleSyncEvent(Event *ev);
@@ -60,7 +67,8 @@ public:
 
     virtual bool MIDILearn();
 
-
+protected:
+    StringVector options;
 
 private:
     T value;

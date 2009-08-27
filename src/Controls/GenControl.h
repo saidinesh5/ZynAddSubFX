@@ -37,6 +37,10 @@ public:
     virtual std::string getString() const=0;
     enum controlType getType(){return type;};
 
+    virtual std::string getOption(int index) const = 0;
+    virtual int numOptions() const = 0;
+
+
     virtual bool MIDILearn()=0;
 
     virtual void requestValue()=0;

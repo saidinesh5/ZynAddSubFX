@@ -179,3 +179,15 @@ bool Control<T>::MIDILearn()
 
 
 }
+
+template <class T>
+std::string Control<T>::getOption(int index) const
+{
+    return options.at(index);
+}
+
+template <class T>
+int Control<T>::numOptions() const
+{
+    return options.size();
+}
