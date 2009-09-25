@@ -191,7 +191,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox"/>
+          <widget class="ComboBox" name="comboBox">
+           <property name="controlId" stdset="0">
+            <string>Bank</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="ComboBox" name="comboBox_2">

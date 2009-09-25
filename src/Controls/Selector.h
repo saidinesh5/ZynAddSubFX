@@ -43,6 +43,7 @@ public:
     std::string getOption(int idx) const;
     int numOptions() const;
     void addOption(std::string option);
+    void clearOptions();
 
 private:
     StringVector options;

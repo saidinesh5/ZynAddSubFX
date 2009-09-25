@@ -10,7 +10,8 @@ class InstrumentControl : public Selector
         //virtual std::string getOption(int index) const;
         //virtual int numOptions() const;
     //private:
-        static class Bank *bank;
+        class Bank *bank;
+        void loadBank(int bankid);
 
 };
 

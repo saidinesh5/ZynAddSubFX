@@ -43,6 +43,7 @@
 //#include "../Controls/FloatControl.h"
 #include "../Controls/Node.h"
 #include "../Controls/InstrumentControl.h"
+#include "../Controls/BankControl.h"
 
 #include <list> // For the monomemnotes list.
 
@@ -113,6 +114,7 @@ public:
 
     //for setting instruments loaded from bank
     InstrumentControl instrumentControl;
+    BankControl bankControl;
 
     //Part parameters
     void setkeylimit(unsigned char Pkeylimit);

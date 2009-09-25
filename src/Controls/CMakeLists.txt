@@ -8,6 +8,7 @@ set(zynaddsubfx_controls_SRCS
     #ControlContainer.cpp
     InstrumentContainer.cpp
     InstrumentControl.cpp
+    BankControl.cpp
     FakeChildFactory.cpp
     #FloatControl.cpp
     #CharControl.cpp

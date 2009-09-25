@@ -34,10 +34,12 @@ Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex
         enabled(this, "Enabled",false),
         instrument(this, "Instrument"),
         instrumentKit(&instrument, "InstrumentKit"),
-        instrumentControl(this)
+        instrumentControl(this),
+        bankControl(this)
 {
 
     instrumentControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
+    bankControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
 
     microtonal=microtonal_;
     fft=fft_;
@@ -1153,8 +1155,12 @@ void Part::handleSyncEvent(Event *event)
         NewValueEvent *newValue = static_cast<NewValueEvent*>(event);
 
         if (newValue->control == &instrumentControl) {
-            InstrumentControl::bank->loadfromslot(newValue->val,this);
+            instrumentControl.bank->loadfromslot(newValue->val,this);
             applyparameters();
+        }
+
+        if (newValue->control == &bankControl) {
+            instrumentControl.loadBank(bankControl());
         }
     }
 }
