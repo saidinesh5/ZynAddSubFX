@@ -85,10 +85,12 @@ void ControlHelper::setControl(QString absoluteId)
             for (int i = 0; i < m_control->numOptions(); ++i) {
                 options << QString::fromStdString(m_control->getOption(i));
             }
+            qDebug() << "Emitting options " << options;
             emit optionsChanged(options);
         }
         qDebug() << "Assigning " << this << " to " << absoluteId;
-        m_control->requestValue();
+        emit valueChanged(getValue());
+        //m_control->requestValue();
     } else
         qDebug() << "Could not find a control named " << absoluteId;
 }
@@ -111,7 +113,7 @@ void ControlHelper::setValue(int value)
 
 void ControlHelper::setValue(bool value)
 {
-    setValue(char(value));
+    setValue(char(127 * value));
 }
 
 QString ControlHelper::getControlId()
@@ -122,13 +124,20 @@ QString ControlHelper::getControlId()
         return "Undefined";
 }
 
-void ControlHelper::requestValue()
-{
-    if (m_control) {
-        m_control->requestValue();
-    }
-}
+//void ControlHelper::requestValue()
+//{
+//    if (m_control) {
+//        m_control->requestValue();
+//    }
+//}
 
+char ControlHelper::getValue()
+{
+    if(m_control)
+        return m_control->getCharValue();
+    qDebug() << "Error: value for nonconnected control requested";
+    return 64;
+}
 void ControlHelper::MIDILearn()
 {
     if (m_control) {

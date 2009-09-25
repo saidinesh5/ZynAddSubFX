@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTableWidget>
+#include <combobox.h>
 
 static const int verticalSlots = 32;
 static const int horizontalSlots = 5;
@@ -14,6 +15,7 @@ BankUI::BankUI(QWidget *parent, Master *master, int *npart)
         master(master),
         npart(npart)
 {
+#if 0
     currentBank = new Bank();
     currentBank->rescanforbanks();
 
@@ -39,12 +41,18 @@ BankUI::BankUI(QWidget *parent, Master *master, int *npart)
     connect(table, SIGNAL(currentCellChanged(int, int, int, int)),
             this, SLOT(slotCurrentCellChanged(int, int, int, int)));
     table->setSelectionMode(QAbstractItemView::SingleSelection);
+#endif
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
-    vlayout->addWidget(table);
+
+    ComboBox *combo = new ComboBox();
+    combo->setProperty("controlId", "BankInstrument");
+    vlayout->addWidget(combo);
+
+    //vlayout->addWidget(table);
     setLayout(vlayout);
 
-    refreshCurrentBank();
+    //refreshCurrentBank();
 
 
 #if 0
@@ -78,9 +86,9 @@ void BankUI::slotCurrentCellChanged(int, int, int row, int column)
     if (id < 0) return;
     qDebug() << "Loading from " << id;
 
-    pthread_mutex_lock(&master->mutex);
+    //pthread_mutex_lock(&master->mutex);
     currentBank->loadfromslot(id,master->part[*npart]);
-    pthread_mutex_unlock(&master->mutex);
+    //pthread_mutex_unlock(&master->mutex);
     master->part[*npart]->applyparameters();
     emit changedInstrument();
 }

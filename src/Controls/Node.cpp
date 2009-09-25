@@ -27,7 +27,7 @@ Node::~Node()
     //}
 
     for (vector<Node*>::iterator it = m_children.begin(); it != m_children.end(); it++) {
-        delete (*it);
+        //delete (*it);
     }
 }
 

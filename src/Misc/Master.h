@@ -140,7 +140,7 @@ public:
     FFTwrapper *fft;
     pthread_mutex_t mutex;
 
-    Control<REALTYPE> masterVolume;
+    Ranger masterVolume;
     FakeChildFactory parts;
 
 private:

@@ -32,7 +32,7 @@ MasterUI::MasterUI(Master *master_,int *exitprogram_)
 
     Node::getRoot()->printTree();
 
-    (new DebugInterface(NULL, master))->show();
+    //(new DebugInterface(NULL, master))->show();
 }
 
 void MasterUI::refresh_master_ui()
@@ -47,6 +47,10 @@ void MasterUI::on_partSelector_valueChanged(int value)
 
 void MasterUI::on_editInstrument_clicked()
 {
+    m_bankUI = new BankUI(NULL, master, new int(0));
+    m_bankUI->setProperty("absoluteControlId", partBar->getCurrentChild());
+    m_bankUI->show();
+    return;
     QWidget *w = new VoiceList(partBar->getCurrentChild() + ".Instrument.InstrumentKit.ADnoteParameters.Voices");
     w->show();
 

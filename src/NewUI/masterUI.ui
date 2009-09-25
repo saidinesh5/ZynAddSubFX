@@ -179,14 +179,28 @@
         <widget class="SiblingBar" name="partBar" native="true"/>
        </item>
        <item>
-        <widget class="CheckBox" name="enabledCheck">
-         <property name="text">
-          <string>Enabled</string>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Enabled</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="CheckBox" name="enabledCheck">
+           <property name="text">
+            <string>Enabled</string>
+           </property>
+           <property name="controlId" stdset="0">
+            <string>Enabled</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+         <item>
+          <widget class="ComboBox" name="comboBox_2">
+           <property name="controlId" stdset="0">
+            <string>BankInstrument</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QWidget" name="partWidget" native="true">
@@ -631,6 +645,11 @@
    <class>CheckBox</class>
    <extends>QCheckBox</extends>
    <header>checkbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

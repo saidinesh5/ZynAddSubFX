@@ -40,8 +40,9 @@ public:
 class NewValueEvent : public Event
 {
     public:
-        NewValueEvent(char val = -1);
+        NewValueEvent(char val, GenControl *control);
         const char val;
+        const GenControl *control;
 };
 
 /** Used for requesting a node to emit its value (ie. a NewValueEvent */

@@ -49,7 +49,7 @@ class VoiceVolumeConv : public InjFunction<char, REALTYPE>
 
 ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
     : Node(parent, id),
-    volume(this, "Volume", 0.23, new VoiceVolumeConv, GenControl::Real)
+    volume(this, "Volume", 0.23, new VoiceVolumeConv)
 {
 
 }
@@ -57,7 +57,7 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_):
     Presets(),
     Node(parent, "ADnoteParameters"),
-    volume(this, "Volume", 10, new VolumeConv, GenControl::Real),
+    volume(this, "Volume", 10, new VolumeConv),
     //note: the original convertion functon is found in ADnote.cpp:337
     voices(this, "Voices")
 {
@@ -99,7 +99,7 @@ void ADnoteParameters::defaults()
 
     /* Amplitude Global Parameters */
     GlobalPar.PVolume=90;
-    volume.resetDefault();
+    volume.defaults();
 
     GlobalPar.PPanning=64;//center
     GlobalPar.PAmpVelocityScaleFunction=64;

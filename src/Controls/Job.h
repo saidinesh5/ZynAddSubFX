@@ -18,6 +18,12 @@ class Job
         static void initialize();
 
         /**
+         * Inform Job class that the thread calling this function is the engine thread (ie, the
+         * thread which will call Job::handleJobs)
+         */
+        static void setEngineThread();
+
+        /**
          * Push an event to the stack. It will then be handled (probably from another thread) when
          * calling handleJobs.
          */

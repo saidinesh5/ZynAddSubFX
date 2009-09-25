@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  GenControl.h - Control base class
+  Ranger.h - Control base class
   Copyright (C) 2009-2009 Mark McCurry
   Author: Mark McCurry
 
@@ -19,38 +19,34 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
-#ifndef _GEN_CONTROL_H
-#define _GEN_CONTROL_H
+#ifndef RANGER_H
+#define RANGER_H
 
-#include <pthread.h>
-#include <string>
-#include "Node.h"
+#include "Control.h"
+#include "../Misc/InjFunction.h"
+#include "../globals.h"
 
-
-/**A control for a parameter within the program*/
-class GenControl : public Node
+/**
+ * A continuiously ranged control
+ * that is safe in a threaded environment
+ */
+class Ranger:public Control<REALTYPE>
 {
 public:
-    virtual char getCharValue()const=0;
-    virtual void setValue(char val)=0;
-    virtual std::string getString() const=0;
+    Ranger(Node *parent, std::string id, REALTYPE defaultval, const InjFunction<char,REALTYPE> *nfunc);
+    virtual ~Ranger();
+    
+    /**@todo get some toString function in here (it only needs to be one way*/
+    std::string getString() const 
+    {return "Example: 50%";};
 
-    bool MIDILearn();
-
-    //virtual void requestValue()=0;
-
-    virtual int numOptions() const {return 0;};
-    virtual std::string getOption(int i) const {return "";};
-protected:
-    GenControl(Node *parent, std::string id);
-    virtual ~GenControl();
-    mutable pthread_mutex_t localMute;
+    void setCharValue(char val);
+    char getCharValue() const;
+    void setValue(char val);
 
 private:
-
-    int midichan, miditype;
-
-    //std::string m_description;
+    /**The transformation function for the control*/
+    const InjFunction<char,REALTYPE> *func;
 };
 
 #endif

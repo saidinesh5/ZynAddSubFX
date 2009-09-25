@@ -34,7 +34,11 @@ class TmpFunc:public InjFunction<char,REALTYPE>
 public:
     
     inline REALTYPE operator()(const char &x)const{return(pow(2,(fabs(x-64.0)/64.0*9)-1.0)/1000.0*(x<64 ? -1 : 1));};
-    inline char operator()(const REALTYPE &x)const{return((char)5);}; /**\todo actually implement this*/
+    inline char operator()(const REALTYPE &x)const{
+        if(x<0)
+            return char(-1*log(1000*x+1)*64.0/log(2.0)/9+64);
+        return char(log(1000*x+1)*64.0/log(2.0)/9+64);
+    };
 };
 
 typedef LinInjFunc<REALTYPE> Linear;
@@ -42,12 +46,12 @@ Echo::Echo(const int & insertion_,REALTYPE *const efxoutl_,REALTYPE *const efxou
         : Effect(insertion_,efxoutl_,efxoutr_,NULL,0),
         Pvolume(50),//Ppanning(64),
         /**Note: random panning is not working here \todo match old panning exactly*/
-        panning(NULL,"panning",      0.5,       new Linear(0,1.0),   GenControl::Real),
-        delay(  NULL,"delay",        0.70866,   new Linear(0,1.5),   GenControl::Real),
-        lrdelay(NULL,"L/R delay",    0.01670838,new TmpFunc(),       GenControl::Real),
-        lrcross(NULL,"L/R crossover",0.5,       new Linear(0.0,1.0), GenControl::Real),
-        fb(     NULL,"Feedback",     0.313,     new Linear(0,0.9922),GenControl::Real),
-        hidamp( NULL,"Dampening",    0.528,     new Linear(1.0,0),   GenControl::Real),
+        panning(NULL,"panning",      0.5,       new Linear(0,1.0)),
+        delay(  NULL,"delay",        0.70866,   new Linear(0,1.5)),
+        lrdelay(NULL,"L/R delay",    0.01670838,new TmpFunc()),
+        lrcross(NULL,"L/R crossover",0.5,       new Linear(0.0,1.0)),
+        fb(     NULL,"Feedback",     0.313,     new Linear(0,0.9922)),
+        hidamp( NULL,"Dampening",    0.528,     new Linear(1.0,0)),
         //Pdelay(60),
         //Plrdelay(100),Plrcross(100),Pfb(40),Phidamp(60),
         //lrdelay(0),

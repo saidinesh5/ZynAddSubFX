@@ -26,17 +26,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "../Misc/Bank.h"
 
 Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
         :Node(parent, "Part"),
-        partVolume(this, "Volume",30,new db2rapInjFunc<REALTYPE>(-40, 12.91666),GenControl::Real),
-        enabled(this, "Enabled",false,NULL,GenControl::Bool),
+        partVolume(this, "Volume",30,new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
+        enabled(this, "Enabled",false),
         instrument(this, "Instrument"),
-        instrumentKit(&instrument, "InstrumentKit")
+        instrumentKit(&instrument, "InstrumentKit"),
+        instrumentControl(this)
 {
 
-    //partVolume.setDb2rapConversion(true);
-    //container.registerUser(this);
+    instrumentControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
+
     microtonal=microtonal_;
     fft=fft_;
     mutex=mutex_;
@@ -99,7 +101,7 @@ Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex
 
 void Part::defaults()
 {
-    enabled.resetDefault();
+    enabled.defaults();
     Pminkey=0;
     Pmaxkey=127;
     Pnoteon=1;
@@ -1145,9 +1147,25 @@ void Part::getfromXML(XMLwrapper *xml)
 
 };
 
-void Part::controlChanged(GenControl* control)
+void Part::handleSyncEvent(Event *event)
 {
+    if (event->type() == Event::NewValueEvent) {
+        NewValueEvent *newValue = static_cast<NewValueEvent*>(event);
 
+        if (newValue->control == &instrumentControl) {
+            InstrumentControl::bank->loadfromslot(newValue->val,this);
+            applyparameters();
+        }
+    }
+}
+
+void Part::handleEvent(Event *event)
+{
+    if (event->type() == Event::NewValueEvent) {
+        NewValueEvent *newValue = static_cast<NewValueEvent*>(event);
+
+        Job::push(new NodeJob(*this, new NewValueEvent(*newValue)));
+    }
 }
 
 void Part::enablePart()

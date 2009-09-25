@@ -37,10 +37,12 @@
 #include "../DSP/FFTwrapper.h"
 #include "../Effects/EffectMgr.h"
 #include "XMLwrapper.h"
-#include "../Controls/Control.h"
+#include "../Controls/Ranger.h"
+#include "../Controls/Toggle.h"
 //#include "../Controls/CharControl.h"
 //#include "../Controls/FloatControl.h"
 #include "../Controls/Node.h"
+#include "../Controls/InstrumentControl.h"
 
 #include <list> // For the monomemnotes list.
 
@@ -87,6 +89,9 @@ public:
     void getfromXML(XMLwrapper *xml);
     void getfromXMLinstrument(XMLwrapper *xml);
 
+    void handleEvent(Event *event);
+    void handleSyncEvent(Event *event);
+
     void cleanup();
 
 //      ADnoteParameters *ADPartParameters;
@@ -105,6 +110,9 @@ public:
 
     Node instrument;
     Node instrumentKit;
+
+    //for setting instruments loaded from bank
+    InstrumentControl instrumentControl;
 
     //Part parameters
     void setkeylimit(unsigned char Pkeylimit);
@@ -144,8 +152,8 @@ public:
     enum NoteStatus {KEY_OFF,KEY_PLAYING,KEY_RELASED_AND_SUSTAINED,KEY_RELASED};
 
     REALTYPE oldvolumel,oldvolumer;//this is applied by Master
-    Control<REALTYPE> partVolume;
-    Control<bool> enabled;
+    Ranger partVolume;
+    Toggle enabled;
 
     REALTYPE panning;//this is applied by Master, too
 
@@ -160,7 +168,6 @@ public:
 
     int lastnote;
 
-    void controlChanged(GenControl* control); //hm, not quite too sure what this does
     //CharControl Volume;/**<part volume*/
 
 private:

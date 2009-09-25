@@ -54,7 +54,12 @@ class ControlHelper : public QObject, public NodeUser
          * @brief Tell the connected control to send an event with its current value. Usually this
          * should happen automatically.
          */
-        void requestValue();
+        //void requestValue();
+
+        /**
+         * @breif Get the current char value of the control
+         */
+        char getValue();
 
         /** 
          * @brief The reimplemented event handler from the control tree.

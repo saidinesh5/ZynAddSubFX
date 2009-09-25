@@ -34,7 +34,7 @@
 
 Master::Master()
         : Node(NULL, "Master"),
-        masterVolume(this, "Volume", -6.66,new db2rapInjFunc<REALTYPE>(-40, 12.91666),GenControl::Real),
+        masterVolume(this, "Volume", -6.66,new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
         parts(this, "Parts")
 {
     Node::setRoot(this);
@@ -46,6 +46,7 @@ Master::Master()
     pthread_mutex_init(&mutex,NULL);
 
     Job::initialize();
+    Job::setEngineThread();
 
     fft=new FFTwrapper(OSCIL_SIZE);
 
@@ -260,6 +261,9 @@ void Master::partonoff(int npart,int what)
 void Master::AudioOut(REALTYPE *outl,REALTYPE *outr)
 {
     int i,npart,nefx;
+
+    //TODO: see if maybe we can call this only once
+    Job::setEngineThread();
 
     /*    //test!!!!!!!!!!!!! se poate bloca aici (mutex)
         if (seq.play){

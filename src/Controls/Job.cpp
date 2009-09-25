@@ -80,9 +80,13 @@ void Job::initialize()
     static bool inited = false;
     if (!inited) {
         pthread_mutex_init(&mutex,NULL);
-        engineThread = pthread_self();
         inited = true;
     }
+}
+
+void Job::setEngineThread()
+{
+    engineThread = pthread_self();
 }
 
 

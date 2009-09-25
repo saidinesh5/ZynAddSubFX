@@ -23,59 +23,42 @@
 #define CONTROL_H
 
 #include <string>
-#include <vector>
 #include <iostream>
 #include "GenControl.h"
 #include "EventClasses.h"
-#include "../Misc/InjFunction.h"
 #include "JobClasses.h"
+#include <pthread.h>
 
-typedef std::vector<std::string> StringVector;
-
-/**A control for a parameter within the program
+/**
+ * A control of interal type T
  *
- * \todo add some bounds checking for sanity*/
-template <class T> //please do not define this to be char as InjFunction should have a difficult time
+ */
+
+template <class T> 
 class Control:public GenControl
 {
 public:
-    Control(Node *parent, std::string id, T defaultval, const InjFunction<char,T> *nfunc,enum controlType type);
+    Control(Node *parent, std::string id, T defaultval);
     virtual ~Control();
 
-    inline T operator()() const {return value;};//It seems to make sense for a control to just return its value when this is called
-    std::string getString() const {return "hm, this should get implemented, but not yet :p";};
+    T operator()() const;
+    virtual std::string getString() const {return "hm, this should get implemented, but not yet :p";};
 
-    virtual std::string getOption(int index) const;
-    virtual int numOptions() const;
-    void addOption(std::string option) { options.push_back(option); }
+    virtual void handleEvent(Event *ev);
 
-    void handleEvent(Event *ev) {}
-    void handleSyncEvent(Event *ev);
+    void setValue(const T &val); //sync
+    T getValue()const; //sync
 
+    virtual void setCharValue(char val);//sync
+    virtual char getCharValue()const; //sync
 
-    void setValue(const T &val); //async
-    inline T getValue() const { return value; } //async
+    virtual void setValue(char val);     //sync
 
-    void setCharValue(char val) { value = (*func)(val); } //async
-    char getCharValue() const { return (*func)(value); } //async
-
-    void setValue(char val);     //sync, overridden
-
-    void resetDefault();
-
-    void requestValue();
-
-    virtual bool MIDILearn();
-
+    virtual char getDefaults()const {return char(defaultval);};
+    void defaults();
 protected:
-    StringVector options;
-
-private:
     T value;
-    T defaultval;
-
-    /**The transformation function for the control*/
-    const InjFunction<char,T> *func;
+    const T defaultval;
 };
 
 #include "Control.cpp"

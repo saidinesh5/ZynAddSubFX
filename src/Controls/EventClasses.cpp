@@ -14,9 +14,10 @@ RequestValueEvent::RequestValueEvent()
 {};
 
 
-NewValueEvent::NewValueEvent(char val)
+NewValueEvent::NewValueEvent(char val, GenControl *control)
     :Event(Event::NewValueEvent),
-    val(val)
+    val(val),
+    control(control)
 {};
 
 CreateNodeEvent::CreateNodeEvent(unsigned int ntype)

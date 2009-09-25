@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  GenControl.h - Control base class
+  Ranger.h - Control base class
   Copyright (C) 2009-2009 Mark McCurry
   Author: Mark McCurry
 
@@ -19,38 +19,29 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
-#ifndef _GEN_CONTROL_H
-#define _GEN_CONTROL_H
+#ifndef TRIGGER_H
+#define TRIGGER_H
 
-#include <pthread.h>
-#include <string>
-#include "Node.h"
+#include "GenControl.h"
 
-
-/**A control for a parameter within the program*/
-class GenControl : public Node
+/**
+ * A stateless trigger
+ * Ex: the Panic Button
+ */
+class Trigger:public GenControl
 {
 public:
-    virtual char getCharValue()const=0;
-    virtual void setValue(char val)=0;
-    virtual std::string getString() const=0;
+    Trigger(Node *parent, std::string id, std::string nlabel);
+    virtual ~Trigger();
+    
+    std::string getString() const 
+    {return label;};
 
-    bool MIDILearn();
-
-    //virtual void requestValue()=0;
-
-    virtual int numOptions() const {return 0;};
-    virtual std::string getOption(int i) const {return "";};
-protected:
-    GenControl(Node *parent, std::string id);
-    virtual ~GenControl();
-    mutable pthread_mutex_t localMute;
+    void setValue(char val);
 
 private:
-
-    int midichan, miditype;
-
-    //std::string m_description;
+    /**The transformation function for the control*/
+    const std::string label;
 };
 
 #endif

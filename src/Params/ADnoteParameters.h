@@ -34,7 +34,7 @@
 #include "../Misc/XMLwrapper.h"
 #include "../DSP/FFTwrapper.h"
 #include "Presets.h"
-#include "../Controls/Control.h"
+#include "../Controls/Ranger.h"
 #include "../Controls/FakeChildFactory.h"
 #include <vector>
 
@@ -186,7 +186,7 @@ class ADnoteVoiceParam : public Node{
 
     /* Voice Volume */
     //unsigned char PVolume;
-    Control<REALTYPE> volume;
+    Ranger volume;
 
     /* If the Volume negative */
     unsigned char PVolumeminus;
@@ -268,7 +268,7 @@ public:
     ADnoteParameters(Node *parent, FFTwrapper *fft_);
     ~ADnoteParameters();
 
-    Control<REALTYPE> volume;
+    Ranger volume;
 
     FakeChildFactory voices;
 

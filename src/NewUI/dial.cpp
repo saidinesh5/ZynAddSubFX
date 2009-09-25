@@ -31,7 +31,7 @@ Dial::Dial(QWidget *parent)
     connect(this, SIGNAL(MIDILearn()),
             helper, SLOT(MIDILearn()));
 
-    helper->requestValue();
+    //helper->requestValue(); (you can directly get the information now
 
 }
 

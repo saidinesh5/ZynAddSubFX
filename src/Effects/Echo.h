@@ -27,9 +27,8 @@
 #include "Effect.h"
 #include "../Samples/AuSample.h"
 #include "../Misc/Stereo.h"
-#include "../Controls/Control.h"
+#include "../Controls/Ranger.h"
 #include "../Controls/Node.h"
-//#include "../Controls/DelayCtl.h"
 
 /**Echo Effect*/
 class Echo:public Effect,NodeUser
@@ -110,16 +109,15 @@ public:
     void setdryonly();
 private:
     //Parameters
-    typedef Control<REALTYPE> rControl;
     char     Pvolume;/**<#1 Volume or Dry/Wetness*/
-    rControl panning;/**<#2 Panning*/
-    rControl delay;/**<#3 Delay of the Echo (seconds)*/
+    Ranger panning;/**<#2 Panning*/
+    Ranger delay;/**<#3 Delay of the Echo (seconds)*/
     /**#4 L/R delay difference (seconds that right channel is longer than mean
      * delay or seconds that the left channel is shorter than the mean delay)*/
-    rControl lrdelay;
-    rControl lrcross;/**<#5 L/R Mixing*/
-    rControl fb;/**<#6Feedback (multiplier)*/
-    rControl hidamp;/**<#7Dampening of the Echo*/
+    Ranger lrdelay;
+    Ranger lrcross;/**<#5 L/R Mixing*/
+    Ranger fb;/**<#6Feedback (multiplier)*/
+    Ranger hidamp;/**<#7Dampening of the Echo*/
 
     void setvolume(char Pvolume);
     //void setpanning(char Ppanning);
