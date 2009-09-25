@@ -12,7 +12,7 @@ if(AlsaMidiInput)
 		ALSAMidiIn.cpp
 		)
 	message(STATUS "Alsa midi input enabled")
-    set(MIDIINPUT_LIBRARIES ${ASOUND_LIBRARY} PARENT_SCOPE)
+	set(MIDIINPUT_LIBRARIES ${ASOUND_LIBRARY} PARENT_SCOPE)
 endif(AlsaMidiInput)
 
 add_library(zynaddsubfx_input STATIC

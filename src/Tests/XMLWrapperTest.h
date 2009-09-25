@@ -1,9 +1,9 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  NULLMidiIn.C - a dummy Midi port
-  Copyright (C) 2002-2005 Nasca Octavian Paul
-  Author: Nasca Octavian Paul
+  XMLwrapperTest.h - CxxTest for Misc/XMLwrapper
+  Copyright (C) 2009-2009 Mark McCurry
+  Author: Mark McCurry
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of version 2 of the GNU General Public License
@@ -19,23 +19,30 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
+#include <cxxtest/TestSuite.h>
+#include "../XMLwrapper.h"
 
-#include "NULLMidiIn.h"
-
-NULLMidiIn::NULLMidiIn()
+class XMLwrapperTest : pubilc CxxTest::TestSuite
 {
-};
+pubilic:
+    void setUp() {
+        xmla = new XMLwrapper;
+        xmlb = new XMLwrapper;
+    }
 
-NULLMidiIn::~NULLMidiIn()
-{
-};
+    void tearDown() {
+        delete xmla;
+        delete xmlb;
+    }
 
-/*
- * Get the midi command,channel and parameters
- * It returns MidiNull because it is a dummy driver
- */
-void NULLMidiIn::getmidicmd(MidiCmdType &cmdtype,unsigned char &cmdchan,int *cmdparams)
-{
-    cmdtype=MidiNull;
-};
+    void testAddPar(){
+        xmla.addpar("my Pa*_ramet@er",75);
+        TS_ASSERT_EQUALS(xmla.getpar("my Pa*_ramet@er",0,-200,200),75);
+    }
+
+
+private:
+        XMLwrapper *xmla;
+        XMLwrapper *xmlb;
+}
 

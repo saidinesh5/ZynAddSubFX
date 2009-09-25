@@ -93,7 +93,7 @@ void Echo::initdelays()
     delaySample.l()=AuSample(dl);
     delaySample.r()=AuSample(dr);
 
-    cleanup();
+    old=Stereo<REALTYPE>(0.0);
 }
 
 /*
@@ -101,9 +101,14 @@ void Echo::initdelays()
  */
 void Echo::out(REALTYPE *const smpsl,REALTYPE *const smpsr)
 {
+    Stereo<AuSample> input(AuSample(SOUND_BUFFER_SIZE,smpsl),AuSample(SOUND_BUFFER_SIZE,smpsr));
+    out(input);
+}
+
+void Echo::out(const Stereo<AuSample> &input)
+{
 //void Echo::out(const Stereo<AuSample> & input){ //ideal
     REALTYPE l,r,ldl,rdl;/**\todo move l+r->? ldl+rdl->?*/
-    Stereo<AuSample> input(AuSample(smpsl,SOUND_BUFFER_SIZE),AuSample(smpsr,SOUND_BUFFER_SIZE));
 
     for (int i=0;i<input.l().size();i++) {
         ldl=delaySample.l()[kl];
