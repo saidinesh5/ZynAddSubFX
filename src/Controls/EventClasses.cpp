@@ -9,9 +9,8 @@ UpdateEvent::UpdateEvent()
     :Event(Event::UpdateEvent)
 {};
 
-NewValueEvent::NewValueEvent(char val, GenControl *control)
+NewValueEvent::NewValueEvent(GenControl *control)
     :Event(Event::NewValueEvent),
-    val(val),
     control(control)
 {};
 

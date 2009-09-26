@@ -58,9 +58,11 @@ void ControlHelper::handleEvent(Event *event)
         }
         expectedEventMutex.unlock();
 
-        emit valueChanged(static_cast<NewValueEvent*>(event)->val);
+        emit valueChanged(static_cast<NewValueEvent*>(event)->control->getCharValue());
     } else if (event->type() == Event::RemovalEvent) {
         
+    } else if (event->type() == Event::OptionsChangedEvent) {
+        emitOptions();
     }
 }
 
@@ -80,14 +82,7 @@ void ControlHelper::setControl(QString absoluteId)
     if (m_control) {
         expectedValueEvents = 0;
         m_control->addRedirection(this);
-        if (m_control->numOptions()) {
-            QStringList options;
-            for (int i = 0; i < m_control->numOptions(); ++i) {
-                options << QString::fromStdString(m_control->getOption(i));
-            }
-            qDebug() << "Emitting options " << options;
-            emit optionsChanged(options);
-        }
+        emitOptions();
         qDebug() << "Assigning " << this << " to " << absoluteId;
         emit valueChanged(getValue());
         //m_control->requestValue();
@@ -189,6 +184,18 @@ QString ControlHelper::findComponentPath(QObject *object)
         }
     }
     return QString();
+}
+
+void ControlHelper::emitOptions()
+{
+    QStringList options;
+    if (m_control && m_control->numOptions()) {
+        for (int i = 0; i < m_control->numOptions(); ++i) {
+            options << QString::fromStdString(m_control->getOption(i));
+        }
+    }
+    qDebug() << "Emitting options " << options;
+    emit optionsChanged(options);
 }
 
 #include "controlhelper.moc"

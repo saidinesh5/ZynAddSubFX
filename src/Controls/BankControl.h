@@ -7,7 +7,7 @@ class BankControl : public Selector
 {
     public:
         BankControl(Node *parent);
-        class Bank *bank;
+        static class Bank *bank;
 };
 
 #endif // BANKCONTROL_H

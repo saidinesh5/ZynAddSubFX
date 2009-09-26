@@ -43,11 +43,11 @@ void Control<T>::handleEvent(Event *ev)
     if (ev->type() == Event::ChangeEvent) {
         char charval = static_cast<ChangeEvent*>(ev)->getVal();
         setValue(charval);
-        forward(new NewValueEvent(charval, this));
+        forward(new NewValueEvent(this));
 
         //and this is for reading the value of the control
     } else if (ev->type() == Event::RequestValueEvent) {
-        forward(new NewValueEvent(getCharValue(), this));
+        forward(new NewValueEvent(this));
     }
 }
 
@@ -64,7 +64,7 @@ void Control<T>::setValue(const T &val)
     if(true)
         std::cout << "Setting to " << val << std::endl;
     if(changed)
-        forward(new NewValueEvent(getCharValue(), this));
+        forward(new NewValueEvent(this));
 }
 
 template <class T>

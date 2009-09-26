@@ -28,6 +28,8 @@
 #include <string.h>
 #include "../Misc/Bank.h"
 
+using namespace std;
+
 Part::Part(Node *parent, Microtonal *microtonal_,FFTwrapper *fft_, pthread_mutex_t *mutex_)
         :Node(parent, "Part"),
         partVolume(this, "Volume",30,new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
@@ -1155,12 +1157,12 @@ void Part::handleSyncEvent(Event *event)
         NewValueEvent *newValue = static_cast<NewValueEvent*>(event);
 
         if (newValue->control == &instrumentControl) {
-            instrumentControl.bank->loadfromslot(newValue->val,this);
+            instrumentControl.bank->loadfromslot(instrumentControl.getCharValue(),this);
             applyparameters();
         }
 
         if (newValue->control == &bankControl) {
-            instrumentControl.loadBank(bankControl());
+            instrumentControl.loadBank(bankControl.bank->banks[bankControl()].dir);
         }
     }
 }

@@ -1,29 +1,34 @@
 #include "InstrumentControl.h"
 #include "../Misc/Bank.h"
 
+using namespace std;
+
 InstrumentControl::InstrumentControl(Node *parent)
     : Selector(parent, "BankInstrument", 0)
 {
     bank = new Bank();
-    loadBank(1);
 }
 
-void InstrumentControl::loadBank(int bankid)
+void InstrumentControl::loadBank(char *dir)
 {
-    if (bankid > MAX_NUM_BANKS) return;
+    if (!dir) {
+        cerr << dir << " is empty, returning...\n";
+        return;
+    }
+
     clearOptions();
 
-    if (bank->banks[bankid].name!=NULL)  {
-        const char* dir = bank->banks[bankid].dir;
-        int ret = bank->loadbank(dir);
-    } else {
-        std::cerr << "Failed to load bank...\n";
+    int ret = bank->loadbank(dir);
+    if (-1 == ret) {
+        cerr << "Failed to load bank " << dir << "\n";
         return;
     }
 
     for (int i = 0; i < 128; ++i) {
         addOption(bank->getname(i));
     }
+    forward(new OptionsChangedEvent());
+    cout << "Loaded " << dir << "\n";
 }
 
 #if 0

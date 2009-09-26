@@ -122,6 +122,8 @@ class ControlHelper : public QObject, public NodeUser
         void optionsChanged(QStringList options);
 
     private:
+        void emitOptions();
+
         GenControl *m_control;
         QString m_controlId;
         int expectedValueEvents;

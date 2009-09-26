@@ -11,7 +11,7 @@ class InstrumentControl : public Selector
         //virtual int numOptions() const;
     //private:
         class Bank *bank;
-        void loadBank(int bankid);
+        void loadBank(char *dir);
 
 };
 

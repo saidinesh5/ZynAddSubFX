@@ -40,8 +40,7 @@ public:
 class NewValueEvent : public Event
 {
     public:
-        NewValueEvent(char val, GenControl *control);
-        const char val;
+        NewValueEvent(GenControl *control);
         const GenControl *control;
 };
 
@@ -67,6 +66,12 @@ class RemovalEvent : public Event
         Node * getNode() const { return node; }
     private:
         Node* node;
+};
+
+class OptionsChangedEvent : public Event
+{
+    public:
+        OptionsChangedEvent() : Event(Event::OptionsChangedEvent) {};
 };
 
 class MidiEvent : public Event
