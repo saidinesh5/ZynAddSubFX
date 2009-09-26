@@ -45,13 +45,6 @@ class NewValueEvent : public Event
         const GenControl *control;
 };
 
-/** Used for requesting a node to emit its value (ie. a NewValueEvent */
-class RequestValueEvent : public Event
-{
-    public:
-        RequestValueEvent();
-};
-
 /**Event for Child creation*/
 class CreateNodeEvent: public Event
 {

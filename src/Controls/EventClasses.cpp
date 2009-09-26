@@ -9,11 +9,6 @@ UpdateEvent::UpdateEvent()
     :Event(Event::UpdateEvent)
 {};
 
-RequestValueEvent::RequestValueEvent()
-    :Event(Event::RequestValueEvent)
-{};
-
-
 NewValueEvent::NewValueEvent(char val, GenControl *control)
     :Event(Event::NewValueEvent),
     val(val),
