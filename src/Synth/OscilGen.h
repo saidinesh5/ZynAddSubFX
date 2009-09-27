@@ -76,8 +76,8 @@ public:
      *   4 - dB scale (-100)*/
     unsigned char Phmagtype;
 
-    unsigned char Pcurrentbasefunc;//The base function used - 0=sin, 1=...
-    Selector currentBaseFunc;
+    //unsigned char Pcurrentbasefunc;
+    Selector currentBaseFunc;//The base function used - 0=sin, 1=...
     unsigned char Pbasefuncpar;//the parameter of the base function
 
     unsigned char Pbasefuncmodulation;//what modulation is applied to the basefunc

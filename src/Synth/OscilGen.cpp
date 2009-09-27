@@ -102,7 +102,7 @@ void OscilGen::defaults()
     if (ADvsPAD) Prand=127;//max phase randomness (usefull if the oscil will be imported to a ADsynth from a PADsynth
     else Prand=64;//no randomness
 
-    Pcurrentbasefunc=0;
+    currentBaseFunc.defaults();
     Pbasefuncpar=64;
 
     Pbasefuncmodulation=0;
@@ -354,7 +354,7 @@ void OscilGen::getbasefunction(REALTYPE *smps)
 
         t=t-floor(t);
 
-        switch (Pcurrentbasefunc) {
+        switch (currentBaseFunc()) {
         case 1:
             smps[i]=basefunc_triangle(t,par);
             break;
@@ -509,7 +509,7 @@ void OscilGen::oscilfilter()
  */
 void OscilGen::changebasefunction()
 {
-    if (Pcurrentbasefunc!=0) {
+    if (currentBaseFunc()!=0) {
         getbasefunction(tmpsmps);
         fft->smps2freqs(tmpsmps,basefuncFFTfreqs);
         basefuncFFTfreqs.c[0]=0.0;
@@ -521,7 +521,7 @@ void OscilGen::changebasefunction()
         //in this case basefuncFFTfreqs_ are not used
     }
     oscilprepared=0;
-    oldbasefunc=Pcurrentbasefunc;
+    oldbasefunc=currentBaseFunc();
     oldbasepar=Pbasefuncpar;
     oldbasefuncmodulation=Pbasefuncmodulation;
     oldbasefuncmodulationpar1=Pbasefuncmodulationpar1;
@@ -749,7 +749,7 @@ void OscilGen::prepare()
     int i,j,k;
     REALTYPE a,b,c,d,hmagnew;
 
-    if ((oldbasepar!=Pbasefuncpar)||(oldbasefunc!=Pcurrentbasefunc)||
+    if ((oldbasepar!=Pbasefuncpar)||(oldbasefunc!=currentBaseFunc())||
             (oldbasefuncmodulation!=Pbasefuncmodulation)||
             (oldbasefuncmodulationpar1!=Pbasefuncmodulationpar1)||
             (oldbasefuncmodulationpar2!=Pbasefuncmodulationpar2)||
@@ -789,7 +789,7 @@ void OscilGen::prepare()
         oscilFFTfreqs.c[i]=0.0;
         oscilFFTfreqs.s[i]=0.0;
     };
-    if (Pcurrentbasefunc==0) {//the sine case
+    if (currentBaseFunc()==0) {//the sine case
         for (i=0;i<MAX_AD_HARMONICS;i++) {
             oscilFFTfreqs.c[i+1]=-hmag[i]*sin(hphase[i]*(i+1))/2.0;
             oscilFFTfreqs.s[i+1]=hmag[i]*cos(hphase[i]*(i+1))/2.0;
@@ -960,7 +960,7 @@ short int OscilGen::get(REALTYPE *smps,REALTYPE freqHz,int resonance)
     int i;
     int nyquist,outpos;
 
-    if ((oldbasepar!=Pbasefuncpar)||(oldbasefunc!=Pcurrentbasefunc)||(oldhmagtype!=Phmagtype)
+    if ((oldbasepar!=Pbasefuncpar)||(oldbasefunc!=currentBaseFunc())||(oldhmagtype!=Phmagtype)
             ||(oldwaveshaping!=Pwaveshaping)||(oldwaveshapingfunction!=Pwaveshapingfunction)) oscilprepared=0;
     if (oldfilterpars!=Pfiltertype*256+Pfilterpar1+Pfilterpar2*65536+Pfilterbeforews*16777216) {
         oscilprepared=0;
@@ -1109,7 +1109,7 @@ void OscilGen::getspectrum(int n, REALTYPE *spc,int what)
             spc[i-1]=sqrt(oscilFFTfreqs.c[i]*oscilFFTfreqs.c[i]
                           +oscilFFTfreqs.s[i]*oscilFFTfreqs.s[i]);
         } else {
-            if (Pcurrentbasefunc==0) spc[i-1]=((i==1)?(1.0):(0.0));
+            if (currentBaseFunc()==0) spc[i-1]=((i==1)?(1.0):(0.0));
             else spc[i-1]=sqrt(basefuncFFTfreqs.c[i]*basefuncFFTfreqs.c[i]+
                                    basefuncFFTfreqs.s[i]*basefuncFFTfreqs.s[i]);
         };
@@ -1137,7 +1137,8 @@ void OscilGen::useasbase()
         basefuncFFTfreqs.s[i]=oscilFFTfreqs.s[i];
     };
 
-    oldbasefunc=Pcurrentbasefunc=127;
+    oldbasefunc=127;
+    currentBaseFunc.setValue(127);
 
     prepare();
 };
@@ -1148,7 +1149,7 @@ void OscilGen::useasbase()
  */
 void OscilGen::getcurrentbasefunction(REALTYPE *smps)
 {
-    if (Pcurrentbasefunc!=0) {
+    if (currentBaseFunc()!=0) {
         fft->freqs2smps(basefuncFFTfreqs,smps);
     } else getbasefunction(smps);//the sine case
 };
@@ -1158,7 +1159,7 @@ void OscilGen::add2XML(XMLwrapper *xml)
 {
     xml->addpar("harmonic_mag_type",Phmagtype);
 
-    xml->addpar("base_function",Pcurrentbasefunc);
+    xml->addpar("base_function",currentBaseFunc());
     xml->addpar("base_function_par",Pbasefuncpar);
     xml->addpar("base_function_modulation",Pbasefuncmodulation);
     xml->addpar("base_function_modulation_par1",Pbasefuncmodulationpar1);
@@ -1202,7 +1203,7 @@ void OscilGen::add2XML(XMLwrapper *xml)
     };
     xml->endbranch();
 
-    if (Pcurrentbasefunc==127) {
+    if (currentBaseFunc()==127) {
         REALTYPE max=0.0;
 
         for (int i=0;i<OSCIL_SIZE/2;i++) {
@@ -1232,7 +1233,7 @@ void OscilGen::getfromXML(XMLwrapper *xml)
 
     Phmagtype=xml->getpar127("harmonic_mag_type",Phmagtype);
 
-    Pcurrentbasefunc=xml->getpar127("base_function",Pcurrentbasefunc);
+    currentBaseFunc.setValue(xml->getpar127("base_function",currentBaseFunc()));
     Pbasefuncpar=xml->getpar127("base_function_par",Pbasefuncpar);
 
     Pbasefuncmodulation=xml->getpar127("base_function_modulation",Pbasefuncmodulation);
@@ -1280,7 +1281,7 @@ void OscilGen::getfromXML(XMLwrapper *xml)
         xml->exitbranch();
     };
 
-    if (Pcurrentbasefunc!=0) changebasefunction();
+    if (currentBaseFunc()!=0) changebasefunction();
 
 
     if (xml->enterbranch("BASE_FUNCTION")) {
