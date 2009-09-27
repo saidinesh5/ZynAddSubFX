@@ -99,7 +99,7 @@ void ADnoteParameters::defaults()
     GlobalPar.PBandwidth=64;
 
     /* Amplitude Global Parameters */
-    GlobalPar.PVolume=90;
+    //GlobalPar.PVolume=90;
     volume.defaults();
 
     GlobalPar.PPanning=64;//center
