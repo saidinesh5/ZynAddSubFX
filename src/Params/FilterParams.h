@@ -26,11 +26,12 @@
 #include "../globals.h"
 #include "../Misc/XMLwrapper.h"
 #include "Presets.h"
+#include "../Controls/Ranger.h"
 
-class FilterParams:public Presets
+class FilterParams:public Presets, public Node
 {
 public:
-    FilterParams(unsigned char Ptype_,unsigned char Pfreq,unsigned char Pq_);
+    FilterParams(Node *parent, unsigned char Ptype_,unsigned char Pfreq,unsigned char Pq_);
     ~FilterParams();
 
     void add2XML(XMLwrapper *xml);

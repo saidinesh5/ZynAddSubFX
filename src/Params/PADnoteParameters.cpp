@@ -45,7 +45,8 @@ PADnoteParameters::PADnoteParameters(FFTwrapper *fft_,pthread_mutex_t *mutex_):P
     AmpEnvelope->ADSRinit_dB(0,40,127,25);
     AmpLfo=new LFOParams(80,0,64,0,0,0,0,1);
 
-    GlobalFilter=new FilterParams(2,94,40);
+    //TODO: controlify this
+    GlobalFilter=new FilterParams(NULL, 2,94,40);
     FilterEnvelope=new EnvelopeParams(0,1);
     FilterEnvelope->ADSRinit_filter(64,40,64,70,60,64);
     FilterLfo=new LFOParams(80,0,64,0,0,0,0,2);

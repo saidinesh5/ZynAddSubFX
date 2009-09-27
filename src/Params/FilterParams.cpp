@@ -25,7 +25,9 @@
 #include <stdlib.h>
 #include "FilterParams.h"
 
-FilterParams::FilterParams(unsigned char Ptype_,unsigned char Pfreq_,unsigned  char Pq_):Presets()
+FilterParams::FilterParams(Node *parent, unsigned char Ptype_,unsigned char Pfreq_,unsigned  char Pq_):
+    Presets(),
+    Node(parent, "FilterParams")
 {
     setpresettype("Pfilter");
     Dtype=Ptype_;

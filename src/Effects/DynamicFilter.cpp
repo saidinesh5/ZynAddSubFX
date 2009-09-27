@@ -24,7 +24,7 @@
 #include "DynamicFilter.h"
 
 DynamicFilter::DynamicFilter(int insertion_,REALTYPE *efxoutl_,REALTYPE *efxoutr_)
-        :Effect(insertion_,efxoutl_,efxoutr_,new FilterParams(0,64,64),0),
+        :Effect(insertion_,efxoutl_,efxoutr_,new FilterParams(NULL, 0,64,64),0),
         Pvolume(110),Ppanning(64),Pdepth(0),Pampsns(90),
         Pampsnsinv(0),Pampsmooth(60),
         filterl(NULL),filterr(NULL)
