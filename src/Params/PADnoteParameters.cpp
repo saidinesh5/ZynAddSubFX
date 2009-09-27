@@ -32,7 +32,9 @@ PADnoteParameters::PADnoteParameters(FFTwrapper *fft_,pthread_mutex_t *mutex_):P
     mutex=mutex_;
 
     resonance=new Resonance();
-    oscilgen=new OscilGen(fft_,resonance);
+
+    //TODO: this oscilgen needs to be further controlified, right now it just sits there
+    oscilgen=new OscilGen(fft_,resonance, NULL, "OscilGen");
     oscilgen->ADvsPAD=true;
 
     FreqEnvelope=new EnvelopeParams(0,0);

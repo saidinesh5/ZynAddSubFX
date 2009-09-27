@@ -27,7 +27,10 @@
 #include "OscilGen.h"
 #include "../Effects/Distorsion.h"
 
-OscilGen::OscilGen(FFTwrapper *fft_,Resonance *res_):Presets()
+OscilGen::OscilGen(FFTwrapper *fft_,Resonance *res_,
+        Node *parent, std::string id):
+    Presets(),
+    Node(parent, id)
 {
     setpresettype("Poscilgen");
     fft=fft_;

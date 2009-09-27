@@ -203,13 +203,16 @@ void ADnoteParameters::defaults(int n)
  */
 void ADnoteParameters::EnableVoice(int nvoice)
 {
-    VoicePar.push_back(new ADnoteVoiceParam(NULL, "VoiceParam"));
+    ADnoteVoiceParam* param = new ADnoteVoiceParam(NULL, "VoiceParam");
+    VoicePar.push_back(param);
 
     voices << VoicePar[nvoice];
     voices.createChild("Voice");
 
-    VoicePar[nvoice]->OscilSmp=new OscilGen(fft,GlobalPar.Reson);
-    VoicePar[nvoice]->FMSmp=new OscilGen(fft,NULL);
+    VoicePar[nvoice]->OscilSmp=new OscilGen(fft,GlobalPar.Reson,
+            param, "OscilSmp");
+    VoicePar[nvoice]->FMSmp=new OscilGen(fft,NULL,
+            param, "FMSmp");
 
     VoicePar[nvoice]->AmpEnvelope=new EnvelopeParams(64,1);
     VoicePar[nvoice]->AmpEnvelope->ADSRinit_dB(0,100,127,100);

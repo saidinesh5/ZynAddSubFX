@@ -28,11 +28,12 @@
 #include "Resonance.h"
 #include "../DSP/FFTwrapper.h"
 #include "../Params/Presets.h"
+#include "../Controls/Node.h"
 
-class OscilGen:public Presets
+class OscilGen:public Presets, public Node
 {
 public:
-    OscilGen(FFTwrapper *fft_,Resonance *res_);
+    OscilGen(FFTwrapper *fft_,Resonance *res_, Node *parent, std::string id);
     ~OscilGen();
 
     /**computes the full spectrum of oscil from harmonics,phases and basefunc*/
