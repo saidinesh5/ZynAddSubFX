@@ -1160,10 +1160,6 @@ void Part::handleSyncEvent(Event *event)
             instrumentControl.bank->loadfromslot(instrumentControl.getCharValue(),this);
             applyparameters();
         }
-
-        if (newValue->control == &bankControl) {
-            instrumentControl.loadBank(bankControl.bank->banks[bankControl()].dir);
-        }
     }
 }
 
@@ -1172,7 +1168,12 @@ void Part::handleEvent(Event *event)
     if (event->type() == Event::NewValueEvent) {
         NewValueEvent *newValue = static_cast<NewValueEvent*>(event);
 
-        Job::push(new NodeJob(*this, new NewValueEvent(*newValue)));
+        if (newValue->control == &bankControl) {
+            instrumentControl.loadBank(bankControl.bank->banks[bankControl()].dir);
+        } else {
+            Job::push(new NodeJob(*this, new NewValueEvent(*newValue)));
+        }
+
     }
 }
 
