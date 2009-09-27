@@ -275,6 +275,8 @@ void ADnoteParameters::KillVoice(int nvoice)
 
     delete (VoicePar[nvoice]->FMFreqEnvelope);
     delete (VoicePar[nvoice]->FMAmpEnvelope);
+
+    delete VoicePar[nvoice];
 };
 
 ADnoteParameters::~ADnoteParameters()

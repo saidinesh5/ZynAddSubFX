@@ -2,9 +2,9 @@
 
 #include <iostream>
 #include "EventClasses.h"
+#include <assert.h>
 
-using std::vector;
-using std::string;
+using namespace std;
 
 Node* Node::m_root = NULL;
 
@@ -19,16 +19,23 @@ Node::Node(Node* parent, std::string id)
 
 Node::~Node()
 {
-
-
-
-    //if (m_parent) {
-        //forward(new RemovalEvent(this));
-    //}
-
     for (vector<Node*>::iterator it = m_children.begin(); it != m_children.end(); it++) {
-        //delete (*it);
+        m_children.erase(it);
     }
+
+    if (m_parent) {
+        m_parent->removeRedirections(this);
+        for (vector<Node*>::iterator it = m_parent->m_children.begin(); it != m_parent->m_children.end(); it++) {
+            if (*it == this) {
+                m_parent->m_children.erase(it);
+                break;
+            }
+        }
+    }
+    forward(new RemovalEvent(this));
+
+    removeRedirections(NULL);
+    m_rules.clear();
 }
 
 void Node::forward(Event *event) const
@@ -83,7 +90,7 @@ void Node::rename(std::string newName)
 void Node::addChild(Node* node)
 {
     m_children.push_back(node);
-    node->addRedirection(this, new TypeFilter(Event::RemovalEvent));
+    //node->addRedirection(this, new TypeFilter(Event::RemovalEvent));
 }
 
 bool Node::hasChildren()
@@ -109,7 +116,31 @@ void Node::moveToParent(Node *parent)
         m_parent->addChild(this);
 }
 
-Node* Node::findChild(std::string id)
+class FindChildJob : public Job
+{
+    public:
+        Node **result, *node;
+        string path;
+        FindChildJob(Node *node, Node **result, string path)
+            : node(node), result(result), path(path)
+        {
+
+        }
+
+        void exec() {
+            //this will be called in sync time, from the backend
+            *result = node->recurseFindChild(path);
+        }
+};
+
+Node* Node::findChild(string id)
+{
+    Node *ret = NULL;
+    Job::pushAndWait(new FindChildJob(this, &ret, id));
+    return ret;
+}
+
+Node* Node::recurseFindChild(string id)
 {
     Node *ret = NULL;
     for (NodeIterator it = m_children.begin();
@@ -126,7 +157,7 @@ Node* Node::findChild(std::string id)
 
         if (!(*it)->hasChildren()) continue;
 
-        ret = (*it)->findChild(id);
+        ret = (*it)->recurseFindChild(id);
         if (ret) return ret;
     }
     return ret;
@@ -201,7 +232,8 @@ void Node::removeRedirections(NodeUser *destination)
     vector<Redirection>::iterator it;
     it = m_rules.begin();
     while (it != m_rules.end()) {
-        if ((*it).destination == destination) {
+        if (!destination || 
+                (*it).destination == destination) {
             delete (*it).filter;
             it = m_rules.erase(it);
         } else {

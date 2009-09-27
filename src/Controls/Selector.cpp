@@ -30,7 +30,7 @@ Selector::Selector(Node *parent, std::string id, int defaultval)
 
 Selector::~Selector()
 {
-    pthread_mutex_destroy(&localMute);
+
 }
 
 string Selector::getString()const

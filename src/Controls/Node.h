@@ -52,6 +52,7 @@ class Node: public NodeUser
     //these are both debug classes
     friend class DebugInterface;
     friend class Tree;
+    friend class FindChildJob;
 
     protected:
         virtual std::string doCreateChild(int type);
@@ -86,6 +87,8 @@ class Node: public NodeUser
         virtual void handleEvent(Event *ev);//you might want this to stay
                                              //pure virtual
         void addRedirection(NodeUser *destination, RedirectFilter *filter = new RedirectFilter());
+
+        //destination == NULL means delete all redirections
         void removeRedirections(NodeUser *destination);
 
         static inline Node* getRoot() { return m_root; }
@@ -94,6 +97,8 @@ class Node: public NodeUser
 
 
     private:
+        Node* recurseFindChild(std::string id);
+
         struct Redirection
         {
             NodeUser *destination;

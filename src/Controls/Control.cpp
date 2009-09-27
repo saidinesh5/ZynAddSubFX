@@ -61,8 +61,8 @@ void Control<T>::setValue(const T &val)
         changed = true;
     }
     pthread_mutex_unlock(&localMute);
-    if(true)
-        std::cout << "Setting to " << val << std::endl;
+    //if(true)
+        //std::cout << "Setting to " << val << " " << (long long)(this) << std::endl;
     if(changed)
         forward(new NewValueEvent(this));
 }

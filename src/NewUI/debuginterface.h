@@ -15,7 +15,7 @@ class EventReceiver : public QObject, public NodeUser
         Node *registeredNode;
 
     signals:
-        void newEvent(Node *node, QString info);
+        void newEvent(Node *node, QString info, bool safeprint);
 };
 
 class DebugInterface : public QDialog
@@ -27,10 +27,10 @@ class DebugInterface : public QDialog
         void handleEvent(Event *event);
 
     signals:
-        void newEvent(Node *node, QString info);
+        void newEvent(Node *node, QString info, bool safeprint);
 
     private slots:
-        void receiveEvent(Node* node, QString info);
+        void receiveEvent(Node* node, QString info, bool safeprint = false);
         void refreshTree();
         void createEventReceivers(class Node *parent);
 

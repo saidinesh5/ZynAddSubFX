@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>381</width>
-    <height>315</height>
+    <width>554</width>
+    <height>707</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,7 +84,7 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="0">
+      <item row="1" column="0">
        <widget class="Dial" name="dial">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -97,7 +97,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="1" column="2">
        <widget class="Dial" name="dial_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -107,7 +107,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
+      <item row="1" column="3">
        <widget class="Dial" name="dial_3">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -117,7 +117,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="Dial" name="dial_6">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -127,7 +127,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="2">
        <widget class="Dial" name="dial_5">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -137,13 +137,20 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
+      <item row="2" column="3">
        <widget class="Dial" name="dial_4">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="ComboBox" name="comboBox_2">
+        <property name="controlId" stdset="0">
+         <string>OscilSmp.BaseFunc</string>
         </property>
        </widget>
       </item>
@@ -159,6 +166,11 @@
    <class>Dial</class>
    <extends>QDial</extends>
    <header>dial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>combobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

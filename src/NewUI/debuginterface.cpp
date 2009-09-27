@@ -15,19 +15,27 @@ EventReceiver::EventReceiver(Node *node)
 
 EventReceiver::~EventReceiver()
 {
-    registeredNode->removeRedirections(this);
+    if (registeredNode)
+        registeredNode->removeRedirections(this);
 }
 
 void EventReceiver::handleEvent(Event *event)
 {
     //this is the place to make it print actual useful info about the event
     QString info;
+    bool safeprint = false;
 
     if (event->type() == Event::ChangeEvent) {
         info += "(ChangeEvent) ";
         info += "val:" + QString::number(static_cast<ChangeEvent*>(event)->getVal());
     } else if (event->type() == Event::NewValueEvent) {
         info += "(NewValueEvent) ";
+    } else if (event->type() == Event::RemovalEvent) {
+        RemovalEvent *rem = static_cast<RemovalEvent*>(event);
+        safeprint = true;
+        info += "(RemovalEvent) ";
+        registeredNode = NULL;
+
     } else if (event->type() == Event::MidiEvent) {
         MidiEvent *mid = static_cast<MidiEvent*>(event);
         info += "(MidiEvent) ";
@@ -37,7 +45,7 @@ void EventReceiver::handleEvent(Event *event)
     } else {
         info += "(Unknown event type: " + int(event->type()) + QString(")");
     }
-    emit newEvent(registeredNode, info);
+    emit newEvent(registeredNode, info, safeprint);
 }
 
 class Tree : public QTreeWidget
@@ -130,14 +138,14 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
 
     layout->addWidget(text);
 
-    connect(this, SIGNAL(newEvent(Node*,QString)),
-            this, SLOT(receiveEvent(Node*,QString)));
+    connect(this, SIGNAL(newEvent(Node*,QString, bool)),
+            this, SLOT(receiveEvent(Node*,QString, bool)));
 
     createEventReceivers(Node::getRoot());
     EventReceiver *receiver = new EventReceiver(Node::getRoot());
     receivers.append(receiver);
-    connect(receiver, SIGNAL(newEvent(Node*,QString)),
-            this, SIGNAL(newEvent(Node*,QString)));
+    connect(receiver, SIGNAL(newEvent(Node*,QString, bool)),
+            this, SIGNAL(newEvent(Node*,QString, bool)));
 
 }
 
@@ -149,18 +157,21 @@ void DebugInterface::createEventReceivers(class Node *parent)
     {
         EventReceiver *receiver = new EventReceiver(*i);
         receivers.append(receiver);
-        connect(receiver, SIGNAL(newEvent(Node*,QString)),
-                this, SIGNAL(newEvent(Node*,QString)));
+        connect(receiver, SIGNAL(newEvent(Node*,QString, bool)),
+                this, SIGNAL(newEvent(Node*,QString, bool)));
         createEventReceivers(*i);
     }
 
 }
 
-void DebugInterface::receiveEvent(Node* node, QString info)
+void DebugInterface::receiveEvent(Node* node, QString info, bool safeprint)
 {
     static int counter = 0;
     counter++;
-    text->append(QString::number(counter) + "] " + QString::fromStdString(node->getAbsoluteId()) + ": " + info);
+    text->append(QString::number(counter) + "] ");
+    if (!safeprint)
+        text->append(QString::fromStdString(node->getAbsoluteId()) + ": ");
+    text->append(info);
     text->verticalScrollBar()->setValue(text->verticalScrollBar()->maximum());
 }
 

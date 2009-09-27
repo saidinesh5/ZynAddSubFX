@@ -48,6 +48,7 @@ void ControlHelper::handleEvent(Event *event)
 
     if (event->type() == Event::NewValueEvent) {
 
+#if 0
         //the logic here is: if we are expecting an event about a new value, then we will ignore it
         //to avoid infinite loops
         expectedEventMutex.lock();
@@ -57,10 +58,14 @@ void ControlHelper::handleEvent(Event *event)
             return;
         }
         expectedEventMutex.unlock();
+#endif
 
         emit valueChanged(static_cast<NewValueEvent*>(event)->control->getCharValue());
     } else if (event->type() == Event::RemovalEvent) {
-        
+        //clear the current connected control
+        //setControl(QString());
+        m_control = NULL;
+        qDebug() << "Got removalevent, clearing...";
     } else if (event->type() == Event::OptionsChangedEvent) {
         emitOptions();
     }
