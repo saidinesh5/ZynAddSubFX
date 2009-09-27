@@ -29,6 +29,7 @@
 #include "../DSP/FFTwrapper.h"
 #include "../Params/Presets.h"
 #include "../Controls/Node.h"
+#include "../Controls/Selector.h"
 
 class OscilGen:public Presets, public Node
 {
@@ -76,6 +77,7 @@ public:
     unsigned char Phmagtype;
 
     unsigned char Pcurrentbasefunc;//The base function used - 0=sin, 1=...
+    Selector currentBaseFunc;
     unsigned char Pbasefuncpar;//the parameter of the base function
 
     unsigned char Pbasefuncmodulation;//what modulation is applied to the basefunc

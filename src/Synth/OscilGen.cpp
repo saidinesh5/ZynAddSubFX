@@ -30,8 +30,25 @@
 OscilGen::OscilGen(FFTwrapper *fft_,Resonance *res_,
         Node *parent, std::string id):
     Presets(),
-    Node(parent, id)
+    Node(parent, id),
+    currentBaseFunc(this, "BaseFunc", 0)
 {
+
+    currentBaseFunc.addOption("Sin"); //0
+    currentBaseFunc.addOption("Triangle"); //1
+    currentBaseFunc.addOption("Pulse"); //2
+    currentBaseFunc.addOption("Saw"); //3
+    currentBaseFunc.addOption("Power"); //4
+    currentBaseFunc.addOption("Gauss"); //5
+    currentBaseFunc.addOption("Diode"); //6
+    currentBaseFunc.addOption("Abs sine"); //7
+    currentBaseFunc.addOption("Pulse sine"); //8
+    currentBaseFunc.addOption("Stretch sine"); //9
+    currentBaseFunc.addOption("Chirp"); //10
+    currentBaseFunc.addOption("Abs stretch sine"); //11
+    currentBaseFunc.addOption("Chebyshev"); //12
+    currentBaseFunc.addOption("Square"); //13
+
     setpresettype("Poscilgen");
     fft=fft_;
     res=res_;
