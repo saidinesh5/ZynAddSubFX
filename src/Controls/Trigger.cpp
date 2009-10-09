@@ -25,18 +25,16 @@
 using namespace std;
 
 Trigger::Trigger(Node *parent, string id, string nlabel)
-    :GenControl(parent,id),label(nlabel)
-{
-}
+    :GenControl(parent, id), label(nlabel)
+{}
 
 Trigger::~Trigger()
-{
-}
+{}
 
 void Trigger::setValue(char val)
 {
     if(val >= 64)
-        //this will be useful when sources are identifyiable 
+        //this will be useful when sources are identifyiable
         //or if there is a more generic event
         forward(new NewValueEvent(this));
 }

@@ -23,16 +23,16 @@
 #define _LININJFUNC_H
 #include "InjFunction.h"
 
-template <class T>
-class LinInjFunc:public InjFunction<char,T>
+template<class T>
+class LinInjFunc:public InjFunction<char, T>
 {
-public:
-    LinInjFunc(T min,T max):
-        b(min),m((max-min)/127){};
-    inline T operator()(const char &x)const{return(m*x+b);};
-    inline char operator()(const T &x)const{return((char)((x-b)/m));};
-private:
-    T b,m;
+    public:
+        LinInjFunc(T min, T max)
+            :b(min), m((max - min) / 127) {}
+        inline T operator()(const char &x) const {return m * x + b; }
+        inline char operator()(const T &x) const {return (char)((x - b) / m); }
+    private:
+        T b, m;
 };
 
 #endif

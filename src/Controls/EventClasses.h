@@ -19,25 +19,24 @@
 //};
 
 /**Events for setting values at nodes*/
-class ChangeEvent: public Event
+class ChangeEvent:public Event
 {
-
-public:
-    ChangeEvent(char nval);
-    char getVal() const {return val;};
-private:
-    const char val;
+    public:
+        ChangeEvent(char nval);
+        char getVal() const {return val;}
+    private:
+        const char val;
 };
 
 /**Notification Event*/
-class UpdateEvent: public Event
+class UpdateEvent:public Event
 {
-public:
-    UpdateEvent();
+    public:
+        UpdateEvent();
 };
 
 /** Emitted from the node when its value has changed **/
-class NewValueEvent : public Event
+class NewValueEvent:public Event
 {
     public:
         NewValueEvent(GenControl *control);
@@ -45,36 +44,36 @@ class NewValueEvent : public Event
 };
 
 /**Event for Child creation*/
-class CreateNodeEvent: public Event
+class CreateNodeEvent:public Event
 {
-public:
-    //I recommend that an enum gets put into ntype
-    //ie. an Instrument could have an enum of
-    //ADsynth=0,SUBsynth=1,PADsynth=2
-    //This means that an int with more meaning is passed here
-    CreateNodeEvent(unsigned int ntype);
-    unsigned int getType() const {return type;};
-private:
-    const unsigned int type;
+    public:
+        //I recommend that an enum gets put into ntype
+        //ie. an Instrument could have an enum of
+        //ADsynth=0,SUBsynth=1,PADsynth=2
+        //This means that an int with more meaning is passed here
+        CreateNodeEvent(unsigned int ntype);
+        unsigned int getType() const {return type;}
+    private:
+        const unsigned int type;
 };
 
 /* Notification that a node is about to be removed */
-class RemovalEvent : public Event
+class RemovalEvent:public Event
 {
     public:
         RemovalEvent(Node *node);
-        Node * getNode() const { return node; }
+        Node *getNode() const { return node; }
     private:
-        Node* node;
+        Node *node;
 };
 
-class OptionsChangedEvent : public Event
+class OptionsChangedEvent:public Event
 {
     public:
-        OptionsChangedEvent() : Event(Event::OptionsChangedEvent) {};
+        OptionsChangedEvent():Event(Event::OptionsChangedEvent) {}
 };
 
-class MidiEvent : public Event
+class MidiEvent:public Event
 {
     public:
         MidiEvent(unsigned char chan, unsigned int type, int par);
@@ -82,12 +81,13 @@ class MidiEvent : public Event
 };
 
 /**Event for notification of the creation of a new node*/
-class NewNodeEvent: public Event
+class NewNodeEvent:public Event
 {
-public:
-    NewNodeEvent(class Node *nnode);
-    class Node *getNode(){return node;}
-private:
-    class Node *node;
+    public:
+        NewNodeEvent(class Node *nnode);
+        class Node *getNode() {return node;}
+    private:
+        class Node * node;
 };
 #endif // EVENTCLASSES_H
+

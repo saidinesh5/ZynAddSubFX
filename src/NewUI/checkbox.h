@@ -3,7 +3,7 @@
 
 #include <QCheckBox>
 
-class CheckBox : public QCheckBox
+class CheckBox:public QCheckBox
 {
     Q_OBJECT
 
@@ -15,3 +15,4 @@ class CheckBox : public QCheckBox
 };
 
 #endif // CHECKBOX_H
+

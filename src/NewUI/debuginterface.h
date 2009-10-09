@@ -5,7 +5,7 @@
 #include "../Controls/Node.h"
 #include <QList>
 
-class EventReceiver : public QObject, public NodeUser
+class EventReceiver:public QObject, public NodeUser
 {
     Q_OBJECT
     public:
@@ -18,7 +18,7 @@ class EventReceiver : public QObject, public NodeUser
         void newEvent(Node *node, QString info, bool safeprint);
 };
 
-class DebugInterface : public QDialog
+class DebugInterface:public QDialog
 {
     Q_OBJECT
 
@@ -30,17 +30,17 @@ class DebugInterface : public QDialog
         void newEvent(Node *node, QString info, bool safeprint);
 
     private slots:
-        void receiveEvent(Node* node, QString info, bool safeprint = false);
+        void receiveEvent(Node *node, QString info, bool safeprint = false);
         void refreshTree();
-        void createEventReceivers(class Node *parent);
+        void createEventReceivers(class Node * parent);
 
     private:
 
-        QList<EventReceiver*> receivers;
-        class Master *master;
-        class QTextEdit *text;
-        class Tree *tree;
-
+        QList<EventReceiver *> receivers;
+        class Master * master;
+        class QTextEdit * text;
+        class Tree * tree;
 };
 
 #endif // _DEBUGINTERFACE_H
+

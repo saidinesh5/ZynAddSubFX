@@ -27,16 +27,16 @@ class Job
          * Push an event to the stack. It will then be handled (probably from another thread) when
          * calling handleJobs.
          */
-        static void push(Job* event);
+        static void push(Job *event);
         /**
          * Like Job::push, except this function will not return until the function's exec function
          * has been finished.
          */
-        static void pushAndWait(Job* job);
+        static void pushAndWait(Job *job);
         /**
          * Pop an event from the event list. Will return NULL if there is no event available.
          */
-        static Job * pop();
+        static Job *pop();
         /**
          * Handle all events in the queue, popping and executing them. After executed, the event
          * will be broadcasted to listeners if exec() returns false.
@@ -46,10 +46,10 @@ class Job
     private:
         pthread_cond_t jobExecuted;
         bool isWaitingForSignal;
-        static pthread_mutex_t mutex;
-        static std::list<Job*> jobs;
+        static pthread_mutex_t  mutex;
+        static std::list<Job *> jobs;
         static pthread_t engineThread;
-
 };
 
 #endif // JOB_H
+

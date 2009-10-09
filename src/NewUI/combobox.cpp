@@ -3,7 +3,7 @@
 #include <QtDebug>
 
 ComboBox::ComboBox(QWidget *parent)
-    : QComboBox(parent)
+    :QComboBox(parent)
 {
     ControlHelper *helper = new ControlHelper(this);
 
@@ -19,9 +19,11 @@ void ComboBox::setOptions(QStringList options)
 {
     qDebug() << "setOptions";
     clear();
-    foreach (const QString& item, options) {
+    foreach(const QString &item, options)
+    {
         addItem(item);
     }
 }
 #include "combobox.moc"
 // vim: sw=4 sts=4 et tw=100
+

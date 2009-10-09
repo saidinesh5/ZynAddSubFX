@@ -5,7 +5,7 @@
 #include <string>
 #include <list>
 
-class FakeChildFactory : public Node
+class FakeChildFactory:public Node
 {
     public:
         FakeChildFactory(Node *parent, std::string id);
@@ -19,10 +19,10 @@ class FakeChildFactory : public Node
     private:
         virtual std::string doCreateChild(int type);
         virtual void doRemoveChild(std::string name);
-        std::list<Node*> fakeChildren;
+        std::list<Node *> fakeChildren;
         int nextChildIndex;
         std::string createdChild;
-
 };
 
 #endif // FAKECHILDFACTORY_H
+

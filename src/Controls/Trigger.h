@@ -30,18 +30,18 @@
  */
 class Trigger:public GenControl
 {
-public:
-    Trigger(Node *parent, std::string id, std::string nlabel);
-    virtual ~Trigger();
-    
-    std::string getString() const 
-    {return label;};
+    public:
+        Trigger(Node *parent, std::string id, std::string nlabel);
+        virtual ~Trigger();
 
-    void setValue(char val);
+        std::string getString() const
+        {return label;}
 
-private:
-    /**The transformation function for the control*/
-    const std::string label;
+        void setValue(char val);
+
+    private:
+        /**The transformation function for the control*/
+        const std::string label;
 };
 
 #endif

@@ -4,7 +4,7 @@
 #include <QFrame>
 #include "ui_collapsableframe.h"
 
-class CollapsableFrame : public QFrame, public Ui::CollapsableFrame
+class CollapsableFrame:public QFrame, public Ui::CollapsableFrame
 {
     Q_OBJECT
 
@@ -20,9 +20,9 @@ class CollapsableFrame : public QFrame, public Ui::CollapsableFrame
 
     private:
         QWidget *expanded;
-        QList<QWidget*> showOnExpand;
-        QList<QWidget*> hideOnExpand;
-
+        QList<QWidget *> showOnExpand;
+        QList<QWidget *> hideOnExpand;
 };
 
 #endif // COLLAPSABLEFRAME_H
+

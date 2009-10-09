@@ -30,16 +30,16 @@
  * from type A to type B using a one-to-one function and its inverse
  * Note: type A cannot be equal to type B */
 
-template <class A,class B>
+template<class A, class B>
 class InjFunction
 {
-public:
-    virtual B operator()(const A &x)const = 0;
-    virtual A operator()(const B &x)const = 0;
+    public:
+        virtual B operator()(const A &x) const = 0;
+        virtual A operator()(const B &x) const = 0;
 
-    char round(REALTYPE val) const {
-        return char(val + 0.5);
-    }
+        char round(REALTYPE val) const {
+            return char(val + 0.5);
+        }
 };
 #endif
 

@@ -25,7 +25,7 @@ using namespace std;
 
 //type,location,mutex
 Toggle::Toggle(Node *parent, std::string id, bool defaultval)
-    :Control<bool>(parent,id,defaultval)
+    :Control<bool>(parent, id, defaultval)
 {}
 
 Toggle::~Toggle()
@@ -38,15 +38,16 @@ string Toggle::getString() const
 
 void Toggle::setCharValue(char val)
 {
-    Control<bool>::setValue(char(127*val));
-} 
+    Control<bool>::setValue(char(127 * val));
+}
 
 char Toggle::getCharValue() const
-{ 
-    return (getValue() ? 127 : 0);
-} 
+{
+    return getValue() ? 127 : 0;
+}
 
 void Toggle::setValue(char val)
 {
-    Control<bool>::setValue(char(127*val));
+    Control<bool>::setValue(char(127 * val));
 }
+

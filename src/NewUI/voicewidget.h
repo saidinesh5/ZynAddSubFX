@@ -4,10 +4,11 @@
 #include <QWidget>
 #include "ui_voicewidgetexpanded.h"
 
-class VoiceWidget : public QWidget, public Ui::Voicewidget
+class VoiceWidget:public QWidget, public Ui::Voicewidget
 {
     public:
         VoiceWidget(QWidget *parent = NULL);
 };
 
 #endif // VOICEWIDGET_H
+

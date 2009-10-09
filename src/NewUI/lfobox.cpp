@@ -1,7 +1,7 @@
 #include "lfobox.h"
 
 LFOBox::LFOBox(QWidget *parent)
-        : UnitBox(parent)
+    :UnitBox(parent)
 {
     setupUi(this);
 }
@@ -19,3 +19,4 @@ void LFOBox::setSources(LFOParams *params)
 }
 
 #include "lfobox.moc"
+

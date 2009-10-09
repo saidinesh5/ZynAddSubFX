@@ -25,8 +25,9 @@
 using namespace std;
 
 DescRanger::DescRanger(Node *parent, std::string id, int defaultval)
-    :Control<int>(parent,id,defaultval)
+    :Control<int>(parent, id, defaultval)
 {}
 
 DescRanger::~DescRanger()
 {}
+

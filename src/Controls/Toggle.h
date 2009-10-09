@@ -31,15 +31,15 @@
  */
 class Toggle:public Control<bool>
 {
-public:
-    Toggle(Node *parent, std::string id, bool defaultval);
-    ~Toggle();
-    
-    std::string getString() const;
-    void setCharValue(char val);
-    char getCharValue() const;
+    public:
+        Toggle(Node *parent, std::string id, bool defaultval);
+        ~Toggle();
 
-    void setValue(char val);
+        std::string getString() const;
+        void setCharValue(char val);
+        char getCharValue() const;
+
+        void setValue(char val);
 };
 
 #endif

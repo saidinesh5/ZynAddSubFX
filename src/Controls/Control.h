@@ -34,31 +34,32 @@
  *
  */
 
-template <class T> 
+template<class T>
 class Control:public GenControl
 {
-public:
-    Control(Node *parent, std::string id, T defaultval);
-    virtual ~Control();
+    public:
+        Control(Node *parent, std::string id, T defaultval);
+        virtual ~Control();
 
-    T operator()() const;
-    virtual std::string getString() const {return "hm, this should get implemented, but not yet :p";};
+        T operator()() const;
+        virtual std::string getString() const {return
+                                                   "hm, this should get implemented, but not yet :p";}
 
-    virtual void handleEvent(Event *ev);
+        virtual void handleEvent(Event *ev);
 
-    void setValue(const T &val); //sync
-    T getValue()const; //sync
+        void setValue(const T &val); //sync
+        T getValue() const; //sync
 
-    virtual void setCharValue(char val);//sync
-    virtual char getCharValue()const; //sync
+        virtual void setCharValue(char val); //sync
+        virtual char getCharValue() const; //sync
 
-    virtual void setValue(char val);     //sync
+        virtual void setValue(char val); //sync
 
-    virtual char getDefaults()const {return char(defaultval);};
-    void defaults();
-protected:
-    T value;
-    const T defaultval;
+        virtual char getDefaults() const {return char(defaultval);}
+        void defaults();
+    protected:
+        T value;
+        const T defaultval;
 };
 
 #include "Control.cpp"

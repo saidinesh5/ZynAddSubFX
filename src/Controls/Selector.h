@@ -34,19 +34,19 @@ typedef std::vector<std::string> StringVector;
  */
 class Selector:public Control<int>
 {
-public:
-    Selector(Node *parent, std::string id, int defaultval);
-    ~Selector();
+    public:
+        Selector(Node *parent, std::string id, int defaultval);
+        ~Selector();
 
-    std::string getString() const;
+        std::string getString() const;
 
-    std::string getOption(int idx) const;
-    int numOptions() const;
-    void addOption(std::string option);
-    void clearOptions();
+        std::string getOption(int idx) const;
+        int numOptions() const;
+        void addOption(std::string option);
+        void clearOptions();
 
-private:
-    StringVector options;
+    private:
+        StringVector options;
 };
 
 #endif

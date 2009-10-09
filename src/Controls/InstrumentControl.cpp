@@ -4,14 +4,14 @@
 using namespace std;
 
 InstrumentControl::InstrumentControl(Node *parent)
-    : Selector(parent, "BankInstrument", 0)
+    :Selector(parent, "BankInstrument", 0)
 {
     bank = new Bank();
 }
 
 void InstrumentControl::loadBank(char *dir)
 {
-    if (!dir) {
+    if(!dir) {
         cerr << dir << " is empty, returning...\n";
         return;
     }
@@ -19,14 +19,13 @@ void InstrumentControl::loadBank(char *dir)
     clearOptions();
 
     int ret = bank->loadbank(dir);
-    if (-1 == ret) {
+    if(-1 == ret) {
         cerr << "Failed to load bank " << dir << "\n";
         return;
     }
 
-    for (int i = 0; i < 128; ++i) {
+    for(int i = 0; i < 128; ++i)
         addOption(bank->getname(i));
-    }
     forward(new OptionsChangedEvent());
     cout << "Loaded " << dir << "\n";
 }
@@ -44,3 +43,4 @@ int InstrumentControl::numOptions() const
 #endif
 
 // vim: sw=4 sts=4 et tw=100
+

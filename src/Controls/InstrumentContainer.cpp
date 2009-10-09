@@ -4,29 +4,30 @@
 #include "JobClasses.h"
 #include <iostream>
 
-InstrumentContainer::InstrumentContainer(class Node *parent, std::string id, Master* master)
-        : Node(parent, id),
-        m_master(master),
-        nextChildIndex(0),
-        nextFakeIndex(0)
+InstrumentContainer::InstrumentContainer(class Node *parent,
+                                         std::string id,
+                                         Master *master)
+    :Node(parent, id),
+      m_master(master),
+      nextChildIndex(0),
+      nextFakeIndex(0)
 {
     m_types.push_back("Part");
 }
 
-void InstrumentContainer::handleEvent(Event * ev)
+void InstrumentContainer::handleEvent(Event *ev)
 {
-    if(ev->type()==Event::CreateNodeEvent) {
-    }
-    else {
-        std::cerr << "Unknown Event Received InstrumentContainer::handleEvent(Event)"
-            << std::endl;
-    }
+    if(ev->type() == Event::CreateNodeEvent) {}
+    else
+        std::cerr
+        << "Unknown Event Received InstrumentContainer::handleEvent(Event)"
+        << std::endl;
 }
 
-void InstrumentContainer::handleSyncEvent(Event * ev)
+void InstrumentContainer::handleSyncEvent(Event *ev)
 {
-    if (ev->type()==Event::CreateNodeEvent) {
-        Part* fakeCreatedPart = m_master->part[nextFakeIndex];
+    if(ev->type() == Event::CreateNodeEvent) {
+        Part *fakeCreatedPart = m_master->part[nextFakeIndex];
         nextFakeIndex++;
 
         //create a child name
@@ -39,12 +40,14 @@ void InstrumentContainer::handleSyncEvent(Event * ev)
         fakeCreatedPart->rename(ss.str());
 
         createdChild = fakeCreatedPart->getAbsoluteId();
-    } else if (ev->type() == Event::RemovalEvent) {
-        //for this "faked" deletion, nothing to do here
-    } else {
-        std::cerr << "Unknown Event Received InstrumentContainer::"
-            << "handleSyncEvent(Event)" << std::endl;
     }
+    else
+    if(ev->type() == Event::RemovalEvent) {
+        //for this "faked" deletion, nothing to do here
+    }
+    else
+        std::cerr << "Unknown Event Received InstrumentContainer::"
+                  << "handleSyncEvent(Event)" << std::endl;
     cout << "finished handleSyncEvent\n";
 }
 
@@ -56,15 +59,16 @@ std::string InstrumentContainer::doCreateChild(int type)
     Job::pushAndWait(job);
 
     return createdChild;
-
 }
 void InstrumentContainer::doRemoveChild(std::string name)
 {
     Node *node = Node::find(getAbsoluteId() + "." + name);
     std::cout << "Finding " << name << " returned " << node << "\n";
 
-    if (!node) return;
+    if(!node)
+        return;
 
     Job *job = new NodeJob(*this, new RemovalEvent(node));
     Job::pushAndWait(job);
 }
+

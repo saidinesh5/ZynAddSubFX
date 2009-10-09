@@ -24,7 +24,7 @@
 #include "JobClasses.h"
 
 GenControl::GenControl(Node *parent, std::string id)
-:Node(parent,id),midichan(0), miditype(0)
+    :Node(parent, id), midichan(0), miditype(0)
 {
     pthread_mutex_init(&localMute, NULL);
 }
@@ -33,25 +33,24 @@ GenControl::~GenControl() {
     pthread_mutex_destroy(&localMute);
 }
 
-class MidiLearnNode : public Node
+class MidiLearnNode:public Node
 {
     public:
 
         int eventcount, learnedchan, learnedtype;
         pthread_mutex_t midilearningmutex;
-        pthread_cond_t midiLearned;
-        GenControl *parent;
+        pthread_cond_t  midiLearned;
+        GenControl     *parent;
         bool isLearning;
 
         MidiLearnNode(GenControl *parentControl)
-            : Node(NULL, "Midilearn"),
-            parent(parentControl),
-            isLearning(true)
+            :Node(NULL, "Midilearn"),
+              parent(parentControl),
+              isLearning(true)
         {
             //init midi learn
-            pthread_mutex_init(&midilearningmutex,NULL);
+            pthread_mutex_init(&midilearningmutex, NULL);
             pthread_cond_init(&midiLearned, NULL);
-
         }
 
         ~MidiLearnNode()
@@ -62,32 +61,29 @@ class MidiLearnNode : public Node
 
         void handleEvent(Event *event)
         {
-            MidiEvent *mid = static_cast<MidiEvent*>(event);
-            if (!mid) return;
+            MidiEvent *mid = static_cast<MidiEvent *>(event);
+            if(!mid)
+                return;
 
-            if (isLearning) {
-
+            if(isLearning) {
                 pthread_mutex_lock(&midilearningmutex);
 
-                if (learnedchan == mid->chan && learnedtype == mid->type) {
+                if((learnedchan == mid->chan) && (learnedtype == mid->type))
                     eventcount++;
-                } else {
-                    eventcount = 0;
+                else {
+                    eventcount  = 0;
                     learnedchan = mid->chan;
                     learnedtype = mid->type;
                 }
-                if (eventcount > 5) {
+                if(eventcount > 5) {
                     pthread_cond_broadcast(&midiLearned);
                     isLearning = false;
                 }
                 pthread_mutex_unlock(&midilearningmutex);
-            } else {
-
-                if (learnedchan == mid->chan && learnedtype == mid->type) {
-                    parent->setValue(char(mid->par));
-                }
-
             }
+            else
+            if((learnedchan == mid->chan) && (learnedtype == mid->type))
+                parent->setValue(char(mid->par));
 
         }
 
@@ -96,12 +92,11 @@ class MidiLearnNode : public Node
             pthread_mutex_lock(&midilearningmutex);
             learnedchan = 0;
             learnedtype = 0;
-            eventcount = 0;
+            eventcount  = 0;
 
             pthread_cond_wait(&midiLearned, &midilearningmutex);
             pthread_mutex_unlock(&midilearningmutex);
         }
-
 };
 
 bool GenControl::MIDILearn()
@@ -114,6 +109,5 @@ bool GenControl::MIDILearn()
     std::cout << "Learned!! " << learnNode->learnedtype << "\n";
     //getRoot()->removeRedirections(learnNode);
     //delete learnNode;
-
-
 }
+

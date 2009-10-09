@@ -5,17 +5,17 @@
 
 class SourcedWidget
 {
-public:
-    void setSource(unsigned char* source);
-    void setSource(REALTYPE* source);
+    public:
+        void setSource(unsigned char *source);
+        void setSource(REALTYPE *source);
 
-protected:
-    virtual void slotUpdateSource() = 0;
+    protected:
+        virtual void slotUpdateSource() = 0;
 
-private:
-    unsigned char *m_source;
-    REALTYPE *m_realtypeSource;
-
+    private:
+        unsigned char *m_source;
+        REALTYPE      *m_realtypeSource;
 };
 
 #endif /* ifndef _SOURCEDWIDGET_H_ */
+

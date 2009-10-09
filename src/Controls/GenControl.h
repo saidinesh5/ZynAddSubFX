@@ -28,29 +28,29 @@
 
 
 /**A control for a parameter within the program*/
-class GenControl : public Node
+class GenControl:public Node
 {
-public:
-    virtual char getCharValue()const=0;
-    virtual void setValue(char val)=0;
-    virtual std::string getString() const=0;
+    public:
+        virtual char getCharValue() const     = 0;
+        virtual void setValue(char val)       = 0;
+        virtual std::string getString() const = 0;
 
-    bool MIDILearn();
+        bool MIDILearn();
 
-    //virtual void requestValue()=0;
+        //virtual void requestValue()=0;
 
-    virtual int numOptions() const {return 0;};
-    virtual std::string getOption(int i) const {return "";};
-protected:
-    GenControl(Node *parent, std::string id);
-    virtual ~GenControl();
-    mutable pthread_mutex_t localMute;
+        virtual int numOptions() const {return 0;}
+        virtual std::string getOption(int i) const {return "";}
+    protected:
+        GenControl(Node *parent, std::string id);
+        virtual ~GenControl();
+        mutable pthread_mutex_t localMute;
 
-private:
+    private:
 
-    int midichan, miditype;
+        int midichan, miditype;
 
-    //std::string m_description;
+        //std::string m_description;
 };
 
 #endif

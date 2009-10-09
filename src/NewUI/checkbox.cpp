@@ -2,7 +2,7 @@
 #include "controlhelper.h"
 
 CheckBox::CheckBox(QWidget *parent)
-    : QCheckBox(parent)
+    :QCheckBox(parent)
 {
     ControlHelper *helper = new ControlHelper(this);
 
@@ -22,3 +22,4 @@ void CheckBox::setChecked(int val)
 #include "checkbox.moc"
 
 // vim: sw=4 sts=4 et tw=100
+

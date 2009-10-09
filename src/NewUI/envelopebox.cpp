@@ -1,7 +1,7 @@
 #include "envelopebox.h"
 
 EnvelopeBox::EnvelopeBox(QWidget *parent)
-        : UnitBox(parent)
+    :UnitBox(parent)
 {
     setupUi(this);
 }
@@ -15,3 +15,4 @@ void EnvelopeBox::setSources(EnvelopeParams *params)
 }
 
 #include "envelopebox.moc"
+

@@ -1,8 +1,8 @@
 #include "addnoteui.h"
 
 AddNoteUi::AddNoteUi(QString id)
-        : QDialog(NULL),
-        id(id)
+    :QDialog(NULL),
+      id(id)
 {
     setupUi(this);
     //amplitudeEnvelope->setSources(master->part[partIndex]->kit[kitIndex].adpars->GlobalPar.AmpEnvelope);
@@ -12,8 +12,8 @@ AddNoteUi::AddNoteUi(QString id)
     //amplitudeLFO->setSources(master->part[partIndex]->kit[kitIndex].adpars->GlobalPar.AmpLfo);
     //filterLFO->setSources(master->part[partIndex]->kit[kitIndex].adpars->GlobalPar.FilterLfo);
     //frequencyLFO->setSources(master->part[partIndex]->kit[kitIndex].adpars->GlobalPar.FreqLfo);
-
 }
 
 
 #include "addnoteui.moc"
+

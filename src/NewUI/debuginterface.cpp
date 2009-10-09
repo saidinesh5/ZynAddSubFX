@@ -8,14 +8,14 @@
 #include "../Misc/Master.h"
 
 EventReceiver::EventReceiver(Node *node)
-    : registeredNode(node)
+    :registeredNode(node)
 {
     registeredNode->addRedirection(this);
 }
 
 EventReceiver::~EventReceiver()
 {
-    if (registeredNode)
+    if(registeredNode)
         registeredNode->removeRedirections(this);
 }
 
@@ -23,60 +23,65 @@ void EventReceiver::handleEvent(Event *event)
 {
     //this is the place to make it print actual useful info about the event
     QString info;
-    bool safeprint = false;
+    bool    safeprint = false;
 
-    if (event->type() == Event::ChangeEvent) {
+    if(event->type() == Event::ChangeEvent) {
         info += "(ChangeEvent) ";
-        info += "val:" + QString::number(static_cast<ChangeEvent*>(event)->getVal());
-    } else if (event->type() == Event::NewValueEvent) {
+        info += "val:" + QString::number(
+            static_cast<ChangeEvent *>(event)->getVal());
+    }
+    else
+    if(event->type() == Event::NewValueEvent)
         info += "(NewValueEvent) ";
-    } else if (event->type() == Event::RemovalEvent) {
-        RemovalEvent *rem = static_cast<RemovalEvent*>(event);
-        safeprint = true;
-        info += "(RemovalEvent) ";
+    else
+    if(event->type() == Event::RemovalEvent) {
+        RemovalEvent *rem = static_cast<RemovalEvent *>(event);
+        safeprint      = true;
+        info          += "(RemovalEvent) ";
         registeredNode = NULL;
-
-    } else if (event->type() == Event::MidiEvent) {
-        MidiEvent *mid = static_cast<MidiEvent*>(event);
+    }
+    else
+    if(event->type() == Event::MidiEvent) {
+        MidiEvent *mid = static_cast<MidiEvent *>(event);
         info += "(MidiEvent) ";
         info += QString::number(mid->chan) + ", ";
         info += QString::number(mid->type) + ", ";
         info += QString::number(mid->par);
-    } else {
-        info += "(Unknown event type: " + int(event->type()) + QString(")");
     }
+    else
+        info += "(Unknown event type: " + int(event->type()) + QString(")");
     emit newEvent(registeredNode, info, safeprint);
 }
 
-class Tree : public QTreeWidget
+class Tree:public QTreeWidget
 {
     public:
         NodeUser *user;
 
         Tree(QWidget *parent)
-            : QTreeWidget(parent)
+            :QTreeWidget(parent)
         {
             refresh();
-
         }
 
         QString makeConnections(Node *node)
         {
             QString connections;
-            for (int j = 0; j < (node)->m_rules.size(); ++j) {
+            for(int j = 0; j < (node)->m_rules.size(); ++j) {
                 NodeUser *user = (node)->m_rules.at(j).destination;
 
                 //we don't need the dynamic ones from this app
-                if (dynamic_cast<EventReceiver*>(user)) continue;
+                if(dynamic_cast<EventReceiver *>(user))
+                    continue;
 
-                Node *node = dynamic_cast<Node*>(user);
-                if (node)
-                    connections += QString::fromStdString(node->getAbsoluteId()) + ", ";
+                Node *node = dynamic_cast<Node *>(user);
+                if(node)
+                    connections +=
+                        QString::fromStdString(node->getAbsoluteId()) + ", ";
                 else
                     connections += QString::number((long int)(user)) + ", ";
             }
             return connections;
-
         }
 
         void refresh()
@@ -84,11 +89,9 @@ class Tree : public QTreeWidget
             clear();
             setColumnCount(2);
 
-            for (NodeIterator i = Node::getRoot()->getChildren().begin();
-                    i != Node::getRoot()->getChildren().end();
-                    ++i)
-            {
-
+            for(NodeIterator i = Node::getRoot()->getChildren().begin();
+                i != Node::getRoot()->getChildren().end();
+                ++i) {
                 QTreeWidgetItem *item = new QTreeWidgetItem(this);
                 item->setText(0, QString::fromStdString((*i)->getId()));
                 item->setText(1, makeConnections(*i));
@@ -100,26 +103,21 @@ class Tree : public QTreeWidget
 
         void addChildren(Node *parent, QTreeWidgetItem *parentItem)
         {
-
-            for (NodeIterator i = parent->getChildren().begin();
-                    i != parent->getChildren().end();
-                    ++i)
-            {
+            for(NodeIterator i = parent->getChildren().begin();
+                i != parent->getChildren().end();
+                ++i) {
                 QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                 item->setText(0, QString::fromStdString((*i)->getId()));
                 item->setText(1, makeConnections(*i));
                 addChildren(*i, item);
             }
-
         }
-
-
 };
 
 
 DebugInterface::DebugInterface(QWidget *parent, Master *master)
-    : QDialog(parent),
-    master(master)
+    :QDialog(parent),
+      master(master)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
     setLayout(layout);
@@ -138,38 +136,35 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
 
     layout->addWidget(text);
 
-    connect(this, SIGNAL(newEvent(Node*,QString, bool)),
-            this, SLOT(receiveEvent(Node*,QString, bool)));
+    connect(this, SIGNAL(newEvent(Node *, QString, bool)),
+            this, SLOT(receiveEvent(Node *, QString, bool)));
 
     createEventReceivers(Node::getRoot());
     EventReceiver *receiver = new EventReceiver(Node::getRoot());
     receivers.append(receiver);
-    connect(receiver, SIGNAL(newEvent(Node*,QString, bool)),
-            this, SIGNAL(newEvent(Node*,QString, bool)));
-
+    connect(receiver, SIGNAL(newEvent(Node *, QString, bool)),
+            this, SIGNAL(newEvent(Node *, QString, bool)));
 }
 
 void DebugInterface::createEventReceivers(class Node *parent)
 {
-    for (NodeIterator i = parent->getChildren().begin();
-            i != parent->getChildren().end();
-            ++i)
-    {
+    for(NodeIterator i = parent->getChildren().begin();
+        i != parent->getChildren().end();
+        ++i) {
         EventReceiver *receiver = new EventReceiver(*i);
         receivers.append(receiver);
-        connect(receiver, SIGNAL(newEvent(Node*,QString, bool)),
-                this, SIGNAL(newEvent(Node*,QString, bool)));
+        connect(receiver, SIGNAL(newEvent(Node *, QString, bool)),
+                this, SIGNAL(newEvent(Node *, QString, bool)));
         createEventReceivers(*i);
     }
-
 }
 
-void DebugInterface::receiveEvent(Node* node, QString info, bool safeprint)
+void DebugInterface::receiveEvent(Node *node, QString info, bool safeprint)
 {
     static int counter = 0;
     counter++;
     text->append(QString::number(counter) + "] ");
-    if (!safeprint)
+    if(!safeprint)
         text->append(QString::fromStdString(node->getAbsoluteId()) + ": ");
     text->append(info);
     text->verticalScrollBar()->setValue(text->verticalScrollBar()->maximum());
@@ -178,7 +173,8 @@ void DebugInterface::receiveEvent(Node* node, QString info, bool safeprint)
 void DebugInterface::refreshTree()
 {
     tree->refresh();
-    foreach (EventReceiver *receiver, receivers) {
+    foreach(EventReceiver * receiver, receivers)
+    {
         delete receiver;
     }
     receivers.clear();
@@ -188,3 +184,4 @@ void DebugInterface::refreshTree()
 
 #include "debuginterface.moc"
 // vim: sw=4 sts=4 et tw=100
+

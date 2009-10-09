@@ -13,8 +13,8 @@
 static int drawStyle = 1;
 
 Dial::Dial(QWidget *parent)
-        : QDial(parent),
-        m_originalMouseY(-1)
+    :QDial(parent),
+      m_originalMouseY(-1)
 {
     setMouseTracking(false);
     setMinimum(0);
@@ -32,12 +32,11 @@ Dial::Dial(QWidget *parent)
             helper, SLOT(MIDILearn()));
 
     //helper->requestValue(); (you can directly get the information now
-
 }
 
-void Dial::mousePressEvent(QMouseEvent* event)
+void Dial::mousePressEvent(QMouseEvent *event)
 {
-    if ((event->button() == Qt::LeftButton)) {
+    if((event->button() == Qt::LeftButton)) {
         m_originalMouseY = event->y();
         m_originalValueOnPress = value();
         event->accept();
@@ -46,32 +45,32 @@ void Dial::mousePressEvent(QMouseEvent* event)
     //QDial::mousePressEvent(event);
 }
 
-void Dial::mouseReleaseEvent(QMouseEvent* event)
+void Dial::mouseReleaseEvent(QMouseEvent *event)
 {
-    if ((event->button() == Qt::RightButton)) {
+    if((event->button() == Qt::RightButton)) {
         QMenu menu(this);
         menu.addAction("Connect to midi");
         QAction *response = menu.exec(event->globalPos());
 
-        if (response) {
+        if(response)
 
             emit MIDILearn();
 
-        }
         event->accept();
-    }else {
+    }
+    else {
         m_originalMouseY = -1;
         setSliderDown(false);
     }
     //QDial::mouseReleaseEvent(event);
 }
 
-void Dial::mouseMoveEvent(QMouseEvent* event)
+void Dial::mouseMoveEvent(QMouseEvent *event)
 {
-    if (isSliderDown()) {
-        setValue(m_originalValueOnPress +
-                float( m_originalMouseY - event->y())
-                * 0.5
+    if(isSliderDown()) {
+        setValue(m_originalValueOnPress
+                 + float(m_originalMouseY - event->y())
+                 * 0.5
                 );
         event->accept();
     }
@@ -83,9 +82,10 @@ void Dial::paintEvent(class QPaintEvent *event)
     QPainter p(this);
 
     QRect r = rect();
-    if (r.width() < r.height())
+    if(r.width() < r.height())
         r.setHeight(r.width());
-    else if (r.height() < r.width())
+    else
+    if(r.height() < r.width())
         r.setWidth(r.height());
 
     r.setSize(r.size() * 0.9);
@@ -93,7 +93,7 @@ void Dial::paintEvent(class QPaintEvent *event)
 
     float v = (float(value()) / (maximum() - minimum()));
 
-    if (drawStyle == 0) {
+    if(drawStyle == 0) {
         QConicalGradient grad(r.center(), 270 - 13);
         p.setBrush(QColor(Qt::white));
 
@@ -103,10 +103,11 @@ void Dial::paintEvent(class QPaintEvent *event)
         grad.setColorAt(0.5, QColor(255, 128, 0));
         grad.setColorAt(0, Qt::red);
         p.setBrush(grad);
-        p.drawPie(r, 255*16, -v * 16);
+        p.drawPie(r, 255 * 16, -v * 16);
         //p.drawPoint(10 *
-    } else if (drawStyle == 1) {
-
+    }
+    else
+    if(drawStyle == 1) {
         //p.setBrush(QColor(Qt::white));
 
         //center circle
@@ -114,7 +115,7 @@ void Dial::paintEvent(class QPaintEvent *event)
 
         p.translate(r.center());
 
-        for (float i = -PI/4; i <= (PI+PI/4); i+=PI/6) {
+        for(float i = -PI / 4; i <= (PI + PI / 4); i += PI / 6)
 
             //draw lots of markers
             p.drawLine(
@@ -122,29 +123,29 @@ void Dial::paintEvent(class QPaintEvent *event)
                 r.width() * 0.5 * cos(i), -r.height() * 0.5 * sin(i));
 
 
-        }
 
         QRect smallRect = r;
         smallRect.setSize(smallRect.size() * 0.6);
         smallRect.moveCenter(QPoint(0, 0));
 
         p.setBrush(palette().alternateBase());
-        p.drawPie(smallRect, 225*16, -v * 270* 16);
+        p.drawPie(smallRect, 225 * 16, -v * 270 * 16);
         //p.rotate(v);
 
         //QPoint point = r.center();
         //point.setY(point.y() - r.height() / 2);
 
         //p.drawEllipse(QPoint(0, r.height() / 3), 4, 4);
-
-    } else if (drawStyle == 2) {
+    }
+    else
+    if(drawStyle == 2) {
         r = rect();
         p.drawRect(r);
         //p.setBrush(palette().alternateBase());
         p.setBrush(QColor(Qt::white));
-        p.drawRect(r.x(), r.height() + r.y() - v * r.height(), r.width(), v * r.height());
+        p.drawRect(r.x(), r.height() + r.y() - v * r.height(),
+                   r.width(), v * r.height());
     }
-
 }
 
 void Dial::wheelEvent(class QWheelEvent *event)
@@ -154,12 +155,10 @@ void Dial::wheelEvent(class QWheelEvent *event)
 }
 
 void Dial::setControl(GenControl *control)
-{
-}
+{}
 
 void Dial::slotUpdateSource()
-{
-
-}
+{}
 
 #include "dial.moc"
+

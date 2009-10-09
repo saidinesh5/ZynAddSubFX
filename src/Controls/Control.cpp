@@ -20,82 +20,83 @@
 
 */
 
-template <class T>
+template<class T>
 Control<T>::Control(Node *parent, std::string id, T defaultval)
-    :GenControl(parent,id),value(defaultval),defaultval(defaultval)
+    :GenControl(parent, id), value(defaultval), defaultval(defaultval)
 {}
 
-template <class T>
+template<class T>
 Control<T>::~Control()
 {}
 
-template <class T>
+template<class T>
 T Control<T>::operator()() const
 {
     return this->getValue();
 }
 
-template <class T>
+template<class T>
 void Control<T>::handleEvent(Event *ev)
 {
     //this is when the control value is to be changed to
     //something else
-    if (ev->type() == Event::ChangeEvent) {
-        char charval = static_cast<ChangeEvent*>(ev)->getVal();
+    if(ev->type() == Event::ChangeEvent) {
+        char charval = static_cast<ChangeEvent *>(ev)->getVal();
         setValue(charval);
         forward(new NewValueEvent(this));
 
         //and this is for reading the value of the control
-    } else if (ev->type() == Event::RequestValueEvent) {
-        forward(new NewValueEvent(this));
     }
+    else
+    if(ev->type() == Event::RequestValueEvent)
+        forward(new NewValueEvent(this));
 }
 
-template <class T>
+template<class T>
 void Control<T>::setValue(const T &val)
 {
     bool changed = false;
     pthread_mutex_lock(&localMute);
-    if(value!=val){
-        value = val;
+    if(value != val) {
+        value   = val;
         changed = true;
     }
     pthread_mutex_unlock(&localMute);
     //if(true)
-        //std::cout << "Setting to " << val << " " << (long long)(this) << std::endl;
+    //std::cout << "Setting to " << val << " " << (long long)(this) << std::endl;
     if(changed)
         forward(new NewValueEvent(this));
 }
 
-template <class T>
+template<class T>
 T Control<T>::getValue() const
 {
-    T tmp; 
+    T tmp;
     pthread_mutex_lock(&localMute);
     tmp = value;
     pthread_mutex_unlock(&localMute);
     return tmp;
 }
 
-template <class T>
+template<class T>
 void Control<T>::setCharValue(char val)
 {
     setValue(T(val));
-} 
+}
 
-template <class T>
+template<class T>
 char Control<T>::getCharValue() const
-{ 
+{
     return (char)getValue();
 }
 
-template <class T>
+template<class T>
 void Control<T>::setValue(char val)
 {
     setValue(T(val));
 }
 
-template <class T>
+template<class T>
 void Control<T>::defaults()
 {
     setValue(defaultval);

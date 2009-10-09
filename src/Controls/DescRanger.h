@@ -32,13 +32,13 @@
  */
 class DescRanger:public Control<int>
 {
-public:
-    DescRanger(Node *parent, std::string id, int defaultval);
-    virtual ~DescRanger();
-    
-    /**@todo get some toString function in here (it only needs to be one way*/
-    std::string getString() const 
-    {return "Example: 50%";};
+    public:
+        DescRanger(Node *parent, std::string id, int defaultval);
+        virtual ~DescRanger();
+
+        /**@todo get some toString function in here (it only needs to be one way*/
+        std::string getString() const
+        {return "Example: 50%";}
 };
 
 #endif

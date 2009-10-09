@@ -32,21 +32,24 @@
  */
 class Ranger:public Control<REALTYPE>
 {
-public:
-    Ranger(Node *parent, std::string id, REALTYPE defaultval, const InjFunction<char,REALTYPE> *nfunc);
-    virtual ~Ranger();
-    
-    /**@todo get some toString function in here (it only needs to be one way*/
-    std::string getString() const 
-    {return "Example: 50%";};
+    public:
+        Ranger(Node *parent,
+               std::string id,
+               REALTYPE defaultval,
+               const InjFunction<char, REALTYPE> *nfunc);
+        virtual ~Ranger();
 
-    void setCharValue(char val);
-    char getCharValue() const;
-    void setValue(char val);
+        /**@todo get some toString function in here (it only needs to be one way*/
+        std::string getString() const
+        {return "Example: 50%";}
 
-private:
-    /**The transformation function for the control*/
-    const InjFunction<char,REALTYPE> *func;
+        void setCharValue(char val);
+        char getCharValue() const;
+        void setValue(char val);
+
+    private:
+        /**The transformation function for the control*/
+        const InjFunction<char, REALTYPE> *func;
 };
 
 #endif

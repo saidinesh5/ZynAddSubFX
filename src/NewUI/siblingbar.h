@@ -4,25 +4,25 @@
 #include <QTabBar>
 #include <QSet>
 
-class SiblingBar : public QTabBar
+class SiblingBar:public QTabBar
 {
     Q_OBJECT
 
-public:
-    SiblingBar(QWidget *parent=NULL);
-    void setControlsWidget(QWidget *widget);
-    void setNode(class Node* container);
-    void mouseReleaseEvent(class QMouseEvent *event);
-    QString getCurrentChild();
+    public:
+        SiblingBar(QWidget *parent = NULL);
+        void setControlsWidget(QWidget *widget);
+        void setNode(class Node * container);
+        void mouseReleaseEvent(class QMouseEvent * event);
+        QString getCurrentChild();
 
-private slots:
-    void updateFoundControls();
+    private slots:
+        void updateFoundControls();
 
-private:
-    QSet<class ControlHelper*> m_foundControls;
-    class Node* m_childContainer;
-    QWidget *m_controlsWidget;
-
+    private:
+        QSet<class ControlHelper *> m_foundControls;
+        class Node * m_childContainer;
+        QWidget *m_controlsWidget;
 };
 
 #endif /* ifndef _SIBLINGBAR_H_ */
+

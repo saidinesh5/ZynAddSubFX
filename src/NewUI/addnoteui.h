@@ -5,19 +5,20 @@
 #ifndef _ADDNOTEUI_H_
 #define _ADDNOTEUI_H_
 
-class AddNoteUi : public QDialog, Ui::AddNoteUi
+class AddNoteUi:public QDialog, Ui::AddNoteUi
 {
     Q_OBJECT
 
-public:
-    AddNoteUi(QString id);
+    public:
+        AddNoteUi(QString id);
 
-private slots:
-    //void simpleRefresh();
+    private slots:
+        //void simpleRefresh();
 
-private:
-    QString id;
+    private:
+        QString id;
 };
 
 
 #endif /* include _ADDNOTEUI_H_ */
+

@@ -5,7 +5,8 @@
 
 class ControlUser
 {
-public:
+    public:
 };
 
 #endif /* ifndef _CONTROLUSER_H_ */
+

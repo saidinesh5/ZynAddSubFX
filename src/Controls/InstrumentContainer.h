@@ -7,24 +7,27 @@
 #include <string>
 #include <vector>
 
-class InstrumentContainer : public Node
+class InstrumentContainer:public Node
 {
-public:
-    InstrumentContainer(class Node* parent, std::string id, class Master *master);
-    void handleEvent(Event * ev);
-    void handleSyncEvent(Event * ev);
+    public:
+        InstrumentContainer(class Node *parent,
+                            std::string id,
+                            class Master *master);
+        void handleEvent(Event *ev);
+        void handleSyncEvent(Event *ev);
 
-private:
-    virtual std::string doCreateChild(int type);
-    virtual void doRemoveChild(std::string name);
-    class Master *m_master;
+    private:
+        virtual std::string doCreateChild(int type);
+        virtual void doRemoveChild(std::string name);
+        class Master * m_master;
 
-    int nextChildIndex;
+        int nextChildIndex;
 
-    //TODO* this should be replaced with a dynamic mechanism
-    std::vector<int> allocatedInstruments;
-    int nextFakeIndex;
-    std::string createdChild;
+        //TODO* this should be replaced with a dynamic mechanism
+        std::vector<int> allocatedInstruments;
+        int nextFakeIndex;
+        std::string createdChild;
 };
 
 #endif /* ifndef _INSTRUMENTCONTAINER_H_ */
+

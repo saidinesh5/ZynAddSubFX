@@ -25,15 +25,13 @@ using namespace std;
 
 //type,location,mutex
 Selector::Selector(Node *parent, std::string id, int defaultval)
-    :Control<int>(parent,id,defaultval)
+    :Control<int>(parent, id, defaultval)
 {}
 
 Selector::~Selector()
-{
+{}
 
-}
-
-string Selector::getString()const
+string Selector::getString() const
 {
     return getOption(value);
 }

@@ -2,8 +2,8 @@
 #include "controlhelper.h"
 
 CollapsableFrame::CollapsableFrame(QWidget *parent, QWidget *expanded)
-    : QFrame(parent),
-    expanded(expanded)
+    :QFrame(parent),
+      expanded(expanded)
 {
     setupUi(this);
     connect(collapseButton, SIGNAL(clicked()),
@@ -12,13 +12,14 @@ CollapsableFrame::CollapsableFrame(QWidget *parent, QWidget *expanded)
             this, SLOT(deleteMe()));
 
     layout()->addWidget(expanded);
-    QList<QWidget*> childs = expanded->findChildren<QWidget*>();
-    foreach (QWidget *child, childs) {
-        if (child->property("showOnExpand").toBool()) {
+    QList<QWidget *> childs = expanded->findChildren<QWidget *>();
+    foreach(QWidget * child, childs)
+    {
+        if(child->property("showOnExpand").toBool()) {
             showOnExpand.append(child);
             child->hide();
         }
-        if (child->property("hideOnExpand").toBool()) {
+        if(child->property("hideOnExpand").toBool()) {
             hideOnExpand.append(child);
             child->show();
         }
@@ -27,23 +28,29 @@ CollapsableFrame::CollapsableFrame(QWidget *parent, QWidget *expanded)
 
 void CollapsableFrame::toggleCollapsed()
 {
-    if (!expanded) return;
+    if(!expanded)
+        return;
 
-    if (collapseButton->text() == ">") {
+    if(collapseButton->text() == ">") {
         collapseButton->setText("\\/");
 
-        foreach (QWidget *child, showOnExpand) {
+        foreach(QWidget * child, showOnExpand)
+        {
             child->show();
         }
-        foreach (QWidget *child, hideOnExpand) {
+        foreach(QWidget * child, hideOnExpand)
+        {
             child->hide();
         }
-    } else {
+    }
+    else {
         collapseButton->setText(">");
-        foreach (QWidget *child, showOnExpand) {
+        foreach(QWidget * child, showOnExpand)
+        {
             child->hide();
         }
-        foreach (QWidget *child, hideOnExpand) {
+        foreach(QWidget * child, hideOnExpand)
+        {
             child->show();
         }
     }
@@ -51,27 +58,32 @@ void CollapsableFrame::toggleCollapsed()
 
 void CollapsableFrame::deleteMe()
 {
-    if (!expanded) return;
+    if(!expanded)
+        return;
 
     QString id = ControlHelper::findComponentPath(expanded);
-    if (id.isEmpty()) return;
+    if(id.isEmpty())
+        return;
 
     Node *node = Node::find(id.toStdString());
-    if (!node) return;
+    if(!node)
+        return;
 
     node->removeFromParent();
 }
 
 void CollapsableFrame::on_enabledCheck_stateChanged(int state)
 {
-    if (!expanded) return;
+    if(!expanded)
+        return;
 
-    if (state == Qt::Checked) {
+    if(state == Qt::Checked)
         expanded->setEnabled(true);
-    } else if (state == Qt::Unchecked) {
+    else
+    if(state == Qt::Unchecked)
         expanded->setEnabled(false);
-    }
 }
 
 #include "collapsableframe.moc"
 // vim: sw=4 sts=4 et tw=100
+
