@@ -44,7 +44,7 @@ class AdNoteTest:public CxxTest::TestSuite
 
             //prepare the default settings
             ADnoteParameters *defaultPreset = new ADnoteParameters(
-                new FFTwrapper(OSCIL_SIZE));
+                NULL, new FFTwrapper(OSCIL_SIZE));
             XMLwrapper *wrap = new XMLwrapper();
             cout << string(SOURCE_DIR) + string("/Tests/guitar-adnote.xmz")
                  << endl;
