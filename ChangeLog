@@ -934,3 +934,23 @@
 25 Sep 2009 (Mark McCurry)
 	    - Allowed for XMLwrapper to retrieve strings stored in mxml TEXT
 	      fields
+29 Sep 2009 (Paul Nasca)
+	    - Remove the old (FFT based) Bandwidth effect to Reverb and started rewrite it (based on multivoice chorus/unison effect)
+
+01 Oct 2009 (Paul Nasca)
+	    - Corrected the ADsynth unison LFO rounding function 
+	    - Made Unison based on Bandwidth (in cents) parameter
+
+02 Oct 2009 (Mark McCurry)
+	    - Added OSS failsafe by Jérémie Andréi
+
+04 Oct 2009 (Mark McCurry)
+	    - fixed Ctest issues
+
+06 Oct 2009 (Mark McCurry)
+	    - Added first simple profiling test
+
+08 Oct 2009 (Mark McCurry)
+	    - Started to see if memset/memcpy offer performance benifits when
+	      widely used
+	    - Added basic SUBnote test

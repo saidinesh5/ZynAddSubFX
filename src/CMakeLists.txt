@@ -135,9 +135,12 @@ include_directories(
 	${CMAKE_CURRENT_BINARY_DIR}
 	)
 
+
+#for tests looking for files stored in the source dir
+add_definitions(-DSOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 #macro for tests
 macro(unit_test NAME CXX_FILE FILES)
-	if (CompileTests)
+    #	if (CompileTests)
 		set(PATH_FILES "")
 		foreach(part ${FILES})
 			set(PATH_FILES "${CMAKE_CURRENT_SOURCE_DIR}/${part}" ${PATH_FILES})
@@ -158,7 +161,7 @@ macro(unit_test NAME CXX_FILE FILES)
 				${MXML_LIBRARIES}
 				)
 		add_test("${NAME}" "${EXECUTABLE_OUTPUT_PATH}/${NAME}")
-	endif()
+                #endif()
 endmacro(unit_test)
 
 set(NONGUI_LIBRARIES

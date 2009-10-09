@@ -22,7 +22,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <string.h>
 
 #include "../globals.h"
 #include "../Misc/Util.h"
@@ -590,7 +590,7 @@ void ADnote::KillVoice(int nvoice)
     if ((NoteVoicePar[nvoice].FMEnabled!=NONE)&&(NoteVoicePar[nvoice].FMVoice<0)) delete []NoteVoicePar[nvoice].FMSmp;
 
     if (NoteVoicePar[nvoice].VoiceOut!=NULL)
-        for (int i=0;i<SOUND_BUFFER_SIZE;i++) NoteVoicePar[nvoice].VoiceOut[i]=0.0;//do not delete, yet: perhaps is used by another voice
+        memset(NoteVoicePar[nvoice].VoiceOut, 0, SOUND_BUFFER_SIZE * sizeof(REALTYPE));//do not delete, yet: perhaps is used by another voice
 
     NoteVoicePar[nvoice].Enabled=OFF;
 };
@@ -787,7 +787,7 @@ void ADnote::compute_unison_freq_rap(int nvoice){
 			pos=1.0;
 			step=-step;
 		};
-		REALTYPE vibratto_val=pos-0.3*pos*pos*pos;//make the vibratto lfo smoother
+		REALTYPE vibratto_val=(pos-0.333333333*pos*pos*pos)*1.5;//make the vibratto lfo smoother
 		unison_freq_rap[nvoice][k]=1.0+((unison_base_freq_rap[nvoice][k]-1.0)+vibratto_val*unison_vibratto[nvoice].amplitude)*relbw;
 		
 		unison_vibratto[nvoice].position[k]=pos;
@@ -830,7 +830,7 @@ void ADnote::setfreqFM(int nvoice,REALTYPE in_freq)
 /*
  * Get Voice base frequency
  */
-REALTYPE ADnote::getvoicebasefreq(int nvoice)
+REALTYPE ADnote::getvoicebasefreq(int nvoice) const
 {
     REALTYPE detune=NoteVoicePar[nvoice].Detune/100.0+
                     NoteVoicePar[nvoice].FineDetune/100.0*ctl->bandwidth.relbw*bandwidthDetuneMultiplier+
@@ -852,7 +852,7 @@ REALTYPE ADnote::getvoicebasefreq(int nvoice)
 /*
  * Get Voice's Modullator base frequency
  */
-REALTYPE ADnote::getFMvoicebasefreq(int nvoice)
+REALTYPE ADnote::getFMvoicebasefreq(int nvoice) const
 {
     REALTYPE detune=NoteVoicePar[nvoice].FMDetune/100.0;
     return(getvoicebasefreq(nvoice)*pow(2,detune/12.0));
@@ -969,7 +969,7 @@ void ADnote::computecurrentparameters()
 /*
  * Fadein in a way that removes clicks but keep sound "punchy"
  */
-inline void ADnote::fadein(REALTYPE *smps)
+inline void ADnote::fadein(REALTYPE *smps) const
 {
     int zerocrossings=0;
     for (int i=1;i<SOUND_BUFFER_SIZE;i++)
@@ -1301,18 +1301,13 @@ int ADnote::noteout(REALTYPE *outl,REALTYPE *outr)
 {
     int i,nvoice;
 
-    for (i=0;i<SOUND_BUFFER_SIZE;i++) {
-        outl[i]=denormalkillbuf[i];
-        outr[i]=denormalkillbuf[i];
-    };
+    memcpy(outl, denormalkillbuf, SOUND_BUFFER_SIZE*sizeof(REALTYPE));
+    memcpy(outr, denormalkillbuf, SOUND_BUFFER_SIZE*sizeof(REALTYPE));
 
     if (NoteEnabled==OFF) return(0);
 
-    for (i=0;i<SOUND_BUFFER_SIZE;i++) {
-        bypassl[i]=0.0;
-        bypassr[i]=0.0;
-    };
-
+    memset(bypassl, 0, SOUND_BUFFER_SIZE*sizeof(REALTYPE));
+    memset(bypassr, 0, SOUND_BUFFER_SIZE*sizeof(REALTYPE));
     computecurrentparameters();
 
     for (nvoice=0;nvoice<NUM_VOICES;nvoice++) {
@@ -1512,10 +1507,8 @@ int ADnote::noteout(REALTYPE *outl,REALTYPE *outr)
     // Apply legato-specific sound signal modifications
     if (Legato.silent) { // Silencer
         if (Legato.msg!=LM_FadeIn) {
-            for (i=0;i<SOUND_BUFFER_SIZE;i++) {
-                outl[i]=0.0;
-                outr[i]=0.0;
-            }
+            memset(outl, 0, SOUND_BUFFER_SIZE * sizeof(REALTYPE));
+            memset(outl, 0, SOUND_BUFFER_SIZE * sizeof(REALTYPE));
         }
     }
     switch (Legato.msg) {
@@ -1613,7 +1606,7 @@ void ADnote::relasekey()
 /*
  * Check if the note is finished
  */
-int ADnote::finished()
+int ADnote::finished() const
 {
     if (NoteEnabled==ON) return(0);
     else return(1);
