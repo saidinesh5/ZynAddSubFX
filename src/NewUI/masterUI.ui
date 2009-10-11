@@ -567,7 +567,7 @@
              </widget>
             </item>
             <item row="0" column="2" colspan="2">
-             <widget class="QPushButton" name="pushButton_9">
+             <widget class="QPushButton" name="buttonControllers">
               <property name="text">
                <string>Controllers</string>
               </property>

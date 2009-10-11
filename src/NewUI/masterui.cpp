@@ -6,6 +6,7 @@
 #include "eventhelper.h"
 #include <QtDebug>
 #include "debuginterface.h"
+#include <oscil.h>
 
 MasterUI::MasterUI(Master *master_, int *exitprogram_)
     :QMainWindow(NULL),
@@ -63,6 +64,14 @@ void MasterUI::on_editInstrument_clicked()
     QString id = partBar->getCurrentChild();
     if(!id.isEmpty())
         (new AddNoteUi(id))->show();
+}
+
+void MasterUI::on_buttonControllers_clicked()
+{
+    Oscil *oscil = new Oscil(NULL);
+    oscil->setProperty("absoluteControlId",
+            "Master.Parts.Part1.Instrument.InstrumentKit.ADnoteParameters.Voices.VoiceParam1.OscilSmp");
+    oscil->show();
 }
 
 void MasterUI::on_action_Quit_triggered()

@@ -16,6 +16,7 @@ set(zynaddsubfx_gui_SRCS
     collapsableframe.cpp
     voicelist.cpp
     voicewidget.cpp
+    oscil.cpp
 	)
 
 SET( zynaddsubfx_gui_MOC_HDRS
@@ -33,6 +34,7 @@ SET( zynaddsubfx_gui_MOC_HDRS
     collapsableframe.h
     voicelist.h
     voicewidget.h
+    oscil.h
 )
 
 SET( zynaddsubfx_gui_UIS
@@ -44,6 +46,7 @@ SET( zynaddsubfx_gui_UIS
     collapsableframe.ui
     voicelist.ui
     voicewidgetexpanded.ui
+    oscil.ui
 )
 
 qt4_wrap_ui(zynaddsubfx_gui_UIS_HDRS ${zynaddsubfx_gui_UIS} )

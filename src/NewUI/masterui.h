@@ -17,6 +17,7 @@ class MasterUI:public QMainWindow, Ui::MainWindow
         void on_action_Quit_triggered();
         void on_partSelector_valueChanged(int value);
         void on_editInstrument_clicked();
+        void on_buttonControllers_clicked();
     private:
 
         int    *Pexitprogram;
