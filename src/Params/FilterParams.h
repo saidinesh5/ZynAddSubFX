@@ -53,7 +53,8 @@ class FilterParams:public Presets, public Node
 
         unsigned char Pcategory; //Filter category (Analog/Formant/StVar)
         unsigned char Ptype; // Filter type  (for analog lpf,hpf,bpf..)
-        unsigned char Pfreq; // Frequency (64-central frequency)
+        //unsigned char Pfreq;// Frequency (64-central frequency)
+        Ranger frequency;
         unsigned char Pq; // Q parameters (resonance or bandwidth)
         unsigned char Pstages; //filter stages+1
         unsigned char Pfreqtrack; //how the filter frequency is changing according the note frequency
@@ -63,7 +64,8 @@ class FilterParams:public Presets, public Node
         unsigned char Pnumformants; //how many formants are used
         unsigned char Pformantslowness; //how slow varies the formants
         unsigned char Pvowelclearness; //how vowels are kept clean (how much try to avoid "mixed" vowels)
-        unsigned char Pcenterfreq, Poctavesfreq; //the center frequency of the res. func., and the number of octaves
+        unsigned char Poctavesfreq; //the center frequency of the res. func., and the number of octaves
+        Ranger centerFrequency;
 
         struct {
             struct {
@@ -97,7 +99,6 @@ class FilterParams:public Presets, public Node
 
         //stored default parameters
         unsigned char Dtype;
-        unsigned char Dfreq;
         unsigned char Dq;
 };
 

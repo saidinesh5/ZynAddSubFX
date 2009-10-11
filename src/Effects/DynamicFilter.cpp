@@ -181,32 +181,32 @@ void DynamicFilter::setpreset(unsigned char npreset)
     case 0:
         filterpars->Pcategory = 0;
         filterpars->Ptype     = 2;
-        filterpars->Pfreq     = 45;
-        filterpars->Pq = 64;
-        filterpars->Pstages   = 1;
-        filterpars->Pgain     = 64;
+        filterpars->frequency.setCharValue(45);
+        filterpars->Pq      = 64;
+        filterpars->Pstages = 1;
+        filterpars->Pgain   = 64;
         break;
     case 1:
         filterpars->Pcategory = 2;
         filterpars->Ptype     = 0;
-        filterpars->Pfreq     = 72;
-        filterpars->Pq = 64;
-        filterpars->Pstages   = 0;
-        filterpars->Pgain     = 64;
+        filterpars->frequency.setCharValue(72);
+        filterpars->Pq      = 64;
+        filterpars->Pstages = 0;
+        filterpars->Pgain   = 64;
         break;
     case 2:
         filterpars->Pcategory = 0;
         filterpars->Ptype     = 4;
-        filterpars->Pfreq     = 64;
-        filterpars->Pq = 64;
-        filterpars->Pstages   = 2;
-        filterpars->Pgain     = 64;
+        filterpars->frequency.setCharValue(64);
+        filterpars->Pq      = 64;
+        filterpars->Pstages = 2;
+        filterpars->Pgain   = 64;
         break;
     case 3:
         filterpars->Pcategory     = 1;
         filterpars->Ptype         = 0;
-        filterpars->Pfreq         = 50;
-        filterpars->Pq = 70;
+        filterpars->frequency.setCharValue(50);
+        filterpars->Pq            = 70;
         filterpars->Pstages       = 1;
         filterpars->Pgain         = 64;
 
@@ -234,11 +234,11 @@ void DynamicFilter::setpreset(unsigned char npreset)
         break;
     case 4:
         filterpars->Pcategory = 1;
-        filterpars->Ptype = 0;
-        filterpars->Pfreq           = 64;
-        filterpars->Pq    = 70;
+        filterpars->Ptype     = 0;
+        filterpars->frequency.setCharValue(64);
+        filterpars->Pq      = 70;
         filterpars->Pstages = 1;
-        filterpars->Pgain = 64;
+        filterpars->Pgain   = 64;
 
         filterpars->Psequencesize   = 2;
         filterpars->Pnumformants    = 2;

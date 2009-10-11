@@ -24,6 +24,21 @@
 
 #include "../globals.h"
 
+#define REALINJFUNC(NAME, TOCHAR, TOREAL) \
+    class NAME:public InjFunction < char, REALTYPE > { \
+        public: inline char operator()(const REALTYPE &x) const \
+            {return round(TOCHAR);} \
+            inline REALTYPE operator()(const char &x) const \
+            {return (TOREAL);} };
+
+#define REALINJFUNCFUNC(NAME, TOCHARNAME, TOREALNAME, TOCHAR, TOREAL) \
+    REALINJFUNC(NAME, TOCHAR, TOREAL); \
+    inline char TOCHARNAME(const REALTYPE & x) \
+    { return round(TOCHAR); } \
+    inline REALTYPE TOREALNAME(const char &x) \
+    { return (TOREAL); }
+
+
 /**Injective Function
  *
  * This means that the object contains a function that will translate
