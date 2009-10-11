@@ -26,12 +26,14 @@
 
 #include "OscilGen.h"
 #include "../Effects/Distorsion.h"
+#include "../Misc/LinInjFunc.h"
 
 OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
                    Node *parent, std::string id)
     :Presets(),
       Node(parent, id),
-      currentBaseFunc(this, "BaseFunc", 0)
+      currentBaseFunc(this, "BaseFunc", 0),
+      baseParam(this, "BaseParam", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0))
 {
     currentBaseFunc.addOption("Sin"); //0
     currentBaseFunc.addOption("Triangle"); //1
@@ -103,7 +105,7 @@ void OscilGen::defaults()
         Prand = 64; //no randomness
 
     currentBaseFunc.defaults();
-    Pbasefuncpar = 64;
+    baseParam.defaults();
 
     Pbasefuncmodulation     = 0;
     Pbasefuncmodulationpar1 = 64;
@@ -345,9 +347,8 @@ REALTYPE OscilGen::basefunc_sqr(REALTYPE x, REALTYPE a)
 void OscilGen::getbasefunction(REALTYPE *smps)
 {
     int      i;
-    REALTYPE par = (Pbasefuncpar + 0.5) / 128.0;
-    if(Pbasefuncpar == 64)
-        par = 0.5;
+    REALTYPE par = baseParam();
+    printf("%f par\n", par);
 
     REALTYPE basefuncmodulationpar1 = Pbasefuncmodulationpar1 / 127.0,
              basefuncmodulationpar2 = Pbasefuncmodulationpar2 / 127.0,
@@ -598,7 +599,7 @@ void OscilGen::changebasefunction()
     }
     oscilprepared = 0;
     oldbasefunc   = currentBaseFunc();
-    oldbasepar    = Pbasefuncpar;
+    oldbasepar    = baseParam.getCharValue();
     oldbasefuncmodulation     = Pbasefuncmodulation;
     oldbasefuncmodulationpar1 = Pbasefuncmodulationpar1;
     oldbasefuncmodulationpar2 = Pbasefuncmodulationpar2;
@@ -855,7 +856,7 @@ void OscilGen::prepare()
     int      i, j, k;
     REALTYPE a, b, c, d, hmagnew;
 
-    if((oldbasepar != Pbasefuncpar) || (oldbasefunc != currentBaseFunc())
+    if((oldbasepar != baseParam.getCharValue()) || (oldbasefunc != currentBaseFunc())
        || (oldbasefuncmodulation != Pbasefuncmodulation)
        || (oldbasefuncmodulationpar1 != Pbasefuncmodulationpar1)
        || (oldbasefuncmodulationpar2 != Pbasefuncmodulationpar2)
@@ -1085,7 +1086,7 @@ short int OscilGen::get(REALTYPE *smps, REALTYPE freqHz, int resonance)
     int i;
     int nyquist, outpos;
 
-    if((oldbasepar != Pbasefuncpar) || (oldbasefunc != currentBaseFunc())
+    if((oldbasepar != baseParam.getCharValue()) || (oldbasefunc != currentBaseFunc())
        || (oldhmagtype != Phmagtype)
        || (oldwaveshaping != Pwaveshaping)
        || (oldwaveshapingfunction != Pwaveshapingfunction))
@@ -1310,7 +1311,7 @@ void OscilGen::add2XML(XMLwrapper *xml)
     xml->addpar("harmonic_mag_type", Phmagtype);
 
     xml->addpar("base_function", currentBaseFunc());
-    xml->addpar("base_function_par", Pbasefuncpar);
+    xml->addpar("base_function_par", baseParam.getCharValue());
     xml->addpar("base_function_modulation", Pbasefuncmodulation);
     xml->addpar("base_function_modulation_par1", Pbasefuncmodulationpar1);
     xml->addpar("base_function_modulation_par2", Pbasefuncmodulationpar2);
@@ -1387,7 +1388,7 @@ void OscilGen::getfromXML(XMLwrapper *xml)
     Phmagtype = xml->getpar127("harmonic_mag_type", Phmagtype);
 
     currentBaseFunc.setValue(xml->getpar127("base_function", currentBaseFunc()));
-    Pbasefuncpar = xml->getpar127("base_function_par", Pbasefuncpar);
+    baseParam.setCharValue(xml->getpar127("base_function_par", baseParam.getCharValue()));
 
     Pbasefuncmodulation = xml->getpar127("base_function_modulation",
                                          Pbasefuncmodulation);

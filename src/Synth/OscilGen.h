@@ -30,6 +30,7 @@
 #include "../Params/Presets.h"
 #include "../Controls/Node.h"
 #include "../Controls/Selector.h"
+#include "../Controls/Ranger.h"
 
 class OscilGen:public Presets, public Node
 {
@@ -81,7 +82,8 @@ class OscilGen:public Presets, public Node
 
         //unsigned char Pcurrentbasefunc;
         Selector      currentBaseFunc; //The base function used - 0=sin, 1=...
-        unsigned char Pbasefuncpar; //the parameter of the base function
+        Ranger        baseParam;
+        //unsigned char Pbasefuncpar; //the parameter of the base function
 
         unsigned char Pbasefuncmodulation; //what modulation is applied to the basefunc
         unsigned char Pbasefuncmodulationpar1, Pbasefuncmodulationpar2,
