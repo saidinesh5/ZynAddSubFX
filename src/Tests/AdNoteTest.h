@@ -42,6 +42,8 @@ class AdNoteTest:public CxxTest::TestSuite
 
             //phew, glad to get thouse out of my way. took me a lot of sweat and gdb to get this far...
 
+            Job::setEngineThread();
+
             //prepare the default settings
             ADnoteParameters *defaultPreset = new ADnoteParameters(
                 NULL, new FFTwrapper(OSCIL_SIZE));
