@@ -19,8 +19,8 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
-#ifndef RANGER_H
-#define RANGER_H
+#ifndef DESCRANGER_H
+#define DESCRANGER_H
 
 #include "Control.h"
 #include "../Misc/InjFunction.h"

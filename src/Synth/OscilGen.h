@@ -31,6 +31,7 @@
 #include "../Controls/Node.h"
 #include "../Controls/Selector.h"
 #include "../Controls/Ranger.h"
+#include "../Controls/DescRanger.h"
 
 class OscilGen:public Presets, public Node
 {
@@ -69,7 +70,8 @@ class OscilGen:public Presets, public Node
          * The hmag and hphase starts counting from 0, so the first harmonic(1) has the index 0,
          * 2-nd harmonic has index 1, ..the 128 harminic has index 127
          */
-        unsigned char Phmag[MAX_AD_HARMONICS], Phphase[MAX_AD_HARMONICS]; //the MIDI parameters for mag. and phases
+        unsigned char Phphase[MAX_AD_HARMONICS]; //the MIDI parameters for mag. and phases
+        DescRanger* magnitude[MAX_AD_HARMONICS];
 
 
         /**The Type of magnitude:
@@ -117,6 +119,9 @@ class OscilGen:public Presets, public Node
         void newrandseed(unsigned int randseed);
 
         bool ADvsPAD; //if it is used by ADsynth or by PADsynth
+
+        void handleEvent(Event *event);
+        void handleSyncEvent(Event *event);
 
     private:
         //This array stores some termporary data and it has OSCIL_SIZE elements

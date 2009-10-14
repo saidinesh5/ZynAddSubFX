@@ -50,6 +50,13 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
     currentBaseFunc.addOption("Chebyshev"); //12
     currentBaseFunc.addOption("Square"); //13
 
+    for (int i = 0; i < MAX_AD_HARMONICS; ++i) {
+        std::stringstream ss;
+        ss << "Magnitude" << i;
+        magnitude[i] = new DescRanger(this, ss.str(), 64);
+        magnitude[i]->addRedirection(this, new TypeFilter(Event::NewValueEvent));
+    }
+
     setpresettype("Poscilgen");
     fft     = fft_;
     res     = res_;
@@ -68,6 +75,7 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
 OscilGen::~OscilGen()
 {
     delete[] tmpsmps;
+    delete[] magnitude;
     deleteFFTFREQS(&outoscilFFTfreqs);
     deleteFFTFREQS(&basefuncFFTfreqs);
     deleteFFTFREQS(&oscilFFTfreqs);
@@ -94,10 +102,10 @@ void OscilGen::defaults()
     for(int i = 0; i < MAX_AD_HARMONICS; i++) {
         hmag[i]    = 0.0;
         hphase[i]  = 0.0;
-        Phmag[i]   = 64;
+        magnitude[i]->setValue(64);
         Phphase[i] = 64;
     }
-    Phmag[0]  = 127;
+    (magnitude[0])->setValue(127);
     Phmagtype = 0;
     if(ADvsPAD)
         Prand = 127;       //max phase randomness (usefull if the oscil will be imported to a ADsynth from a PADsynth
@@ -180,13 +188,13 @@ void OscilGen::convert2sine(int magtype)
         REALTYPE newmag   = mag[i] / max;
         REALTYPE newphase = phase[i];
 
-        Phmag[i]   = (int) ((newmag) * 64.0) + 64;
+        magnitude[i]->setValue((int) ((newmag) * 64.0) + 64);
 
         Phphase[i] = 64 - (int) (64.0 * newphase / PI);
         if(Phphase[i] > 127)
             Phphase[i] = 127;
 
-        if(Phmag[i] == 64)
+        if((*magnitude[i])() == 64)
             Phphase[i] = 64;
     }
     deleteFFTFREQS(&freqs);
@@ -867,7 +875,7 @@ void OscilGen::prepare()
         hphase[i] = (Phphase[i] - 64.0) / 64.0 * PI / (i + 1);
 
     for(i = 0; i < MAX_AD_HARMONICS; i++) {
-        hmagnew = 1.0 - fabs(Phmag[i] / 64.0 - 1.0);
+        hmagnew = 1.0 - fabs((*magnitude[i])() / 64.0 - 1.0);
         switch(Phmagtype) {
         case 1:
             hmag[i] = exp(hmagnew * log(0.01));
@@ -886,13 +894,13 @@ void OscilGen::prepare()
             break;
         }
 
-        if(Phmag[i] < 64)
+        if((*magnitude[i])() < 64)
             hmag[i] = -hmag[i];
     }
 
     //remove the harmonics where Phmag[i]==64
     for(i = 0; i < MAX_AD_HARMONICS; i++)
-        if(Phmag[i] == 64)
+        if((*magnitude[i])() == 64)
             hmag[i] = 0.0;
 
 
@@ -908,7 +916,7 @@ void OscilGen::prepare()
     }
     else {
         for(j = 0; j < MAX_AD_HARMONICS; j++) {
-            if(Phmag[j] == 64)
+            if((*magnitude[j])() == 64)
                 continue;
             for(i = 1; i < OSCIL_SIZE / 2; i++) {
                 k = i * (j + 1);
@@ -1346,10 +1354,10 @@ void OscilGen::add2XML(XMLwrapper *xml)
 
     xml->beginbranch("HARMONICS");
     for(int n = 0; n < MAX_AD_HARMONICS; n++) {
-        if((Phmag[n] == 64) && (Phphase[n] == 64))
+        if(((*magnitude[n])() == 64) && (Phphase[n] == 64))
             continue;
         xml->beginbranch("HARMONIC", n + 1);
-        xml->addpar("mag", Phmag[n]);
+        xml->addpar("mag", (*magnitude[n])());
         xml->addpar("phase", Phphase[n]);
         xml->endbranch();
     }
@@ -1447,12 +1455,12 @@ void OscilGen::getfromXML(XMLwrapper *xml)
 
 
     if(xml->enterbranch("HARMONICS")) {
-        Phmag[0]   = 64;
+        magnitude[0]->setValue(64);
         Phphase[0] = 64;
         for(int n = 0; n < MAX_AD_HARMONICS; n++) {
             if(xml->enterbranch("HARMONIC", n + 1) == 0)
                 continue;
-            Phmag[n]   = xml->getpar127("mag", 64);
+            magnitude[n]->setValue(xml->getpar127("mag", 64));
             Phphase[n] = xml->getpar127("phase", 64);
             xml->exitbranch();
         }
@@ -1494,3 +1502,17 @@ void OscilGen::getfromXML(XMLwrapper *xml)
     }
 }
 
+void OscilGen::handleSyncEvent(Event *event)
+{
+    if(event->type() == Event::NewValueEvent) {
+        //NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
+        prepare();
+    }
+}
+
+void OscilGen::handleEvent(Event *event)
+{
+    if(event->type() == Event::NewValueEvent) {
+        Job::push(new NodeJob(*this, new NewValueEvent(*(NewValueEvent*)(event))));
+    }
+}

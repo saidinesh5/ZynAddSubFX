@@ -34,7 +34,7 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     partBar->setControlsWidget(partFrame);
     partBar->setNode(Node::find("Master.Parts"));
 
-    Node::getRoot()->printTree();
+    //Node::getRoot()->printTree();
 
     (new DebugInterface(NULL, master))->show();
 }

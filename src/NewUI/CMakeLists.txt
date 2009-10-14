@@ -17,6 +17,7 @@ set(zynaddsubfx_gui_SRCS
     voicelist.cpp
     voicewidget.cpp
     oscil.cpp
+    slider.cpp
 	)
 
 SET( zynaddsubfx_gui_MOC_HDRS
@@ -35,6 +36,7 @@ SET( zynaddsubfx_gui_MOC_HDRS
     voicelist.h
     voicewidget.h
     oscil.h
+    slider.h
 )
 
 SET( zynaddsubfx_gui_UIS
