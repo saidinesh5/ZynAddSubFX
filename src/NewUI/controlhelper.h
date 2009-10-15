@@ -107,6 +107,11 @@ class ControlHelper:public QObject, public NodeUser
          */
         static QString findComponentPath(QObject *object);
 
+        /** 
+         * @brief Revert the control to its defaults
+         */
+        void defaults();
+
     signals:
         /**
          * @brief This signal is emitted from the controlhelper when the value of the controls value

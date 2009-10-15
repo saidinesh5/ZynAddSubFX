@@ -203,5 +203,12 @@ void ControlHelper::emitOptions()
     emit optionsChanged(options);
 }
 
+void ControlHelper::defaults()
+{
+    if (m_control) {
+        m_control->defaults();
+    }
+}
+
 #include "controlhelper.moc"
 

@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QConicalGradient>
 #include <math.h>
+#include "menu.h"
 
 //drawstyles: 0 - piechart
 //            1 - rotated dial
@@ -28,10 +29,7 @@ Dial::Dial(QWidget *parent)
     connect(helper, SIGNAL(valueChanged(int)),
             this, SLOT(setValue(int)));
 
-    connect(this, SIGNAL(MIDILearn()),
-            helper, SLOT(MIDILearn()));
-
-    //helper->requestValue(); (you can directly get the information now
+    new Menu(this, helper);
 }
 
 void Dial::mousePressEvent(QMouseEvent *event)
@@ -41,28 +39,20 @@ void Dial::mousePressEvent(QMouseEvent *event)
         m_originalValueOnPress = value();
         event->accept();
         setSliderDown(true);
+        return;
     }
-    //QDial::mousePressEvent(event);
+    QDial::mousePressEvent(event);
 }
 
 void Dial::mouseReleaseEvent(QMouseEvent *event)
 {
     if((event->button() == Qt::RightButton)) {
-        QMenu menu(this);
-        menu.addAction("Connect to midi");
-        QAction *response = menu.exec(event->globalPos());
-
-        if(response)
-
-            emit MIDILearn();
-
-        event->accept();
+        QDial::mouseReleaseEvent(event);
     }
     else {
         m_originalMouseY = -1;
         setSliderDown(false);
     }
-    //QDial::mouseReleaseEvent(event);
 }
 
 void Dial::mouseMoveEvent(QMouseEvent *event)

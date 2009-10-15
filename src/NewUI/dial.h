@@ -15,9 +15,6 @@ class Dial:public QDial
     private slots:
         void slotUpdateSource();
 
-    signals:
-        void MIDILearn();
-
     private:
         void mousePressEvent(class QMouseEvent * event);
         void mouseReleaseEvent(class QMouseEvent * event);
