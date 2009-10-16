@@ -8,6 +8,14 @@ class Slider : public QSlider
     Q_OBJECT
     public:
         Slider(QWidget *parent=NULL);
+        void mousePressEvent(class QMouseEvent * event);
+        void mouseReleaseEvent(class QMouseEvent * event);
+        void mouseMoveEvent(class QMouseEvent * event);
+        void slideEvent(QMouseEvent *event);
+
+    private:
+        bool m_outside, m_sliding;
+        int m_prevValue;
 };
 
 #endif // SLIDER_H
