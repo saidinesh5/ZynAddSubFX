@@ -18,6 +18,7 @@ set(zynaddsubfx_controls_SRCS
     Selector.cpp
     Toggle.cpp
     Trigger.cpp
+    ArrayControl.cpp
 )
 
 add_library(zynaddsubfx_controls STATIC

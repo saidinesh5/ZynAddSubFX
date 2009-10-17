@@ -2,6 +2,7 @@
 #define _CONTROLHELPER_H_
 
 #include "../Controls/Control.h"
+#include "../Controls/ArrayControl.h"
 #include "../Controls/ControlUser.h"
 #include <QObject>
 #include <QMutex>
@@ -125,6 +126,8 @@ class ControlHelper:public QObject, public NodeUser
          * control
          */
         void optionsChanged(QStringList options);
+
+        void arrayUpdated(ArrayControl *control);
 
     private:
         void emitOptions();

@@ -33,7 +33,8 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
     :Presets(),
       Node(parent, id),
       currentBaseFunc(this, "BaseFunc", 0),
-      baseParam(this, "BaseParam", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0))
+      baseParam(this, "BaseParam", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0)),
+      oscilSpectrum(this, "OscilSpectrum")
 {
     currentBaseFunc.addOption("Sin"); //0
     currentBaseFunc.addOption("Triangle"); //1

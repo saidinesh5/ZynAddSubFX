@@ -32,6 +32,7 @@
 #include "../Controls/Selector.h"
 #include "../Controls/Ranger.h"
 #include "../Controls/DescRanger.h"
+#include "../Controls/ArrayControl.h"
 
 class OscilGen:public Presets, public Node
 {
@@ -72,6 +73,8 @@ class OscilGen:public Presets, public Node
          */
         unsigned char Phphase[MAX_AD_HARMONICS]; //the MIDI parameters for mag. and phases
         DescRanger* magnitude[MAX_AD_HARMONICS];
+
+        ArrayControl oscilSpectrum;
 
 
         /**The Type of magnitude:

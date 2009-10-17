@@ -48,20 +48,13 @@ void ControlHelper::handleEvent(Event *event)
     //and efficient about all processing in this function
 
     if(event->type() == Event::NewValueEvent) {
-#if 0
-        //the logic here is: if we are expecting an event about a new value, then we will ignore it
-        //to avoid infinite loops
-        expectedEventMutex.lock();
-        if(expectedValueEvents > 0) {
-            expectedValueEvents--;
-            expectedEventMutex.unlock();
-            return;
-        }
-        expectedEventMutex.unlock();
-#endif
-
         emit valueChanged(
             static_cast<NewValueEvent *>(event)->control->getCharValue());
+
+        ArrayControl *arr_control = dynamic_cast<ArrayControl*>(m_control);
+        if (arr_control) {
+            emit arrayUpdated(arr_control);
+        }
     }
     else
     if(event->type() == Event::RemovalEvent) {
