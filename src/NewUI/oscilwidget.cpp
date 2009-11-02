@@ -3,6 +3,7 @@
 #include <QPaintEvent>
 #include <QtDebug>
 #include <math.h>
+#include "../globals.h"
 
 OscilWidget::OscilWidget(QWidget *parent)
     : QWidget(parent)
@@ -25,20 +26,37 @@ void OscilWidget::paintEvent(QPaintEvent* event)
     QWidget::paintEvent(event);
     QPainter p(this);
 
-    float max = -999;
+    const int maxdb=60;//must be multiple of 10
+
+    REALTYPE max = -999;
     for (int i = 0; i < OSCIL_SIZE; ++i) {
-        if (m_data[i] > max) {
-             max = m_data[i];
+        if (fabs(m_data[i]) > max) {
+            max = fabs(m_data[i]);
         }
     }
+    if (max<0.000001) max=1.0;
+    max=max*1.05;
     max = 1 / max;
 
-    float multiplier = float(OSCIL_SIZE) / width();
+    REALTYPE multiplier = REALTYPE(OSCIL_SIZE) / width();
+    REALTYPE barwidth = REALTYPE(width()) / (OSCIL_SIZE / 2 - 1);
 
-    for (int x = 0; x < width(); ++x) {
-        p.drawLine(
-                x, 0,
-                x, height() - height() * dB2rap(m_data[int(x*multiplier)]) * max);
+    p.setBrush(Qt::SolidPattern);
+
+    //draws the spectrum
+    for (int i=0;i<OSCIL_SIZE / 2 - 1;i++){
+        int tmp=i*2+2;
+        REALTYPE x=m_data[i]*max;
+
+        if (x>dB2rap(-maxdb)) x=rap2dB(x)/maxdb+1;
+        else x=0;
+
+        int val=(int) (height()*x);
+        if (val>0) 
+        p.drawRect(
+                i * barwidth, height() - val,
+                barwidth, val);
+
     }
 }
 
