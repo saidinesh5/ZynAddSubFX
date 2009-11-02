@@ -56,12 +56,12 @@ template<class T>
 void Control<T>::setValue(const T &val)
 {
     bool changed = false;
-    pthread_mutex_lock(&localMute);
+    lock();
     if(value != val) {
         value   = val;
         changed = true;
     }
-    pthread_mutex_unlock(&localMute);
+    unlock();
     //std::cout << "Setting to " << val << " " << (long long)(this) << std::endl;
     if(changed)
         forward(new NewValueEvent(this));
@@ -71,9 +71,9 @@ template<class T>
 T Control<T>::getValue() const
 {
     T tmp;
-    pthread_mutex_lock(&localMute);
+    lock();
     tmp = value;
-    pthread_mutex_unlock(&localMute);
+    unlock();
     return tmp;
 }
 

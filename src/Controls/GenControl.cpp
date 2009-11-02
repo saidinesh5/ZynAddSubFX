@@ -111,3 +111,14 @@ bool GenControl::MIDILearn()
     //delete learnNode;
 }
 
+
+void GenControl::lock() const
+{
+    pthread_mutex_lock(&localMute);
+}
+
+void GenControl::unlock() const
+{
+    pthread_mutex_unlock(&localMute);
+}
+

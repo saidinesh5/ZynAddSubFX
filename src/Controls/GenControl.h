@@ -47,6 +47,10 @@ class GenControl:public Node
         virtual ~GenControl();
         mutable pthread_mutex_t localMute;
 
+        void lock() const;
+        void unlock() const;
+
+
     private:
 
         int midichan, miditype;
