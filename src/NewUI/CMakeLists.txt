@@ -23,28 +23,6 @@ set(zynaddsubfx_gui_SRCS
     spectrumwidget.cpp
 	)
 
-SET( zynaddsubfx_gui_MOC_HDRS
-	masterui.h
-    eventhelper.h
-    checkbox.h
-    combobox.h
-    dial.h
-	bankui.h
-	addnoteui.h
-	unitbox.h
-	lfobox.h
-	envelopebox.h
-	siblingbar.h
-    collapsableframe.h
-    voicelist.h
-    voicewidget.h
-    oscil.h
-    slider.h
-    menu.h
-    oscilwidget.h
-    spectrumwidget.h
-)
-
 SET( zynaddsubfx_gui_UIS
 	masterUI.ui
     #addnoteui.ui
@@ -57,13 +35,19 @@ SET( zynaddsubfx_gui_UIS
     oscil.ui
 )
 
+set( zynaddsubfx_gui_RC_FILES
+    main.qrc
+)
+
 qt4_wrap_ui(zynaddsubfx_gui_UIS_HDRS ${zynaddsubfx_gui_UIS} )
 qt4_automoc(${zynaddsubfx_gui_SRCS})
+qt4_add_resources(zynaddsubfx_gui_RCS ${zynaddsubfx_gui_RC_FILES} )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_library(zynaddsubfx_gui STATIC
 	${zynaddsubfx_gui_SRCS}
 	${zynaddsubfx_gui_UIS}
+    ${zynaddsubfx_gui_RCS}
 	)
 
 set(GUI_LIBRARIES

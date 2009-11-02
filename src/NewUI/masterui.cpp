@@ -15,6 +15,8 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
       m_bankUI(NULL)
 
 {
+    Q_INIT_RESOURCE(main);
+
     //this instance will monitor all dynamic event property changes
     new ControlHelper(QCoreApplication::instance());
 

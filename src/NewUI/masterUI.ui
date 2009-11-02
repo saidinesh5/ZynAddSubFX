@@ -160,6 +160,29 @@
        <attribute name="title">
         <string>Insertion effects</string>
        </attribute>
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>10</y>
+          <width>231</width>
+          <height>111</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>:/images/images/power.png</normaloff>:/images/images/power.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>64</width>
+          <height>64</height>
+         </size>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -665,7 +688,9 @@
    <header>checkbox.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="main.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>enabledCheck</sender>
