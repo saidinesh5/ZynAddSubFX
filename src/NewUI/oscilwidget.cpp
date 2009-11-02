@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QtDebug>
+#include <math.h>
 
 OscilWidget::OscilWidget(QWidget *parent)
     : QWidget(parent)
@@ -37,7 +38,7 @@ void OscilWidget::paintEvent(QPaintEvent* event)
     for (int x = 0; x < width(); ++x) {
         p.drawLine(
                 x, 0,
-                x, height() - height() * m_data[int(x*multiplier)] * max);
+                x, height() - height() * dB2rap(m_data[int(x*multiplier)]) * max);
     }
 }
 

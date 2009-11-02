@@ -57,6 +57,8 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
         magnitude[i] = new DescRanger(this, ss.str(), 64);
         magnitude[i]->addRedirection(this, new TypeFilter(Event::NewValueEvent));
     }
+    baseParam.addRedirection(this, new TypeFilter(Event::NewValueEvent));
+    currentBaseFunc.addRedirection(this, new TypeFilter(Event::NewValueEvent));
 
     setpresettype("Poscilgen");
     fft     = fft_;
@@ -359,7 +361,6 @@ void OscilGen::getbasefunction(REALTYPE *smps)
 {
     int      i;
     REALTYPE par = baseParam();
-    printf("%f par\n", par);
 
     REALTYPE basefuncmodulationpar1 = Pbasefuncmodulationpar1 / 127.0,
              basefuncmodulationpar2 = Pbasefuncmodulationpar2 / 127.0,
@@ -961,7 +962,6 @@ void OscilGen::prepare()
 
     getspectrum(OSCIL_SIZE / 2 - 1, tmpsmps, 0);
     oscilSpectrum.writeArray(tmpsmps, OSCIL_SIZE);
-    printf("Oscil prepared\n");
 
     oscilprepared    = 1;
 }
