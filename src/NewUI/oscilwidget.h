@@ -10,9 +10,14 @@ class OscilWidget : public QWidget
 
     public:
         OscilWidget(QWidget *parent = NULL);
+        void paintEvent(class QPaintEvent* event);
 
     private slots:
         void readArray(ArrayControl* array);
+
+    private:
+        REALTYPE *m_data;
+        int m_size;
 
 };
 

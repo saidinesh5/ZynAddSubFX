@@ -34,7 +34,7 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
       Node(parent, id),
       currentBaseFunc(this, "BaseFunc", 0),
       baseParam(this, "BaseParam", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0)),
-      oscilSpectrum(this, "OscilSpectrum")
+      oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE)
 {
     currentBaseFunc.addOption("Sin"); //0
     currentBaseFunc.addOption("Triangle"); //1
@@ -63,6 +63,7 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
     res     = res_;
 
     tmpsmps = new REALTYPE[OSCIL_SIZE];
+    oscilOutTmp = new REALTYPE[OSCIL_SIZE];
     newFFTFREQS(&outoscilFFTfreqs, OSCIL_SIZE / 2);
     newFFTFREQS(&oscilFFTfreqs, OSCIL_SIZE / 2);
     newFFTFREQS(&basefuncFFTfreqs, OSCIL_SIZE / 2);
@@ -76,6 +77,7 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
 OscilGen::~OscilGen()
 {
     delete[] tmpsmps;
+    delete[] oscilOutTmp;
     delete[] magnitude;
     deleteFFTFREQS(&outoscilFFTfreqs);
     deleteFFTFREQS(&basefuncFFTfreqs);
@@ -956,6 +958,10 @@ void OscilGen::prepare()
 
     oldhmagtype      = Phmagtype;
     oldharmonicshift = Pharmonicshift + Pharmonicshiftfirst * 256;
+
+    getspectrum(OSCIL_SIZE / 2 - 1, tmpsmps, 0);
+    oscilSpectrum.writeArray(tmpsmps, OSCIL_SIZE);
+    printf("Oscil prepared\n");
 
     oscilprepared    = 1;
 }

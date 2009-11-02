@@ -29,13 +29,22 @@
 class ArrayControl : public GenControl
 {
     public:
-        ArrayControl(Node *parent, std::string id);
-        REALTYPE* readArray(int *size);
+        ArrayControl(Node *parent, std::string id, int bufsize);
+        virtual ~ArrayControl();
+
+        void readArray(REALTYPE *buffer, int *size);
+        void writeArray(REALTYPE* array, int size);
 
         virtual char getCharValue() const;
         virtual void setValue(char val);
         virtual std::string getString() const;
         virtual void defaults();
+
+    private:
+        //frontbuffer and backbuffer
+        REALTYPE *m_front, *m_back;
+        int m_bufsize;
+        void swapBuffers();
 };
 
 #endif // ARRAYCONTROL_H

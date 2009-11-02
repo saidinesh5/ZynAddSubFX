@@ -129,7 +129,13 @@ class OscilGen:public Presets, public Node
     private:
         //This array stores some termporary data and it has OSCIL_SIZE elements
         REALTYPE *tmpsmps;
+
         FFTFREQS  outoscilFFTfreqs;
+
+        //this is used (probably temporarily) for storing the spectrum values, usually
+        //gotten in a pull-fashion through getspectrum(), but now instead pushed to the
+        //oscilSpectrum ArrayControl
+        REALTYPE *oscilOutTmp;
 
         REALTYPE hmag[MAX_AD_HARMONICS], hphase[MAX_AD_HARMONICS]; //the magnituides and the phases of the sine/nonsine harmonics
 //    private:
