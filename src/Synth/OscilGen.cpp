@@ -34,7 +34,7 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
       Node(parent, id),
       currentBaseFunc(this, "BaseFunc", 0),
       baseParam(this, "BaseParam", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0)),
-      oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE)
+      oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE/2)
 {
     currentBaseFunc.addOption("Sin"); //0
     currentBaseFunc.addOption("Triangle"); //1
@@ -961,8 +961,8 @@ void OscilGen::prepare()
     oldharmonicshift = Pharmonicshift + Pharmonicshiftfirst * 256;
 
     //TODO: this might be optimized
-    getspectrum(OSCIL_SIZE / 2 - 1, tmpsmps, 0);
-    oscilSpectrum.writeArray(tmpsmps, OSCIL_SIZE);
+    getspectrum(OSCIL_SIZE / 2, tmpsmps, 0);
+    oscilSpectrum.writeArray(tmpsmps, OSCIL_SIZE/2);
 
     oscilprepared    = 1;
 }

@@ -38,14 +38,13 @@ void OscilWidget::paintEvent(QPaintEvent* event)
     max=max*1.05;
     max = 1 / max;
 
-    REALTYPE multiplier = REALTYPE(OSCIL_SIZE) / width();
-    REALTYPE barwidth = REALTYPE(width()) / (OSCIL_SIZE / 2 - 1);
+    REALTYPE barwidth = REALTYPE(width()) / (OSCIL_SIZE / 2);
 
     p.setBrush(Qt::SolidPattern);
 
     //draws the spectrum
-    for (int i=0;i<OSCIL_SIZE / 2 - 1;i++){
-        int tmp=i*2+2;
+    for (int i=0;i<OSCIL_SIZE / 2;i++){
+        int tmp=i*2;
         REALTYPE x=m_data[i]*max;
 
         if (x>dB2rap(-maxdb)) x=rap2dB(x)/maxdb+1;
