@@ -960,6 +960,7 @@ void OscilGen::prepare()
     oldhmagtype      = Phmagtype;
     oldharmonicshift = Pharmonicshift + Pharmonicshiftfirst * 256;
 
+    //TODO: this might be optimized
     getspectrum(OSCIL_SIZE / 2 - 1, tmpsmps, 0);
     oscilSpectrum.writeArray(tmpsmps, OSCIL_SIZE);
 

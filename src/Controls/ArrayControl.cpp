@@ -11,18 +11,24 @@ ArrayControl::ArrayControl(Node *parent, std::string id, int bufsize)
 {
     m_front = new REALTYPE[bufsize];
     m_back = new REALTYPE[bufsize];
+
+    memset(m_front, 0, sizeof(REALTYPE)*bufsize);
+    memset(m_back, 0, sizeof(REALTYPE)*bufsize);
+
 }
 
 ArrayControl::~ArrayControl()
 {
-    delete m_front;
-    delete m_back;
+    delete [] m_front;
+    delete [] m_back;
 }
 
 void ArrayControl::readArray(REALTYPE *buffer, int *size)
 {
+    lock();
     memcpy(buffer, m_front, sizeof(REALTYPE)*m_bufsize);
     *size = m_bufsize;
+    unlock();
 }
 
 void ArrayControl::swapBuffers()
@@ -34,12 +40,15 @@ void ArrayControl::swapBuffers()
 
 void ArrayControl::writeArray(REALTYPE* array, int size)
 {
+    lock();
     if (size > m_bufsize) {
         printf("ERROR: writeArray to too small buffer!!!\n");
+        unlock();
         return;
     }
     memcpy(m_back, array, sizeof(REALTYPE)*size);
     swapBuffers();
+    unlock();
 
     forward(new NewValueEvent(this));
 }
