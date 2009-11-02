@@ -75,6 +75,7 @@ class OscilGen:public Presets, public Node
         DescRanger* magnitude[MAX_AD_HARMONICS];
 
         ArrayControl oscilSpectrum;
+        ArrayControl oscilBaseFunc;
 
 
         /**The Type of magnitude:

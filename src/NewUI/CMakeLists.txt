@@ -20,6 +20,7 @@ set(zynaddsubfx_gui_SRCS
     slider.cpp
     menu.cpp
     oscilwidget.cpp
+    spectrumwidget.cpp
 	)
 
 SET( zynaddsubfx_gui_MOC_HDRS
@@ -41,6 +42,7 @@ SET( zynaddsubfx_gui_MOC_HDRS
     slider.h
     menu.h
     oscilwidget.h
+    spectrumwidget.h
 )
 
 SET( zynaddsubfx_gui_UIS

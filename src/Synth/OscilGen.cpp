@@ -34,7 +34,8 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
       Node(parent, id),
       currentBaseFunc(this, "BaseFunc", 0),
       baseParam(this, "BaseParam", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0)),
-      oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE/2)
+      oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE/2),
+      oscilBaseFunc(this, "OscilBaseFunc", OSCIL_SIZE)
 {
     currentBaseFunc.addOption("Sin"); //0
     currentBaseFunc.addOption("Triangle"); //1
@@ -960,11 +961,16 @@ void OscilGen::prepare()
     oldhmagtype      = Phmagtype;
     oldharmonicshift = Pharmonicshift + Pharmonicshiftfirst * 256;
 
+    oscilprepared    = 1;
+
+
     //TODO: this might be optimized
     getspectrum(OSCIL_SIZE / 2, tmpsmps, 0);
     oscilSpectrum.writeArray(tmpsmps, OSCIL_SIZE/2);
 
-    oscilprepared    = 1;
+    get(tmpsmps, -1.0);
+    oscilBaseFunc.writeArray(tmpsmps, OSCIL_SIZE);
+
 }
 
 void OscilGen::adaptiveharmonic(FFTFREQS f, REALTYPE freq)

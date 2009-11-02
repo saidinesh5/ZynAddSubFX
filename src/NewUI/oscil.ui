@@ -39,7 +39,7 @@
     </layout>
    </item>
    <item>
-    <widget class="OscilWidget" name="widget" native="true">
+    <widget class="SpectrumWidget" name="widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -48,6 +48,19 @@
      </property>
      <property name="controlId" stdset="0">
       <string>OscilSpectrum</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="OscilWidget" name="widget_2" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="controlId" stdset="0">
+      <string>OscilBaseFunc</string>
      </property>
     </widget>
    </item>
@@ -62,7 +75,7 @@
         <x>0</x>
         <y>0</y>
         <width>3460</width>
-        <height>236</height>
+        <height>148</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1756,6 +1769,12 @@
    <class>OscilWidget</class>
    <extends>QWidget</extends>
    <header>oscilwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SpectrumWidget</class>
+   <extends>QWidget</extends>
+   <header>spectrumwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
