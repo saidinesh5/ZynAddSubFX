@@ -45,7 +45,8 @@ void SpectrumWidget::paintEvent(QPaintEvent* event)
 
     REALTYPE barwidth = REALTYPE(width()) / (m_size);
 
-    p.setBrush(Qt::SolidPattern);
+    //p.setBrush(QBrush(palette().color(QPalette::Text)));
+    p.setPen(palette().color(QPalette::Text));
 
     //draws the spectrum
     for (int i=0;i<m_size;i++){

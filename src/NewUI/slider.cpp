@@ -3,6 +3,7 @@
 #include <QtDebug>
 #include <QMouseEvent>
 #include <QStyleOptionComplex>
+#include "menu.h"
 
 Slider::Slider(QWidget *parent)
     : QSlider(parent),
@@ -16,6 +17,8 @@ Slider::Slider(QWidget *parent)
             helper, SLOT(setValue(int)));
     connect(helper, SIGNAL(valueChanged(int)),
             this, SLOT(setValue(int)));
+
+    new Menu(this, helper);
 
 }
 
