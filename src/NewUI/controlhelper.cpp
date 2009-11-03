@@ -86,6 +86,11 @@ void ControlHelper::setControl(QString absoluteId)
         emitOptions();
         qDebug() << "Assigning " << this << " to " << absoluteId;
         emit valueChanged(getValue());
+
+        ArrayControl *arr_control = dynamic_cast<ArrayControl*>(m_control);
+        if (arr_control) {
+            emit arrayUpdated(arr_control);
+        }
         //m_control->requestValue();
     }
     else
