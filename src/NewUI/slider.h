@@ -13,6 +13,9 @@ class Slider : public QSlider
         void mouseMoveEvent(class QMouseEvent * event);
         void slideEvent(QMouseEvent *event);
 
+    signals:
+        void defaults();
+
     private:
         bool m_outside, m_sliding;
         int m_prevValue;

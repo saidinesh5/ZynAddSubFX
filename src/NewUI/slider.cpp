@@ -13,10 +13,14 @@ Slider::Slider(QWidget *parent)
 {
     ControlHelper *helper = new ControlHelper(this);
 
-    connect(this, SIGNAL(sliderMoved(int)),
+    //connect(this, SIGNAL(sliderMoved(int)),
+            //helper, SLOT(setValue(int)));
+    connect(this, SIGNAL(valueChanged(int)),
             helper, SLOT(setValue(int)));
     connect(helper, SIGNAL(valueChanged(int)),
             this, SLOT(setValue(int)));
+    connect(this, SIGNAL(defaults()),
+            helper, SLOT(defaults()));
 
     new Menu(this, helper);
 
@@ -26,11 +30,19 @@ void Slider::mousePressEvent(QMouseEvent *e)
 {
     QStyleOptionComplex complex;
     QRect rect  = style()->subControlRect( QStyle::CC_Slider, &complex , QStyle::SC_SliderHandle, this );
-    m_sliding   = true;
-    m_prevValue = QSlider::value();
 
-    if ( !rect.contains( e->pos() ) )
+    if ( e->button() == Qt::LeftButton &&
+            !rect.contains( e->pos() ) ) {
+
+        m_sliding   = true;
+        m_prevValue = QSlider::value();
         mouseMoveEvent( e );
+
+    } else if (e->button() == Qt::MidButton) {
+        emit defaults();
+    } else {
+        QSlider::mousePressEvent(e);
+    }
 }
 
 void Slider::mouseReleaseEvent(QMouseEvent *event)
