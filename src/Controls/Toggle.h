@@ -40,6 +40,10 @@ class Toggle:public Control<bool>
         char getCharValue() const;
 
         void setValue(char val);
+
+        inline void operator=(bool b) {
+            setValue(b);
+        }
 };
 
 #endif

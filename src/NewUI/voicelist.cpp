@@ -24,7 +24,7 @@ VoiceList::VoiceList(QString absoluteId, QWidget *parent)
                               + QString::fromStdString(node->getChildren()[i]->
                                                        getId()) + "</h3>");
             lay->addWidget(f);
-            w->setProperty("controlId",
+            f->setProperty("controlId",
                            QString::fromStdString(node->getChildren()[i]->getId()));
         }
 

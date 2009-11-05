@@ -37,7 +37,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="enabledCheck">
+      <widget class="CheckBox" name="enabledCheck">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -46,6 +46,9 @@
        </property>
        <property name="text">
         <string notr="true"/>
+       </property>
+       <property name="controlId" stdset="0">
+        <string>Enabled</string>
        </property>
       </widget>
      </item>
@@ -60,6 +63,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>checkbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -26,12 +26,17 @@ CollapsableFrame::CollapsableFrame(QWidget *parent, QWidget *expanded)
     }
 }
 
+bool CollapsableFrame::isCollapsed()
+{
+    return (collapseButton->text() == ">");
+}
+
 void CollapsableFrame::toggleCollapsed()
 {
     if(!expanded)
         return;
 
-    if(collapseButton->text() == ">") {
+    if(isCollapsed()) {
         collapseButton->setText("\\/");
 
         foreach(QWidget * child, showOnExpand)

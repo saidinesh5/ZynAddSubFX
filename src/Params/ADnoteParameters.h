@@ -35,6 +35,7 @@
 #include "../DSP/FFTwrapper.h"
 #include "Presets.h"
 #include "../Controls/Ranger.h"
+#include "../Controls/Toggle.h"
 #include "../Controls/FakeChildFactory.h"
 #include <vector>
 
@@ -123,7 +124,7 @@ class ADnoteVoiceParam:public Node
         ADnoteVoiceParam(Node *parent, std::string id);
 
         /** If the voice is enabled */
-        unsigned char Enabled;
+        Toggle Enabled;
 
         /** How many subvoices are used in this voice */
         unsigned char Unison_size;

@@ -51,7 +51,8 @@ class VoiceVolumeConv:public InjFunction<char, REALTYPE>
 
 ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
     :Node(parent, id),
-      volume(this, "Volume", 0.23, new VoiceVolumeConv)
+      volume(this, "Volume", 0.23, new VoiceVolumeConv),
+      Enabled(this, "Enabled", false)
 {}
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
@@ -342,8 +343,8 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
             fmoscilused = 1;
     }
 
-    xml->addparbool("enabled", VoicePar[nvoice]->Enabled);
-    if(((VoicePar[nvoice]->Enabled == 0) && (oscilused == 0)
+    xml->addparbool("enabled", VoicePar[nvoice]->Enabled());
+    if(((VoicePar[nvoice]->Enabled() == 0) && (oscilused == 0)
         && (fmoscilused == 0)) && (xml->minimal))
         return;
 

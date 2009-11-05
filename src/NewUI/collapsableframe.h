@@ -19,6 +19,8 @@ class CollapsableFrame:public QFrame, public Ui::CollapsableFrame
         void on_enabledCheck_stateChanged(int state);
 
     private:
+        bool isCollapsed();
+
         QWidget *expanded;
         QList<QWidget *> showOnExpand;
         QList<QWidget *> hideOnExpand;

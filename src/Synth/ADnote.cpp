@@ -112,7 +112,7 @@ ADnote::ADnote(ADnoteParameters *pars,
         NoteVoicePar[nvoice].FMVoice  = -1;
         unison_size[nvoice] = 1;
 
-        if(pars->VoicePar[nvoice]->Enabled == 0) {
+        if(pars->VoicePar[nvoice]->Enabled() == 0) {
             NoteVoicePar[nvoice].Enabled = OFF;
             continue; //the voice is disabled
         }
