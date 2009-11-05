@@ -48,15 +48,25 @@ FilterParams::FilterParams(Node *parent,
 
 // 1 kHz
       centerFrequency(this, "CenterFrequency", cfreq2real(64), new CFreqInj),
-      category(this, "Category", 0)
+      category(this, "Category", 0),
+      type(this, "Type", Ptype_)
 {
 
     category.addOption("Analog");
     category.addOption("Formant");
     category.addOption("StVarF");
 
+    type.addOption("LPF 1 pole");
+    type.addOption("HPF 1 pole");
+    type.addOption("LPF 2 poles");
+    type.addOption("HPF 2 poles");
+    type.addOption("BPF 2 poles");
+    type.addOption("NOTCH 2 poles");
+    type.addOption("PEAK 2 poles");
+    type.addOption("Low Shelf 2 poles");
+    type.addOption("High Shelf 2 poles");
+
     setpresettype("Pfilter");
-    Dtype   = Ptype_;
     Dq      = Pq_;
 
     changed = false;
@@ -69,7 +79,8 @@ FilterParams::~FilterParams()
 
 void FilterParams::defaults()
 {
-    Ptype      = Dtype;
+    type.defaults();
+
     frequency.defaults();
     Pq         = Dq;
 
@@ -117,7 +128,7 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
     if(pars == NULL)
         return;
 
-    Ptype      = pars->Ptype;
+    type      = pars->type();
     frequency.setCharValue(pars->frequency.getCharValue());
     Pq         = pars->Pq;
 
@@ -321,7 +332,7 @@ void FilterParams::add2XML(XMLwrapper *xml)
 {
     //filter parameters
     xml->addpar("category", category());
-    xml->addpar("type", Ptype);
+    xml->addpar("type", type());
     xml->addpar("freq", frequency.getCharValue());
     xml->addpar("q", Pq);
     xml->addpar("stages", Pstages);
@@ -378,7 +389,7 @@ void FilterParams::getfromXML(XMLwrapper *xml)
 {
     //filter parameters
     category.setValue(xml->getpar127("category", category()));
-    Ptype      = xml->getpar127("type", Ptype);
+    type      = xml->getpar127("type", type());
     frequency.setCharValue(xml->getpar127("freq", frequency.getCharValue()));
     Pq         = xml->getpar127("q", Pq);
     Pstages    = xml->getpar127("stages", Pstages);

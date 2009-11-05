@@ -53,7 +53,7 @@ class FilterParams:public Presets, public Node
         REALTYPE getgain();
 
         Selector category; //Filter category (Analog/Formant/StVar)
-        unsigned char Ptype; // Filter type  (for analog lpf,hpf,bpf..)
+        Selector type; // Filter type  (for analog lpf,hpf,bpf..)
         //unsigned char Pfreq;// Frequency (64-central frequency)
         Ranger frequency;
         unsigned char Pq; // Q parameters (resonance or bandwidth)

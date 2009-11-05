@@ -27,7 +27,7 @@
 
 Filter::Filter(FilterParams *pars)
 {
-    unsigned char Ftype   = pars->Ptype;
+    unsigned char Ftype   = pars->type();
     unsigned char Fstages = pars->Pstages;
 
     category = pars->category();
