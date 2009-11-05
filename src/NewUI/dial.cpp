@@ -15,7 +15,8 @@ static int drawStyle = 1;
 
 Dial::Dial(QWidget *parent)
     :QDial(parent),
-      m_originalMouseY(-1)
+      m_originalMouseY(-1),
+      m_isConnected(false)
 {
     setMouseTracking(false);
     setMinimum(0);
@@ -28,6 +29,11 @@ Dial::Dial(QWidget *parent)
             helper, SLOT(setValue(int)));
     connect(helper, SIGNAL(valueChanged(int)),
             this, SLOT(setValue(int)));
+
+    connect(helper, SIGNAL(connected(GenControl *)),
+            this, SLOT(slotConnected(GenControl *)));
+    connect(helper, SIGNAL(disconnected()),
+            this, SLOT(slotDisconnected()));
 
     new Menu(this, helper);
 }
@@ -65,6 +71,18 @@ void Dial::mouseMoveEvent(QMouseEvent *event)
         event->accept();
     }
     //QDial::mouseMoveEvent(event);
+}
+
+void Dial::slotConnected(GenControl *control)
+{
+    m_isConnected = true;
+    update();
+}
+
+void Dial::slotDisconnected()
+{
+    m_isConnected = false;
+    update();
 }
 
 void Dial::paintEvent(class QPaintEvent *event)
@@ -118,7 +136,11 @@ void Dial::paintEvent(class QPaintEvent *event)
         smallRect.setSize(smallRect.size() * 0.6);
         smallRect.moveCenter(QPoint(0, 0));
 
-        p.setBrush(palette().alternateBase());
+        if (m_isConnected)
+            p.setBrush(palette().alternateBase());
+        else
+            p.setBrush(palette().dark());
+
         p.drawPie(smallRect, 225 * 16, -v * 270 * 16);
         //p.rotate(v);
 
