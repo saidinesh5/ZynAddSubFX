@@ -59,8 +59,7 @@ void ControlHelper::handleEvent(Event *event)
     else
     if(event->type() == Event::RemovalEvent) {
         //clear the current connected control
-        //setControl(QString());
-        m_control = NULL;
+        disconnect();
         qDebug() << "Got removalevent, clearing...";
     }
     else
@@ -70,10 +69,8 @@ void ControlHelper::handleEvent(Event *event)
 
 void ControlHelper::setControl(QString absoluteId)
 {
-    if(m_control) {
-        m_control->removeRedirections(this);
-        m_control = NULL;
-    }
+    if (m_control) m_control->removeRedirections(this);
+    disconnect();
 
     if(absoluteId.isEmpty())
         return;
@@ -83,6 +80,7 @@ void ControlHelper::setControl(QString absoluteId)
     if(m_control) {
         expectedValueEvents = 0;
         m_control->addRedirection(this);
+        emit connected(m_control);
         emitOptions();
         qDebug() << "Assigning " << this << " to " << absoluteId;
         emit valueChanged(getValue());
@@ -95,6 +93,14 @@ void ControlHelper::setControl(QString absoluteId)
     }
     else
         qDebug() << "Could not find a control named " << absoluteId;
+}
+
+void ControlHelper::disconnect()
+{
+    if(m_control) {
+        m_control = NULL;
+    }
+    emit disconnected();
 }
 
 void ControlHelper::setValue(char value)

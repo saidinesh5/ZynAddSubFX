@@ -129,8 +129,23 @@ class ControlHelper:public QObject, public NodeUser
 
         void arrayUpdated(ArrayControl *control);
 
+        /** 
+         * @brief The controlhelper has been connected to a node in the tree.
+         * 
+         * @param control The control the helper has been connected to
+         */
+        void connected(GenControl *control);
+
+        /** 
+         * @brief The controlhelper has been disconnected from the node in the tree it was
+         * previously connected to
+         */
+        void disconnected();
+
     private:
         void emitOptions();
+
+        void disconnect();
 
         GenControl *m_control;
         QString     m_controlId;
