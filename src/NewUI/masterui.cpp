@@ -57,15 +57,16 @@ void MasterUI::on_editInstrument_clicked()
     //m_bankUI->setProperty("absoluteControlId", partBar->getCurrentChild());
     //m_bankUI->show();
     //return;
+
+    QString id = partBar->getCurrentChild();
     QWidget *w = new VoiceList(
-        partBar->getCurrentChild()
-        + ".Instrument.InstrumentKit.ADnoteParameters.Voices");
+        id + ".Instrument.InstrumentKit.ADnoteParameters.Voices");
     w->show();
 
-    return;
-    QString id = partBar->getCurrentChild();
     if(!id.isEmpty())
-        (new AddNoteUi(id))->show();
+        (w = new AddNoteUi(id))->show();
+
+    w->setProperty("absoluteControlId", id + ".Instrument.InstrumentKit.ADnoteParameters");
 }
 
 void MasterUI::on_buttonControllers_clicked()

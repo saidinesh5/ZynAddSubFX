@@ -12,9 +12,6 @@ class AddNoteUi:public QDialog, Ui::AddNoteUi
     public:
         AddNoteUi(QString id);
 
-    private slots:
-        //void simpleRefresh();
-
     private:
         QString id;
 };

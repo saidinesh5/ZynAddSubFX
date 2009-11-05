@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
-    <height>492</height>
+    <width>685</width>
+    <height>963</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,8 +67,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>484</width>
-        <height>411</height>
+        <width>671</width>
+        <height>882</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -182,6 +182,76 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Filter</string>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>FilterParams</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="ComboBox" name="comboBox_3">
+            <property name="controlId" stdset="0">
+             <string>Type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="ComboBox" name="comboBox_4">
+            <property name="controlId" stdset="0">
+             <string>Category</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="Dial" name="partPan_2">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="pageStep">
+             <number>32</number>
+            </property>
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="notchTarget">
+             <double>4.699999999999999</double>
+            </property>
+            <property name="notchesVisible">
+             <bool>true</bool>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>CenterFrequency</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="Dial" name="masterVolume_10">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="pageStep">
+             <number>32</number>
+            </property>
+            <property name="wrapping">
+             <bool>false</bool>
+            </property>
+            <property name="notchTarget">
+             <double>4.699999999999999</double>
+            </property>
+            <property name="notchesVisible">
+             <bool>true</bool>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Frequency</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="EnvelopeBox" name="filterEnvelope">
          <property name="title">
           <string>Filter Envelope</string>
@@ -271,6 +341,11 @@
    <class>Dial</class>
    <extends>QDial</extends>
    <header>dial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>combobox.h</header>
   </customwidget>
   <customwidget>
    <class>LFOBox</class>
