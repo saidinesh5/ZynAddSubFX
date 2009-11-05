@@ -1079,9 +1079,7 @@ void Part::ComputePartSmps()
 void Part::setPvolume(char Pvolume_)
 {
     Pvolume = Pvolume_;
-    partVolume.setValue((REALTYPE)dB2rap(
-                            (Pvolume
-                             - 96.0) / 96.0 * 40.0) * ctl.expression.relvolume);
+    partVolume.setCharValue(Pvolume_);
 }
 
 void Part::setPpanning(char Ppanning_)
