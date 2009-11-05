@@ -45,6 +45,10 @@ class Selector:public Control<int>
         void addOption(std::string option);
         void clearOptions();
 
+        inline void operator=(int v) {
+            setValue(v);
+        }
+
     private:
         StringVector options;
 };

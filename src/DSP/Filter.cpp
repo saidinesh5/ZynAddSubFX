@@ -30,7 +30,7 @@ Filter::Filter(FilterParams *pars)
     unsigned char Ftype   = pars->Ptype;
     unsigned char Fstages = pars->Pstages;
 
-    category = pars->Pcategory;
+    category = pars->category();
 
     switch(category) {
     case 1:

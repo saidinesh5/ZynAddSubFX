@@ -47,8 +47,14 @@ FilterParams::FilterParams(Node *parent,
       frequency(this, "Frequency", freq2real(Pfreq_), new FreqInj),
 
 // 1 kHz
-      centerFrequency(this, "CenterFrequency", cfreq2real(64), new CFreqInj)
+      centerFrequency(this, "CenterFrequency", cfreq2real(64), new CFreqInj),
+      category(this, "Category", 0)
 {
+
+    category.addOption("Analog");
+    category.addOption("Formant");
+    category.addOption("StVarF");
+
     setpresettype("Pfilter");
     Dtype   = Ptype_;
     Dq      = Pq_;
@@ -70,7 +76,7 @@ void FilterParams::defaults()
     Pstages    = 0;
     Pfreqtrack = 64;
     Pgain     = 64;
-    Pcategory = 0;
+    category.defaults();
 
     Pnumformants     = 3;
     Pformantslowness = 64;
@@ -118,7 +124,7 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
     Pstages    = pars->Pstages;
     Pfreqtrack = pars->Pfreqtrack;
     Pgain     = pars->Pgain;
-    Pcategory = pars->Pcategory;
+    category.setValue(pars->category());
 
     Pnumformants     = pars->Pnumformants;
     Pformantslowness = pars->Pformantslowness;
@@ -314,7 +320,7 @@ void FilterParams::add2XMLsection(XMLwrapper *xml, int n)
 void FilterParams::add2XML(XMLwrapper *xml)
 {
     //filter parameters
-    xml->addpar("category", Pcategory);
+    xml->addpar("category", category());
     xml->addpar("type", Ptype);
     xml->addpar("freq", frequency.getCharValue());
     xml->addpar("q", Pq);
@@ -323,7 +329,7 @@ void FilterParams::add2XML(XMLwrapper *xml)
     xml->addpar("gain", Pgain);
 
     //formant filter parameters
-    if((Pcategory == 1) || (!xml->minimal)) {
+    if((category() == 1) || (!xml->minimal)) {
         xml->beginbranch("FORMANT_FILTER");
         xml->addpar("num_formants", Pnumformants);
         xml->addpar("formant_slowness", Pformantslowness);
@@ -371,7 +377,7 @@ void FilterParams::getfromXMLsection(XMLwrapper *xml, int n)
 void FilterParams::getfromXML(XMLwrapper *xml)
 {
     //filter parameters
-    Pcategory  = xml->getpar127("category", Pcategory);
+    category.setValue(xml->getpar127("category", category()));
     Ptype      = xml->getpar127("type", Ptype);
     frequency.setCharValue(xml->getpar127("freq", frequency.getCharValue()));
     Pq         = xml->getpar127("q", Pq);
