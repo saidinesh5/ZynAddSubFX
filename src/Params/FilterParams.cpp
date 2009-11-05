@@ -56,10 +56,10 @@ FilterParams::FilterParams(Node *parent,
     category.addOption("Formant");
     category.addOption("StVarF");
 
-    type.addOption("LPF 1 pole");
-    type.addOption("HPF 1 pole");
-    type.addOption("LPF 2 poles");
-    type.addOption("HPF 2 poles");
+    type.addOption("Lowpass 1 pole");
+    type.addOption("Highpass 1 pole");
+    type.addOption("Lowpass 2 pole");
+    type.addOption("Highpass 2 pole");
     type.addOption("BPF 2 poles");
     type.addOption("NOTCH 2 poles");
     type.addOption("PEAK 2 poles");
