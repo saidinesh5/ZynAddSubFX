@@ -1,6 +1,8 @@
 
 set(zynaddsubfx_gui_SRCS
-    AddnoteUI.cpp
+    Addnote/AddnoteUI.cpp
+    Addnote/VoiceList.cpp
+    Addnote/VoiceWidget.cpp
     BankUI.cpp
     CheckBox.cpp
     CollapsableFrame.cpp
@@ -18,30 +20,32 @@ set(zynaddsubfx_gui_SRCS
     Slider.cpp
     SpectrumWidget.cpp
     UnitBox.cpp
-    VoiceList.cpp
-    VoiceWidget.cpp
 	)
 
 SET( zynaddsubfx_gui_UIS
+    Addnote/NewAddNote.ui
+    Addnote/VoiceList.ui
+    Addnote/VoiceWidgetExpanded.ui
     CollapsableFrame.ui
     EnvelopeBox.ui
     LFOBox.ui
     MasterUI.ui
-    NewAddNote.ui
     Oscil.ui
-    VoiceList.ui
-    VoiceWidgetExpanded.ui
 )
 
 set( zynaddsubfx_gui_RC_FILES
     main.qrc
 )
 
+
 qt4_wrap_ui(zynaddsubfx_gui_UIS_HDRS ${zynaddsubfx_gui_UIS} )
 qt4_automoc(${zynaddsubfx_gui_SRCS})
 qt4_add_resources(zynaddsubfx_gui_RCS ${zynaddsubfx_gui_RC_FILES} )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Addnote)
+
 add_library(zynaddsubfx_gui STATIC
 	${zynaddsubfx_gui_SRCS}
 	${zynaddsubfx_gui_UIS}
