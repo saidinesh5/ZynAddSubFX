@@ -9,7 +9,6 @@ set(zynaddsubfx_gui_SRCS
     DebugInterface.cpp
     Dial.cpp
     EnvelopeBox.cpp
-    EventHelper.cpp
     LFOBox.cpp
     MasterUI.cpp
     Menu.cpp

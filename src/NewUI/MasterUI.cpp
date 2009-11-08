@@ -3,7 +3,6 @@
 #include "AddnoteUI.h"
 #include "VoiceList.h"
 #include "../Controls/Node.h"
-#include "EventHelper.h"
 #include <QtDebug>
 #include "DebugInterface.h"
 #include <Oscil.h>
@@ -31,7 +30,6 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
         master->parts.createChild(0));
 
     setupUi(this);
-    EventHelper::getInstance();
 
     partBar->setControlsWidget(partFrame);
     partBar->setNode(Node::find("Master.Parts"));
