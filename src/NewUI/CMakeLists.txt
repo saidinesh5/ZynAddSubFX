@@ -10,7 +10,7 @@ set(zynaddsubfx_gui_SRCS
     Dial.cpp
     EnvelopeBox.cpp
     EventHelper.cpp
-    LFObox.cpp
+    LFOBox.cpp
     MasterUI.cpp
     Menu.cpp
     Oscil.cpp
