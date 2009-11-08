@@ -2,9 +2,9 @@
 set(zynaddsubfx_gui_SRCS
     AddnoteUI.cpp
     BankUI.cpp
-    Checkbox.cpp
+    CheckBox.cpp
     CollapsableFrame.cpp
-    Combobox.cpp
+    ComboBox.cpp
     ControlHelper.cpp
     DebugInterface.cpp
     Dial.cpp
