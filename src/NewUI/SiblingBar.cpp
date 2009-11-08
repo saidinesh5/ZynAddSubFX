@@ -1,7 +1,7 @@
-#include "siblingbar.h"
+#include "SiblingBar.h"
 #include <QEvent>
 #include "../Controls/Node.h"
-#include "controlhelper.h"
+#include "ControlHelper.h"
 #include <QSet>
 #include <QtDebug>
 #include <QMouseEvent>
@@ -120,5 +120,5 @@ QString SiblingBar::getCurrentChild()
                                       currentIndex())->getAbsoluteId());
 }
 
-#include "siblingbar.moc"
+#include "SiblingBar.moc"
 

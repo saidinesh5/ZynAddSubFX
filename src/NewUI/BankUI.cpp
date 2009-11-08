@@ -1,11 +1,11 @@
-#include "bankui.h"
+#include "BankUI.h"
 
 #include <QtDebug>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTableWidget>
-#include <combobox.h>
+#include <Combobox.h>
 
 static const int verticalSlots   = 32;
 static const int horizontalSlots = 5;
@@ -103,5 +103,5 @@ BankUI::~BankUI()
     delete currentBank;
 }
 
-#include "bankui.moc"
+#include "BankUI.moc"
 

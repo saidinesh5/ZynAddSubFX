@@ -1,12 +1,12 @@
-#include "masterui.h"
-#include "bankui.h"
-#include "addnoteui.h"
-#include "voicelist.h"
+#include "MasterUI.h"
+#include "BankUI.h"
+#include "AddnoteUI.h"
+#include "VoiceList.h"
 #include "../Controls/Node.h"
-#include "eventhelper.h"
+#include "EventHelper.h"
 #include <QtDebug>
-#include "debuginterface.h"
-#include <oscil.h>
+#include "DebugInterface.h"
+#include <Oscil.h>
 
 MasterUI::MasterUI(Master *master_, int *exitprogram_)
     :QMainWindow(NULL),
@@ -81,5 +81,5 @@ void MasterUI::on_action_Quit_triggered()
 {
     *Pexitprogram = 1;
 }
-#include "masterui.moc"
+#include "MasterUI.moc"
 

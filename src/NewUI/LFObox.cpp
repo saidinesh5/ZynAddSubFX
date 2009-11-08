@@ -1,4 +1,4 @@
-#include "lfobox.h"
+#include "LFObox.h"
 
 LFOBox::LFOBox(QWidget *parent)
     :UnitBox(parent)
@@ -18,5 +18,5 @@ void LFOBox::setSources(LFOParams *params)
     //pars->PLFOtype;
 }
 
-#include "lfobox.moc"
+#include "LFObox.moc"
 

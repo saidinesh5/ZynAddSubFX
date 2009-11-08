@@ -2,7 +2,7 @@
 #define SPECTRUMWIDGET_H
 
 #include <QWidget>
-#include "controlhelper.h"
+#include "ControlHelper.h"
 
 class SpectrumWidget : public QWidget
 {

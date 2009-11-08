@@ -1,6 +1,6 @@
-#include "voicelist.h"
-#include "collapsableframe.h"
-#include "voicewidget.h"
+#include "VoiceList.h"
+#include "CollapsableFrame.h"
+#include "VoiceWidget.h"
 #include <QtDebug>
 
 VoiceList::VoiceList(QString absoluteId, QWidget *parent)

@@ -1,4 +1,4 @@
-#include "controlhelper.h"
+#include "ControlHelper.h"
 #include <QCoreApplication>
 #include <QDynamicPropertyChangeEvent>
 #include <QStack>
@@ -214,5 +214,5 @@ void ControlHelper::defaults()
     }
 }
 
-#include "controlhelper.moc"
+#include "ControlHelper.moc"
 

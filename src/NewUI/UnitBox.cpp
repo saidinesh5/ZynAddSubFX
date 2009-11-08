@@ -1,8 +1,8 @@
-#include "unitbox.h"
+#include "UnitBox.h"
 
 UnitBox::UnitBox(QWidget *parent)
     :QGroupBox(parent)
 {}
 
-#include "unitbox.moc"
+#include "UnitBox.moc"
 

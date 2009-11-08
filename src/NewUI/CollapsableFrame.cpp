@@ -1,5 +1,5 @@
-#include "collapsableframe.h"
-#include "controlhelper.h"
+#include "CollapsableFrame.h"
+#include "ControlHelper.h"
 
 CollapsableFrame::CollapsableFrame(QWidget *parent, QWidget *expanded)
     :QFrame(parent),
@@ -89,6 +89,6 @@ void CollapsableFrame::on_enabledCheck_stateChanged(int state)
         expanded->setEnabled(false);
 }
 
-#include "collapsableframe.moc"
+#include "CollapsableFrame.moc"
 // vim: sw=4 sts=4 et tw=100
 

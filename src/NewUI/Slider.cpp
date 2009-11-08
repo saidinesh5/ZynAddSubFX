@@ -1,9 +1,9 @@
-#include "slider.h"
-#include "controlhelper.h"
+#include "Slider.h"
+#include "ControlHelper.h"
 #include <QtDebug>
 #include <QMouseEvent>
 #include <QStyleOptionComplex>
-#include "menu.h"
+#include "Menu.h"
 
 Slider::Slider(QWidget *parent)
     : QSlider(parent),
@@ -102,5 +102,5 @@ void Slider::slideEvent(QMouseEvent *e)
     QSlider::setValue( val );
 }
 
-#include "slider.moc"
+#include "Slider.moc"
 // vim: sw=4 sts=4 et tw=100

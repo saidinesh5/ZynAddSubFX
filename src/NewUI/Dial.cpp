@@ -1,4 +1,4 @@
-#include "dial.h"
+#include "Dial.h"
 #include <QMenu>
 #include <QMouseEvent>
 #include <QtDebug>
@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QConicalGradient>
 #include <math.h>
-#include "menu.h"
+#include "Menu.h"
 
 //drawstyles: 0 - piechart
 //            1 - rotated dial
@@ -172,5 +172,5 @@ void Dial::setControl(GenControl *control)
 void Dial::slotUpdateSource()
 {}
 
-#include "dial.moc"
+#include "Dial.moc"
 

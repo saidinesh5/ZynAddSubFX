@@ -1,7 +1,7 @@
 #ifndef OSCIL_H
 #define OSCIL_H
 
-#include "ui_oscil.h"
+#include "ui_Oscil.h"
 #include <QDialog>
 
 class Oscil : public QDialog, public Ui::OscilUi

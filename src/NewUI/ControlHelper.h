@@ -122,7 +122,7 @@ class ControlHelper:public QObject, public NodeUser
 
         /**
          * @brief For controls that have a set of string describing the values (options), this
-         * signal will be emitted with a list of them when the controlhelper has connected to a new
+         * signal will be emitted with a list of them when the ControlHelper.has connected to a new
          * control
          */
         void optionsChanged(QStringList options);
@@ -130,14 +130,14 @@ class ControlHelper:public QObject, public NodeUser
         void arrayUpdated(ArrayControl *control);
 
         /** 
-         * @brief The controlhelper has been connected to a node in the tree.
+         * @brief The ControlHelper.has been connected to a node in the tree.
          * 
          * @param control The control the helper has been connected to
          */
         void connected(GenControl *control);
 
         /** 
-         * @brief The controlhelper has been disconnected from the node in the tree it was
+         * @brief The ControlHelper.has been disconnected from the node in the tree it was
          * previously connected to
          */
         void disconnected();

@@ -1,4 +1,4 @@
-#include "eventhelper.h"
+#include "EventHelper.h"
 #include <QEvent>
 #include "../Controls/Node.h"
 #include <QtDebug>
@@ -18,6 +18,6 @@ EventHelper *EventHelper::getInstance()
         theInstance = new EventHelper(NULL);
 }
 
-#include "eventhelper.moc"
+#include "EventHelper.moc"
 // vim: sw=4 sts=4 et tw=100
 

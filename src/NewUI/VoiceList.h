@@ -1,7 +1,7 @@
 #ifndef VOICELIST_H
 #define VOICELIST_H
 
-#include "ui_voicelist.h"
+#include "ui_VoiceList.h"
 
 class VoiceList:public QDialog, public Ui::VoiceList
 {

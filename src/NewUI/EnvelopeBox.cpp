@@ -1,4 +1,4 @@
-#include "envelopebox.h"
+#include "EnvelopeBox.h"
 
 EnvelopeBox::EnvelopeBox(QWidget *parent)
     :UnitBox(parent)
@@ -14,5 +14,5 @@ void EnvelopeBox::setSources(EnvelopeParams *params)
     //this->r_dt->setSource(&params->PR_dt);
 }
 
-#include "envelopebox.moc"
+#include "EnvelopeBox.moc"
 

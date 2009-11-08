@@ -1,6 +1,6 @@
 #include <QDialog>
 #include "../Misc/Master.h"
-#include "ui_newaddnote.h"
+#include "ui_NewAddNote.h"
 
 #ifndef _ADDNOTEUI_H_
 #define _ADDNOTEUI_H_

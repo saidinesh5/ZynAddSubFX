@@ -1,6 +1,6 @@
 #include <QMainWindow>
 #include "../Misc/Master.h"
-#include "ui_masterUI.h"
+#include "ui_MasterUI.h"
 
 #ifndef _MASTERUI_H_
 #define _MASTERUI_H_

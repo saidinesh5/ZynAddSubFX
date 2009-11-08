@@ -1,38 +1,37 @@
 
 set(zynaddsubfx_gui_SRCS
-	dial.cpp
-    checkbox.cpp
-    combobox.cpp
-	siblingbar.cpp
-	controlhelper.cpp
-    eventhelper.cpp
-	bankui.cpp
-	masterui.cpp
-	addnoteui.cpp
-	unitbox.cpp
-	lfobox.cpp
-	envelopebox.cpp
-    debuginterface.cpp
-    collapsableframe.cpp
-    voicelist.cpp
-    voicewidget.cpp
-    oscil.cpp
-    slider.cpp
-    menu.cpp
-    oscilwidget.cpp
-    spectrumwidget.cpp
+    AddnoteUI.cpp
+    BankUI.cpp
+    Checkbox.cpp
+    CollapsableFrame.cpp
+    Combobox.cpp
+    ControlHelper.cpp
+    DebugInterface.cpp
+    Dial.cpp
+    EnvelopeBox.cpp
+    EventHelper.cpp
+    LFObox.cpp
+    MasterUI.cpp
+    Menu.cpp
+    Oscil.cpp
+    OscilWidget.cpp
+    SiblingBar.cpp
+    Slider.cpp
+    SpectrumWidget.cpp
+    UnitBox.cpp
+    VoiceList.cpp
+    VoiceWidget.cpp
 	)
 
 SET( zynaddsubfx_gui_UIS
-	masterUI.ui
-    #addnoteui.ui
-    newaddnote.ui
-	lfobox.ui
-	envelopebox.ui
-    collapsableframe.ui
-    voicelist.ui
-    voicewidgetexpanded.ui
-    oscil.ui
+    CollapsableFrame.ui
+    EnvelopeBox.ui
+    LFOBox.ui
+    MasterUI.ui
+    NewAddNote.ui
+    Oscil.ui
+    VoiceList.ui
+    VoiceWidgetExpanded.ui
 )
 
 set( zynaddsubfx_gui_RC_FILES

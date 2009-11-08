@@ -224,7 +224,7 @@
   <customwidget>
    <class>Dial</class>
    <extends>QDial</extends>
-   <header>dial.h</header>
+   <header>Dial.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

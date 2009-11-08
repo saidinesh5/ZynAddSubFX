@@ -1,8 +1,8 @@
 #ifndef _LFOBOX_H_
 #define _LFOBOX_H_
 
-#include "unitbox.h"
-#include "ui_lfobox.h"
+#include "UnitBox.h"
+#include "ui_LFOBox.h"
 #include "../Misc/Master.h"
 
 class LFOBox:public UnitBox, Ui::LFOBox

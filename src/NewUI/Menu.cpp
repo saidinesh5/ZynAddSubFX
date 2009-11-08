@@ -1,5 +1,5 @@
 #include <QMenu>
-#include "menu.h"
+#include "Menu.h"
 #include <QtDebug>
 
 Menu::Menu(QWidget *parent, ControlHelper *helper)
@@ -31,6 +31,6 @@ void Menu::menuRequested(const QPoint& pos)
     }
 }
 
-#include "menu.moc"
+#include "Menu.moc"
 
 // vim: sw=4 sts=4 et tw=100

@@ -649,23 +649,23 @@
   <customwidget>
    <class>Dial</class>
    <extends>QDial</extends>
-   <header>dial.h</header>
+   <header>Dial.h</header>
   </customwidget>
   <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
-   <header>combobox.h</header>
+   <header>Combobox.h</header>
   </customwidget>
   <customwidget>
    <class>SiblingBar</class>
    <extends>QWidget</extends>
-   <header>siblingbar.h</header>
+   <header>SiblingBar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>CheckBox</class>
    <extends>QCheckBox</extends>
-   <header>checkbox.h</header>
+   <header>Checkbox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

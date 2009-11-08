@@ -1,4 +1,4 @@
-#include "debuginterface.h"
+#include "DebugInterface.h"
 #include <QPushButton>
 #include <QTextEdit>
 #include <QTreeWidget>
@@ -182,6 +182,6 @@ void DebugInterface::refreshTree()
 }
 
 
-#include "debuginterface.moc"
+#include "DebugInterface.moc"
 // vim: sw=4 sts=4 et tw=100
 

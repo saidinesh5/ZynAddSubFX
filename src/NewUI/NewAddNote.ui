@@ -340,23 +340,23 @@
   <customwidget>
    <class>Dial</class>
    <extends>QDial</extends>
-   <header>dial.h</header>
+   <header>Dial.h</header>
   </customwidget>
   <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
-   <header>combobox.h</header>
+   <header>Combobox.h</header>
   </customwidget>
   <customwidget>
    <class>LFOBox</class>
    <extends>QGroupBox</extends>
-   <header>lfobox.h</header>
+   <header>LFObox.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>EnvelopeBox</class>
    <extends>QGroupBox</extends>
-   <header>envelopebox.h</header>
+   <header>EnvelopeBox.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

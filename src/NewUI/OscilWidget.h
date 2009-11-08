@@ -2,7 +2,7 @@
 #define OSCILWIDGET_H
 
 #include <QWidget>
-#include "controlhelper.h"
+#include "ControlHelper.h"
 
 class OscilWidget : public QWidget
 {

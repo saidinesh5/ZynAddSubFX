@@ -1,4 +1,4 @@
-#include "addnoteui.h"
+#include "AddnoteUI.h"
 
 AddNoteUi::AddNoteUi(QString id)
     :QDialog(NULL),
@@ -8,5 +8,5 @@ AddNoteUi::AddNoteUi(QString id)
 }
 
 
-#include "addnoteui.moc"
+#include "AddnoteUI.moc"
 

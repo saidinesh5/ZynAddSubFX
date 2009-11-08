@@ -1,5 +1,5 @@
-#include "voicewidget.h"
-#include "controlhelper.h"
+#include "VoiceWidget.h"
+#include "ControlHelper.h"
 
 VoiceWidget::VoiceWidget(QWidget *parent)
     :QWidget(parent)

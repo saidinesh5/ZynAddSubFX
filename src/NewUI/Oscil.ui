@@ -1914,28 +1914,28 @@
   <customwidget>
    <class>Dial</class>
    <extends>QDial</extends>
-   <header>dial.h</header>
+   <header>Dial.h</header>
   </customwidget>
   <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
-   <header>combobox.h</header>
+   <header>Combobox.h</header>
   </customwidget>
   <customwidget>
    <class>Slider</class>
    <extends>QSlider</extends>
-   <header>slider.h</header>
+   <header>Slider.h</header>
   </customwidget>
   <customwidget>
    <class>OscilWidget</class>
    <extends>QWidget</extends>
-   <header>oscilwidget.h</header>
+   <header>OscilWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SpectrumWidget</class>
    <extends>QWidget</extends>
-   <header>spectrumwidget.h</header>
+   <header>SpectrumWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

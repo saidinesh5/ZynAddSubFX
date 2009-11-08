@@ -1,4 +1,4 @@
-#include "oscil.h"
+#include "Oscil.h"
 
 Oscil::Oscil(QWidget *parent)
     : QDialog(parent)
@@ -6,5 +6,5 @@ Oscil::Oscil(QWidget *parent)
     setupUi(this);
 }
 
-#include "oscil.moc"
+#include "Oscil.moc"
 // vim: sw=4 sts=4 et tw=100

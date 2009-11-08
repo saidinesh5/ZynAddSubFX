@@ -1,4 +1,4 @@
-#include "oscilwidget.h"
+#include "OscilWidget.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QtDebug>
@@ -60,5 +60,5 @@ void OscilWidget::paintEvent(QPaintEvent* event)
     }
 }
 
-#include "oscilwidget.moc"
+#include "OscilWidget.moc"
 // vim: sw=4 sts=4 et tw=100

@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "controlhelper.h"
+#include "ControlHelper.h"
 #include <QObject>
 
 class Menu : public QObject

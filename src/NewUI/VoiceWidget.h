@@ -2,7 +2,7 @@
 #define VOICEWIDGET_H
 
 #include <QWidget>
-#include "ui_voicewidgetexpanded.h"
+#include "ui_VoiceWidgetExpanded.h"
 
 class VoiceWidget:public QWidget, public Ui::Voicewidget
 {

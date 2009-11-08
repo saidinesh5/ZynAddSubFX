@@ -1,4 +1,4 @@
-#include "spectrumwidget.h"
+#include "SpectrumWidget.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QtDebug>
@@ -64,5 +64,5 @@ void SpectrumWidget::paintEvent(QPaintEvent* event)
     }
 }
 
-#include "spectrumwidget.moc"
+#include "SpectrumWidget.moc"
 // vim: sw=4 sts=4 et tw=100

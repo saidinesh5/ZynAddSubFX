@@ -58,7 +58,7 @@ extern Dump dump;
 #ifdef QT_GUI
 
 #include <QApplication>
-#include "masterui.h"
+#include "MasterUI.h"
 QApplication *app;
 
 #elif defined FLTK_GUI

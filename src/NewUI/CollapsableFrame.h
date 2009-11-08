@@ -2,7 +2,7 @@
 #define COLLAPSABLEFRAME_H
 
 #include <QFrame>
-#include "ui_collapsableframe.h"
+#include "ui_CollapsableFrame.h"
 
 class CollapsableFrame:public QFrame, public Ui::CollapsableFrame
 {

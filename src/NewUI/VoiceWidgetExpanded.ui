@@ -168,17 +168,17 @@
   <customwidget>
    <class>Dial</class>
    <extends>QDial</extends>
-   <header>dial.h</header>
+   <header>Dial.h</header>
   </customwidget>
   <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
-   <header>combobox.h</header>
+   <header>Combobox.h</header>
   </customwidget>
   <customwidget>
    <class>Slider</class>
    <extends>QSlider</extends>
-   <header>slider.h</header>
+   <header>Slider.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
