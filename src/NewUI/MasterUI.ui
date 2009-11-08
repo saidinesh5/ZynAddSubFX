@@ -654,7 +654,7 @@
   <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
-   <header>Combobox.h</header>
+   <header>ComboBox.h</header>
   </customwidget>
   <customwidget>
    <class>SiblingBar</class>
@@ -665,7 +665,7 @@
   <customwidget>
    <class>CheckBox</class>
    <extends>QCheckBox</extends>
-   <header>Checkbox.h</header>
+   <header>CheckBox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

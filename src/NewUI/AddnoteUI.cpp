@@ -1,6 +1,6 @@
 #include "AddnoteUI.h"
 
-AddNoteUi::AddNoteUi(QString id)
+AddnoteUI::AddnoteUI(QString id)
     :QDialog(NULL),
       id(id)
 {

@@ -64,7 +64,7 @@ void MasterUI::on_editInstrument_clicked()
     w->show();
 
     if(!id.isEmpty())
-        (w = new AddNoteUi(id))->show();
+        (w = new AddnoteUI(id))->show();
 
     w->setProperty("absoluteControlId", id + ".Instrument.InstrumentKit.ADnoteParameters");
 }

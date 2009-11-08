@@ -1,4 +1,4 @@
-#include "Combobox.h"
+#include "ComboBox.h"
 #include "ControlHelper.h"
 #include <QtDebug>
 #include <QMap>
@@ -40,6 +40,6 @@ void ComboBox::setOptions(QStringList options)
         }
     }
 }
-#include "Combobox.moc"
+#include "ComboBox.moc"
 // vim: sw=4 sts=4 et tw=100
 

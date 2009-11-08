@@ -1,4 +1,4 @@
-#include "Checkbox.h"
+#include "CheckBox.h"
 #include "ControlHelper.h"
 
 CheckBox::CheckBox(QWidget *parent)
@@ -19,7 +19,7 @@ void CheckBox::setChecked(int val)
     QAbstractButton::setChecked(bool(val));
 }
 
-#include "Checkbox.moc"
+#include "CheckBox.moc"
 
 // vim: sw=4 sts=4 et tw=100
 

@@ -5,7 +5,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTableWidget>
-#include <Combobox.h>
+#include <ComboBox.h>
 
 static const int verticalSlots   = 32;
 static const int horizontalSlots = 5;

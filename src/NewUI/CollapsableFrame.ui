@@ -67,7 +67,7 @@
   <customwidget>
    <class>CheckBox</class>
    <extends>QCheckBox</extends>
-   <header>Checkbox.h</header>
+   <header>CheckBox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

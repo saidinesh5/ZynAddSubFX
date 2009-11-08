@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddNoteUi</class>
- <widget class="QDialog" name="AddNoteUi">
+ <class>AddnoteUI</class>
+ <widget class="QDialog" name="AddnoteUI">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -345,12 +345,12 @@
   <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
-   <header>Combobox.h</header>
+   <header>ComboBox.h</header>
   </customwidget>
   <customwidget>
    <class>LFOBox</class>
    <extends>QGroupBox</extends>
-   <header>LFObox.h</header>
+   <header>LFOBox.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
