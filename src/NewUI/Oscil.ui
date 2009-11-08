@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>678</width>
-    <height>641</height>
+    <height>778</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -226,1686 +226,1704 @@
     </widget>
    </item>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
+    <widget class="GroupBox" name="groupBox">
+     <property name="title">
+      <string>Oscillator harmonics</string>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>3460</width>
-        <height>148</height>
-       </rect>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="Slider" name="verticalSlider0">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider1">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude1</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider2">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude2</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider3">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude3</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider4">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude4</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider5">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude5</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider6">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude6</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider7">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude7</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider8">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude8</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider9">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude9</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider10">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude10</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider11">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude11</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider12">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude12</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider13">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude13</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider14">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude14</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider15">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude15</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider16">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude16</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider17">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude17</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider18">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude18</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider19">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude19</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider20">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude20</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider21">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude21</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider22">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude22</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider23">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude23</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider24">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude24</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider25">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude25</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider26">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude26</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider27">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude27</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider28">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude28</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider29">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude29</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider30">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude30</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider31">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude31</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider32">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude32</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider33">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude33</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider34">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude34</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider35">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude35</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider36">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude36</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider37">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude37</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider38">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude38</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider39">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude39</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider40">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude40</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider41">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude41</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider42">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude42</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider43">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude43</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider44">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude44</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider45">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude45</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider46">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude46</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider47">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude47</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider48">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude48</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider49">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude49</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider50">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude50</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider51">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude51</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider52">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude52</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider53">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude53</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider54">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude54</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider55">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude55</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider56">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude56</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider57">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude57</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider58">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude58</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider59">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude59</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider60">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude60</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider61">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude61</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider62">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude62</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider63">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude63</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider64">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude64</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider65">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude65</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider66">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude66</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider67">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude67</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider68">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude68</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider69">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude69</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider70">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude70</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider71">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude71</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider72">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude72</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider73">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude73</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider74">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude74</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider75">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude75</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider76">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude76</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider77">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude77</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider78">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude78</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider79">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude79</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider80">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude80</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider81">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude81</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider82">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude82</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider83">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude83</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider84">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude84</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider85">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude85</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider86">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude86</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider87">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude87</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider88">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude88</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider89">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude89</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider90">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude90</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider91">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude91</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider92">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude92</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider93">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude93</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider94">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude94</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider95">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude95</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider96">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude96</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider97">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude97</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider98">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude98</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider99">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude99</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider100">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude100</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider101">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude101</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider102">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude102</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider103">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude103</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider104">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude104</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider105">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude105</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider106">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude106</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider107">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude107</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider108">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude108</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider109">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude109</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider110">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude110</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider111">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude111</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider112">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude112</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider113">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude113</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider114">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude114</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider115">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude115</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider116">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude116</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider117">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude117</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider118">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude118</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider119">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude119</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider120">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude120</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider121">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude121</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider122">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude122</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider123">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude123</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider124">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude124</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider125">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude125</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider126">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude126</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Slider" name="verticalSlider127">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>Magnitude127</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>3460</width>
+           <height>164</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="Slider" name="verticalSlider0">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider1">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude1</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider2">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude2</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider3">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude3</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider4">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude4</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider5">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude5</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider6">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude6</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider7">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude7</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider8">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude8</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider9">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude9</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider10">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude10</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider11">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude11</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider12">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude12</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider13">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude13</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider14">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude14</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider15">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude15</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider16">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude16</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider17">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude17</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider18">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude18</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider19">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude19</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider20">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude20</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider21">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude21</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider22">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude22</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider23">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude23</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider24">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude24</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider25">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude25</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider26">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude26</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider27">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude27</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider28">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude28</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider29">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude29</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider30">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude30</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider31">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude31</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider32">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude32</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider33">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude33</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider34">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude34</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider35">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude35</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider36">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude36</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider37">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude37</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider38">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude38</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider39">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude39</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider40">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude40</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider41">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude41</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider42">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude42</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider43">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude43</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider44">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude44</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider45">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude45</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider46">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude46</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider47">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude47</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider48">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude48</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider49">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude49</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider50">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude50</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider51">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude51</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider52">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude52</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider53">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude53</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider54">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude54</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider55">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude55</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider56">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude56</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider57">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude57</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider58">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude58</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider59">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude59</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider60">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude60</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider61">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude61</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider62">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude62</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider63">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude63</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider64">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude64</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider65">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude65</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider66">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude66</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider67">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude67</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider68">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude68</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider69">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude69</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider70">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude70</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider71">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude71</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider72">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude72</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider73">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude73</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider74">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude74</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider75">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude75</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider76">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude76</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider77">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude77</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider78">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude78</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider79">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude79</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider80">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude80</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider81">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude81</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider82">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude82</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider83">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude83</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider84">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude84</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider85">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude85</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider86">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude86</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider87">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude87</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider88">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude88</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider89">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude89</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider90">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude90</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider91">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude91</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider92">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude92</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider93">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude93</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider94">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude94</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider95">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude95</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider96">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude96</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider97">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude97</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider98">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude98</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider99">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude99</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider100">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude100</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider101">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude101</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider102">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude102</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider103">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude103</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider104">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude104</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider105">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude105</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider106">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude106</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider107">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude107</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider108">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude108</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider109">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude109</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider110">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude110</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider111">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude111</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider112">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude112</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider113">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude113</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider114">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude114</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider115">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude115</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider116">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude116</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider117">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude117</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider118">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude118</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider119">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude119</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider120">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude120</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider121">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude121</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider122">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude122</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider123">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude123</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider124">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude124</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider125">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude125</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider126">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude126</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Slider" name="verticalSlider127">
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Magnitude127</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -1920,6 +1938,12 @@
    <class>ComboBox</class>
    <extends>QComboBox</extends>
    <header>ComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>GroupBox.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>Slider</class>
