@@ -1,16 +1,26 @@
 #include "GroupBox.h"
 #include "ControlHelper.h"
-#include <QPushButton>
 #include <QtDebug>
+#include <QToolButton>
+#include <QAction>
 
 GroupBox::GroupBox(QWidget *parent)
     : QGroupBox(parent)
 {
-    QPushButton *b = new QPushButton("Reset", this);
-    b->resize(50, b->height());
-    b->setFocusPolicy(Qt::NoFocus);
 
-    connect(b, SIGNAL(clicked()),
+
+    QToolButton *b = new QToolButton(this);
+    b->move(5, 5);
+    b->resize(20, 20);
+    b->setFocusPolicy(Qt::NoFocus);
+    b->setArrowType(Qt::NoArrow);
+    b->setAutoRaise(true);
+    b->setPopupMode(QToolButton::InstantPopup);
+
+    QAction *action = new QAction("Reset to defaults", b);
+    b->addAction(action);
+
+    connect(action, SIGNAL(triggered()),
             this, SLOT(slotReset()));
 }
 
