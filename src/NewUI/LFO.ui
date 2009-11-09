@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>346</width>
-    <height>154</height>
+    <width>441</width>
+    <height>96</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,14 +16,21 @@
   <property name="title">
    <string>GroupBox</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label_31">
+     <property name="text">
+      <string>A. dt</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Dial" name="dial_27">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -33,7 +40,14 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item>
+    <widget class="QLabel" name="label_32">
+     <property name="text">
+      <string>D. dt</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Dial" name="dial_28">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -43,7 +57,14 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
+   <item>
+    <widget class="QLabel" name="label_33">
+     <property name="text">
+      <string>S. val</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Dial" name="dial_29">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -53,7 +74,14 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
+   <item>
+    <widget class="QLabel" name="label_34">
+     <property name="text">
+      <string>R. dt</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Dial" name="dial_30">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -63,48 +91,20 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
+   <item>
+    <widget class="QLabel" name="label_35">
+     <property name="text">
+      <string>Stretch</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Dial" name="dial_31">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_31">
-     <property name="text">
-      <string>A. dt</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="label_32">
-     <property name="text">
-      <string>D. dt</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLabel" name="label_33">
-     <property name="text">
-      <string>S. val</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3">
-    <widget class="QLabel" name="label_34">
-     <property name="text">
-      <string>R. dt</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4">
-    <widget class="QLabel" name="label_35">
-     <property name="text">
-      <string>Stretch</string>
      </property>
     </widget>
    </item>

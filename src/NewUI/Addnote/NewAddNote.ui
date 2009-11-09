@@ -6,16 +6,315 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>685</width>
-    <height>963</height>
+    <width>711</width>
+    <height>699</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,2,1,1,1,1,1">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>&lt;h3&gt;Amplitude&lt;/h3&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="label_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>&lt;h3&gt;Filter&lt;/h3&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_14">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSlider" name="horizontalSlider_5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>Vol</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_16">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSlider" name="horizontalSlider_6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_17">
+       <property name="text">
+        <string>V. Sns</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="Dial" name="dial_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_18">
+       <property name="text">
+        <string>Pan</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="GroupBox" name="groupBox">
+     <property name="title">
+      <string>Filter</string>
+     </property>
+     <property name="controlId" stdset="0">
+      <string>FilterParams</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="ComboBox" name="comboBox_5">
+        <property name="controlId" stdset="0">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="ComboBox" name="comboBox_6">
+        <property name="controlId" stdset="0">
+         <string>Category</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="Dial" name="partPan_3">
+        <property name="maximum">
+         <number>127</number>
+        </property>
+        <property name="pageStep">
+         <number>32</number>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="notchTarget">
+         <double>4.699999999999999</double>
+        </property>
+        <property name="notchesVisible">
+         <bool>true</bool>
+        </property>
+        <property name="controlId" stdset="0">
+         <string>CenterFrequency</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="Dial" name="masterVolume_11">
+        <property name="maximum">
+         <number>127</number>
+        </property>
+        <property name="pageStep">
+         <number>32</number>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="notchTarget">
+         <double>4.699999999999999</double>
+        </property>
+        <property name="notchesVisible">
+         <bool>true</bool>
+        </property>
+        <property name="controlId" stdset="0">
+         <string>Frequency</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="EnvelopeBox" name="amplitudeEnvelope">
+     <property name="title">
+      <string>Amplitude Envelope</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="EnvelopeBox" name="filterEnvelope">
+     <property name="title">
+      <string>Filter Envelope</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="LFOBox" name="amplitudeLFO">
+     <property name="title">
+      <string>Amplitude LFO</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="LFOBox" name="filterLFO">
+     <property name="title">
+      <string>Filter LFO</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>&lt;h3&gt;Frequency&lt;/h3&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_12">
+          <property name="text">
+           <string>Detune</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_13">
+          <property name="frameShape">
+           <enum>QFrame::Panel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="text">
+           <string>0.0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QSlider" name="horizontalSlider_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="octave_2">
+        <property name="prefix">
+         <string>Octave </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="EnvelopeBox" name="frequencyEnvelope">
+     <property name="title">
+      <string>Frequency Envelope</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="LFOBox" name="frequencyLFO">
+     <property name="title">
+      <string>Frequency LFO</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="2">
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -45,293 +344,6 @@
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Scroll to [ &lt;a href=&quot;filters&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Amplitude&lt;/span&gt;&lt;/a&gt; | &lt;a href=&quot;filters&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Filter&lt;/span&gt;&lt;/a&gt; | &lt;a href=&quot;frequency&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Frequency&lt;/span&gt;&lt;/a&gt; ]</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>671</width>
-        <height>882</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>&lt;h1&gt;Amplitude&lt;/h1&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>0</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSlider" name="horizontalSlider">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Vol</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>0</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSlider" name="horizontalSlider_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>V. Sns</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="Dial" name="dial">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Pan</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="EnvelopeBox" name="amplitudeEnvelope">
-         <property name="title">
-          <string>Amplitude Envelope</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="LFOBox" name="amplitudeLFO">
-         <property name="title">
-          <string>Amplitude LFO</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>&lt;h1&gt;Filter&lt;/h1&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="GroupBox" name="groupBox">
-         <property name="title">
-          <string>Filter</string>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>FilterParams</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="ComboBox" name="comboBox_3">
-            <property name="controlId" stdset="0">
-             <string>Type</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="ComboBox" name="comboBox_4">
-            <property name="controlId" stdset="0">
-             <string>Category</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="Dial" name="partPan_2">
-            <property name="maximum">
-             <number>127</number>
-            </property>
-            <property name="pageStep">
-             <number>32</number>
-            </property>
-            <property name="wrapping">
-             <bool>false</bool>
-            </property>
-            <property name="notchTarget">
-             <double>4.699999999999999</double>
-            </property>
-            <property name="notchesVisible">
-             <bool>true</bool>
-            </property>
-            <property name="controlId" stdset="0">
-             <string>CenterFrequency</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="Dial" name="masterVolume_10">
-            <property name="maximum">
-             <number>127</number>
-            </property>
-            <property name="pageStep">
-             <number>32</number>
-            </property>
-            <property name="wrapping">
-             <bool>false</bool>
-            </property>
-            <property name="notchTarget">
-             <double>4.699999999999999</double>
-            </property>
-            <property name="notchesVisible">
-             <bool>true</bool>
-            </property>
-            <property name="controlId" stdset="0">
-             <string>Frequency</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="EnvelopeBox" name="filterEnvelope">
-         <property name="title">
-          <string>Filter Envelope</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="LFOBox" name="filterLFO">
-         <property name="title">
-          <string>Filter LFO</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>&lt;h1&gt;Frequency&lt;/h1&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="widget" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <widget class="QLabel" name="label_9">
-              <property name="text">
-               <string>Detune</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_11">
-              <property name="frameShape">
-               <enum>QFrame::Panel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Sunken</enum>
-              </property>
-              <property name="text">
-               <string>0.0</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QSlider" name="horizontalSlider_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="octave">
-            <property name="prefix">
-             <string>Octave </string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="EnvelopeBox" name="frequencyEnvelope">
-         <property name="title">
-          <string>Frequency Envelope</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="LFOBox" name="frequencyLFO">
-         <property name="title">
-          <string>Frequency LFO</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
   </layout>
