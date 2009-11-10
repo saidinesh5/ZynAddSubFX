@@ -26,6 +26,13 @@ ArrayControl::~ArrayControl()
 void ArrayControl::readArray(REALTYPE *buffer, int *size)
 {
     lock();
+
+    if (*size < m_bufsize) {
+        std::cout << "Arraycontrol error: the read buffer is too small\n";
+        unlock();
+        return;
+    }
+
     memcpy(buffer, m_front, sizeof(REALTYPE)*m_bufsize);
     *size = m_bufsize;
     unlock();
@@ -36,21 +43,6 @@ void ArrayControl::swapBuffers()
     REALTYPE *tmp = m_front;
     m_front = m_back;
     m_back = tmp;
-}
-
-void ArrayControl::writeArray(REALTYPE* array, int size)
-{
-    lock();
-    if (size > m_bufsize) {
-        printf("ERROR: writeArray to too small buffer!!!\n");
-        unlock();
-        return;
-    }
-    memcpy(m_back, array, sizeof(REALTYPE)*size);
-    swapBuffers();
-    unlock();
-
-    forward(new NewValueEvent(this));
 }
 
 char ArrayControl::getCharValue() const
@@ -71,6 +63,25 @@ string ArrayControl::getString() const
 void ArrayControl::defaults()
 {
 
+}
+
+void ArrayControl::finishWrite()
+{
+    lock();
+    swapBuffers();
+    unlock();
+
+    forward(new NewValueEvent(this));
+}
+
+REALTYPE* ArrayControl::writeBuffer()
+{
+    return m_back;
+}
+
+int ArrayControl::size()
+{
+    return m_bufsize;
 }
 
 // vim: sw=4 sts=4 et tw=100

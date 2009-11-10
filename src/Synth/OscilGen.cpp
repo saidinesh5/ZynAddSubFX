@@ -964,12 +964,12 @@ void OscilGen::prepare()
     oscilprepared    = 1;
 
 
-    //TODO: this might be optimized
-    getspectrum(OSCIL_SIZE / 2, tmpsmps, 0);
-    oscilSpectrum.writeArray(tmpsmps, OSCIL_SIZE/2);
+    getspectrum(oscilSpectrum.size(), oscilSpectrum.writeBuffer(), 0);
+    oscilSpectrum.finishWrite();
 
-    get(tmpsmps, -1.0);
-    oscilBaseFunc.writeArray(tmpsmps, OSCIL_SIZE);
+    //note: this next line breaks the Adnote test. not sure why yet
+    get(oscilBaseFunc.writeBuffer(), -1.0);
+    oscilBaseFunc.finishWrite();
 
 }
 

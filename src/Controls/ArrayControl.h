@@ -32,13 +32,17 @@ class ArrayControl : public GenControl
         ArrayControl(Node *parent, std::string id, int bufsize);
         virtual ~ArrayControl();
 
-        void readArray(REALTYPE *buffer, int *size);
-        void writeArray(REALTYPE* array, int size);
 
         virtual char getCharValue() const;
         virtual void setValue(char val);
         virtual std::string getString() const;
         virtual void defaults();
+
+        void readArray(REALTYPE *buffer, int *size);
+
+        int size();
+        REALTYPE* writeBuffer();
+        void finishWrite();
 
     private:
         //frontbuffer and backbuffer
