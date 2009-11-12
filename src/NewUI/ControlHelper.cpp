@@ -167,6 +167,8 @@ void ControlHelper::updateControlId()
 
 QString ControlHelper::findComponentPath(QObject *object)
 {
+    if (!object) return QString();
+
     QString fullid = object->property("absoluteControlId").toString();
 
     if(!fullid.isEmpty())
@@ -208,7 +210,7 @@ void ControlHelper::emitOptions()
     if(m_control && m_control->numOptions())
         for(int i = 0; i < m_control->numOptions(); ++i)
             options << QString::fromStdString(m_control->getOption(i));
-    qDebug() << "Emitting options " << options;
+    //qDebug() << "Emitting options " << options;
     emit optionsChanged(options);
 }
 

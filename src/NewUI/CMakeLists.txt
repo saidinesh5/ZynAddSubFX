@@ -3,6 +3,7 @@ set(zynaddsubfx_gui_SRCS
     Addnote/AddnoteUI.cpp
     Addnote/VoiceList.cpp
     Addnote/VoiceWidget.cpp
+    Addnote/VoiceParameters.cpp
     BankUI.cpp
     Button.cpp
     CheckBox.cpp
@@ -28,6 +29,7 @@ SET( zynaddsubfx_gui_UIS
     Addnote/NewAddNote.ui
     Addnote/VoiceList.ui
     Addnote/VoiceWidgetExpanded.ui
+    Addnote/VoiceParameters.ui
     CollapsableFrame.ui
     EnvelopeBox.ui
     LFOBox.ui

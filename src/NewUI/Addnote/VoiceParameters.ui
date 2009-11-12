@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VoiceParameters</class>
+ <widget class="QDialog" name="VoiceParameters">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>598</width>
+    <height>495</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="EnvelopeBox" name="filterEnvelope">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>50</y>
+     <width>370</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Filter Envelope</string>
+   </property>
+  </widget>
+  <widget class="ComboBox" name="comboBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>210</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="controlId" stdset="0">
+    <string>OscilSmp.BaseFunc</string>
+   </property>
+  </widget>
+  <widget class="Dial" name="dial">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>150</y>
+     <width>210</width>
+     <height>315</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="controlId" stdset="0">
+    <string>Volume</string>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Dial</class>
+   <extends>QDial</extends>
+   <header>Dial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>ComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>EnvelopeBox</class>
+   <extends>QGroupBox</extends>
+   <header>EnvelopeBox.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
