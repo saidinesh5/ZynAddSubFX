@@ -8,6 +8,7 @@
 #include "../Synth/ADnote.h"
 #include "../Params/Presets.h"
 #include "../globals.h"
+#include "testing.h"
 
 using namespace std;
 

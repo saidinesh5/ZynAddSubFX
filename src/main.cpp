@@ -38,6 +38,8 @@
 #include "Misc/Dump.h"
 extern Dump dump;
 
+int (*rand_func)();
+
 #ifdef ALSAMIDIIN
 #include "Input/ALSAMidiIn.h"
 #endif
@@ -428,6 +430,10 @@ int main(int argc, char *argv[])
 #ifdef USE_LASH
     lash = new LASHClient(&argc, &argv);
 #endif
+
+    //set the random function to the stdlib.h one.
+    //this will be changed for testing mode
+    rand_func = rand;
 
     config.init();
     dump.startnow();

@@ -21,6 +21,7 @@
 */
 #include <cxxtest/TestSuite.h>
 #include "../Misc/XMLwrapper.h"
+#include "testing.h"
 
 class XMLwrapperTest:public CxxTest::TestSuite
 {

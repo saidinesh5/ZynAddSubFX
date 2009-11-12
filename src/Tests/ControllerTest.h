@@ -22,6 +22,7 @@
 #include <cxxtest/TestSuite.h>
 #include <iostream>
 #include "../Params/Controller.h"
+#include "testing.h"
 
 class ControllerTest:public CxxTest::TestSuite
 {

@@ -25,6 +25,7 @@
 #include <cstring>
 #include <string>
 #include <cstdio>
+#include "testing.h"
 
 using namespace std;
 
