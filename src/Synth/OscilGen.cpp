@@ -1198,8 +1198,7 @@ short int OscilGen::get(REALTYPE *smps, REALTYPE freqHz, int resonance)
 
     //Harmonic Amplitude Randomness
     if((freqHz > 0.1) && (!ADvsPAD)) {
-        unsigned int realrnd = rand();
-        srand(randseed);
+        unsigned int realrnd = rand_func();
         REALTYPE power     = Pamprandpower / 127.0;
         REALTYPE normalize = 1.0 / (1.2 - power);
         switch(Pamprandtype) {
@@ -1223,7 +1222,6 @@ short int OscilGen::get(REALTYPE *smps, REALTYPE freqHz, int resonance)
             }
             break;
         }
-        srand(realrnd + 1);
     }
 
     if((freqHz > 0.1) && (resonance != 0))
