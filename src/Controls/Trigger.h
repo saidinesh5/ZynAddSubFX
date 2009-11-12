@@ -37,7 +37,13 @@ class Trigger:public GenControl
         std::string getString() const
         {return label;}
 
+        //since Trigger is a bit of a special case these three functiosn
+        //will remain dummies
         void setValue(char val);
+        void defaults() {};
+        char getCharValue() const { return 0; }
+
+        inline void operator()() { setValue(127); }
 
     private:
         /**The transformation function for the control*/

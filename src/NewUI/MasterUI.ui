@@ -18,7 +18,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="3" colspan="2">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="Button" name="pushButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -27,6 +27,9 @@
         </property>
         <property name="text">
          <string>Panic!</string>
+        </property>
+        <property name="absoluteControlId" stdset="0">
+         <string>Master.Panic</string>
         </property>
        </widget>
       </item>
@@ -699,6 +702,11 @@
    <extends>QGroupBox</extends>
    <header>GroupBox.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Button</class>
+   <extends>QPushButton</extends>
+   <header>Button.h</header>
   </customwidget>
  </customwidgets>
  <resources>

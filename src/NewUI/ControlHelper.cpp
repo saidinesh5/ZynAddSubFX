@@ -152,6 +152,11 @@ void ControlHelper::MIDILearn()
         bool result = m_control->MIDILearn();
 }
 
+void ControlHelper::trigger()
+{
+    setValue(127);
+}
+
 void ControlHelper::updateControlId()
 {
     QString fullid = findComponentPath(parent());

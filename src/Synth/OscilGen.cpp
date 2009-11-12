@@ -967,7 +967,6 @@ void OscilGen::prepare()
     getspectrum(oscilSpectrum.size(), oscilSpectrum.writeBuffer(), 0);
     oscilSpectrum.finishWrite();
 
-    //note: this next line breaks the Adnote test. not sure why yet
     get(oscilBaseFunc.writeBuffer(), -1.0);
     oscilBaseFunc.finishWrite();
 

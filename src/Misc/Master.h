@@ -36,6 +36,7 @@
 #include "XMLwrapper.h"
 #include "../Controls/Node.h"
 #include "../Controls/Control.h"
+#include "../Controls/Trigger.h"
 #include "LinInjFunc.h"
 #include "../Controls/FakeChildFactory.h"
 
@@ -85,9 +86,8 @@ class Master:public Node
                            int rawtype);
         //void NRPN...
 
-        /**Places a queue in place for shutup*/
-        void queueShutUp() {shutup = 1;}
-        void ShutUp();
+
+        Trigger panic;
 
         /**Audio Output*/
         void AudioOut(REALTYPE *outl, REALTYPE *outr);
@@ -97,6 +97,8 @@ class Master:public Node
                                 REALTYPE *outl,
                                 REALTYPE *outr);
 
+        void handleEvent(Event *event);
+        void handleSyncEvent(Event *event);
 
         void partonoff(int npart, int what);
 
@@ -154,12 +156,13 @@ class Master:public Node
 
     private:
 
+        //use panic control instead
+        void ShutUp();
+
         //parameters
         unsigned char Pkeyshift;
         unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
         unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
-
-        int shutup;
 
         REALTYPE sysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
         REALTYPE sysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];

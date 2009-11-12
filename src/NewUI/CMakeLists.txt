@@ -4,6 +4,7 @@ set(zynaddsubfx_gui_SRCS
     Addnote/VoiceList.cpp
     Addnote/VoiceWidget.cpp
     BankUI.cpp
+    Button.cpp
     CheckBox.cpp
     CollapsableFrame.cpp
     ComboBox.cpp

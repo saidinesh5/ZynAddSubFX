@@ -34,11 +34,14 @@
 
 Master::Master()
     :Node(NULL, "Master"),
+      panic(this, "Panic", "Panic!"),
       masterVolume(this, "Volume", -6.66,
                    new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
       parts(this, "Parts")
 {
     Node::setRoot(this);
+
+    panic.addRedirection(this, new TypeFilter(Event::NewValueEvent));
 
     //masterVolume.setDb2rapConversion(true);
 
@@ -60,7 +63,6 @@ Master::Master()
     ksoundbuffersamplelow = 0.0;
     oldsamplel = 0.0;
     oldsampler = 0.0;
-    shutup     = 0;
     for(int npart = 0; npart < NUM_MIDI_PARTS; npart++) {
         vuoutpeakpart[npart] = 1e-9;
         fakepeakpart[npart]  = 0;
@@ -482,6 +484,7 @@ void Master::AudioOut(REALTYPE *outl, REALTYPE *outr)
     }
 
 
+#if 0
     //Shutup if it is asked (with fade-out)
     if(shutup != 0) {
         for(i = 0; i < SOUND_BUFFER_SIZE; i++) {
@@ -492,6 +495,7 @@ void Master::AudioOut(REALTYPE *outl, REALTYPE *outr)
         }
         ShutUp();
     }
+#endif
 
     //update the LFO's time
     LFOParams::time++;
@@ -654,7 +658,6 @@ void Master::ShutUp()
     for(int nefx = 0; nefx < NUM_SYS_EFX; nefx++)
         sysefx[nefx]->cleanup();
     vuresetpeaks();
-    shutup = 0;
 }
 
 
@@ -671,6 +674,25 @@ void Master::vuresetpeaks()
 }
 
 
+void Master::handleSyncEvent(Event *event)
+{
+    if(event->type() == Event::NewValueEvent) {
+        NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
+
+        if(newValue->control == &panic) {
+            ShutUp();
+        }
+    }
+}
+
+void Master::handleEvent(Event *event)
+{
+    if(event->type() == Event::NewValueEvent) {
+        NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
+        Job::push(new NodeJob(*this, new NewValueEvent(*newValue)));
+
+    }
+}
 
 void Master::applyparameters()
 {

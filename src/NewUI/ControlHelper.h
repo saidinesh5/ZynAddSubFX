@@ -93,6 +93,11 @@ class ControlHelper:public QObject, public NodeUser
          */
         void MIDILearn();
 
+        /** 
+         * @brief Convenience function. Will call setValue(127). Used for trigger-controls/buttons
+         */
+        void trigger();
+
         /**
          * @brief Recurse up the parent chain and set control according to qt properties
          */
