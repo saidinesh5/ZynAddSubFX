@@ -70,7 +70,7 @@ void CollapsableFrame::deleteMe()
     if(id.isEmpty())
         return;
 
-    Node *node = Node::find(id.toStdString());
+    Node *node = Node::get(id.toStdString());
     if(!node)
         return;
 

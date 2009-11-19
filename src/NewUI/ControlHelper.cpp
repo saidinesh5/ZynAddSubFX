@@ -75,7 +75,7 @@ void ControlHelper::setControl(QString absoluteId)
     if(absoluteId.isEmpty())
         return;
 
-    Node *node = Node::find(absoluteId.toStdString());
+    Node *node = Node::get(absoluteId.toStdString());
     m_control = dynamic_cast<GenControl *>(node);
     if(m_control) {
         expectedValueEvents = 0;

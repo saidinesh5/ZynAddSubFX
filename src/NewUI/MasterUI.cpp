@@ -32,7 +32,7 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     setupUi(this);
 
     partBar->setControlsWidget(partFrame);
-    partBar->setNode(Node::find("Master.Parts"));
+    partBar->setNode(Node::get("Master.Parts"));
 
     //Node::getRoot()->printTree();
 

@@ -15,7 +15,7 @@ VoiceList::VoiceList(QString absoluteId, QWidget *parent)
 
     QLayout *lay = new QVBoxLayout(mainWidget);
 
-    Node *node   = Node::find(absoluteId.toStdString());
+    Node *node   = Node::get(absoluteId.toStdString());
     if(node)
         for(int i = 0; i < node->getChildren().size(); ++i) {
             VoiceWidget      *w = new VoiceWidget();

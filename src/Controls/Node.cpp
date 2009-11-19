@@ -125,18 +125,18 @@ class FindChildJob:public Job
 
         void exec() {
             //this will be called in sync time, from the backend
-            *result = node->recurseFindChild(path);
+            *result = node->recurseGetChild(path);
         }
 };
 
-Node *Node::findChild(string id)
+Node *Node::getChild(string id)
 {
     Node *ret = NULL;
     Job::pushAndWait(new FindChildJob(this, &ret, id));
     return ret;
 }
 
-Node *Node::recurseFindChild(string id)
+Node *Node::recurseGetChild(string id)
 {
     Node *ret = NULL;
     for(NodeIterator it = m_children.begin();
@@ -155,7 +155,7 @@ Node *Node::recurseFindChild(string id)
         if(!(*it)->hasChildren())
             continue;
 
-        ret = (*it)->recurseFindChild(id);
+        ret = (*it)->recurseGetChild(id);
         if(ret)
             return ret;
     }

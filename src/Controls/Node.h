@@ -80,8 +80,8 @@ class Node:public NodeUser
         std::string createChild(std::string name);
         void removeChild(std::string name);
         void clearChildren();
-        Node *findChild(std::string id); //should be getChild(string) find seems
-                                        //to be misleading
+        Node *getChild(std::string id);
+
         const std::vector<std::string> getTypes();
         bool removeFromParent();
 
@@ -95,11 +95,11 @@ class Node:public NodeUser
 
         static inline Node *getRoot() { return m_root; }
         static void setRoot(Node *root) { m_root = root; }
-        static Node *find(std::string id) { return m_root->findChild(id); }
+        static Node *get(std::string id) { return m_root->getChild(id); }
 
 
     private:
-        Node *recurseFindChild(std::string id);
+        Node *recurseGetChild(std::string id);
 
         struct Redirection {
             NodeUser *destination;

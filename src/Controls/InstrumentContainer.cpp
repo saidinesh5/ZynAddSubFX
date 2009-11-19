@@ -62,7 +62,7 @@ std::string InstrumentContainer::doCreateChild(int type)
 }
 void InstrumentContainer::doRemoveChild(std::string name)
 {
-    Node *node = Node::find(getAbsoluteId() + "." + name);
+    Node *node = Node::get(getAbsoluteId() + "." + name);
     std::cout << "Finding " << name << " returned " << node << "\n";
 
     if(!node)
