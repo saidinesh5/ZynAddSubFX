@@ -689,7 +689,7 @@ void Master::handleEvent(Event *event)
 {
     if(event->type() == Event::NewValueEvent) {
         NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
-        Job::push(new NodeJob(*this, new NewValueEvent(*newValue)));
+        Job::push(new NodeJob(this, new NewValueEvent(*newValue)));
 
     }
 }

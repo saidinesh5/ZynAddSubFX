@@ -285,11 +285,11 @@ class ADnoteVoiceParam:public Node
         EnvelopeParams *FMAmpEnvelope;
 };
 
-class ADnoteParameters:public Presets, public Node
+class ADnoteParameters:public Presets
 {
     public:
         ADnoteParameters(Node *parent, FFTwrapper *fft_);
-        ~ADnoteParameters();
+        virtual ~ADnoteParameters();
 
         Ranger volume;
 

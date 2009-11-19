@@ -56,10 +56,9 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
 {}
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
-    :Presets(),
-      Node(parent, "ADnoteParameters"),
+    :Presets(parent, "ADnoteParameters"),
       volume(this, "Volume", 10, new VolumeConv),
-      //note: the original convertion functon is found in ADnote.cpp:337
+      //note: the original conversion functon is found in ADnote.cpp:337
       voices(this, "Voices")
 {
     setpresettype("Padsyth");

@@ -30,8 +30,7 @@
 
 OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
                    Node *parent, std::string id)
-    :Presets(),
-      Node(parent, id),
+    :Presets(parent, id),
       currentBaseFunc(this, "BaseFunc", 0),
       baseParam(this, "BaseParam", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0)),
       oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE/2),
@@ -79,9 +78,12 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
 
 OscilGen::~OscilGen()
 {
+    std::cout << "Oscilgen deleted\n";
+
     delete[] tmpsmps;
     delete[] oscilOutTmp;
-    delete[] magnitude;
+    for (int i = 0; i < MAX_AD_HARMONICS; ++i)
+        delete magnitude[i];
     deleteFFTFREQS(&outoscilFFTfreqs);
     deleteFFTFREQS(&basefuncFFTfreqs);
     deleteFFTFREQS(&oscilFFTfreqs);
@@ -1524,6 +1526,6 @@ void OscilGen::handleSyncEvent(Event *event)
 void OscilGen::handleEvent(Event *event)
 {
     if(event->type() == Event::NewValueEvent) {
-        Job::push(new NodeJob(*this, new NewValueEvent(*(NewValueEvent*)(event))));
+        Job::push(new NodeJob(this, new NewValueEvent(*(NewValueEvent*)(event))));
     }
 }

@@ -25,7 +25,8 @@
 using namespace std;
 
 PADnoteParameters::PADnoteParameters(FFTwrapper *fft_,
-                                     pthread_mutex_t *mutex_):Presets()
+                                     pthread_mutex_t *mutex_):
+    Presets(NULL, "PADnoteParameters: FIXME")
 {
     setpresettype("Ppadsyth");
 

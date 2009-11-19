@@ -87,6 +87,5 @@ void Job::setEngineThread()
     engineThread = pthread_self();
 }
 
-
 // vim: sw=4 sts=4 et tw=100
 

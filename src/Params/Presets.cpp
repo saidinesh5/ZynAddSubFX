@@ -24,7 +24,8 @@
 #include <string.h>
 
 
-Presets::Presets()
+Presets::Presets(Node *parent, std::string id) :
+    Node(parent, id)
 {
     type[0]  = 0;
     nelement = -1;

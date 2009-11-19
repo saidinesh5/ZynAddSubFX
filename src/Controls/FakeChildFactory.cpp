@@ -25,7 +25,7 @@ std::string FakeChildFactory::doCreateChild(int type)
 {
     createdChild.clear();
 
-    Job *job = new NodeJob(*this, new CreateNodeEvent(type));
+    Job *job = new NodeJob(this, new CreateNodeEvent(type));
     Job::pushAndWait(job);
 
     return createdChild;
@@ -40,7 +40,7 @@ void FakeChildFactory::doRemoveChild(std::string name)
     if(!node)
         return;
 
-    Job *job = new NodeJob(*this, new RemovalEvent(node));
+    Job *job = new NodeJob(this, new RemovalEvent(node));
     Job::pushAndWait(job);
 }
 

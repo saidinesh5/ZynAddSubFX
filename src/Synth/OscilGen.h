@@ -34,14 +34,14 @@
 #include "../Controls/DescRanger.h"
 #include "../Controls/ArrayControl.h"
 
-class OscilGen:public Presets, public Node
+class OscilGen:public Presets
 {
     public:
         OscilGen(FFTwrapper *fft_,
                  Resonance *res_,
                  Node *parent,
                  std::string id);
-        ~OscilGen();
+        virtual ~OscilGen();
 
         /**computes the full spectrum of oscil from harmonics,phases and basefunc*/
         void prepare();

@@ -34,7 +34,8 @@ LFOParams::LFOParams(char Pfreq_,
                      char Prandomness_,
                      char Pdelay_,
                      char Pcontinous_,
-                     char fel_):Presets()
+                     char fel_):
+    Presets(NULL, "LFOParams: FIXME")
 {
     switch(fel_) {
     case 0:

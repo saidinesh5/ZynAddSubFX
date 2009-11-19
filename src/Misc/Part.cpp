@@ -1413,7 +1413,7 @@ void Part::handleEvent(Event *event)
             instrumentControl.loadBank(
                 bankControl.bank->banks[bankControl()].dir);
         else
-            Job::push(new NodeJob(*this, new NewValueEvent(*newValue)));
+            Job::push(new NodeJob(this, new NewValueEvent(*newValue)));
 
     }
 }

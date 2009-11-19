@@ -24,7 +24,8 @@
 #include "SUBnoteParameters.h"
 #include <stdio.h>
 
-SUBnoteParameters::SUBnoteParameters():Presets()
+SUBnoteParameters::SUBnoteParameters():
+    Presets(NULL, "SUBnoteParameters: FIXME")
 {
     setpresettype("Psubsyth");
     AmpEnvelope = new EnvelopeParams(64, 1);

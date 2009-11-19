@@ -27,7 +27,8 @@
 #include "EnvelopeParams.h"
 
 EnvelopeParams::EnvelopeParams(unsigned char Penvstretch_,
-                               unsigned char Pforcedrelease_):Presets()
+                               unsigned char Pforcedrelease_):
+    Presets(NULL, "EnvelopeParams: FIXME")
 {
     int i;
 

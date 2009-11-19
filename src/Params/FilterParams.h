@@ -29,7 +29,7 @@
 #include "../Controls/Ranger.h"
 #include "../Controls/Selector.h"
 
-class FilterParams:public Presets, public Node
+class FilterParams:public Presets
 {
     public:
         FilterParams(Node *parent,

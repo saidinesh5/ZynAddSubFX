@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-Resonance::Resonance():Presets()
+Resonance::Resonance():Presets(NULL, "Resonance: FIXME")
 {
     setpresettype("Presonance");
     defaults();
