@@ -32,7 +32,9 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     setupUi(this);
 
     partBar->setControlsWidget(partFrame);
+    //Node::lock();
     partBar->setNode(Node::get("Master.Parts"));
+    //Node::unlock();
 
     //Node::getRoot()->printTree();
 

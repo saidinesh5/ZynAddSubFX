@@ -7,18 +7,22 @@
 class NodeJob:public Job
 {
     public:
-        explicit NodeJob(NodeUser *nnode, class Event *nev)
-            :node(dynamic_cast<NodeUser*>(nnode)), ev(nev) {
+        explicit NodeJob(Node *nnode, class Event *nev)
+            :node(dynamic_cast<Node*>(nnode)), ev(nev) {
+                uid = nnode->m_uid;
             }
         class Event *getEvent() const {return ev;}
         void exec() {
-            node->handleSyncEvent(ev);
+            if (!Job::isRecentlyDeleted(uid)) {
+                node->handleSyncEvent(ev);
+            }
             delete ev;
         }
 
     protected:
-        NodeUser *node;
+        Node *node;
         class Event * ev;
+        unsigned int uid;
 };
 
 #endif

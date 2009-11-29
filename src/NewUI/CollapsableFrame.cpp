@@ -70,11 +70,13 @@ void CollapsableFrame::deleteMe()
     if(id.isEmpty())
         return;
 
+    Node::lock();
     Node *node = Node::get(id.toStdString());
     if(!node)
         return;
 
     node->removeFromParent();
+    Node::unlock();
 }
 
 void CollapsableFrame::on_enabledCheck_stateChanged(int state)

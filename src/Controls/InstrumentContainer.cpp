@@ -65,8 +65,10 @@ void InstrumentContainer::doRemoveChild(std::string name)
     Node *node = Node::get(getAbsoluteId() + "." + name);
     std::cout << "Finding " << name << " returned " << node << "\n";
 
-    if(!node)
+    if(!node) {
+        //Node::unlock();
         return;
+    }
 
     Job *job = new NodeJob(this, new RemovalEvent(node));
     Job::pushAndWait(job);

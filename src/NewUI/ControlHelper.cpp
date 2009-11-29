@@ -75,6 +75,7 @@ void ControlHelper::setControl(QString absoluteId)
     if(absoluteId.isEmpty())
         return;
 
+    Node::lock();
     Node *node = Node::get(absoluteId.toStdString());
     m_control = dynamic_cast<GenControl *>(node);
     if(m_control) {
@@ -93,6 +94,8 @@ void ControlHelper::setControl(QString absoluteId)
     }
     else
         qDebug() << "Could not find a control named " << absoluteId;
+
+    Node::unlock();
 }
 
 void ControlHelper::disconnect()

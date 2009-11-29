@@ -27,7 +27,6 @@ VoiceList::VoiceList(QString absoluteId, QWidget *parent)
             f->setProperty("controlId",
                            QString::fromStdString(node->getChildren()[i]->getId()));
         }
-
 }
 
 // vim: sw=4 sts=4 et tw=100

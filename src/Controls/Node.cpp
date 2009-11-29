@@ -4,14 +4,23 @@
 #include "EventClasses.h"
 #include <assert.h>
 
+#include <pthread.h>
+
 using namespace std;
 
 Node *Node::m_root = NULL;
+static pthread_mutex_t treeMutex;
 
+unsigned int Node::m_nextUid = 0;
 
 Node::Node(Node *parent, std::string id)
     :m_parent(parent)
 {
+    Node::lock();
+    m_uid = m_nextUid;
+    m_nextUid++;
+    Node::unlock();
+
     rename(id);
     if(m_parent)
         m_parent->addChild(this);
@@ -19,6 +28,8 @@ Node::Node(Node *parent, std::string id)
 
 Node::~Node()
 {
+    Job::addToRecentlyDeleted(m_uid);
+
     for(vector<Node *>::iterator it = m_children.begin();
         it != m_children.end();
         it++)
@@ -114,29 +125,7 @@ void Node::moveToParent(Node *parent)
         m_parent->addChild(this);
 }
 
-class FindChildJob:public Job
-{
-    public:
-        Node **result, *node;
-        string path;
-        FindChildJob(Node *node, Node **result, string path)
-            :node(node), result(result), path(path)
-        {}
-
-        void exec() {
-            //this will be called in sync time, from the backend
-            *result = node->recurseGetChild(path);
-        }
-};
-
 Node *Node::getChild(string id)
-{
-    Node *ret = NULL;
-    Job::pushAndWait(new FindChildJob(this, &ret, id));
-    return ret;
-}
-
-Node *Node::recurseGetChild(string id)
 {
     Node *ret = NULL;
     for(NodeIterator it = m_children.begin();
@@ -155,7 +144,7 @@ Node *Node::recurseGetChild(string id)
         if(!(*it)->hasChildren())
             continue;
 
-        ret = (*it)->recurseGetChild(id);
+        ret = (*it)->getChild(id);
         if(ret)
             return ret;
     }
@@ -244,6 +233,27 @@ bool Node::removeFromParent()
 
     m_parent->removeChild(getId());
     return true;
+}
+
+void Node::setRoot(Node *root)
+{
+    m_root = root;
+
+    static int once = 0;
+    if (!once) {
+        once = 1;
+        pthread_mutex_init(&treeMutex, NULL);
+    }
+}
+
+void Node::lock()
+{
+    pthread_mutex_lock(&treeMutex);
+}
+
+void Node::unlock()
+{
+    pthread_mutex_unlock(&treeMutex);
 }
 
 // vim: sw=4 sts=4 et tw=100

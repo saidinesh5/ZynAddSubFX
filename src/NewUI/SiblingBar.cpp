@@ -102,8 +102,10 @@ void SiblingBar::mouseReleaseEvent(QMouseEvent *event)
         std::string stdChild = m_childContainer->createChild(typeIndex);
         QString     childId  = QString::fromStdString(stdChild);
         if(!childId.isEmpty()) {
+            Node::lock();
             Node *newContainer = Node::get(stdChild);
             addTab(QString::fromStdString(newContainer->getId()));
+            Node::unlock();
         }
         qDebug() << "Created child at " << childId;
     }

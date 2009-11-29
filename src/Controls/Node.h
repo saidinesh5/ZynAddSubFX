@@ -53,7 +53,7 @@ class Node:public NodeUser
     //these are both debug classes
     friend class DebugInterface;
     friend class Tree;
-    friend class FindChildJob;
+    friend class NodeJob;
 
     protected:
         virtual std::string doCreateChild(int type);
@@ -94,19 +94,24 @@ class Node:public NodeUser
         void removeRedirections(NodeUser *destination);
 
         static inline Node *getRoot() { return m_root; }
-        static void setRoot(Node *root) { m_root = root; }
+        static void setRoot(Node *root);
         static Node *get(std::string id) { return m_root->getChild(id); }
+        static void lock();
+        static void unlock();
 
 
     private:
-        Node *recurseGetChild(std::string id);
-
         struct Redirection {
             NodeUser *destination;
             RedirectFilter *filter;
         };
 
         std::vector<Redirection> m_rules;
+
+        //these give us unique id's for every instantiated node. used (so far) for uniquely identifying nodes
+        //and their nodejobs together.
+        unsigned int m_uid;
+        static unsigned int m_nextUid;
 
         std::string m_id, m_description;
         Node *m_parent;

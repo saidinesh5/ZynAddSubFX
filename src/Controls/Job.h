@@ -43,11 +43,16 @@ class Job
          */
         static void handleJobs();
 
+        static bool isRecentlyDeleted(unsigned int uid);
+
+        static void addToRecentlyDeleted(unsigned int id);
+
     private:
         pthread_cond_t jobExecuted;
         bool isWaitingForSignal;
         static pthread_mutex_t  mutex;
         static std::list<Job *> jobs;
+        static std::list<unsigned int> recentlyDeletedNodes;
         static pthread_t engineThread;
 };
 

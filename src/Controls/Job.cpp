@@ -5,6 +5,7 @@ using std::cout;
 
 pthread_mutex_t Job::mutex;
 list<Job *> Job::    jobs;
+list<unsigned int> Job::    recentlyDeletedNodes;
 pthread_t Job::engineThread;
 
 Job::Job()
@@ -30,6 +31,11 @@ void Job::handleJobs()
         if(!isWaitingForSignal)
             delete job;
     }
+
+
+    //TODO: whether this is an ok place to clear the queue needs to be doublechecked once things
+    //start getting more asynchronous
+    recentlyDeletedNodes.clear();
 }
 
 Job *Job::pop()
@@ -85,6 +91,34 @@ void Job::initialize()
 void Job::setEngineThread()
 {
     engineThread = pthread_self();
+}
+
+bool Job::isRecentlyDeleted(unsigned int uid)
+{
+    bool ret = false;
+    pthread_mutex_lock(&mutex);
+
+    for (list<unsigned int>::iterator it = recentlyDeletedNodes.begin();
+            it != recentlyDeletedNodes.end();
+            it++)
+    {
+        if ((*it) == uid) {
+            ret = true;
+            break;
+        }
+    }
+
+    pthread_mutex_unlock(&mutex);
+    return ret;
+}
+
+void Job::addToRecentlyDeleted(unsigned int uid)
+{
+    pthread_mutex_lock(&mutex);
+
+    recentlyDeletedNodes.push_back(uid);
+
+    pthread_mutex_unlock(&mutex);
 }
 
 // vim: sw=4 sts=4 et tw=100
