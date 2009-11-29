@@ -30,7 +30,7 @@
 #include <unistd.h>
 #include "../Controls/Job.h"
 #include "db2rapInjFunc.h"
-#include <../Controls/Event.h>
+#include "../Controls/Event.h"
 
 Master::Master()
     :Node(NULL, "Master"),
