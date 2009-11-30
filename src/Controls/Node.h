@@ -9,6 +9,7 @@
 class NodeUser
 {
     public:
+        virtual ~NodeUser() {};
         /**Handle given event
          * @param event the pointer to the given event*/
         virtual void handleEvent(Event *event) = 0;
@@ -20,6 +21,7 @@ class NodeUser
 class RedirectFilter
 {
     public:
+        virtual ~RedirectFilter() {}
         virtual bool filterEvent(class Event *event) const
         { return false; }
         //perhaps this would work better with a doFilter method

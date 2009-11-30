@@ -7,6 +7,7 @@ class BankControl:public Selector
 {
     public:
         BankControl(Node *parent);
+        virtual ~BankControl() {}
         static class Bank * bank;
 };
 

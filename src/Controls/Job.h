@@ -9,6 +9,7 @@ class Job
 {
     public:
         Job();
+        virtual ~Job() {}
 
         virtual void exec() = 0;
 
