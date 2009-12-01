@@ -49,7 +49,7 @@ class Master:public Node
         /** Constructor*/
         Master();
         /** Destructor*/
-        ~Master();
+        virtual ~Master();
 
         /**Saves all settings to a XML file
          * @return 0 for ok or <0 if there is an error*/

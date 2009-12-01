@@ -79,6 +79,7 @@ void MasterUI::on_buttonControllers_clicked()
 
 void MasterUI::on_action_Quit_triggered()
 {
+    QCoreApplication::instance()->quit();
     *Pexitprogram = 1;
 }
 #include "MasterUI.moc"

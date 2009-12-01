@@ -236,9 +236,11 @@ void *thread3(void *arg)
 
 #elif defined QT_GUI
     app = new QApplication(0, 0);
-    ui  = new MasterUI(master, 0);
+    ui  = new MasterUI(master, &Pexitprogram);
     ui->show();
     app->exec();
+    delete ui;
+    delete app;
 #endif //defined QT_GUI
 
 #endif //DISABLE_GUI
@@ -384,7 +386,9 @@ void exitprogram()
 #endif
 
 #ifndef DISABLE_GUI
+#ifdef FLTK_GUI
     delete (ui);
+#endif
 #endif
     delete (Midi);
     delete (master);

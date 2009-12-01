@@ -5,6 +5,7 @@
 #include <assert.h>
 
 #include <pthread.h>
+#include "../globals.h"
 
 using namespace std;
 

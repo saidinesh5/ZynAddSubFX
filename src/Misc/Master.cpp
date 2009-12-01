@@ -576,8 +576,26 @@ void Master::GetAudioOutSamples(int nsamples,
 }
 
 
+static void recursiveRemoveDirections(Node *node)
+{
+    node->removeRedirections(NULL);
+
+    for (NodeIterator it = node->getChildren().begin();
+            it != node->getChildren().end();
+            it++) { 
+        recursiveRemoveDirections(*it);
+    }
+}
+
 Master::~Master()
 {
+
+    for (NodeIterator it = getChildren().begin();
+            it != getChildren().end();
+            it++) { 
+        recursiveRemoveDirections(*it);
+    }
+
     for(int npart = 0; npart < NUM_MIDI_PARTS; npart++)
         delete part[npart];
     for(int nefx = 0; nefx < NUM_INS_EFX; nefx++)
