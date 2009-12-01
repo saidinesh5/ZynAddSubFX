@@ -89,6 +89,8 @@ void Dial::paintEvent(class QPaintEvent *event)
 {
     QPainter p(this);
 
+    p.setRenderHint(QPainter::Antialiasing);
+
     QRect r = rect();
     if(r.width() < r.height())
         r.setHeight(r.width());
