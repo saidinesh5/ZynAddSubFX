@@ -24,7 +24,6 @@
 
 ALSAMidiIn::ALSAMidiIn()
 {
-    int alsaport;
     inputok     = false;
 
     midi_handle = NULL;
@@ -50,6 +49,10 @@ ALSAMidiIn::~ALSAMidiIn()
 {
     if(midi_handle)
         snd_seq_close(midi_handle);
+
+    if (alsaport) {
+        snd_seq_delete_simple_port(midi_handle, alsaport);
+    }
 }
 
 

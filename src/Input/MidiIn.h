@@ -44,6 +44,8 @@ class MidiIn
                                 unsigned char &cmdchan,
                                 int *cmdparams) = 0;
         int getcontroller(unsigned char b);
+
+        virtual ~MidiIn() {}
     protected:
         bool inputok; /**<1 if I can read midi bytes from input ports*/
 };

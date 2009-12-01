@@ -34,7 +34,7 @@ class ALSAMidiIn:public MidiIn
         /**Constructor*/
         ALSAMidiIn();
         /**Destructor*/
-        ~ALSAMidiIn();
+        virtual ~ALSAMidiIn();
 
         void getmidicmd(MidiCmdType &cmdtype,
                         unsigned char &cmdchan,
@@ -45,6 +45,7 @@ class ALSAMidiIn:public MidiIn
 
     private:
         snd_seq_t *midi_handle;
+        int alsaport;
 };
 
 #endif

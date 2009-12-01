@@ -9,6 +9,11 @@ InstrumentControl::InstrumentControl(Node *parent)
     bank = new Bank();
 }
 
+InstrumentControl::~InstrumentControl()
+{
+    delete bank;
+}
+
 void InstrumentControl::loadBank(char *dir)
 {
     if(!dir) {

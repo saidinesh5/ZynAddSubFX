@@ -78,8 +78,6 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
 
 OscilGen::~OscilGen()
 {
-    std::cout << "Oscilgen deleted\n";
-
     delete[] tmpsmps;
     delete[] oscilOutTmp;
     for (int i = 0; i < MAX_AD_HARMONICS; ++i)

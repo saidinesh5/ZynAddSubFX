@@ -7,6 +7,7 @@ class InstrumentControl:public Selector
 {
     public:
         InstrumentControl(Node *parent);
+        virtual ~InstrumentControl();
         //virtual std::string getOption(int index) const;
         //virtual int numOptions() const;
         //private:
