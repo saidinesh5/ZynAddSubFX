@@ -28,6 +28,8 @@ void OscilWidget::paintEvent(QPaintEvent* event)
     QWidget::paintEvent(event);
     QPainter p(this);
 
+    p.setRenderHint(QPainter::Antialiasing);
+
     REALTYPE barwidth = REALTYPE(width()) / (m_size);
 
     p.setPen(palette().color(QPalette::Text));
@@ -45,15 +47,15 @@ void OscilWidget::paintEvent(QPaintEvent* event)
     //draws the spectrum
     for (int i=0;i<m_size;i++){
         REALTYPE x=m_data[i];
-        int val=height() * 0.5 - int(0.5 * height() * (x/max));
+        float val=height() * 0.5 - (0.5 * height() * (x/max));
 
         if (0 == i) {
             prev = val;
         }
 
         p.drawLine(
-                i * barwidth, val,
-                (i - 1)*barwidth, prev);
+                QPointF(i * barwidth, val),
+                QPointF((i - 1)*barwidth, prev));
 
         prev = val;
 
