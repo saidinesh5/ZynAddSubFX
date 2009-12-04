@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>542</width>
-    <height>243</height>
+    <width>672</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,43 +79,122 @@
       <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
+      <item row="1" column="1">
+       <widget class="EnvelopeBox" name="filterEnvelope">
+        <property name="title">
+         <string>Filter Envelope</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="LFOBox" name="filterLFO">
+        <property name="title">
+         <string>Filter LFO</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="EnvelopeBox" name="amplitudeEnvelope">
+        <property name="title">
+         <string>Amplitude Envelope</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="LFOBox" name="amplitudeLFO">
+        <property name="title">
+         <string>Amplitude LFO</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
        <widget class="ComboBox" name="comboBox_2">
         <property name="controlId" stdset="0">
          <string>OscilSmp.BaseFunc</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="Dial" name="dial">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+      <item row="0" column="0">
+       <widget class="GroupBox" name="groupBox">
+        <property name="title">
+         <string>Filter</string>
         </property>
         <property name="controlId" stdset="0">
-         <string>Volume</string>
+         <string>FilterParams</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="ComboBox" name="comboBox_5">
+           <property name="controlId" stdset="0">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="ComboBox" name="comboBox_6">
+           <property name="controlId" stdset="0">
+            <string>Category</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="Dial" name="partPan_3">
+           <property name="maximum">
+            <number>127</number>
+           </property>
+           <property name="pageStep">
+            <number>32</number>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="notchTarget">
+            <double>4.699999999999999</double>
+           </property>
+           <property name="notchesVisible">
+            <bool>true</bool>
+           </property>
+           <property name="controlId" stdset="0">
+            <string>CenterFrequency</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="Dial" name="masterVolume_11">
+           <property name="maximum">
+            <number>127</number>
+           </property>
+           <property name="pageStep">
+            <number>32</number>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="notchTarget">
+            <double>4.699999999999999</double>
+           </property>
+           <property name="notchesVisible">
+            <bool>true</bool>
+           </property>
+           <property name="controlId" stdset="0">
+            <string>Frequency</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="EnvelopeBox" name="frequencyEnvelope">
+        <property name="title">
+         <string>Frequency Envelope</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="Dial" name="dial_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="Dial" name="dial_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+      <item row="3" column="1">
+       <widget class="LFOBox" name="frequencyLFO">
+        <property name="title">
+         <string>Frequency LFO</string>
         </property>
        </widget>
       </item>
@@ -136,6 +215,24 @@
    <class>ComboBox</class>
    <extends>QComboBox</extends>
    <header>ComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>GroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LFOBox</class>
+   <extends>QGroupBox</extends>
+   <header>LFOBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EnvelopeBox</class>
+   <extends>QGroupBox</extends>
+   <header>EnvelopeBox.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>Slider</class>

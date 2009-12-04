@@ -16,10 +16,10 @@
   <widget class="EnvelopeBox" name="filterEnvelope">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>50</y>
-     <width>370</width>
-     <height>231</height>
+     <x>210</x>
+     <y>70</y>
+     <width>341</width>
+     <height>181</height>
     </rect>
    </property>
    <property name="title">
@@ -77,6 +77,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../main.qrc"/>
+ </resources>
  <connections/>
 </ui>
