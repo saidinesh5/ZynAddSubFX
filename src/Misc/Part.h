@@ -132,7 +132,7 @@ class Part:public Node
         unsigned char Prcvchn; //from what midi channel it receive commnads
         unsigned char Ppanning; //part panning
         void setPpanning(char Ppanning);
-        unsigned char Pvelsns; //velocity sensing (amplitude velocity scale)
+        DescRanger velSns; //velocity sensing (amplitude velocity scale)
         unsigned char Pveloffs; //velocity offset
         unsigned char Pnoteon; //if the part receives NoteOn messages
         unsigned char Pkitmode; //if the kitmode is enabled
