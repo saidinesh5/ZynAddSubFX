@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>images/spindial.png</file>
     <file>images/hpf1.png</file>
     <file>images/hpf2.png</file>
     <file>images/lpf1.png</file>

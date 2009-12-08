@@ -11,7 +11,8 @@
 //drawstyles: 0 - piechart
 //            1 - rotated dial
 //            2 - rectangular
-static int drawStyle = 1;
+//            3 - image
+static int drawStyle = 3;
 
 Dial::Dial(QWidget *parent)
     :QDial(parent),
@@ -159,6 +160,23 @@ void Dial::paintEvent(class QPaintEvent *event)
         p.setBrush(QColor(Qt::white));
         p.drawRect(r.x(), r.height() + r.y() - v * r.height(),
                    r.width(), v * r.height());
+    }
+    else
+    if(drawStyle == 3) {
+
+        //leave 30 degrees space at the bottom
+        const int spaceAtBottom = 30;
+        int rotation = -180 + spaceAtBottom / 2 + v*(360 - spaceAtBottom);
+
+        QPixmap button(":/images/spindial.png");
+        p.save();
+        p.translate(r.center());
+        p.rotate(rotation);
+        p.translate(-r.center());
+        p.drawPixmap(r, button);
+        p.restore();
+
+        p.drawText(r, Qt::AlignCenter, QString::number(value()));
     }
 }
 
