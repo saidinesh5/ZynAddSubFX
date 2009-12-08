@@ -30,22 +30,49 @@
 
 using namespace std;
 
+REALINJFUNCFUNC(panningFunc,
+        pan2char, pan2real,
+        x * 127.0,
+        x / 127.0)
+
 Part::Part(Node *parent,
            Microtonal *microtonal_,
            FFTwrapper *fft_,
            pthread_mutex_t *mutex_)
     :Node(parent, "Part"),
-      partVolume(this, "Volume", 30, new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
-      enabled(this, "Enabled", false),
-      instrument(this, "Instrument"),
-      instrumentKit(&instrument, "InstrumentKit"),
-      instrumentControl(this),
-      bankControl(this),
-      velSns(this, "VelocitySense", 64),
-      velOffs(this, "VelocityOffset", 64)
+      partVolume        (this, "Volume", 30, new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
+      enabled           (this, "Enabled", false),
+      instrument        (this, "Instrument"),
+      instrumentKit     (&instrument, "InstrumentKit"),
+      instrumentControl (this),
+      bankControl       (this),
+      minKey            (this, "MinKey", 0),
+      maxKey            (this, "MaxKey", 127),
+      keyShift          (this, "KeyShift", 64),
+      receiveChannel    (this, "ReceiveChannel", 0),
+      panning           (this, "Panning", pan2real(64), new panningFunc()),
+      velSns            (this, "VelocitySense", 64),
+      velOffs           (this, "VelocityOffset", 64)
 {
     instrumentControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
     bankControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
+
+    receiveChannel.addOption("Channel 1");
+    receiveChannel.addOption("Channel 2");
+    receiveChannel.addOption("Channel 3");
+    receiveChannel.addOption("Channel 4");
+    receiveChannel.addOption("Channel 5");
+    receiveChannel.addOption("Channel 6");
+    receiveChannel.addOption("Channel 7");
+    receiveChannel.addOption("Channel 8");
+    receiveChannel.addOption("Channel 9");
+    receiveChannel.addOption("10(drums)");
+    receiveChannel.addOption("Channel 11");
+    receiveChannel.addOption("Channel 12");
+    receiveChannel.addOption("Channel 13");
+    receiveChannel.addOption("Channel 14");
+    receiveChannel.addOption("Channel 15");
+    receiveChannel.addOption("Channel 16");
 
     microtonal = microtonal_;
     fft = fft_;
@@ -110,15 +137,15 @@ Part::Part(Node *parent,
 void Part::defaults()
 {
     enabled.defaults();
-    Pminkey     = 0;
-    Pmaxkey     = 127;
+    minKey.defaults();
+    maxKey.defaults();
     Pnoteon     = 1;
     Ppolymode   = 1;
     Plegatomode = 0;
     setPvolume(96);
-    Pkeyshift   = 64;
-    Prcvchn     = 0;
-    setPpanning(64);
+    keyShift.defaults();
+    receiveChannel.defaults();
+    panning.defaults();
     velSns.defaults();
     velOffs.defaults();
     Pkeylimit   = 15;
@@ -238,7 +265,7 @@ void Part::NoteOn(unsigned char note,
 
     if(Pnoteon == 0)
         return;
-    if((note < Pminkey) || (note > Pmaxkey))
+    if((note < minKey()) || (note > maxKey()))
         return;
 
     // MonoMem stuff:
@@ -336,7 +363,7 @@ void Part::NoteOn(unsigned char note,
             vel = 1.0;
 
         //compute the keyshift
-        int partkeyshift = (int)Pkeyshift - 64;
+        int partkeyshift = keyShift() - 64;
         int keyshift     = masterkeyshift + partkeyshift;
 
         //initialise note frequency
@@ -727,7 +754,7 @@ void Part::SetController(unsigned int type, int par)
         break;
     case C_panning:
         ctl.setpanning(par);
-        setPpanning(Ppanning); //update the panning
+        panning.setCharValue(panning.getCharValue() + ctl.panning.pan);
         break;
     case C_filtercutoff:
         ctl.setfiltercutoff(par);
@@ -767,7 +794,7 @@ void Part::SetController(unsigned int type, int par)
         else
             setPvolume(Pvolume);
         setPvolume(Pvolume); //update the volume
-        setPpanning(Ppanning); //update the panning
+        panning.setCharValue(panning.getCharValue() + ctl.panning.pan);
 
         for(int item = 0; item < NUM_KIT_ITEMS; item++) {
             if(kit[item].adpars == NULL)
@@ -1084,17 +1111,6 @@ void Part::setPvolume(char Pvolume_)
     partVolume.setCharValue(Pvolume_);
 }
 
-void Part::setPpanning(char Ppanning_)
-{
-    Ppanning = Ppanning_;
-    panning  = Ppanning / 127.0 + ctl.panning.pan;
-    if(panning < 0.0)
-        panning = 0.0;
-    else
-    if(panning > 1.0)
-        panning = 1.0;
-}
-
 /*
  * Enable or disable a kit item
  */
@@ -1210,12 +1226,12 @@ void Part::add2XML(XMLwrapper *xml)
         return;
 
     xml->addpar("volume", Pvolume);
-    xml->addpar("panning", Ppanning);
+    xml->addpar("panning", panning.getCharValue());
 
-    xml->addpar("min_key", Pminkey);
-    xml->addpar("max_key", Pmaxkey);
-    xml->addpar("key_shift", Pkeyshift);
-    xml->addpar("rcv_chn", Prcvchn);
+    xml->addpar("min_key", minKey());
+    xml->addpar("max_key", maxKey());
+    xml->addpar("key_shift", keyShift());
+    xml->addpar("rcv_chn", receiveChannel());
 
     xml->addpar("velocity_sensing", velSns());
     xml->addpar("velocity_offset", velOffs());
@@ -1363,12 +1379,12 @@ void Part::getfromXML(XMLwrapper *xml)
     enabled.setCharValue(xml->getparbool("enabled", enabled.getCharValue()));
 
     setPvolume(xml->getpar127("volume", Pvolume));
-    setPpanning(xml->getpar127("panning", Ppanning));
+    panning.setCharValue(xml->getpar127("panning", panning.getCharValue()));
 
-    Pminkey     = xml->getpar127("min_key", Pminkey);
-    Pmaxkey     = xml->getpar127("max_key", Pmaxkey);
-    Pkeyshift   = xml->getpar127("key_shift", Pkeyshift);
-    Prcvchn     = xml->getpar127("rcv_chn", Prcvchn);
+    minKey.setValue(xml->getpar127("min_key", minKey()));
+    maxKey.setValue(xml->getpar127("max_key", maxKey()));
+    keyShift.setValue(xml->getpar127("key_shift", keyShift()));
+    receiveChannel.setCharValue(xml->getpar127("rcv_chn", receiveChannel()));
 
     velSns.setValue(xml->getpar127("velocity_sensing", velSns()));
     velOffs.setValue(xml->getpar127("velocity_offset", velOffs()));

@@ -703,7 +703,7 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>Instrument.InstrumentKit.ADnoteParameters.FilterParams.CenterFrequency</string>
+               <string>Panning</string>
               </property>
              </widget>
             </item>
@@ -809,38 +809,13 @@
              </widget>
             </item>
             <item row="1" column="5">
-             <widget class="QComboBox" name="partChannelReceiver">
+             <widget class="ComboBox" name="partChannelReceiver">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
-              <property name="currentIndex">
-               <number>0</number>
+              <property name="controlId" stdset="0">
+               <string>ReceiveChannel</string>
               </property>
-              <item>
-               <property name="text">
-                <string>Channel 0</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Channel 1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Channel 2</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Channel 3</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Channel 4</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item row="2" column="5">

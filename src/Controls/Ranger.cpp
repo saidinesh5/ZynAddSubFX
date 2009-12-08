@@ -31,7 +31,7 @@ Ranger::Ranger(Node *parent,
     :Control<REALTYPE>(parent, id, defaultval), func(nfunc)
 {
     if(func == NULL)
-        cerr << "THIS SHOULD NEVER HAPPEN!" << __FILE__ << __LINE__ << endl;
+        cerr << "func == NULL, THIS SHOULD NEVER HAPPEN!" << __FILE__ << __LINE__ << endl;
 
     //test func
     for(char c = 0; c < 127; ++c) {

@@ -125,15 +125,15 @@ class Part:public Node
         void setkititemstatus(int kititem, int Penabled_);
 
         unsigned char Pvolume; /**<part volume*/
-        unsigned char Pminkey; /**<the minimum key that the part receives noteon messages*/
-        unsigned char Pmaxkey; //the maximum key that the part receives noteon messages
+        DescRanger minKey; /**<the minimum key that the part receives noteon messages*/
+        DescRanger maxKey; //the maximum key that the part receives noteon messages
         void setPvolume(char Pvolume);
-        unsigned char Pkeyshift; //Part keyshift
-        unsigned char Prcvchn; //from what midi channel it receive commnads
-        unsigned char Ppanning; //part panning
-        void setPpanning(char Ppanning);
+        DescRanger keyShift; //Part keyshift
+        Selector receiveChannel; //from what midi channel it receive commnads
+        Ranger panning; //part panning
         DescRanger velSns; //velocity sensing (amplitude velocity scale)
         DescRanger velOffs; //velocity offset
+
         unsigned char Pnoteon; //if the part receives NoteOn messages
         unsigned char Pkitmode; //if the kitmode is enabled
         unsigned char Pdrummode; //if all keys are mapped and the system is 12tET (used for drums)
@@ -163,8 +163,6 @@ class Part:public Node
         REALTYPE oldvolumel, oldvolumer; //this is applied by Master
         Ranger   partVolume;
         Toggle   enabled;
-
-        REALTYPE panning; //this is applied by Master, too
 
         Controller ctl; //Part controllers
 

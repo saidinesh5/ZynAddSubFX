@@ -102,7 +102,7 @@ void Master::defaults()
 
     for(int npart = 0; npart < NUM_MIDI_PARTS; npart++) {
         part[npart]->defaults();
-        part[npart]->Prcvchn = npart % NUM_MIDI_CHANNELS;
+        part[npart]->receiveChannel.setValue(npart % NUM_MIDI_CHANNELS);
     }
 
     partonoff(0, 1); //enable the first part
@@ -151,7 +151,7 @@ void Master::noteon(unsigned char chan,
     int npart;
     if(velocity != 0) {
         for(npart = 0; npart < NUM_MIDI_PARTS; npart++) {
-            if(chan == part[npart]->Prcvchn) {
+            if(chan == part[npart]->receiveChannel()) {
                 fakepeakpart[npart] = velocity * 2;
                 if(part[npart]->enabled())
                     part[npart]->NoteOn(note, velocity, keyshift);
@@ -181,7 +181,7 @@ void Master::noteoff(unsigned char chan, unsigned char note)
 {
     int npart;
     for(npart = 0; npart < NUM_MIDI_PARTS; npart++)
-        if((chan == part[npart]->Prcvchn) && (part[npart]->enabled()))
+        if((chan == part[npart]->receiveChannel()) && (part[npart]->enabled()))
             part[npart]->NoteOff(note);
     ;
 }
@@ -229,7 +229,7 @@ void Master::setcontroller(unsigned char chan, unsigned int type, int par)
     }
     else {  //other controllers
         for(int npart = 0; npart < NUM_MIDI_PARTS; npart++) //Send the controller to all part assigned to the channel
-            if((chan == part[npart]->Prcvchn) && (part[npart]->enabled()))
+            if((chan == part[npart]->receiveChannel()) && (part[npart]->enabled()))
                 part[npart]->SetController(type, par);
         ;
 
@@ -336,7 +336,7 @@ void Master::AudioOut(REALTYPE *outl, REALTYPE *outr)
         REALTYPE newvol_r = part[npart]->partVolume.getValue();
         REALTYPE oldvol_l = part[npart]->oldvolumel;
         REALTYPE oldvol_r = part[npart]->oldvolumer;
-        REALTYPE pan      = part[npart]->panning;
+        REALTYPE pan      = part[npart]->panning();
         if(pan < 0.5)
             newvol_l *= pan * 2.0;
         else
