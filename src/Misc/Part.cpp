@@ -41,7 +41,8 @@ Part::Part(Node *parent,
       instrumentKit(&instrument, "InstrumentKit"),
       instrumentControl(this),
       bankControl(this),
-      velSns(this, "VelocitySense", 64)
+      velSns(this, "VelocitySense", 64),
+      velOffs(this, "VelocityOffset", 64)
 {
     instrumentControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
     bankControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
@@ -119,7 +120,7 @@ void Part::defaults()
     Prcvchn     = 0;
     setPpanning(64);
     velSns.defaults();
-    Pveloffs    = 64;
+    velOffs.defaults();
     Pkeylimit   = 15;
     defaultsinstrument();
     ctl.defaults();
@@ -327,7 +328,7 @@ void Part::NoteOn(unsigned char note,
         REALTYPE vel = VelF(velocity / 127.0, velSns());
 
         //compute the velocity offset
-        vel += (Pveloffs - 64.0) / 64.0;
+        vel += (velOffs() - 64.0) / 64.0;
         if(vel < 0.0)
             vel = 0.0;
         else
@@ -1217,7 +1218,7 @@ void Part::add2XML(XMLwrapper *xml)
     xml->addpar("rcv_chn", Prcvchn);
 
     xml->addpar("velocity_sensing", velSns());
-    xml->addpar("velocity_offset", Pveloffs);
+    xml->addpar("velocity_offset", velOffs());
 
     xml->addparbool("note_on", Pnoteon);
     xml->addparbool("poly_mode", Ppolymode);
@@ -1370,7 +1371,7 @@ void Part::getfromXML(XMLwrapper *xml)
     Prcvchn     = xml->getpar127("rcv_chn", Prcvchn);
 
     velSns.setValue(xml->getpar127("velocity_sensing", velSns()));
-    Pveloffs    = xml->getpar127("velocity_offset", Pveloffs);
+    velOffs.setValue(xml->getpar127("velocity_offset", velOffs()));
 
     Pnoteon     = xml->getparbool("note_on", Pnoteon);
     Ppolymode   = xml->getparbool("poly_mode", Ppolymode);

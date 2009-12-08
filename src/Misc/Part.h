@@ -133,7 +133,7 @@ class Part:public Node
         unsigned char Ppanning; //part panning
         void setPpanning(char Ppanning);
         DescRanger velSns; //velocity sensing (amplitude velocity scale)
-        unsigned char Pveloffs; //velocity offset
+        DescRanger velOffs; //velocity offset
         unsigned char Pnoteon; //if the part receives NoteOn messages
         unsigned char Pkitmode; //if the kitmode is enabled
         unsigned char Pdrummode; //if all keys are mapped and the system is 12tET (used for drums)

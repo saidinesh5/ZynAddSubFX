@@ -725,7 +725,7 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>Instrument.InstrumentKit.ADnoteParameters.FilterParams.Frequency</string>
+               <string>VelocitySense</string>
               </property>
              </widget>
             </item>
@@ -747,7 +747,7 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>Instrument.InstrumentKit.ADnoteParameters.FilterParams.Frequency</string>
+               <string>VelocityOffset</string>
               </property>
              </widget>
             </item>
@@ -774,7 +774,7 @@
             <item row="2" column="2">
              <widget class="QLabel" name="label_5">
               <property name="text">
-               <string>Vel. Sns</string>
+               <string>Vel. Sense</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -784,7 +784,7 @@
             <item row="2" column="3">
              <widget class="QLabel" name="label_6">
               <property name="text">
-               <string>Vel. 0 fs.</string>
+               <string>Vel. Offset</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
