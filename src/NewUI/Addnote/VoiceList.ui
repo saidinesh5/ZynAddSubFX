@@ -6,21 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>725</width>
-    <height>543</height>
+    <width>882</width>
+    <height>897</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Voicelist</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>0</number>
-   </property>
+  <layout class="QGridLayout" name="gridLayout_2">
    <property name="margin">
     <number>0</number>
    </property>
-   <item>
+   <item row="0" column="0">
     <widget class="QFrame" name="voiceWidget">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -29,6 +26,12 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="SiblingBar" name="partBar" native="true"/>
       </item>
@@ -57,14 +60,42 @@
          <bool>true</bool>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="3" column="1">
-          <widget class="LFOBox" name="filterLFO">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0" rowspan="2">
+          <widget class="QGroupBox" name="groupBox_2">
            <property name="title">
-            <string>Filter LFO</string>
+            <string>Amplitude</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="EnvelopeBox" name="amplitudeEnvelope">
+              <property name="title">
+               <string>Amplitude Envelope</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="LFOBox" name="amplitudeLFO">
+              <property name="title">
+               <string>Amplitude LFO</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="0" column="1" rowspan="2">
           <widget class="GroupBox" name="groupBox">
            <property name="title">
             <string>Filter</string>
@@ -72,108 +103,335 @@
            <property name="controlId" stdset="0">
             <string>FilterParams</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="0">
-             <widget class="ComboBox" name="comboBox_7">
-              <property name="controlId" stdset="0">
-               <string>Type</string>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="ComboBox" name="comboBox_7">
+                <property name="controlId" stdset="0">
+                 <string>Type</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ComboBox" name="comboBox_8">
+                <property name="controlId" stdset="0">
+                 <string>Category</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Dial" name="partPan_4">
+                <property name="maximum">
+                 <number>127</number>
+                </property>
+                <property name="pageStep">
+                 <number>32</number>
+                </property>
+                <property name="wrapping">
+                 <bool>false</bool>
+                </property>
+                <property name="notchTarget">
+                 <double>4.699999999999999</double>
+                </property>
+                <property name="notchesVisible">
+                 <bool>true</bool>
+                </property>
+                <property name="controlId" stdset="0">
+                 <string>CenterFrequency</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Dial" name="masterVolume_12">
+                <property name="maximum">
+                 <number>127</number>
+                </property>
+                <property name="pageStep">
+                 <number>32</number>
+                </property>
+                <property name="wrapping">
+                 <bool>false</bool>
+                </property>
+                <property name="notchTarget">
+                 <double>4.699999999999999</double>
+                </property>
+                <property name="notchesVisible">
+                 <bool>true</bool>
+                </property>
+                <property name="controlId" stdset="0">
+                 <string>Frequency</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="EnvelopeBox" name="filterEnvelope">
+              <property name="title">
+               <string>Filter Envelope</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="ComboBox" name="comboBox_8">
-              <property name="controlId" stdset="0">
-               <string>Category</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="Dial" name="partPan_4">
-              <property name="maximum">
-               <number>127</number>
-              </property>
-              <property name="pageStep">
-               <number>32</number>
-              </property>
-              <property name="wrapping">
-               <bool>false</bool>
-              </property>
-              <property name="notchTarget">
-               <double>4.699999999999999</double>
-              </property>
-              <property name="notchesVisible">
-               <bool>true</bool>
-              </property>
-              <property name="controlId" stdset="0">
-               <string>CenterFrequency</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="Dial" name="masterVolume_12">
-              <property name="maximum">
-               <number>127</number>
-              </property>
-              <property name="pageStep">
-               <number>32</number>
-              </property>
-              <property name="wrapping">
-               <bool>false</bool>
-              </property>
-              <property name="notchTarget">
-               <double>4.699999999999999</double>
-              </property>
-              <property name="notchesVisible">
-               <bool>true</bool>
-              </property>
-              <property name="controlId" stdset="0">
-               <string>Frequency</string>
+            <item>
+             <widget class="LFOBox" name="filterLFO">
+              <property name="title">
+               <string>Filter LFO</string>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="EnvelopeBox" name="amplitudeEnvelope">
-           <property name="title">
-            <string>Amplitude Envelope</string>
-           </property>
+         <item row="3" column="0" colspan="2">
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Voice Oscillator</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="horizontalSlider">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="OscilWidget" name="widget_3" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>3</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="palette">
+               <palette>
+                <active>
+                 <colorrole role="Text">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>85</red>
+                    <green>255</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                 <colorrole role="Window">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                </active>
+                <inactive>
+                 <colorrole role="Text">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>85</red>
+                    <green>255</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                 <colorrole role="Window">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                </inactive>
+                <disabled>
+                 <colorrole role="Text">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>126</red>
+                    <green>125</green>
+                    <blue>124</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                 <colorrole role="Window">
+                  <brush brushstyle="SolidPattern">
+                   <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                   </color>
+                  </brush>
+                 </colorrole>
+                </disabled>
+               </palette>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="controlId" stdset="0">
+               <string>OscilSmp.OscilBaseFunc</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="LFOBox" name="amplitudeLFO">
+         <item row="2" column="0" colspan="2">
+          <widget class="QGroupBox" name="groupBox_3">
            <property name="title">
-            <string>Amplitude LFO</string>
+            <string>Frequency</string>
            </property>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0" colspan="2">
+             <widget class="QWidget" name="widget_2" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <item>
+                  <widget class="QLabel" name="label_12">
+                   <property name="text">
+                    <string>Detune</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_13">
+                   <property name="frameShape">
+                    <enum>QFrame::Panel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Sunken</enum>
+                   </property>
+                   <property name="text">
+                    <string>0.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="Slider" name="horizontalSlider_4">
+                 <property name="maximum">
+                  <number>127</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="controlId" stdset="0">
+                  <string>Detune</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="octave_2">
+                 <property name="prefix">
+                  <string>Octave </string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="EnvelopeBox" name="frequencyEnvelope">
+              <property name="title">
+               <string>Frequency Envelope</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="LFOBox" name="frequencyLFO">
+              <property name="title">
+               <string>Frequency LFO</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="ComboBox" name="comboBox_2">
-           <property name="controlId" stdset="0">
-            <string>OscilSmp.BaseFunc</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="LFOBox" name="frequencyLFO">
+         <item row="0" column="2" rowspan="4">
+          <widget class="QGroupBox" name="groupBox_4">
            <property name="title">
-            <string>Frequency LFO</string>
+            <string>Modulator</string>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="EnvelopeBox" name="filterEnvelope">
-           <property name="title">
-            <string>Filter Envelope</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="EnvelopeBox" name="frequencyEnvelope">
-           <property name="title">
-            <string>Frequency Envelope</string>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="EnvelopeBox" name="amplitudeEnvelope_2">
+              <property name="title">
+               <string>Amplitude Envelope</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="EnvelopeBox" name="frequencyEnvelope_2">
+              <property name="title">
+               <string>Frequency Envelope </string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -224,7 +482,26 @@
    <extends>QCheckBox</extends>
    <header>CheckBox.h</header>
   </customwidget>
+  <customwidget>
+   <class>OscilWidget</class>
+   <extends>QWidget</extends>
+   <header>OscilWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Slider</class>
+   <extends>QSlider</extends>
+   <header>Slider.h</header>
+  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>enabledCheck</tabstop>
+  <tabstop>comboBox_7</tabstop>
+  <tabstop>comboBox_8</tabstop>
+  <tabstop>partPan_4</tabstop>
+  <tabstop>masterVolume_12</tabstop>
+  <tabstop>horizontalSlider</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -240,6 +517,22 @@
     <hint type="destinationlabel">
      <x>13</x>
      <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_13</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>42</x>
+     <y>532</y>
     </hint>
    </hints>
   </connection>
