@@ -1,4 +1,5 @@
 #include "DebugInterface.h"
+#include <QMouseEvent>
 #include <QPushButton>
 #include <QTextEdit>
 #include <QTreeWidget>
@@ -6,6 +7,11 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include "../Misc/Master.h"
+#include <QtDebug>
+#include "Slider.h"
+
+
+static class Tree * tree;
 
 EventReceiver::EventReceiver(Node *node)
     :registeredNode(node)
@@ -95,10 +101,12 @@ class Tree:public QTreeWidget
                 QTreeWidgetItem *item = new QTreeWidgetItem(this);
                 item->setText(0, QString::fromStdString((*i)->getId()));
                 item->setText(1, makeConnections(*i));
+                item->setToolTip(0, QString::fromStdString((*i)->getAbsoluteId()));
                 addChildren(*i, item);
             }
 
             expandAll();
+            resizeColumnToContents(0);
         }
 
         void addChildren(Node *parent, QTreeWidgetItem *parentItem)
@@ -109,9 +117,27 @@ class Tree:public QTreeWidget
                 QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                 item->setText(0, QString::fromStdString((*i)->getId()));
                 item->setText(1, makeConnections(*i));
+                item->setToolTip(0, QString::fromStdString((*i)->getAbsoluteId()));
                 addChildren(*i, item);
             }
         }
+
+        void mouseDoubleClickEvent(QMouseEvent *event)
+        {
+
+            QTreeWidgetItem *item = itemAt(event->pos());
+
+            if (!item) return;
+
+            Slider *slider = new Slider(NULL);
+            slider->show();
+            slider->setMinimum(0);
+            slider->setMaximum(127);
+            slider->setOrientation(Qt::Horizontal);
+            slider->setProperty("absoluteControlId", item->toolTip(0));
+            setIndexWidget(indexFromItem(item, 1), slider);
+        }
+
 };
 
 
@@ -126,6 +152,7 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
 
     layout->addWidget(tree);
 
+
     QPushButton *button = new QPushButton("Refresh tree");
     layout->addWidget(button);
 
@@ -136,6 +163,9 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
 
     layout->addWidget(text);
 
+    layout->setStretchFactor(text, 1);
+    layout->setStretchFactor(tree, 3);
+
     connect(this, SIGNAL(newEvent(Node *, QString, bool)),
             this, SLOT(receiveEvent(Node *, QString, bool)));
 
@@ -144,6 +174,8 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
     receivers.append(receiver);
     connect(receiver, SIGNAL(newEvent(Node *, QString, bool)),
             this, SIGNAL(newEvent(Node *, QString, bool)));
+
+    resize(800, 600);
 }
 
 void DebugInterface::createEventReceivers(class Node *parent)

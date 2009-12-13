@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "../Controls/Node.h"
 #include <QList>
+#include<QTreeWidgetItem>
 
 class EventReceiver:public QObject, public NodeUser
 {
@@ -39,7 +40,6 @@ class DebugInterface:public QDialog
         QList<EventReceiver *> receivers;
         class Master * master;
         class QTextEdit * text;
-        class Tree * tree;
 };
 
 #endif // _DEBUGINTERFACE_H
