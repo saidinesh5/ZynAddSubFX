@@ -171,28 +171,28 @@ class ADnoteVoiceParam:public Node
         **********************************/
 
         /** If the base frequency is fixed to 440 Hz*/
-        unsigned char Pfixedfreq;
+        DescRanger fixedFreq;
 
         /* Equal temperate (this is used only if the Pfixedfreq is enabled)
            If this parameter is 0, the frequency is fixed (to 440 Hz);
            if this parameter is 64, 1 MIDI halftone -> 1 frequency halftone */
-        unsigned char PfixedfreqET;
+        DescRanger fixedFreqET;
 
         /** Fine detune */
-        unsigned short int PDetune;
+        DescRanger detune;
 
         /** Coarse detune + octave */
-        unsigned short int PCoarseDetune;
+        DescRanger coarseDetune;
 
         /** Detune type */
-        unsigned char PDetuneType;
+        DescRanger detuneType;
 
         /* Frequency Envelope */
-        unsigned char   PFreqEnvelopeEnabled;
+        Toggle   freqEnvelopeEnabled;
         EnvelopeParams *FreqEnvelope;
 
         /* Frequency LFO */
-        unsigned char PFreqLfoEnabled;
+        Toggle freqLfoEnabled;
         LFOParams    *FreqLfo;
 
 
