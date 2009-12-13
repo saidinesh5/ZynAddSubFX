@@ -51,8 +51,16 @@ class VoiceVolumeConv:public InjFunction<char, REALTYPE>
 
 ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
     :Node(parent, id),
-      volume(this, "Volume", 0.23, new VoiceVolumeConv),
-      Enabled(this, "Enabled", false)
+      volume      (this, "Volume", 0.23, new VoiceVolumeConv),
+      Enabled     (this, "Enabled", false),
+      type        (this, "Type", 0),
+      delay       (this, "Delay",0),
+      resonance   (this, "Resonance",1),
+      extoscil   (this, "ExtOscil",-1),
+      extFMoscil  (this, "ExtFMOscil",-1),
+      oscilphase  (this, "OscilPhase",64),
+      FMoscilphase(this, "FMOscilPhase",64),
+      filterBypass(this, "FilterBypass",0)
 {}
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
@@ -142,16 +150,16 @@ void ADnoteParameters::defaults(int n)
     VoicePar[nvoice]->Unison_vibratto_speed   = 64;
     VoicePar[nvoice]->Unison_invert_phase     = 0;
 
-    VoicePar[nvoice]->Type = 0;
+    VoicePar[nvoice]->type.defaults();
     VoicePar[nvoice]->Pfixedfreq    = 0;
     VoicePar[nvoice]->PfixedfreqET  = 0;
-    VoicePar[nvoice]->Presonance    = 1;
-    VoicePar[nvoice]->Pfilterbypass = 0;
-    VoicePar[nvoice]->Pextoscil     = -1;
-    VoicePar[nvoice]->PextFMoscil   = -1;
-    VoicePar[nvoice]->Poscilphase   = 64;
-    VoicePar[nvoice]->PFMoscilphase = 64;
-    VoicePar[nvoice]->PDelay = 0;
+    VoicePar[nvoice]->resonance.defaults();
+    VoicePar[nvoice]->filterBypass.defaults();
+    VoicePar[nvoice]->extoscil.defaults();
+    VoicePar[nvoice]->extFMoscil.defaults();
+    VoicePar[nvoice]->oscilphase.defaults();
+    VoicePar[nvoice]->FMoscilphase.defaults();
+    VoicePar[nvoice]->delay.defaults();
     //VoicePar[nvoice]->PVolume=100;
     VoicePar[nvoice]->PVolumeminus    = 0;
     VoicePar[nvoice]->PPanning        = 64; //center
@@ -336,9 +344,9 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
     int oscilused = 0, fmoscilused = 0; //if the oscil or fmoscil are used by another voice
 
     for(int i = 0; i < NUM_VOICES; i++) {
-        if(VoicePar[i]->Pextoscil == nvoice)
+        if(VoicePar[i]->extoscil() == nvoice)
             oscilused = 1;
-        if(VoicePar[i]->PextFMoscil == nvoice)
+        if(VoicePar[i]->extFMoscil() == nvoice)
             fmoscilused = 1;
     }
 
@@ -348,7 +356,7 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
         return;
 
 
-    xml->addpar("type", VoicePar[nvoice]->Type);
+    xml->addpar("type", VoicePar[nvoice]->type());
 
     xml->addpar("unison_size", VoicePar[nvoice]->Unison_size);
     xml->addpar("unison_frequency_spread",
@@ -359,17 +367,17 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
                 VoicePar[nvoice]->Unison_vibratto_speed);
     xml->addpar("unison_invert_phase", VoicePar[nvoice]->Unison_invert_phase);
 
-    xml->addpar("delay", VoicePar[nvoice]->PDelay);
-    xml->addparbool("resonance", VoicePar[nvoice]->Presonance);
+    xml->addpar("delay", VoicePar[nvoice]->delay());
+    xml->addparbool("resonance", VoicePar[nvoice]->resonance());
 
-    xml->addpar("ext_oscil", VoicePar[nvoice]->Pextoscil);
-    xml->addpar("ext_fm_oscil", VoicePar[nvoice]->PextFMoscil);
+    xml->addpar("ext_oscil", VoicePar[nvoice]->extoscil());
+    xml->addpar("ext_fm_oscil", VoicePar[nvoice]->extFMoscil());
 
-    xml->addpar("oscil_phase", VoicePar[nvoice]->Poscilphase);
-    xml->addpar("oscil_fm_phase", VoicePar[nvoice]->PFMoscilphase);
+    xml->addpar("oscil_phase", VoicePar[nvoice]->oscilphase());
+    xml->addpar("oscil_fm_phase", VoicePar[nvoice]->FMoscilphase());
 
     xml->addparbool("filter_enabled", VoicePar[nvoice]->PFilterEnabled);
-    xml->addparbool("filter_bypass", VoicePar[nvoice]->Pfilterbypass);
+    xml->addparbool("filter_bypass", VoicePar[nvoice]->filterBypass());
 
     xml->addpar("fm_enabled", VoicePar[nvoice]->PFMEnabled);
 
@@ -688,37 +696,34 @@ void ADnoteParameters::getfromXMLsection(XMLwrapper *xml, int n)
         "unison_invert_phase",
         VoicePar[nvoice]->Unison_invert_phase);
 
-    VoicePar[nvoice]->Type = xml->getpar127("type",
-                                            VoicePar[nvoice]->Type);
-    VoicePar[nvoice]->PDelay     = xml->getpar127("delay",
-                                                  VoicePar[nvoice]->PDelay);
-    VoicePar[nvoice]->Presonance =
-        xml->getparbool("resonance", VoicePar[nvoice]->Presonance);
+    VoicePar[nvoice]->type.setValue(xml->getpar127("type",
+                                            VoicePar[nvoice]->type()));
+    VoicePar[nvoice]->delay.setValue(xml->getpar127("delay",
+                                                  VoicePar[nvoice]->delay()));
+    VoicePar[nvoice]->resonance.setValue(
+        xml->getparbool("resonance", VoicePar[nvoice]->resonance()));
 
-    VoicePar[nvoice]->Pextoscil      = xml->getpar("ext_oscil",
+    VoicePar[nvoice]->extoscil.setValue(xml->getpar("ext_oscil",
                                                    -1,
                                                    -1,
-                                                   nvoice - 1);
-    VoicePar[nvoice]->PextFMoscil    = xml->getpar("ext_fm_oscil",
+                                                   nvoice - 1));
+    VoicePar[nvoice]->extFMoscil.setValue(xml->getpar("ext_fm_oscil",
                                                    -1,
                                                    -1,
-                                                   nvoice - 1);
+                                                   nvoice - 1));
 
-    VoicePar[nvoice]->Poscilphase    =
-        xml->getpar127("oscil_phase", VoicePar[nvoice]->Poscilphase);
-    VoicePar[nvoice]->PFMoscilphase  = xml->getpar127(
-        "oscil_fm_phase",
-        VoicePar[nvoice]->
-        PFMoscilphase);
+    VoicePar[nvoice]->oscilphase.setValue(
+        xml->getpar127("oscil_phase", VoicePar[nvoice]->oscilphase()));
+    VoicePar[nvoice]->FMoscilphase.setValue(xml->getpar127(
+        "oscil_fm_phase", VoicePar[nvoice]->FMoscilphase()));
 
     VoicePar[nvoice]->PFilterEnabled = xml->getparbool(
         "filter_enabled",
         VoicePar[nvoice]->
         PFilterEnabled);
-    VoicePar[nvoice]->Pfilterbypass  = xml->getparbool(
+    VoicePar[nvoice]->filterBypass.setValue(xml->getparbool(
         "filter_bypass",
-        VoicePar[nvoice]->
-        Pfilterbypass);
+        VoicePar[nvoice]->filterBypass()));
 
     VoicePar[nvoice]->PFMEnabled     =
         xml->getpar127("fm_enabled", VoicePar[nvoice]->PFMEnabled);

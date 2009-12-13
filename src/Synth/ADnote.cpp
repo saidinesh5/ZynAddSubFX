@@ -290,8 +290,8 @@ ADnote::ADnote(ADnoteParameters *pars,
 
         //Get the voice's oscil or external's voice oscil
         int vc = nvoice;
-        if(pars->VoicePar[nvoice]->Pextoscil != -1)
-            vc = pars->VoicePar[nvoice]->Pextoscil;
+        if(pars->VoicePar[nvoice]->extoscil() != -1)
+            vc = pars->VoicePar[nvoice]->extoscil();
         if(!pars->GlobalPar.Hrandgrouping)
             pars->VoicePar[vc]->OscilSmp->newrandseed(rand());
         int oscposhi_start =
@@ -299,7 +299,7 @@ ADnote::ADnote(ADnoteParameters *pars,
                                               getvoicebasefreq(
                                                   nvoice),
                                               pars->VoicePar[nvoice]->
-                                              Presonance);
+                                              resonance());
 
         //I store the first elments to the last position for speedups
         for(int i = 0; i < OSCIL_SMP_EXTRA_SAMPLES; i++)
@@ -308,7 +308,7 @@ ADnote::ADnote(ADnoteParameters *pars,
                 NoteVoicePar[nvoice].OscilSmp[i];
 
         oscposhi_start +=
-            (int)((pars->VoicePar[nvoice]->Poscilphase
+            (int)((pars->VoicePar[nvoice]->oscilphase()
                    - 64.0) / 128.0 * OSCIL_SIZE + OSCIL_SIZE * 4);
         oscposhi_start %= OSCIL_SIZE;
 
@@ -331,7 +331,7 @@ ADnote::ADnote(ADnoteParameters *pars,
         NoteVoicePar[nvoice].FilterCenterPitch =
             pars->VoicePar[nvoice]->VoiceFilter->getfreq();
         NoteVoicePar[nvoice].filterbypass      =
-            pars->VoicePar[nvoice]->Pfilterbypass;
+            pars->VoicePar[nvoice]->filterBypass();
 
         switch(pars->VoicePar[nvoice]->PFMEnabled) {
         case 1:
@@ -396,7 +396,7 @@ ADnote::ADnote(ADnoteParameters *pars,
 
         firsttick[nvoice] = 1;
         NoteVoicePar[nvoice].DelayTicks =
-            (int)((exp(pars->VoicePar[nvoice]->PDelay / 127.0
+            (int)((exp(pars->VoicePar[nvoice]->delay() / 127.0
                        * log(50.0))
                    - 1.0) / SOUND_BUFFER_SIZE / 10.0 * SAMPLE_RATE);
     }
@@ -528,14 +528,14 @@ void ADnote::ADlegatonote(REALTYPE freq,
 
         //Get the voice's oscil or external's voice oscil
         int vc = nvoice;
-        if(pars->VoicePar[nvoice]->Pextoscil != -1)
-            vc = pars->VoicePar[nvoice]->Pextoscil;
+        if(pars->VoicePar[nvoice]->extoscil() != -1)
+            vc = pars->VoicePar[nvoice]->extoscil();
         if(!pars->GlobalPar.Hrandgrouping)
             pars->VoicePar[vc]->OscilSmp->newrandseed(rand());
 
         pars->VoicePar[vc]->OscilSmp->get(NoteVoicePar[nvoice].OscilSmp,
                                           getvoicebasefreq(nvoice),
-                                          pars->VoicePar[nvoice]->Presonance);                                                       //(gf)Modif of the above line.
+                                          pars->VoicePar[nvoice]->resonance());                                                       //(gf)Modif of the above line.
 
         //I store the first elments to the last position for speedups
         for(int i = 0; i < OSCIL_SMP_EXTRA_SAMPLES; i++)
@@ -547,7 +547,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
         NoteVoicePar[nvoice].FilterCenterPitch =
             pars->VoicePar[nvoice]->VoiceFilter->getfreq();
         NoteVoicePar[nvoice].filterbypass      =
-            pars->VoicePar[nvoice]->Pfilterbypass;
+            pars->VoicePar[nvoice]->filterBypass();
 
 
         NoteVoicePar[nvoice].FMVoice = pars->VoicePar[nvoice]->PFMVoice;
@@ -587,7 +587,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
                  partparams->VoicePar[nvoice]->PFMVelocityScaleFunction);
 
         NoteVoicePar[nvoice].DelayTicks =
-            (int)((exp(pars->VoicePar[nvoice]->PDelay / 127.0
+            (int)((exp(pars->VoicePar[nvoice]->delay() / 127.0
                        * log(50.0))
                    - 1.0) / SOUND_BUFFER_SIZE / 10.0 * SAMPLE_RATE);
     }
@@ -624,7 +624,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
         if(NoteVoicePar[nvoice].Enabled == 0)
             continue;
 
-        NoteVoicePar[nvoice].noisetype = partparams->VoicePar[nvoice]->Type;
+        NoteVoicePar[nvoice].noisetype = partparams->VoicePar[nvoice]->type();
         /* Voice Amplitude Parameters Init */
         NoteVoicePar[nvoice].Volume    = partparams->VoicePar[nvoice]->volume() // -60 dB .. 0 dB
                                          * VelF(
@@ -664,8 +664,8 @@ void ADnote::ADlegatonote(REALTYPE freq,
             //Perform Anti-aliasing only on MORPH or RING MODULATION
 
             int vc = nvoice;
-            if(partparams->VoicePar[nvoice]->PextFMoscil != -1)
-                vc = partparams->VoicePar[nvoice]->PextFMoscil;
+            if(partparams->VoicePar[nvoice]->extFMoscil() != -1)
+                vc = partparams->VoicePar[nvoice]->extFMoscil();
 
             REALTYPE tmp = 1.0;
             if((partparams->VoicePar[vc]->FMSmp->Padaptiveharmonics != 0)
@@ -878,7 +878,7 @@ void ADnote::initparameters()
         if(NoteVoicePar[nvoice].Enabled == 0)
             continue;
 
-        NoteVoicePar[nvoice].noisetype = partparams->VoicePar[nvoice]->Type;
+        NoteVoicePar[nvoice].noisetype = partparams->VoicePar[nvoice]->type();
         /* Voice Amplitude Parameters Init */
         NoteVoicePar[nvoice].Volume    = partparams->VoicePar[nvoice]->volume() // -60 dB .. 0 dB
                                          * VelF(
@@ -952,8 +952,8 @@ void ADnote::initparameters()
             //Perform Anti-aliasing only on MORPH or RING MODULATION
 
             int vc = nvoice;
-            if(partparams->VoicePar[nvoice]->PextFMoscil != -1)
-                vc = partparams->VoicePar[nvoice]->PextFMoscil;
+            if(partparams->VoicePar[nvoice]->extFMoscil() != -1)
+                vc = partparams->VoicePar[nvoice]->extFMoscil();
 
             REALTYPE tmp = 1.0;
             if((partparams->VoicePar[vc]->FMSmp->Padaptiveharmonics != 0)
@@ -976,7 +976,7 @@ void ADnote::initparameters()
                 NoteVoicePar[nvoice].FMSmp[OSCIL_SIZE
                                            + i] = NoteVoicePar[nvoice].FMSmp[i];
             int oscposhiFM_add =
-                (int)((partparams->VoicePar[nvoice]->PFMoscilphase
+                (int)((partparams->VoicePar[nvoice]->FMoscilphase()
                        - 64.0) / 128.0 * OSCIL_SIZE + OSCIL_SIZE * 4);
             for(int k = 0; k < unison_size[nvoice]; k++) {
                 oscposhiFM[nvoice][k] += oscposhiFM_add;

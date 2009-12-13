@@ -145,23 +145,23 @@ class ADnoteVoiceParam:public Node
         unsigned char Unison_invert_phase; //0=none,1=random,2=50%,3=33%,4=25%
 
         /** Type of the voice (0=Sound,1=Noise)*/
-        unsigned char Type;
+        DescRanger type;
 
         /** Voice Delay */
-        unsigned char PDelay;
+        DescRanger delay;
 
         /** If the resonance is enabled for this voice */
-        unsigned char Presonance;
+        DescRanger resonance;
 
         // What external oscil should I use, -1 for internal OscilSmp&FMSmp
-        short int Pextoscil, PextFMoscil;
+        DescRanger extoscil, extFMoscil;
         // it is not allowed that the externoscil,externFMoscil => current voice
 
         // oscillator phases
-        unsigned char Poscilphase, PFMoscilphase;
+        DescRanger oscilphase, FMoscilphase;
 
         // filter bypass
-        unsigned char Pfilterbypass;
+        DescRanger filterBypass;
 
         /** Voice oscillator */
         OscilGen *OscilSmp;
