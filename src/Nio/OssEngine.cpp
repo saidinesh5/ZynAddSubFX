@@ -24,6 +24,7 @@
 #include "../Misc/Util.h"
 #include "../globals.h"
 
+#include <cstring>
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -51,7 +52,7 @@ OssEngine::OssEngine(OutMgr *out)
 
 OssEngine::~OssEngine()
 {
-    close(snd_handle);
+    Stop();
     delete [] smps;
 }
 
@@ -93,6 +94,7 @@ void OssEngine::Stop()
 {
     threadStop = true;
     enabled = false;
+    close(snd_handle);
 }
 
 void *OssEngine::_AudioThread(void *arg)

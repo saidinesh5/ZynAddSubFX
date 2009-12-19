@@ -22,7 +22,7 @@ class RedirectFilter
 {
     public:
         virtual ~RedirectFilter() {}
-        virtual bool filterEvent(class Event *event) const
+        virtual bool filterEvent(class Event *) const
         { return false; }
         //perhaps this would work better with a doFilter method
         //It would pass it on to the next filter (which could be an

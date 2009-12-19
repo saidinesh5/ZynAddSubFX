@@ -75,7 +75,6 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
     :PresetsArray(parent, "ADnoteParameters"),
-      PresetsArray()
       volume(this, "Volume", 10, new VolumeConv),
       //note: the original conversion functon is found in ADnote.cpp:337
       voices(this, "Voices")

@@ -23,7 +23,7 @@
 
 #include "../Misc/Stereo.h"
 #include "../Samples/Sample.h"
-#include <queue>
+#include <deque>
 #include <pthread.h>
 #include "OutMgr.h"
 #include "../Misc/Atomic.h"
@@ -32,7 +32,7 @@ class AudioOut
 {
     public:
         AudioOut(OutMgr *out);
-        virtual ~AudioOut() {};
+        virtual ~AudioOut();
 
         /**Start the Driver*/
         virtual bool Start()=0;
@@ -40,7 +40,7 @@ class AudioOut
         virtual void Stop()=0;
 
         /**Give the Driver Samples to process*/
-        virtual void out(const Stereo<Sample> smps);
+        virtual void out(Stereo<Sample> smps);
         /**Determines if new operator should/can be used*/
         virtual bool isEnabled() const {return enabled();};
 
@@ -48,11 +48,26 @@ class AudioOut
          * @return 0 for stoped, 1 for running*/
         virtual int state() const {return enabled();};
 
-    protected:
-        /**Get the next sample for output.*/
-        virtual const Stereo<Sample> getNext();
+        /**Sets the Sample Rate of this Output
+         * (used for getNext()).*/
+        void setSamplerate(int _samplerate) {samplerate=_samplerate;};
 
-        std::queue<Stereo<Sample> >  outBuf;
+        /**Sets the Samples required per Out of this driver
+         * (used for getNext()).*/
+        void setNsamples(int _nsamples) {nsamples=_nsamples;};
+
+    protected:
+
+        const Stereo<Sample> popOne();
+        void putBack(const Stereo<Sample> smp);
+        /**Get the next sample for output.
+         * (has nsamples sampled at a rate of samplerate)*/
+        virtual const Stereo<Sample> getNext(int smps = -1);
+
+        int samplerate;
+        int nsamples;
+
+        std::deque<Stereo<Sample> >  outBuf;
         const Sample *  curSmp;
         Stereo<Sample> current;
         pthread_mutex_t outBuf_mutex;

@@ -25,7 +25,6 @@
 
 #include "../Params/LFOParams.h"
 #include "../Effects/EffectMgr.h"
-#include "../Nio/NulEngine.h"
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -55,7 +54,6 @@ Master::Master()
     Job::initialize();
     Job::setEngineThread();
 
-    myNull=NULL;
     swaplr = 0;
 
     pthread_mutex_init(&mutex, NULL);
@@ -754,26 +752,6 @@ void Master::handleEvent(Event *event)
         Job::push(new NodeJob(this, new NewValueEvent(*newValue)));
 
     }
-}
-
-void Master::toggleNull()
-{
-    if(myNull==NULL)
-    {
-        myNull=new NulEngine(sysOut);
-        nullRun=false;
-    }
-    if(nullRun)
-    {
-        sysOut->add(myNull);
-        cout << "Inserting A Null Output-----------------" << endl;
-    }
-    else
-    {
-        sysOut->remove(myNull);
-        cout << "Uninserting A Null Output-----------------" << endl;
-    }
-    nullRun=!nullRun;
 }
 
 void Master::applyparameters()

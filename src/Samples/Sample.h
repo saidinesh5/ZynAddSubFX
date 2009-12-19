@@ -51,13 +51,22 @@ class Sample
         void operator=(const Sample &smp);
         /**Provides the == operator*/
         bool operator==(const Sample &smp) const;
+
         /**Provides direct access to the buffer to allow for transition
          *
          * This method is like c_str() from the string class and should be used
          * sparingly*/
-        const REALTYPE *c_buf() const{
-            return buffer;
-        }
+        const REALTYPE *c_buf() const {return buffer;}
+
+        /**Change the sampling rate of the Sample*/
+        void resample(const unsigned int rate, const unsigned int nrate);
+
+        /**Appends another Sample to this Sample*/
+        void append(const Sample &smp);
+
+        /**Gets a subsample from a to b*/
+        Sample subSample(int a, int b) const;
+
         REALTYPE max() const;
         REALTYPE min() const;
         REALTYPE absMax() const;

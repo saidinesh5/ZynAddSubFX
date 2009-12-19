@@ -4,6 +4,8 @@
 #include "JobClasses.h"
 #include <iostream>
 
+using std::cout;
+
 InstrumentContainer::InstrumentContainer(class Node *parent,
                                          std::string id,
                                          Master *master)

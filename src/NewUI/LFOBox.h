@@ -4,6 +4,7 @@
 #include "UnitBox.h"
 #include "ui_LFOBox.h"
 #include "../Misc/Master.h"
+#include "../Params/LFOParams.h"
 
 class LFOBox:public UnitBox, Ui::LFOBox
 {

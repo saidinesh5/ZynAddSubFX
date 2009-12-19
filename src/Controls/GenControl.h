@@ -41,7 +41,7 @@ class GenControl:public Node
         //virtual void requestValue()=0;
 
         virtual int numOptions() const {return 0;}
-        virtual std::string getOption(int i) const {return "";}
+        virtual std::string getOption(int /*i*/) const {return "";}
     protected:
         GenControl(Node *parent, std::string id);
         virtual ~GenControl();

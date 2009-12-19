@@ -43,8 +43,6 @@ typedef enum { MUTEX_TRYLOCK, MUTEX_LOCK, MUTEX_UNLOCK } lockset;
 
 extern Dump dump;
 
-class NulEngine;
-
 typedef struct vuData_t {
     REALTYPE outpeakl, outpeakr, maxoutpeakl, maxoutpeakr,
              rmspeakl, rmspeakr;
@@ -120,6 +118,12 @@ class Master:public Node
         /**parts \todo see if this can be made to be dynamic*/
         Part *part[NUM_MIDI_PARTS];
 
+        //parameters
+        unsigned char Pvolume;
+        unsigned char Pkeyshift;
+        unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
+        unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
+
         //parameters control
         void setPvolume(char Pvolume_);
         void setPkeyshift(char Pkeyshift_);
@@ -171,15 +175,12 @@ class Master:public Node
         Ranger masterVolume;
         FakeChildFactory parts;
 
-        void toggleNull();//temporary debug function
-
     private:
 
         //use panic control instead
         void ShutUp();
 
     private:
-        NulEngine *myNull;
         bool nullRun;
         vuData vu;
         REALTYPE volume;

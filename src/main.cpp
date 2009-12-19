@@ -115,7 +115,10 @@ void *thread1(void *arg)
         if((cmdtype == MidiNoteOFF) && (note != 0))
             master->NoteOff(cmdchan, note);
         if(cmdtype == MidiController)
-            master->SetController(cmdchan, cmdparams[0], cmdparams[1]);
+            master->SetController(cmdchan,
+                    cmdparams[0],
+                    cmdparams[1],
+                    cmdparams[2]);
     }
 
     return 0;
@@ -252,6 +255,10 @@ void initprogram()
 #if (defined(NONEMIDIIN) || (defined(VSTMIDIIN)))
     Midi = new NULLMidiIn();
 #endif
+
+    sysOut = new OutMgr(master);
+    sysOut->run();
+
 #ifndef DISABLE_GUI
 #ifdef FLTK_GUI
     ui = new MasterUI(master, &Pexitprogram);
@@ -265,6 +272,7 @@ void initprogram()
 void exitprogram()
 {
     pthread_mutex_lock(&master->mutex);
+    delete sysOut;
 
 #ifndef DISABLE_GUI
 #ifdef FLTK_GUI
@@ -537,6 +545,7 @@ int main(int argc, char *argv[])
 #endif
 #endif
 
+
     if(strlen(loadfile) > 1) {
         int tmp = master->loadXML(loadfile);
         if(tmp < 0) {
@@ -578,9 +587,6 @@ int main(int argc, char *argv[])
     pthread_create(&thr1, NULL, thread1, NULL);
 #endif
 
-    //Output Bootstrapping
-    sysOut = new OutMgr(master);
-    sysOut->run();
 
 
     if(noui == 0)

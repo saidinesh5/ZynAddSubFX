@@ -511,7 +511,13 @@ updatepanel();}
           MenuItem {} {
             label {&Settings...}
             callback {configui->show();}
-            xywh {25 25 100 20} divider
+            xywh {25 25 100 20}
+          }
+          MenuItem {} {
+            label {N&io Settings}
+            callback {nioui.refresh();
+nioui.show();} selected
+            xywh {0 0 36 21} divider
           }
           MenuItem {} {
             label {&Copyright...}
@@ -995,11 +1001,6 @@ globalfinedetuneslider->do_callback();}
         callback {updatepanel();
 panelwindow->show();}
         tooltip {Panel Window} xywh {293 62 92 16} box PLASTIC_UP_BOX color 183 labelfont 1 labelsize 10
-      }
-      Fl_Button {} {
-        label N
-        callback {nioui.show();} selected
-        xywh {270 75 20 25}
       }
     }
     Fl_Window aboutwindow {
@@ -1607,16 +1608,6 @@ config.cfg.UserInterfaceMode=2;}
       Fl_Box {} {
         label {You can switch the interface modes anytime you want.}
         xywh {30 215 360 25} box BORDER_BOX color 51 labelfont 1 labelsize 11 align 144
-      }
-    }
-    Fl_Window newiowindow {
-      label {New IO}
-      xywh {467 490 120 55} type Double labeltype NORMAL_LABEL align 80 hide
-    } {
-      Fl_Light_Button nullToggle {
-        label {Null Output}
-        callback {master->toggleNull();}
-        xywh {10 15 100 20} labelfont 13
       }
     }
   }
