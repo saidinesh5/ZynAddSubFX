@@ -25,8 +25,6 @@
 
 
 #include "../globals.h"
-#include "EnvelopeParams.h"
-#include "LFOParams.h"
 #include "FilterParams.h"
 #include "../Synth/OscilGen.h"
 #include "../Synth/Resonance.h"
@@ -38,6 +36,10 @@
 #include "../Controls/Toggle.h"
 #include "../Controls/FakeChildFactory.h"
 #include <vector>
+#include "PresetsArray.h"
+
+class EnvelopeParams;
+class LFOParams;
 
 enum FMTYPE {
     NONE, MORPH, RING_MOD, PHASE_MOD, FREQ_MOD, PITCH_MOD
@@ -285,7 +287,7 @@ class ADnoteVoiceParam:public Node
         EnvelopeParams *FMAmpEnvelope;
 };
 
-class ADnoteParameters:public Presets
+class ADnoteParameters : public PresetsArray
 {
     public:
         ADnoteParameters(Node *parent, FFTwrapper *fft_);

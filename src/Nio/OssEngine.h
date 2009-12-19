@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  Effect.C - this class is inherited by the all effects(Reverb, Echo, ..)
+  OSSaudiooutput.h - Audio output for Open Sound System
   Copyright (C) 2002-2005 Nasca Octavian Paul
   Author: Nasca Octavian Paul
 
@@ -20,13 +20,40 @@
 
 */
 
-#include "Effect.h"
-#include "../Params/FilterParams.h"
+#ifndef OSS_ENGINE_H
+#define OSS_ENGINE_H
 
+#include <sys/time.h>
+#include "../globals.h"
+#include "AudioOut.h"
 
-Effect::Effect(bool insertion_, REALTYPE *const efxoutl_,
-               REALTYPE *const efxoutr_, FilterParams *filterpars_,
-               const unsigned char &Ppreset_)
-    :Ppreset(Ppreset_), efxoutl(efxoutl_), efxoutr(efxoutr_),
-      filterpars(filterpars_), insertion(insertion_) {}
+class OssEngine: public AudioOut
+{
+    public:
+        OssEngine(OutMgr *out);
+        ~OssEngine();
+
+        bool Start();
+        void Stop();
+
+    protected:
+        void *AudioThread();
+        static void *_AudioThread(void *arg);
+
+    private:
+        /**Open the audio device
+         * @return true for success*/
+        bool openAudio();
+        
+        void OSSout(const REALTYPE *smp_left, const REALTYPE *smp_right);
+        int snd_handle;
+        int snd_fragment;
+        int snd_stereo;
+        int snd_format;
+        int snd_samplerate;
+
+        short int *smps; //Samples to be sent to soundcard
+};
+
+#endif
 

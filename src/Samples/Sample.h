@@ -22,11 +22,12 @@
 #define SAMPLE_H
 #include "../globals.h"
 /**
- * Base Class for Samples
+ * Audio Samples Representation
  */
 class Sample
 {
     public:
+        Sample();
         Sample(const Sample &smp);
         Sample(int length, REALTYPE fill = 0);
         Sample(int length, const REALTYPE *fill);
@@ -54,7 +55,7 @@ class Sample
          *
          * This method is like c_str() from the string class and should be used
          * sparingly*/
-        const REALTYPE *c_buf() {
+        const REALTYPE *c_buf() const{
             return buffer;
         }
         REALTYPE max() const;

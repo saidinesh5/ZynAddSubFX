@@ -42,7 +42,7 @@ FilterParams::FilterParams(Node *parent,
                            unsigned char Ptype_,
                            unsigned char Pfreq_,
                            unsigned char Pq_)
-    :Presets(parent, "FilterParams"),
+    :PresetsArray(parent, "FilterParams"),
       frequency(this, "Frequency", freq2real(Pfreq_), new FreqInj),
 
 // 1 kHz

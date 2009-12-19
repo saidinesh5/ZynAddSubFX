@@ -25,12 +25,11 @@
 #define MASTER_H
 
 #include "../globals.h"
-#include "../Effects/EffectMgr.h"
-#include "Part.h"
-#include "../Output/Recorder.h"
 #include "Microtonal.h"
 
 #include "Bank.h"
+#include "Recorder.h"
+#include "Part.h"
 #include "Dump.h"
 #include "../Seq/Sequencer.h"
 #include "XMLwrapper.h"
@@ -40,7 +39,19 @@
 #include "LinInjFunc.h"
 #include "../Controls/FakeChildFactory.h"
 
+typedef enum { MUTEX_TRYLOCK, MUTEX_LOCK, MUTEX_UNLOCK } lockset;
+
 extern Dump dump;
+
+class NulEngine;
+
+typedef struct vuData_t {
+    REALTYPE outpeakl, outpeakr, maxoutpeakl, maxoutpeakr,
+             rmspeakl, rmspeakr;
+    int clipped;
+} vuData;
+
+
 /** It sends Midi Messages to Parts, receives samples from parts,
  *  process them with system/insertion effects and mix them */
 class Master:public Node
@@ -73,7 +84,11 @@ class Master:public Node
         /**put all data from the *data array to zynaddsubfx parameters (used for VST)*/
         void putalldata(char *data, int size);
 
-
+        //Mutex control
+        /**Control the Master's mutex state.
+         * @param lockset either trylock, lock, or unlock.
+         * @return true when successful false otherwise.*/
+        bool mutexLock(lockset request);
 
         //Midi IN
         void NoteOn(unsigned char chan,
@@ -128,13 +143,14 @@ class Master:public Node
         //part that's apply the insertion effect; -1 to disable
         short int Pinsparts[NUM_INS_EFX];
 
+
         //peaks for VU-meter
         void vuresetpeaks();
-        REALTYPE vuoutpeakl, vuoutpeakr, vumaxoutpeakl, vumaxoutpeakr,
-                 vurmspeakl, vurmspeakr;
-        int vuclipped;
+        //get VU-meter data
+        vuData getVuData();
 
         //peaks for part VU-meters
+        /**\todo synchronize this with a mutex*/
         REALTYPE      vuoutpeakpart[NUM_MIDI_PARTS];
         unsigned char fakepeakpart[NUM_MIDI_PARTS]; //this is used to compute the "peak" when the part is disabled
 
@@ -150,20 +166,23 @@ class Master:public Node
 
         FFTwrapper     *fft;
         pthread_mutex_t mutex;
+        pthread_mutex_t vumutex;
 
         Ranger masterVolume;
         FakeChildFactory parts;
+
+        void toggleNull();//temporary debug function
 
     private:
 
         //use panic control instead
         void ShutUp();
 
-        //parameters
-        unsigned char Pkeyshift;
-        unsigned char Psysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
-        unsigned char Psysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
-
+    private:
+        NulEngine *myNull;
+        bool nullRun;
+        vuData vu;
+        REALTYPE volume;
         REALTYPE sysefxvol[NUM_SYS_EFX][NUM_MIDI_PARTS];
         REALTYPE sysefxsend[NUM_SYS_EFX][NUM_SYS_EFX];
 

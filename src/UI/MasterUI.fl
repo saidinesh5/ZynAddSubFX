@@ -1,5 +1,5 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0107 
+version 1.0300 
 header_name {.h} 
 code_name {.cc}
 decl {//Copyright (c) 2002-2009 Nasca Octavian Paul} {} 
@@ -48,6 +48,9 @@ decl {\#include "SeqUI.h"} {public
 decl {\#include "PresetsUI.h"} {public
 } 
 
+decl {\#include "NioUI.h"} {public global
+} 
+
 decl {\#include "../Misc/Master.h"} {public
 } 
 
@@ -81,15 +84,17 @@ oldrmsdbr=0.0;} {}
 
 int ox=x(); int oy=y(); int lx=w(); int ly=h();
 
-pthread_mutex_lock(&master->mutex);
-REALTYPE dbl=rap2dB(master->vuoutpeakl);
-REALTYPE dbr=rap2dB(master->vuoutpeakr);
-REALTYPE rmsdbl=rap2dB(master->vurmspeakl);
-REALTYPE rmsdbr=rap2dB(master->vurmspeakr);
-REALTYPE maxdbl=rap2dB(master->vumaxoutpeakl);
-REALTYPE maxdbr=rap2dB(master->vumaxoutpeakr);
-int clipped=master->vuclipped;
-pthread_mutex_unlock(&master->mutex);
+vuData data = master->getVuData();
+
+//pthread_mutex_lock(&master->mutex);
+REALTYPE dbl=rap2dB(data.outpeakl);
+REALTYPE dbr=rap2dB(data.outpeakr);
+REALTYPE rmsdbl=rap2dB(data.rmspeakl);
+REALTYPE rmsdbr=rap2dB(data.rmspeakr);
+REALTYPE maxdbl=rap2dB(data.maxoutpeakl);
+REALTYPE maxdbr=rap2dB(data.maxoutpeakr);
+int clipped=data.clipped;
+//pthread_mutex_unlock(&master->mutex);
 
 dbl=(MIN_DB-dbl)/MIN_DB; 
 if (dbl<0.0) dbl=0.0;
@@ -298,7 +303,7 @@ class Panellistitem {: {public Fl_Group}
   Function {make_window()} {private
   } {
     Fl_Window panellistitem {
-      private xywh {315 213 70 260} type Double hide
+      private xywh {315 213 70 260} type Double labeltype NORMAL_LABEL align 80 hide
       class Fl_Group
     } {
       Fl_Group panellistitemgroup {
@@ -414,8 +419,7 @@ panellistitemgroup->redraw();} {}
 } 
 
 class MasterUI {} {
-  Function {make_window()} {selected
-  } {
+  Function {make_window()} {} {
     Fl_Window masterwindow {
       label zynaddsubfx
       callback {\#ifdef VSTAUDIOOUT
@@ -426,7 +430,7 @@ if (fl_choice("Exit and leave the unsaved data?","No","Yes",NULL)) {
     *exitprogram=1;
 };
 \#endif}
-      xywh {31 206 390 465} type Double hide xclass zynaddsubfx
+      xywh {450 306 390 465} type Double align 80 hide xclass zynaddsubfx
     } {
       Fl_Menu_Bar mastermenu {
         xywh {-5 0 690 25}
@@ -992,10 +996,15 @@ globalfinedetuneslider->do_callback();}
 panelwindow->show();}
         tooltip {Panel Window} xywh {293 62 92 16} box PLASTIC_UP_BOX color 183 labelfont 1 labelsize 10
       }
+      Fl_Button {} {
+        label N
+        callback {nioui.show();} selected
+        xywh {270 75 20 25}
+      }
     }
     Fl_Window aboutwindow {
       label {Copyright...}
-      xywh {411 344 365 280} type Double hide
+      xywh {411 344 365 280} type Double labeltype NORMAL_LABEL align 80 hide
     } {
       Fl_Box {} {
         label {Copyright (c) 2002-2009 Nasca O. PAUL and others. Please read AUTHORS.txt}
@@ -1022,7 +1031,7 @@ GNU General Public License for details.}
     }
     Fl_Window syseffsendwindow {
       label {System Effects Send}
-      xywh {171 234 120 250} type Double hide resizable
+      xywh {171 234 120 250} type Double labeltype NORMAL_LABEL align 80 hide resizable
     } {
       Fl_Scroll {} {open
         xywh {0 45 120 170} box FLAT_BOX resizable
@@ -1041,7 +1050,7 @@ GNU General Public License for details.}
     }
     Fl_Window panelwindow {
       label {ZynAddSubFX Panel}
-      xywh {89 59 630 635} type Double hide
+      xywh {89 59 630 635} type Double labeltype NORMAL_LABEL align 80 hide
     } {
       Fl_Scroll {} {
         xywh {0 5 570 310} type HORIZONTAL box THIN_UP_BOX
@@ -1081,7 +1090,7 @@ if (fl_choice("Exit and leave the unsaved data?","No","Yes",NULL)) {
 	*exitprogram=1;
 };
 \#endif}
-      xywh {400 405 600 335} type Double hide
+      xywh {400 405 600 335} type Double labeltype NORMAL_LABEL align 80 hide
     } {
       Fl_Menu_Bar {} {
         xywh {0 0 690 25}
@@ -1563,7 +1572,7 @@ virkeys->take_focus();}
     Fl_Window selectuiwindow {
       label {User Interface mode}
       callback {*exitprogram=1;}
-      xywh {342 246 430 250} type Double hide non_modal
+      xywh {342 246 430 250} type Double labeltype NORMAL_LABEL align 80 hide non_modal
     } {
       Fl_Box {} {
         label {Welcome to ZynAddSubFX}
@@ -1598,6 +1607,16 @@ config.cfg.UserInterfaceMode=2;}
       Fl_Box {} {
         label {You can switch the interface modes anytime you want.}
         xywh {30 215 360 25} box BORDER_BOX color 51 labelfont 1 labelsize 11 align 144
+      }
+    }
+    Fl_Window newiowindow {
+      label {New IO}
+      xywh {467 490 120 55} type Double labeltype NORMAL_LABEL align 80 hide
+    } {
+      Fl_Light_Button nullToggle {
+        label {Null Output}
+        callback {master->toggleNull();}
+        xywh {10 15 100 20} labelfont 13
       }
     }
   }
@@ -1723,8 +1742,9 @@ pthread_mutex_lock(&master->mutex);
 
   //load the data
   int result=master->loadXML(filename);
-pthread_mutex_unlock(&master->mutex);
+
 master->applyparameters();
+pthread_mutex_unlock(&master->mutex);
 
 npartcounter->value(1);
 refresh_master_ui();
@@ -1810,4 +1830,5 @@ bankui->hide();} {}
   decl {int swapefftype;} {}
   decl {char masterwindowlabel[100];} {}
   decl {Panellistitem *panellistitem[NUM_MIDI_PARTS];} {}
+  decl {NioUI nioui;} {}
 } 

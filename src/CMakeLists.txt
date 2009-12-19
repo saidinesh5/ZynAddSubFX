@@ -4,19 +4,29 @@ find_package(fftw REQUIRED)
 find_package(MXML REQUIRED)
 #find_package(pthread REQUIRED)
 FIND_PACKAGE(Qt4)
+#find_package(OSS)
 find_package(Alsa)
 find_package(JACK)
 find_package(PortAudio)
+set(FLTK_SKIP_OPENGL true)
 find_package(FLTK)
+find_package(OpenGL) #for FLTK
 
 ######### Settings ###########
-# NOTE: These cache variables should normallly not be changed in this
+# NOTE: These cache variables should normally not be changed in this
 # file, but either in in CMakeCache.txt before compile, or by passing
 # parameters directly into cmake using the -D flag.
 SET (FFTW_VERSION 3 CACHE STRING "Version number of FFTW")
-SET (OutputModule alsa CACHE STRING "Output module, either alsa, jack or portaudio")
+SET (DefaultOutput oss CACHE STRING
+    "Default Output module: [null, alsa, oss, jack, portaudio]")
 SET (GuiModule fltk CACHE STRING "GUI module, either fltk, qt or off")
 SET (CompileTests OFF CACHE BOOL "whether tests should be compiled in or not")
+SET (AlsaEnable ${ALSA_FOUND} CACHE BOOL
+    "Enable support for Advanced Linux Sound Architecture")
+SET (JackEnable ${JACK_FOUND} CACHE BOOL
+    "Enable support for JACK Audio Connection toolKit")
+SET (OssEnable ${ALSA_FOUND} CACHE BOOL #TODO perhaps check for /dev/dsp
+    "Enable support for Open Sound System")
 
 # Now, handle the incoming settings and set define flags/variables based
 # on this
@@ -35,19 +45,31 @@ else  ()
 	message(STATUS "GUI module defaulting to off")
 endif()
 
-if (OutputModule STREQUAL alsa AND ALSA_FOUND)
-	set(AlsaMidiOutput TRUE)
-elseif(OutputModule STREQUAL jack AND JACK_FOUND)
-	set(JackOutput TRUE)
-elseif(OutputModule STREQUAL portaudio AND PortAudio_FOUND)
-	set(PortAudioOutput TRUE)
-else ()
-	message(FATAL_ERROR "OutputModule must be either alsa, jack or portaudio")
+if (DefaultOutput STREQUAL alsa)
+        add_definitions(-DALSA_DEFAULT=1)
+elseif(DefaultOutput STREQUAL oss)
+        add_definitions(-DOSS_DEFAULT=1)
+elseif(DefaultOutput STREQUAL jack)
+        add_definitions(-DOSS_DEFAULT=1)
 endif()
+
 
 ########### Settings dependant code ###########
 # From here on, the setting variables have  been prepared so concentrate
 # on the actual compiling.
+
+if(AlsaEnable)
+        list(APPEND AUDIO_LIBRARIES ${ASOUND_LIBRARY})
+        add_definitions(-DALSA=1)
+endif(AlsaEnable)
+if(JackEnable)
+        add_definitions(-DJACK=1)
+endif(JackEnable)
+if(OssEnable)
+	add_definitions(-DOSSAUDIOOUT)
+        list(APPEND AUDIO_LIBRARIES ${ASOUND_LIBRARY})
+        add_definitions(-DOSS=1)
+endif(OssEnable)
 
 if(AlsaMidiOutput)
 	add_definitions(-DOSSAUDIOOUT)
@@ -74,19 +96,12 @@ add_definitions(-DFFTW_VERSION_${FFTW_VERSION}
 	 -DOS_LINUX
 	 -DALSAMIDIIN
 	 -DASM_F2I_YES
+         -g #TODO #todo put in a better location
+         -Wall
+         -Wextra
 	 )
 
-
-if(FltkGui)
-    #message(STATUS "FLTK_LIBRARIES: ${FLTK_LIBRARIES}")
-    #message(STATUS "FLTK_MATH_LIBRARY: ${FLTK_MATH_LIBRARY}")
-
-    #UGLY WORKAROUND
-    find_program (MYFLTK_CONFIG fltk-config)
-    if (MYFLTK_CONFIG)
-        execute_process (COMMAND ${MYFLTK_CONFIG} --ldflags OUTPUT_VARIABLE MYFLTK_LDFLAGS)
-        string(STRIP ${MYFLTK_LDFLAGS} MYFLTK_LIBRARIES)
-    endif()
+if(FLTK_FOUND)
     mark_as_advanced(FORCE FLTK_BASE_LIBRARY)
     mark_as_advanced(FORCE FLTK_CONFIG_SCRIPT)
     mark_as_advanced(FORCE FLTK_DIR)
@@ -96,9 +111,21 @@ if(FltkGui)
     mark_as_advanced(FORCE FLTK_IMAGES_LIBRARY)
     mark_as_advanced(FORCE FLTK_INCLUDE_DIR)
     mark_as_advanced(FORCE FLTK_MATH_LIBRARY)
+endif(FLTK_FOUND)
+
+if(FltkGui)
+    #UGLY WORKAROUND
+    find_program (MYFLTK_CONFIG fltk-config)
+    if (MYFLTK_CONFIG)
+        execute_process (COMMAND ${MYFLTK_CONFIG} --ldflags OUTPUT_VARIABLE MYFLTK_LDFLAGS)
+        string(STRIP ${MYFLTK_LDFLAGS} MYFLTK_LIBRARIES)
+    endif()
+
+    message(STATUS ${MYFLTK_LDFLAGS})
 
 
-    set(GUI_LIBRARIES ${FLTK_LIBRARIES} ${MYFLTK_LIBRARIES} zynaddsubfx_gui)
+    set(GUI_LIBRARIES  ${MYFLTK_LIBRARIES} ${FLTK_LIBRARIES} ${OPENGL_LIBRARIES} zynaddsubfx_gui)
+
     add_definitions(-DFLTK_GUI)
 
     message(STATUS "Will build fltk gui")
@@ -166,15 +193,16 @@ endmacro(unit_test)
 
 set(NONGUI_LIBRARIES
 	zynaddsubfx_input
-	zynaddsubfx_output
 	zynaddsubfx_misc
 	zynaddsubfx_synth
 	zynaddsubfx_seq
 	zynaddsubfx_effect
 	zynaddsubfx_params
+        zynaddsubfx_output
 	zynaddsubfx_dsp
 	zynaddsubfx_samples
 	zynaddsubfx_controls
+        zynaddsubfx_nio
     )
 
 set(CXXTEST_LINK_LIBS ${NONGUI_LIBRARIES})
@@ -191,12 +219,13 @@ add_subdirectory(Params)
 add_subdirectory(DSP)
 add_subdirectory(Samples)
 add_subdirectory(Tests)
+add_subdirectory(Nio)
 
 set(zynaddsubfx_SRCS
 	main.cpp
 	)
 
-add_executable(zynaddsubfx 
+add_executable(zynaddsubfx
 	${zynaddsubfx_SRCS}
 )
 
@@ -206,6 +235,7 @@ target_link_libraries(zynaddsubfx
         ${zlib_LIBRARIES}
         ${fftw_LIBRARIES}
         ${MXML_LIBRARIES}
+        ${NIO_LIBRARIES}
         ${AUDIO_LIBRARIES}
         ${MIDIINPUT_LIBRARIES}
 	)

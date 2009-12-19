@@ -22,21 +22,19 @@
 
 #include <sys/stat.h>
 #include "Recorder.h"
+#ifdef NEW_IO
+#include "../Nio/OutMgr.h"
+#include "../Nio/WavEngine.h"
+#endif
 
 Recorder::Recorder()
-{
-    recordbuf_16bit = new short int [SOUND_BUFFER_SIZE * 2];
-    status = 0;
-    notetrigger     = 0;
-    for(int i = 0; i < SOUND_BUFFER_SIZE * 2; i++)
-        recordbuf_16bit[i] = 0;
-}
+    :status(0), notetrigger(0), wave(NULL)
+{}
 
 Recorder::~Recorder()
 {
     if(recording() == 1)
         stop();
-    delete [] recordbuf_16bit;
 }
 
 int Recorder::preparefile(std::string filename_, int overwrite)
@@ -49,7 +47,7 @@ int Recorder::preparefile(std::string filename_, int overwrite)
             return 1;
     }
 
-    if(!wav.newfile(filename_, SAMPLE_RATE, 2))
+    if(!(wave=new WavEngine(sysOut, filename_, SAMPLE_RATE, 2)))
         return 2;
 
     status = 1; //ready
@@ -65,13 +63,21 @@ void Recorder::start()
 
 void Recorder::stop()
 {
-    wav.close();
+    if(wave)
+    {
+        sysOut->remove(wave);
+        wave->Close();
+        delete wave;
+        wave = NULL; //is this even needed?
+    }
     status = 0;
 }
 
 void Recorder::pause()
 {
     status = 0;
+//        wave->Stop();
+        sysOut->remove(wave);
 }
 
 int Recorder::recording()
@@ -82,32 +88,15 @@ int Recorder::recording()
         return 0;
 }
 
-void Recorder::recordbuffer(REALTYPE *outl, REALTYPE *outr)
-{
-    int tmp;
-    if(status != 2)
-        return;
-    for(int i = 0; i < SOUND_BUFFER_SIZE; i++) {
-        tmp = (int)(outl[i] * 32767.0);
-        if(tmp < -32768)
-            tmp = -32768;
-        if(tmp > 32767)
-            tmp = 32767;
-        recordbuf_16bit[i * 2] = tmp;
-
-        tmp = (int)(outr[i] * 32767.0);
-        if(tmp < -32768)
-            tmp = -32768;
-        if(tmp > 32767)
-            tmp = 32767;
-        recordbuf_16bit[i * 2 + 1] = tmp;
-    }
-    wav.write_stereo_samples(SOUND_BUFFER_SIZE, recordbuf_16bit);
-}
-
 void Recorder::triggernow()
 {
-    if(status == 2)
+    if(status == 2) {
+        if(notetrigger!=1) {
+            wave->openAudio();
+            //wave->Start();
+            sysOut->add(wave);
+        }
         notetrigger = 1;
+    }
 }
 

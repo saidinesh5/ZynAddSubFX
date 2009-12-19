@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  main.c  -  Main file of the synthesizer
+  main.cpp  -  Main file of the synthesizer
   Copyright (C) 2002-2005 Nasca Octavian Paul
   Author: Nasca Octavian Paul
 
@@ -22,6 +22,7 @@
 
 #include <stdio.h> //remove once iostream is used
 #include <iostream>
+#include <cmath>
 
 #include <unistd.h>
 #include <pthread.h>
@@ -39,6 +40,7 @@
 extern Dump dump;
 
 int (*rand_func)();
+#include "Nio/OutMgr.h"
 
 #ifdef ALSAMIDIIN
 #include "Input/ALSAMidiIn.h"
@@ -74,27 +76,13 @@ MasterUI *ui;
 
 using namespace std;
 
-pthread_t thr1, thr2, thr3, thr4;
+pthread_t thr1, thr2, thr3, thr4;/**@deprecated*/
 Master   *master;
 int  swaplr    = 0; //1 for left-right swapping
 bool usejackit = false;
 
-#ifdef JACKAUDIOOUT
-#include "Output/JACKaudiooutput.h"
-#endif
+#include "Nio/OutMgr.h"
 
-#ifdef JACK_RTAUDIOOUT
-#include "Output/JACKaudiooutput.h"
-#endif
-
-#ifdef PAAUDIOOUT
-#include "Output/PAaudiooutput.h"
-#endif
-
-#ifdef OSSAUDIOOUT
-#include "Output/OSSaudiooutput.h"
-OSSaudiooutput *audioout;
-#endif
 
 #ifdef USE_LASH
 #include "Misc/LASHClient.h"
@@ -103,22 +91,6 @@ LASHClient *lash;
 
 MidiIn *Midi;
 int     Pexitprogram = 0; //if the UI set this to 1, the program will exit
-
-/*
- * Try to get the realtime priority
- */
-void set_realtime()
-{
-#ifdef OS_LINUX
-    sched_param sc;
-
-    sc.sched_priority = 50;
-
-    //if you want get "sched_setscheduler undeclared" from compilation, you can safely remove the folowing line
-    sched_setscheduler(0, SCHED_FIFO, &sc);
-//    if (err==0) printf("Real-time");
-#endif
-}
 
 /*
  * Midi input thread
@@ -138,74 +110,22 @@ void *thread1(void *arg)
         note = cmdparams[0];
         vel  = cmdparams[1];
 
-        pthread_mutex_lock(&master->mutex);
-
         if((cmdtype == MidiNoteON) && (note != 0))
             master->NoteOn(cmdchan, note, vel);
         if((cmdtype == MidiNoteOFF) && (note != 0))
             master->NoteOff(cmdchan, note);
         if(cmdtype == MidiController)
-            master->SetController(cmdchan,
-                                  cmdparams[0],
-                                  cmdparams[1],
-                                  cmdparams[2]);
-
-        pthread_mutex_unlock(&master->mutex);
+            master->SetController(cmdchan, cmdparams[0], cmdparams[1]);
     }
 
     return 0;
 }
 #endif
 
-/*
- * Wave output thread (for OSS AUDIO out)
- */
-#if defined(OSSAUDIOOUT)
-//!(defined(JACKAUDIOOUT)||defined(JACK_RTAUDIOOUT)||defined(PAAUDIOOUT)||defined(VSTAUDIOOUT))
-
-void *thread2(void *arg)
-{
-    REALTYPE outputl[SOUND_BUFFER_SIZE];
-    REALTYPE outputr[SOUND_BUFFER_SIZE];
-
-    set_realtime();
-    while(Pexitprogram == 0) {
-        pthread_mutex_lock(&master->mutex);
-        master->AudioOut(outputl, outputr);
-        pthread_mutex_unlock(&master->mutex);
-
-#ifndef NONEAUDIOOUT
-        audioout->OSSout(outputl, outputr);
-#endif
-
-        /** /   int i,x,x2;
-            REALTYPE xx,xx2;
-
-                short int xsmps[SOUND_BUFFER_SIZE*2];
-            for (i=0;i<SOUND_BUFFER_SIZE;i++){//output to stdout
-                xx=-outputl[i]*32767;
-                xx2=-outputr[i]*32767;
-                if (xx<-32768) xx=-32768;
-                if (xx>32767) xx=32767;
-                if (xx2<-32768) xx2=-32768;
-                if (xx2>32767) xx2=32767;
-                x=(short int) xx;
-                x2=(short int) xx2;
-                xsmps[i*2]=x;xsmps[i*2+1]=x2;
-                };
-                write(1,&xsmps,SOUND_BUFFER_SIZE*2*2);
-
-                / * */
-    }
-    return 0;
-}
-#endif
 
 /*
  * User Interface thread
  */
-
-
 void *thread3(void *arg)
 {
 #ifndef DISABLE_GUI
@@ -322,32 +242,6 @@ void initprogram()
     master = new Master();
     master->swaplr = swaplr;
 
-#if defined(JACKAUDIOOUT)
-    if(usejackit) {
-        bool tmp = JACKaudiooutputinit(master);
-#if defined(OSSAUDIOOUT)
-        if(!tmp)
-            cout << "\nUsing OSS instead." << endl;
-#else
-        if(!tmp)
-            exit(1);
-#endif
-        usejackit = tmp;
-    }
-#endif
-#if defined(OSSAUDIOOUT)
-    if(!usejackit)
-        audioout = new OSSaudiooutput();
-    else
-        audioout = NULL;
-#endif
-
-#ifdef JACK_RTAUDIOOUT
-    JACKaudiooutputinit(master);
-#endif
-#ifdef PAAUDIOOUT
-    PAaudiooutputinit(master);
-#endif
 
 #ifdef ALSAMIDIIN
     Midi = new ALSAMidiIn();
@@ -371,19 +265,6 @@ void initprogram()
 void exitprogram()
 {
     pthread_mutex_lock(&master->mutex);
-#ifdef OSSAUDIOOUT
-    delete (audioout);
-#endif
-#ifdef JACKAUDIOOUT
-    if(usejackit)
-        JACKfinish();
-#endif
-#ifdef JACK_RTAUDIOOUT
-    JACKfinish();
-#endif
-#ifdef PAAUDIOOUT
-    PAfinish();
-#endif
 
 #ifndef DISABLE_GUI
 #ifdef FLTK_GUI
@@ -464,18 +345,14 @@ int main(int argc, char *argv[])
     OSCIL_SIZE  = config.cfg.OscilSize;
     swaplr      = config.cfg.SwapStereo;
 
+
     /* Parse command-line options */
 #ifdef OS_LINUX
     struct option opts[] = {
-        {
-            "load", 2, NULL, 'l'
+        {"load", 2, NULL, 'l'},
+        {"load-instrument", 2, NULL, 'L'
         },
-        {
-            "load-instrument", 2, NULL, 'L'
-        },
-        {
-            "sample-rate", 2, NULL, 'r'
-        },
+        {"sample-rate", 2, NULL, 'r'},
         {
             "buffer-size", 2, NULL, 'b'
         },
@@ -701,21 +578,11 @@ int main(int argc, char *argv[])
     pthread_create(&thr1, NULL, thread1, NULL);
 #endif
 
-#ifdef OSSAUDIOOUT
-//!(defined(JACKAUDIOOUT)||defined(JACK_RTAUDIOOUT)||defined(PAAUDIOOUT)||defined(VSTAUDIOOUT))
-    if(!usejackit)
-        pthread_create(&thr2, NULL, thread2, NULL);
-#endif
+    //Output Bootstrapping
+    sysOut = new OutMgr(master);
+    sysOut->run();
 
-    /*It is not working and I don't know why
-    //drop the suid-root permisions
-    #if !(defined(JACKAUDIOOUT)||defined(PAAUDIOOUT)||defined(VSTAUDIOOUT)|| (defined (WINMIDIIN)) )
-          setuid(getuid());
-          seteuid(getuid());
-    //      setreuid(getuid(),getuid());
-    //      setregid(getuid(),getuid());
-    #endif
-    */
+
     if(noui == 0)
         pthread_create(&thr3, NULL, thread3, NULL);
 

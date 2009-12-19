@@ -28,8 +28,9 @@
 #include "Presets.h"
 #include "../Controls/Ranger.h"
 #include "../Controls/Selector.h"
+#include "PresetsArray.h"
 
-class FilterParams:public Presets
+class FilterParams : public PresetsArray
 {
     public:
         FilterParams(Node *parent,

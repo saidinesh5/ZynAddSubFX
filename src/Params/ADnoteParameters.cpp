@@ -25,7 +25,10 @@
 #include <math.h>
 
 #include "ADnoteParameters.h"
+#include "EnvelopeParams.h"
+#include "LFOParams.h"
 #include "../Misc/db2rapInjFunc.h"
+
 int ADnote_unison_sizes[] =
 {1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30, 40, 50, 0};
 
@@ -71,7 +74,8 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
 {}
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
-    :Presets(parent, "ADnoteParameters"),
+    :PresetsArray(parent, "ADnoteParameters"),
+      PresetsArray()
       volume(this, "Volume", 10, new VolumeConv),
       //note: the original conversion functon is found in ADnote.cpp:337
       voices(this, "Voices")
