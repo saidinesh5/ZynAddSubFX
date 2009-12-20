@@ -10,6 +10,11 @@
     <height>897</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Voicelist</string>
   </property>
@@ -472,6 +477,11 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>Slider</class>
+   <extends>QSlider</extends>
+   <header>Slider.h</header>
+  </customwidget>
+  <customwidget>
    <class>SiblingBar</class>
    <extends>QWidget</extends>
    <header>SiblingBar.h</header>
@@ -487,11 +497,6 @@
    <extends>QWidget</extends>
    <header>OscilWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Slider</class>
-   <extends>QSlider</extends>
-   <header>Slider.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

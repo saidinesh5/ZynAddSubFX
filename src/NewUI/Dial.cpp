@@ -12,7 +12,7 @@
 //            1 - rotated dial
 //            2 - rectangular
 //            3 - image
-static int drawStyle = 3;
+static int drawStyle = 1;
 
 Dial::Dial(QWidget *parent)
     :QDial(parent),
@@ -119,14 +119,18 @@ void Dial::paintEvent(class QPaintEvent *event)
     }
     else
     if(drawStyle == 1) {
-        //p.setBrush(QColor(Qt::white));
+
+        //leave 30 degrees space at the bottom
+        const int spaceAtBottom = 30;
+        const int start = 270 - spaceAtBottom / 2;
+        const int span = -v*(360 - spaceAtBottom);
 
         //center circle
         p.drawEllipse(r);
 
         p.translate(r.center());
 
-        for(float i = -PI / 4; i <= (PI + PI / 4); i += PI / 6)
+        for(float i = start*(2*(PI/360)); i >= (-90+spaceAtBottom/2)*(2*(PI/360)); i -= PI / 12)
 
             //draw lots of markers
             p.drawLine(
@@ -144,7 +148,7 @@ void Dial::paintEvent(class QPaintEvent *event)
         else
             p.setBrush(palette().dark());
 
-        p.drawPie(smallRect, 225 * 16, -v * 270 * 16);
+        p.drawPie(smallRect, start * 16, span * 16);
         //p.rotate(v);
 
         //QPoint point = r.center();
@@ -172,8 +176,8 @@ void Dial::paintEvent(class QPaintEvent *event)
         p.save();
         p.translate(r.center());
         p.rotate(rotation);
-        p.translate(-r.center());
-        p.drawPixmap(r, button);
+        p.drawPixmap(-r.width() / 2, -r.height() / 2, r.width(), r.height(), button);
+
         p.restore();
 
         p.drawText(r, Qt::AlignCenter, QString::number(value()));
