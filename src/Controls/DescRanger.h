@@ -33,12 +33,18 @@
 class DescRanger:public Control<int>
 {
     public:
-        DescRanger(Node *parent, std::string id, int defaultval);
+        DescRanger(Node *parent, std::string id, int defaultval, int min  = 0, int max = 127);
         virtual ~DescRanger();
 
         /**@todo get some toString function in here (it only needs to be one way*/
         std::string getString() const
         {return "Example: 50%";}
+
+        int getMin() const { return min; }
+        int getMax() const { return max; }
+
+    private:
+        int min, max;
 };
 
 #endif

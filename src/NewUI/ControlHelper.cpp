@@ -4,6 +4,7 @@
 #include <QStack>
 #include <QVariant>
 #include <QtDebug>
+#include "../Controls/DescRanger.h"
 
 
 //TODO: this class should also remove itself from the control its
@@ -11,8 +12,7 @@
 
 ControlHelper::ControlHelper(QObject *parent)
     :QObject(parent),
-      m_control(NULL),
-      expectedValueEvents(0)
+      m_control(NULL)
 {}
 
 
@@ -48,11 +48,14 @@ void ControlHelper::handleEvent(Event *event)
     //and efficient about all processing in this function
 
     if(event->type() == Event::NewValueEvent) {
-        emit valueChanged(
-            static_cast<NewValueEvent *>(event)->control->getCharValue());
 
-        ArrayControl *arr_control = dynamic_cast<ArrayControl*>(m_control);
-        if (arr_control) {
+        if (static_cast<NewValueEvent *>(event)->control != m_control) {
+            qDebug() << "ControlHelper: Weird, events from a control we don't know?";
+            return;
+        }
+        emit valueChanged(getValue());
+
+        if (ArrayControl *arr_control = dynamic_cast<ArrayControl*>(m_control)) {
             emit arrayUpdated(arr_control);
         }
     }
@@ -79,8 +82,8 @@ void ControlHelper::setControl(QString absoluteId)
     Node *node = Node::get(absoluteId.toStdString());
     m_control = dynamic_cast<GenControl *>(node);
     if(m_control) {
-        expectedValueEvents = 0;
         m_control->addRedirection(this);
+
         emit connected(m_control);
         emitOptions();
         qDebug() << "Assigning " << this << " to " << absoluteId;
@@ -108,18 +111,21 @@ void ControlHelper::disconnect()
 
 void ControlHelper::setValue(char value)
 {
-    if(m_control) {
-        m_control->setValue(value);
-
-        expectedEventMutex.lock();
-        expectedValueEvents++;
-        expectedEventMutex.unlock();
-    }
+    setValue(int(value));
 }
 
 void ControlHelper::setValue(int value)
 {
-    setValue(char(qBound(0, value, 127)));
+    if (DescRanger* desc = dynamic_cast<DescRanger*>(m_control)) {
+        //if we do not explicitly do this, the char-variant of
+        //setValue will be called, and the value will be truncated
+        desc->setValue(value);
+        return;
+    }
+
+    if(m_control) {
+        m_control->setValue(value);
+    }
 }
 
 void ControlHelper::setValue(bool value)
@@ -135,20 +141,19 @@ QString ControlHelper::getControlId()
         return "Undefined";
 }
 
-//void ControlHelper::requestValue()
-//{
-//    if (m_control) {
-//        m_control->requestValue();
-//    }
-//}
-
-char ControlHelper::getValue()
+int ControlHelper::getValue()
 {
-    if(m_control)
+    if (DescRanger* desc = dynamic_cast<DescRanger*>(m_control)) {
+        return desc->getValue();
+    }
+    if(m_control) {
         return m_control->getCharValue();
+    }
+
     qDebug() << "Error: value for nonconnected control requested";
     return 64;
 }
+
 void ControlHelper::MIDILearn()
 {
     if(m_control)

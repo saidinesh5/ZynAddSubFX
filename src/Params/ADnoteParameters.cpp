@@ -66,8 +66,8 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
       filterBypass         (this, "FilterBypass",0),
       fixedFreq            (this, "FixedFreq",0),
       fixedFreqET          (this, "FixedFreqET", 0),
-      detune               (this, "Detune", 8192),
-      coarseDetune         (this, "CoarseDetune", 0),
+      detune               (this, "Detune", 8192, 0, 16383),
+      coarseDetune         (this, "CoarseDetune", 0, 0, 15),
       detuneType           (this, "DetuneType", 0),
       freqEnvelopeEnabled  (this, "FreqEnvelopeEnabled", 0),
       freqLfoEnabled       (this, "FreqLfoEnabled", 0)

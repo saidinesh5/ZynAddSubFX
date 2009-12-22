@@ -38,7 +38,7 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
 
     //Node::getRoot()->printTree();
 
-    //(new DebugInterface(NULL, master))->show();
+    (new DebugInterface(NULL, master))->show();
 }
 
 void MasterUI::refresh_master_ui()

@@ -3,6 +3,7 @@
 #include <QtDebug>
 #include <QMouseEvent>
 #include <QStyleOptionComplex>
+#include "../Controls/DescRanger.h"
 #include "Menu.h"
 
 Slider::Slider(QWidget *parent)
@@ -21,9 +22,19 @@ Slider::Slider(QWidget *parent)
             this, SLOT(setValue(int)));
     connect(this, SIGNAL(defaults()),
             helper, SLOT(defaults()));
+    connect(helper, SIGNAL(connected(GenControl *)),
+            this, SLOT(connected(GenControl *)));
 
     new Menu(this, helper);
 
+}
+
+void Slider::connected(class GenControl *control)
+{
+    if (DescRanger* desc = dynamic_cast<DescRanger*>(control)) {
+        setMinimum(desc->getMin());
+        setMaximum(desc->getMax());
+    }
 }
 
 void Slider::mousePressEvent(QMouseEvent *e)

@@ -16,8 +16,11 @@ class Slider : public QSlider
     signals:
         void defaults();
 
+    private slots:
+        void connected(class GenControl *control);
+
     private:
-        bool m_outside, m_sliding;
+        bool m_sliding, m_outside;
         int m_prevValue;
 };
 
