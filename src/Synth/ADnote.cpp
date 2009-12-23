@@ -67,37 +67,37 @@ ADnote::ADnote(ADnoteParameters *pars,
         velocity = 1.0;
     this->velocity = velocity;
     time   = 0.0;
-    stereo = pars->GlobalPar.PStereo;
+    stereo = pars->PStereo;
 
-    NoteGlobalPar.Detune      = getdetune(pars->GlobalPar.PDetuneType,
-                                          pars->GlobalPar.PCoarseDetune,
-                                          pars->GlobalPar.PDetune);
+    NoteGlobalPar.Detune      = getdetune(pars->PDetuneType,
+                                          pars->PCoarseDetune,
+                                          pars->PDetune);
     bandwidthDetuneMultiplier = pars->getBandwidthDetuneMultiplier();
 
-    if(pars->GlobalPar.PPanning == 0)
+    if(pars->PPanning == 0)
         NoteGlobalPar.Panning = RND;
     else
-        NoteGlobalPar.Panning = pars->GlobalPar.PPanning / 128.0;
+        NoteGlobalPar.Panning = pars->PPanning / 128.0;
 
 
-    NoteGlobalPar.FilterCenterPitch = pars->GlobalPar.GlobalFilter->getfreq() //center freq
-                                      + pars->GlobalPar.PFilterVelocityScale
+    NoteGlobalPar.FilterCenterPitch = pars->GlobalFilter->getfreq() //center freq
+                                      + pars->PFilterVelocityScale
                                       / 127.0 * 6.0                                  //velocity sensing
                                       * (VelF(velocity,
-                                              pars->GlobalPar.
+                                              pars->
                                               PFilterVelocityScaleFunction) - 1);
 
-    if(pars->GlobalPar.PPunchStrength != 0) {
+    if(pars->PPunchStrength != 0) {
         NoteGlobalPar.Punch.Enabled      = 1;
         NoteGlobalPar.Punch.t = 1.0; //start from 1.0 and to 0.0
         NoteGlobalPar.Punch.initialvalue =
-            ((pow(10, 1.5 * pars->GlobalPar.PPunchStrength / 127.0) - 1.0)
+            ((pow(10, 1.5 * pars->PPunchStrength / 127.0) - 1.0)
              * VelF(velocity,
-                    pars->GlobalPar.PPunchVelocitySensing));
+                    pars->PPunchVelocitySensing));
         REALTYPE time    =
-            pow(10, 3.0 * pars->GlobalPar.PPunchTime / 127.0) / 10000.0;   //0.1 .. 100 ms
+            pow(10, 3.0 * pars->PPunchTime / 127.0) / 10000.0;   //0.1 .. 100 ms
         REALTYPE stretch = pow(440.0 / freq,
-                               pars->GlobalPar.PPunchStretch / 64.0);
+                               pars->PPunchStretch / 64.0);
         NoteGlobalPar.Punch.dt = 1.0 / (time * SAMPLE_RATE * stretch);
     }
     else
@@ -253,11 +253,11 @@ ADnote::ADnote(ADnoteParameters *pars,
         }
         else {
             NoteVoicePar[nvoice].Detune     = getdetune(
-                pars->GlobalPar.PDetuneType,
+                pars->PDetuneType,
                 pars->VoicePar[nvoice]->coarseDetune(),
                 8192);                                                                         //coarse detune
             NoteVoicePar[nvoice].FineDetune = getdetune(
-                pars->GlobalPar.PDetuneType,
+                pars->PDetuneType,
                 0,
                 pars->VoicePar[nvoice]->detune());                               //fine detune
         }
@@ -269,7 +269,7 @@ ADnote::ADnote(ADnoteParameters *pars,
                 pars->VoicePar[nvoice]->PFMDetune);
         else
             NoteVoicePar[nvoice].FMDetune = getdetune(
-                pars->GlobalPar.PDetuneType,
+                pars->PDetuneType,
                 pars->VoicePar[nvoice]->
                 PFMCoarseDetune,
                 pars->VoicePar[nvoice]->PFMDetune);
@@ -290,7 +290,7 @@ ADnote::ADnote(ADnoteParameters *pars,
         int vc = nvoice;
         if(pars->VoicePar[nvoice]->extoscil() != -1)
             vc = pars->VoicePar[nvoice]->extoscil();
-        if(!pars->GlobalPar.Hrandgrouping)
+        if(!pars->Hrandgrouping)
             pars->VoicePar[vc]->OscilSmp->newrandseed(rand());
         int oscposhi_start =
             pars->VoicePar[vc]->OscilSmp->get(NoteVoicePar[nvoice].OscilSmp,
@@ -460,22 +460,22 @@ void ADnote::ADlegatonote(REALTYPE freq,
         velocity = 1.0;
     this->velocity = velocity;
 
-    NoteGlobalPar.Detune      = getdetune(pars->GlobalPar.PDetuneType,
-                                          pars->GlobalPar.PCoarseDetune,
-                                          pars->GlobalPar.PDetune);
+    NoteGlobalPar.Detune      = getdetune(pars->PDetuneType,
+                                          pars->PCoarseDetune,
+                                          pars->PDetune);
     bandwidthDetuneMultiplier = pars->getBandwidthDetuneMultiplier();
 
-    if(pars->GlobalPar.PPanning == 0)
+    if(pars->PPanning == 0)
         NoteGlobalPar.Panning = RND;
     else
-        NoteGlobalPar.Panning = pars->GlobalPar.PPanning / 128.0;
+        NoteGlobalPar.Panning = pars->PPanning / 128.0;
 
 
-    NoteGlobalPar.FilterCenterPitch = pars->GlobalPar.GlobalFilter->getfreq() //center freq
-                                      + pars->GlobalPar.PFilterVelocityScale
+    NoteGlobalPar.FilterCenterPitch = pars->GlobalFilter->getfreq() //center freq
+                                      + pars->PFilterVelocityScale
                                       / 127.0 * 6.0                                  //velocity sensing
                                       * (VelF(velocity,
-                                              pars->GlobalPar.
+                                              pars->
                                               PFilterVelocityScaleFunction) - 1);
 
 
@@ -499,11 +499,11 @@ void ADnote::ADlegatonote(REALTYPE freq,
         }
         else {
             NoteVoicePar[nvoice].Detune     = getdetune(
-                pars->GlobalPar.PDetuneType,
+                pars->PDetuneType,
                 pars->VoicePar[nvoice]->coarseDetune(),
                 8192);                                                                         //coarse detune
             NoteVoicePar[nvoice].FineDetune = getdetune(
-                pars->GlobalPar.PDetuneType,
+                pars->PDetuneType,
                 0,
                 pars->VoicePar[nvoice]->detune());                               //fine detune
         }
@@ -515,7 +515,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
                 pars->VoicePar[nvoice]->PFMDetune);
         else
             NoteVoicePar[nvoice].FMDetune = getdetune(
-                pars->GlobalPar.PDetuneType,
+                pars->PDetuneType,
                 pars->VoicePar[nvoice]->
                 PFMCoarseDetune,
                 pars->VoicePar[nvoice]->PFMDetune);
@@ -525,7 +525,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
         int vc = nvoice;
         if(pars->VoicePar[nvoice]->extoscil() != -1)
             vc = pars->VoicePar[nvoice]->extoscil();
-        if(!pars->GlobalPar.Hrandgrouping)
+        if(!pars->Hrandgrouping)
             pars->VoicePar[vc]->OscilSmp->newrandseed(rand());
 
         pars->VoicePar[vc]->OscilSmp->get(NoteVoicePar[nvoice].OscilSmp,
@@ -598,16 +598,15 @@ void ADnote::ADlegatonote(REALTYPE freq,
     NoteGlobalPar.Volume = partparams->volume()
                            * VelF(
         velocity,
-        partparams->GlobalPar.
-        PAmpVelocityScaleFunction);                                                      //velocity sensing
+        partparams->PAmpVelocityScaleFunction);                                                      //velocity sensing
 
     globalnewamplitude = NoteGlobalPar.Volume
                          * NoteGlobalPar.AmpEnvelope->envout_dB()
                          * NoteGlobalPar.AmpLfo->amplfoout();
 
-    NoteGlobalPar.FilterQ = partparams->GlobalPar.GlobalFilter->getq();
+    NoteGlobalPar.FilterQ = partparams->GlobalFilter->getq();
     NoteGlobalPar.FilterFreqTracking =
-        partparams->GlobalPar.GlobalFilter->getfreqtracking(basefreq);
+        partparams->GlobalFilter->getfreqtracking(basefreq);
 
     // Forbids the Modulation Voice to be greater or equal than voice
     for(i = 0; i < NUM_VOICES; i++)
@@ -668,7 +667,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
                || (NoteVoicePar[nvoice].FMEnabled == RING_MOD))
                 tmp = getFMvoicebasefreq(nvoice);
             ;
-            if(!partparams->GlobalPar.Hrandgrouping)
+            if(!partparams->Hrandgrouping)
                 partparams->VoicePar[vc]->FMSmp->newrandseed(rand());
 
             ///oscposhiFM[nvoice]=(oscposhi[nvoice]+partparams->VoicePar[vc]->FMSmp->get(NoteVoicePar[nvoice].FMSmp,tmp)) % OSCIL_SIZE;
@@ -829,39 +828,38 @@ void ADnote::initparameters()
 
     // Global Parameters
     NoteGlobalPar.FreqEnvelope = new Envelope(
-        partparams->GlobalPar.FreqEnvelope,
+        partparams->FreqEnvelope,
         basefreq);
-    NoteGlobalPar.FreqLfo      = new LFO(partparams->GlobalPar.FreqLfo,
+    NoteGlobalPar.FreqLfo      = new LFO(partparams->FreqLfo,
                                          basefreq);
 
-    NoteGlobalPar.AmpEnvelope  = new Envelope(partparams->GlobalPar.AmpEnvelope,
+    NoteGlobalPar.AmpEnvelope  = new Envelope(partparams->AmpEnvelope,
                                               basefreq);
-    NoteGlobalPar.AmpLfo = new LFO(partparams->GlobalPar.AmpLfo, basefreq);
+    NoteGlobalPar.AmpLfo = new LFO(partparams->AmpLfo, basefreq);
 
     NoteGlobalPar.Volume = partparams->volume()
                            * VelF(
         velocity,
-        partparams->GlobalPar.
-        PAmpVelocityScaleFunction);                                                      //velocity sensing
+        partparams->PAmpVelocityScaleFunction);                                                      //velocity sensing
 
     NoteGlobalPar.AmpEnvelope->envout_dB(); //discard the first envelope output
     globalnewamplitude = NoteGlobalPar.Volume
                          * NoteGlobalPar.AmpEnvelope->envout_dB()
                          * NoteGlobalPar.AmpLfo->amplfoout();
 
-    NoteGlobalPar.GlobalFilterL = new Filter(partparams->GlobalPar.GlobalFilter);
+    NoteGlobalPar.GlobalFilterL = new Filter(partparams->GlobalFilter);
     if(stereo != 0)
         NoteGlobalPar.GlobalFilterR = new Filter(
-            partparams->GlobalPar.GlobalFilter);
+            partparams->GlobalFilter);
 
     NoteGlobalPar.FilterEnvelope     = new Envelope(
-        partparams->GlobalPar.FilterEnvelope,
+        partparams->FilterEnvelope,
         basefreq);
-    NoteGlobalPar.FilterLfo          = new LFO(partparams->GlobalPar.FilterLfo,
+    NoteGlobalPar.FilterLfo          = new LFO(partparams->FilterLfo,
                                                basefreq);
-    NoteGlobalPar.FilterQ = partparams->GlobalPar.GlobalFilter->getq();
+    NoteGlobalPar.FilterQ = partparams->GlobalFilter->getq();
     NoteGlobalPar.FilterFreqTracking =
-        partparams->GlobalPar.GlobalFilter->getfreqtracking(basefreq);
+        partparams->GlobalFilter->getfreqtracking(basefreq);
 
     // Forbids the Modulation Voice to be greater or equal than voice
     for(i = 0; i < NUM_VOICES; i++)
@@ -956,7 +954,7 @@ void ADnote::initparameters()
                || (NoteVoicePar[nvoice].FMEnabled == RING_MOD))
                 tmp = getFMvoicebasefreq(nvoice);
             ;
-            if(!partparams->GlobalPar.Hrandgrouping)
+            if(!partparams->Hrandgrouping)
                 partparams->VoicePar[vc]->FMSmp->newrandseed(rand());
 
             for(int k = 0; k < unison_size[nvoice]; k++)

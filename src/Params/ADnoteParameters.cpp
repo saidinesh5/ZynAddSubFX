@@ -85,19 +85,19 @@ ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
 
     voices.addType("Voice");
 
-    GlobalPar.FreqEnvelope = new EnvelopeParams(0, 0);
-    GlobalPar.FreqEnvelope->ASRinit(64, 50, 64, 60);
-    GlobalPar.FreqLfo      = new LFOParams(70, 0, 64, 0, 0, 0, 0, 0);
+    FreqEnvelope = new EnvelopeParams(0, 0);
+    FreqEnvelope->ASRinit(64, 50, 64, 60);
+    FreqLfo      = new LFOParams(70, 0, 64, 0, 0, 0, 0, 0);
 
-    GlobalPar.AmpEnvelope  = new EnvelopeParams(64, 1);
-    GlobalPar.AmpEnvelope->ADSRinit_dB(0, 40, 127, 25);
-    GlobalPar.AmpLfo = new LFOParams(80, 0, 64, 0, 0, 0, 0, 1);
+    AmpEnvelope  = new EnvelopeParams(64, 1);
+    AmpEnvelope->ADSRinit_dB(0, 40, 127, 25);
+    AmpLfo = new LFOParams(80, 0, 64, 0, 0, 0, 0, 1);
 
-    GlobalPar.GlobalFilter   = new FilterParams(this, 2, 94, 40);
-    GlobalPar.FilterEnvelope = new EnvelopeParams(0, 1);
-    GlobalPar.FilterEnvelope->ADSRinit_filter(64, 40, 64, 70, 60, 64);
-    GlobalPar.FilterLfo      = new LFOParams(80, 0, 64, 0, 0, 0, 0, 2);
-    GlobalPar.Reson = new Resonance();
+    GlobalFilter   = new FilterParams(this, 2, 94, 40);
+    FilterEnvelope = new EnvelopeParams(0, 1);
+    FilterEnvelope->ADSRinit_filter(64, 40, 64, 70, 60, 64);
+    FilterLfo      = new LFOParams(80, 0, 64, 0, 0, 0, 0, 2);
+    Reson = new Resonance();
 
     for(int nvoice = 0; nvoice < NUM_VOICES; nvoice++)
         EnableVoice(nvoice);
@@ -109,35 +109,35 @@ void ADnoteParameters::defaults()
 {
     //Default Parameters
     /* Frequency Global Parameters */
-    GlobalPar.PStereo = 1; //stereo
-    GlobalPar.PDetune = 8192; //zero
-    GlobalPar.PCoarseDetune = 0;
-    GlobalPar.PDetuneType   = 1;
-    GlobalPar.FreqEnvelope->defaults();
-    GlobalPar.FreqLfo->defaults();
-    GlobalPar.PBandwidth = 64;
+    PStereo = 1; //stereo
+    PDetune = 8192; //zero
+    PCoarseDetune = 0;
+    PDetuneType   = 1;
+    FreqEnvelope->defaults();
+    FreqLfo->defaults();
+    PBandwidth = 64;
 
     /* Amplitude Global Parameters */
     //GlobalPar.PVolume=90;
     volume.defaults();
 
-    GlobalPar.PPanning = 64; //center
-    GlobalPar.PAmpVelocityScaleFunction = 64;
-    GlobalPar.AmpEnvelope->defaults();
-    GlobalPar.AmpLfo->defaults();
-    GlobalPar.PPunchStrength = 0;
-    GlobalPar.PPunchTime     = 60;
-    GlobalPar.PPunchStretch  = 64;
-    GlobalPar.PPunchVelocitySensing = 72;
-    GlobalPar.Hrandgrouping  = 0;
+    PPanning = 64; //center
+    PAmpVelocityScaleFunction = 64;
+    AmpEnvelope->defaults();
+    AmpLfo->defaults();
+    PPunchStrength = 0;
+    PPunchTime     = 60;
+    PPunchStretch  = 64;
+    PPunchVelocitySensing = 72;
+    Hrandgrouping  = 0;
 
     /* Filter Global Parameters*/
-    GlobalPar.PFilterVelocityScale = 64;
-    GlobalPar.PFilterVelocityScaleFunction = 64;
-    GlobalPar.GlobalFilter->defaults();
-    GlobalPar.FilterEnvelope->defaults();
-    GlobalPar.FilterLfo->defaults();
-    GlobalPar.Reson->defaults();
+    PFilterVelocityScale = 64;
+    PFilterVelocityScaleFunction = 64;
+    GlobalFilter->defaults();
+    FilterEnvelope->defaults();
+    FilterLfo->defaults();
+    Reson->defaults();
 
 
     for(int nvoice = 0; nvoice < NUM_VOICES; nvoice++)
@@ -229,7 +229,7 @@ void ADnoteParameters::EnableVoice(int nvoice)
     voices << VoicePar[nvoice];
     voices.createChild("Voice");
 
-    VoicePar[nvoice]->OscilSmp = new OscilGen(fft, GlobalPar.Reson,
+    VoicePar[nvoice]->OscilSmp = new OscilGen(fft, Reson,
                                               param, "OscilSmp");
     VoicePar[nvoice]->FMSmp    = new OscilGen(fft, NULL,
                                               param, "FMSmp");
@@ -258,7 +258,7 @@ void ADnoteParameters::EnableVoice(int nvoice)
  */
 REALTYPE ADnoteParameters::getBandwidthDetuneMultiplier()
 {
-    REALTYPE bw = (GlobalPar.PBandwidth - 64.0) / 64.0;
+    REALTYPE bw = (PBandwidth - 64.0) / 64.0;
     bw = pow(2.0, bw * pow(fabs(bw), 0.2) * 5.0);
 
     return bw;
@@ -300,14 +300,14 @@ void ADnoteParameters::KillVoice(int nvoice)
 
 ADnoteParameters::~ADnoteParameters()
 {
-    delete (GlobalPar.FreqEnvelope);
-    delete (GlobalPar.FreqLfo);
-    delete (GlobalPar.AmpEnvelope);
-    delete (GlobalPar.AmpLfo);
-    delete (GlobalPar.GlobalFilter);
-    delete (GlobalPar.FilterEnvelope);
-    delete (GlobalPar.FilterLfo);
-    delete (GlobalPar.Reson);
+    delete (FreqEnvelope);
+    delete (FreqLfo);
+    delete (AmpEnvelope);
+    delete (AmpLfo);
+    delete (GlobalFilter);
+    delete (FilterEnvelope);
+    delete (FilterLfo);
+    delete (Reson);
 
     for(int nvoice = 0; nvoice < NUM_VOICES; nvoice++)
         KillVoice(nvoice);
@@ -510,65 +510,65 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
 
 void ADnoteParameters::add2XML(XMLwrapper *xml)
 {
-    xml->addparbool("stereo", GlobalPar.PStereo);
+    xml->addparbool("stereo", PStereo);
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
-    //xml->addpar("volume",GlobalPar.PVolume);
+    //xml->addpar("volume",PVolume);
     xml->addpar("volume", volume.getCharValue());
-    xml->addpar("panning", GlobalPar.PPanning);
-    xml->addpar("velocity_sensing", GlobalPar.PAmpVelocityScaleFunction);
-    xml->addpar("punch_strength", GlobalPar.PPunchStrength);
-    xml->addpar("punch_time", GlobalPar.PPunchTime);
-    xml->addpar("punch_stretch", GlobalPar.PPunchStretch);
-    xml->addpar("punch_velocity_sensing", GlobalPar.PPunchVelocitySensing);
-    xml->addpar("harmonic_randomness_grouping", GlobalPar.Hrandgrouping);
+    xml->addpar("panning", PPanning);
+    xml->addpar("velocity_sensing", PAmpVelocityScaleFunction);
+    xml->addpar("punch_strength", PPunchStrength);
+    xml->addpar("punch_time", PPunchTime);
+    xml->addpar("punch_stretch", PPunchStretch);
+    xml->addpar("punch_velocity_sensing", PPunchVelocitySensing);
+    xml->addpar("harmonic_randomness_grouping", Hrandgrouping);
 
     xml->beginbranch("AMPLITUDE_ENVELOPE");
-    GlobalPar.AmpEnvelope->add2XML(xml);
+    AmpEnvelope->add2XML(xml);
     xml->endbranch();
 
     xml->beginbranch("AMPLITUDE_LFO");
-    GlobalPar.AmpLfo->add2XML(xml);
+    AmpLfo->add2XML(xml);
     xml->endbranch();
     xml->endbranch();
 
     xml->beginbranch("FREQUENCY_PARAMETERS");
-    xml->addpar("detune", GlobalPar.PDetune);
+    xml->addpar("detune", PDetune);
 
-    xml->addpar("coarse_detune", GlobalPar.PCoarseDetune);
-    xml->addpar("detune_type", GlobalPar.PDetuneType);
+    xml->addpar("coarse_detune", PCoarseDetune);
+    xml->addpar("detune_type", PDetuneType);
 
-    xml->addpar("bandwidth", GlobalPar.PBandwidth);
+    xml->addpar("bandwidth", PBandwidth);
 
     xml->beginbranch("FREQUENCY_ENVELOPE");
-    GlobalPar.FreqEnvelope->add2XML(xml);
+    FreqEnvelope->add2XML(xml);
     xml->endbranch();
 
     xml->beginbranch("FREQUENCY_LFO");
-    GlobalPar.FreqLfo->add2XML(xml);
+    FreqLfo->add2XML(xml);
     xml->endbranch();
     xml->endbranch();
 
 
     xml->beginbranch("FILTER_PARAMETERS");
-    xml->addpar("velocity_sensing_amplitude", GlobalPar.PFilterVelocityScale);
-    xml->addpar("velocity_sensing", GlobalPar.PFilterVelocityScaleFunction);
+    xml->addpar("velocity_sensing_amplitude", PFilterVelocityScale);
+    xml->addpar("velocity_sensing", PFilterVelocityScaleFunction);
 
     xml->beginbranch("FILTER");
-    GlobalPar.GlobalFilter->add2XML(xml);
+    GlobalFilter->add2XML(xml);
     xml->endbranch();
 
     xml->beginbranch("FILTER_ENVELOPE");
-    GlobalPar.FilterEnvelope->add2XML(xml);
+    FilterEnvelope->add2XML(xml);
     xml->endbranch();
 
     xml->beginbranch("FILTER_LFO");
-    GlobalPar.FilterLfo->add2XML(xml);
+    FilterLfo->add2XML(xml);
     xml->endbranch();
     xml->endbranch();
 
     xml->beginbranch("RESONANCE");
-    GlobalPar.Reson->add2XML(xml);
+    Reson->add2XML(xml);
     xml->endbranch();
 
     for(int nvoice = 0; nvoice < NUM_VOICES; nvoice++) {
@@ -581,37 +581,37 @@ void ADnoteParameters::add2XML(XMLwrapper *xml)
 
 void ADnoteParameters::getfromXML(XMLwrapper *xml)
 {
-    GlobalPar.PStereo = xml->getparbool("stereo", GlobalPar.PStereo);
+    PStereo = xml->getparbool("stereo", PStereo);
 
     if(xml->enterbranch("AMPLITUDE_PARAMETERS")) {
-        //GlobalPar.PVolume=xml->getpar127("volume",GlobalPar.PVolume);
+        //PVolume=xml->getpar127("volume",PVolume);
         volume.setCharValue(char(xml->getpar127("volume", volume.getCharValue())));
-        GlobalPar.PPanning = xml->getpar127("panning", GlobalPar.PPanning);
-        GlobalPar.PAmpVelocityScaleFunction = xml->getpar127(
+        PPanning = xml->getpar127("panning", PPanning);
+        PAmpVelocityScaleFunction = xml->getpar127(
             "velocity_sensing",
-            GlobalPar.
+            
             PAmpVelocityScaleFunction);
 
-        GlobalPar.PPunchStrength = xml->getpar127("punch_strength",
-                                                  GlobalPar.PPunchStrength);
-        GlobalPar.PPunchTime     = xml->getpar127("punch_time",
-                                                  GlobalPar.PPunchTime);
-        GlobalPar.PPunchStretch  = xml->getpar127("punch_stretch",
-                                                  GlobalPar.PPunchStretch);
-        GlobalPar.PPunchVelocitySensing = xml->getpar127(
+        PPunchStrength = xml->getpar127("punch_strength",
+                                                  PPunchStrength);
+        PPunchTime     = xml->getpar127("punch_time",
+                                                  PPunchTime);
+        PPunchStretch  = xml->getpar127("punch_stretch",
+                                                  PPunchStretch);
+        PPunchVelocitySensing = xml->getpar127(
             "punch_velocity_sensing",
-            GlobalPar.PPunchVelocitySensing);
-        GlobalPar.Hrandgrouping  = xml->getpar127(
+            PPunchVelocitySensing);
+        Hrandgrouping  = xml->getpar127(
             "harmonic_randomness_grouping",
-            GlobalPar.Hrandgrouping);
+            Hrandgrouping);
 
         if(xml->enterbranch("AMPLITUDE_ENVELOPE")) {
-            GlobalPar.AmpEnvelope->getfromXML(xml);
+            AmpEnvelope->getfromXML(xml);
             xml->exitbranch();
         }
 
         if(xml->enterbranch("AMPLITUDE_LFO")) {
-            GlobalPar.AmpLfo->getfromXML(xml);
+            AmpLfo->getfromXML(xml);
             xml->exitbranch();
         }
 
@@ -619,26 +619,26 @@ void ADnoteParameters::getfromXML(XMLwrapper *xml)
     }
 
     if(xml->enterbranch("FREQUENCY_PARAMETERS")) {
-        GlobalPar.PDetune = xml->getpar("detune",
-                                        GlobalPar.PDetune,
+        PDetune = xml->getpar("detune",
+                                        PDetune,
                                         0,
                                         16383);
-        GlobalPar.PCoarseDetune = xml->getpar("coarse_detune",
-                                              GlobalPar.PCoarseDetune,
+        PCoarseDetune = xml->getpar("coarse_detune",
+                                              PCoarseDetune,
                                               0,
                                               16383);
-        GlobalPar.PDetuneType   = xml->getpar127("detune_type",
-                                                 GlobalPar.PDetuneType);
+        PDetuneType   = xml->getpar127("detune_type",
+                                                 PDetuneType);
 
-        GlobalPar.PBandwidth    = xml->getpar127("bandwidth",
-                                                 GlobalPar.PBandwidth);
+        PBandwidth    = xml->getpar127("bandwidth",
+                                                 PBandwidth);
 
         xml->enterbranch("FREQUENCY_ENVELOPE");
-        GlobalPar.FreqEnvelope->getfromXML(xml);
+        FreqEnvelope->getfromXML(xml);
         xml->exitbranch();
 
         xml->enterbranch("FREQUENCY_LFO");
-        GlobalPar.FreqLfo->getfromXML(xml);
+        FreqLfo->getfromXML(xml);
         xml->exitbranch();
 
         xml->exitbranch();
@@ -646,29 +646,29 @@ void ADnoteParameters::getfromXML(XMLwrapper *xml)
 
 
     if(xml->enterbranch("FILTER_PARAMETERS")) {
-        GlobalPar.PFilterVelocityScale = xml->getpar127(
+        PFilterVelocityScale = xml->getpar127(
             "velocity_sensing_amplitude",
-            GlobalPar.PFilterVelocityScale);
-        GlobalPar.PFilterVelocityScaleFunction = xml->getpar127(
+            PFilterVelocityScale);
+        PFilterVelocityScaleFunction = xml->getpar127(
             "velocity_sensing",
-            GlobalPar.PFilterVelocityScaleFunction);
+            PFilterVelocityScaleFunction);
 
         xml->enterbranch("FILTER");
-        GlobalPar.GlobalFilter->getfromXML(xml);
+        GlobalFilter->getfromXML(xml);
         xml->exitbranch();
 
         xml->enterbranch("FILTER_ENVELOPE");
-        GlobalPar.FilterEnvelope->getfromXML(xml);
+        FilterEnvelope->getfromXML(xml);
         xml->exitbranch();
 
         xml->enterbranch("FILTER_LFO");
-        GlobalPar.FilterLfo->getfromXML(xml);
+        FilterLfo->getfromXML(xml);
         xml->exitbranch();
         xml->exitbranch();
     }
 
     if(xml->enterbranch("RESONANCE")) {
-        GlobalPar.Reson->getfromXML(xml);
+        Reson->getfromXML(xml);
         xml->exitbranch();
     }
 

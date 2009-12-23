@@ -806,10 +806,10 @@ void Part::SetController(unsigned int type, int par)
         for(int item = 0; item < NUM_KIT_ITEMS; item++) {
             if(kit[item].adpars == NULL)
                 continue;
-            kit[item].adpars->GlobalPar.Reson->
+            kit[item].adpars->Reson->
             sendcontroller(C_resonance_center, 1.0);
 
-            kit[item].adpars->GlobalPar.Reson->
+            kit[item].adpars->Reson->
             sendcontroller(C_resonance_bandwidth, 1.0);
         }
         //more update to add here if I add controllers
@@ -822,13 +822,13 @@ void Part::SetController(unsigned int type, int par)
         for(int item = 0; item < NUM_KIT_ITEMS; item++) {
             if(kit[item].adpars == NULL)
                 continue;
-            kit[item].adpars->GlobalPar.Reson->
+            kit[item].adpars->Reson->
             sendcontroller(C_resonance_center, ctl.resonancecenter.relcenter);
         }
         break;
     case C_resonance_bandwidth:
         ctl.setresonancebw(par);
-        kit[0].adpars->GlobalPar.Reson->
+        kit[0].adpars->Reson->
         sendcontroller(C_resonance_bandwidth, ctl.resonancebandwidth.relbw);
         break;
     }
