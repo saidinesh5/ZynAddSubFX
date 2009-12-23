@@ -67,7 +67,8 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
       fixedFreq            (this, "FixedFreq",0),
       fixedFreqET          (this, "FixedFreqET", 0),
       detune               (this, "Detune", 8192, 0, 16383),
-      coarseDetune         (this, "CoarseDetune", 0, 0, 15),
+      octaveDetune         (this, "OctaveDetune", 0, -8, 7),
+      coarseDetune         (this, "CoarseDetune", 0, -512, 511),
       detuneType           (this, "DetuneType", 0),
       freqEnvelopeEnabled  (this, "FreqEnvelopeEnabled", 0),
       freqLfoEnabled       (this, "FreqLfoEnabled", 0)
@@ -174,6 +175,7 @@ void ADnoteParameters::defaults(int n)
     VoicePar[nvoice]->PVolumeminus    = 0;
     VoicePar[nvoice]->PPanning        = 64; //center
     VoicePar[nvoice]->detune.defaults();
+    VoicePar[nvoice]->octaveDetune.defaults();
     VoicePar[nvoice]->coarseDetune.defaults();
     VoicePar[nvoice]->detuneType.defaults();
     VoicePar[nvoice]->freqLfoEnabled.defaults();

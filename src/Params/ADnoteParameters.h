@@ -183,7 +183,10 @@ class ADnoteVoiceParam:public Node
         /** Fine detune */
         DescRanger detune;
 
-        /** Coarse detune + octave */
+        /** Octave detune */
+        DescRanger octaveDetune;
+
+        /** Coarse detune NOTE: this also included octave in old zyn */
         DescRanger coarseDetune;
 
         /** Detune type */
