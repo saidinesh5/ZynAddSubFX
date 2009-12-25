@@ -52,9 +52,8 @@ class VoiceVolumeConv:public InjFunction<char, REALTYPE>
         { return round(127 * (1 - (1 / (3 * log(0.1))) * (log(x)))); }
 };
 
-ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
+ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id, ADnoteParameters *par)
     :Node(parent, id),
-      volume               (this, "Volume", 0.23, new VoiceVolumeConv),
       Enabled              (this, "Enabled", false),
       type                 (this, "Type", 0),
       delay                (this, "Delay",0),
@@ -66,19 +65,19 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id)
       filterBypass         (this, "FilterBypass",0),
       fixedFreq            (this, "FixedFreq",0),
       fixedFreqET          (this, "FixedFreqET", 0),
-      detune               (this, "Detune", 8192, 0, 16383),
-      octaveDetune         (this, "OctaveDetune", 0, -8, 7),
-      coarseDetune         (this, "CoarseDetune", 0, -512, 511),
-      detuneType           (this, "DetuneType", 0),
+      detuneSet            (this, "", 0, &par->globalDetuneSet),
+      FMDetuneSet          (this, "FM", 0, &par->globalDetuneSet),
       freqEnvelopeEnabled  (this, "FreqEnvelopeEnabled", 0),
-      freqLfoEnabled       (this, "FreqLfoEnabled", 0)
+      freqLfoEnabled       (this, "FreqLfoEnabled", 0),
+      volume               (this, "Volume", 0.23, new VoiceVolumeConv)
 {}
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
     :PresetsArray(parent, "ADnoteParameters"),
-      volume(this, "Volume", 10, new VolumeConv),
+      volume               (this, "Volume", 10, new VolumeConv),
       //note: the original conversion functon is found in ADnote.cpp:337
-      voices(this, "Voices")
+      globalDetuneSet      (this, "", 1),
+      voices               (this, "Voices")
 {
     setpresettype("Padsyth");
     fft = fft_;
@@ -100,7 +99,7 @@ ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
     Reson = new Resonance();
 
     for(int nvoice = 0; nvoice < NUM_VOICES; nvoice++)
-        EnableVoice(nvoice);
+        EnableVoice(nvoice, this);
 
     defaults();
 }
@@ -110,9 +109,6 @@ void ADnoteParameters::defaults()
     //Default Parameters
     /* Frequency Global Parameters */
     PStereo = 1; //stereo
-    PDetune = 8192; //zero
-    PCoarseDetune = 0;
-    PDetuneType   = 1;
     FreqEnvelope->defaults();
     FreqLfo->defaults();
     PBandwidth = 64;
@@ -174,10 +170,7 @@ void ADnoteParameters::defaults(int n)
     //VoicePar[nvoice]->PVolume=100;
     VoicePar[nvoice]->PVolumeminus    = 0;
     VoicePar[nvoice]->PPanning        = 64; //center
-    VoicePar[nvoice]->detune.defaults();
-    VoicePar[nvoice]->octaveDetune.defaults();
-    VoicePar[nvoice]->coarseDetune.defaults();
-    VoicePar[nvoice]->detuneType.defaults();
+    VoicePar[nvoice]->detuneSet.defaults();
     VoicePar[nvoice]->freqLfoEnabled.defaults();
     VoicePar[nvoice]->freqEnvelopeEnabled.defaults();
     VoicePar[nvoice]->PAmpEnvelopeEnabled       = 0;
@@ -193,9 +186,7 @@ void ADnoteParameters::defaults(int n)
 
     VoicePar[nvoice]->PFMVolume = 90;
     VoicePar[nvoice]->PFMVolumeDamp   = 64;
-    VoicePar[nvoice]->PFMDetune       = 8192;
-    VoicePar[nvoice]->PFMCoarseDetune = 0;
-    VoicePar[nvoice]->PFMDetuneType   = 0;
+
     VoicePar[nvoice]->PFMFreqEnvelopeEnabled   = 0;
     VoicePar[nvoice]->PFMAmpEnvelopeEnabled    = 0;
     VoicePar[nvoice]->PFMVelocityScaleFunction = 64;
@@ -221,9 +212,9 @@ void ADnoteParameters::defaults(int n)
 /*
  * Init the voice parameters
  */
-void ADnoteParameters::EnableVoice(int nvoice)
+void ADnoteParameters::EnableVoice(int nvoice, ADnoteParameters *par)
 {
-    ADnoteVoiceParam *param = new ADnoteVoiceParam(NULL, "VoiceParam");
+    ADnoteVoiceParam *param = new ADnoteVoiceParam(NULL, "VoiceParam", par);
     VoicePar.push_back(param);
 
     voices << VoicePar[nvoice];
@@ -422,9 +413,8 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
     xml->beginbranch("FREQUENCY_PARAMETERS");
     xml->addparbool("fixed_freq", VoicePar[nvoice]->fixedFreq());
     xml->addpar("fixed_freq_et", VoicePar[nvoice]->fixedFreqET());
-    xml->addpar("detune", VoicePar[nvoice]->detune());
-    xml->addpar("coarse_detune", VoicePar[nvoice]->coarseDetune());
-    xml->addpar("detune_type", VoicePar[nvoice]->detuneType());
+
+    VoicePar[nvoice]->detuneSet.add2XMLsection(xml);
 
     xml->addparbool("freq_envelope_enabled",
                     VoicePar[nvoice]->freqEnvelopeEnabled());
@@ -485,9 +475,8 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
             xml->endbranch();
         }
         xml->beginbranch("MODULATOR");
-        xml->addpar("detune", VoicePar[nvoice]->PFMDetune);
-        xml->addpar("coarse_detune", VoicePar[nvoice]->PFMCoarseDetune);
-        xml->addpar("detune_type", VoicePar[nvoice]->PFMDetuneType);
+
+        VoicePar[nvoice]->FMDetuneSet.add2XMLsection(xml);
 
         xml->addparbool("freq_envelope_enabled",
                         VoicePar[nvoice]->PFMFreqEnvelopeEnabled);
@@ -533,10 +522,8 @@ void ADnoteParameters::add2XML(XMLwrapper *xml)
     xml->endbranch();
 
     xml->beginbranch("FREQUENCY_PARAMETERS");
-    xml->addpar("detune", PDetune);
 
-    xml->addpar("coarse_detune", PCoarseDetune);
-    xml->addpar("detune_type", PDetuneType);
+    globalDetuneSet.add2XMLsection(xml);
 
     xml->addpar("bandwidth", PBandwidth);
 
@@ -619,16 +606,8 @@ void ADnoteParameters::getfromXML(XMLwrapper *xml)
     }
 
     if(xml->enterbranch("FREQUENCY_PARAMETERS")) {
-        PDetune = xml->getpar("detune",
-                                        PDetune,
-                                        0,
-                                        16383);
-        PCoarseDetune = xml->getpar("coarse_detune",
-                                              PCoarseDetune,
-                                              0,
-                                              16383);
-        PDetuneType   = xml->getpar127("detune_type",
-                                                 PDetuneType);
+
+        globalDetuneSet.getFromXMLsection(xml);
 
         PBandwidth    = xml->getpar127("bandwidth",
                                                  PBandwidth);
@@ -789,19 +768,8 @@ void ADnoteParameters::getfromXMLsection(XMLwrapper *xml, int n)
             VoicePar[nvoice]->fixedFreqET()));
 
 
-        VoicePar[nvoice]->detune.setValue(xml->getpar("detune",
-                                                VoicePar[nvoice]->detune(),
-                                                0,
-                                                16383));
+        VoicePar[nvoice]->detuneSet.getFromXMLsection(xml);
 
-        VoicePar[nvoice]->coarseDetune.setValue(xml->getpar(
-            "coarse_detune",
-            VoicePar[nvoice]->coarseDetune(),
-            0,
-            16383));
-        VoicePar[nvoice]->detuneType.setValue(xml->getpar127(
-            "detune_type",
-            VoicePar[nvoice]->detuneType()));
 
         VoicePar[nvoice]->freqEnvelopeEnabled.setValue(xml->getparbool(
             "freq_envelope_enabled",
@@ -871,18 +839,8 @@ void ADnoteParameters::getfromXMLsection(XMLwrapper *xml, int n)
         }
 
         if(xml->enterbranch("MODULATOR")) {
-            VoicePar[nvoice]->PFMDetune =
-                xml->getpar("detune", VoicePar[nvoice]->PFMDetune, 0, 16383);
-            VoicePar[nvoice]->PFMCoarseDetune = xml->getpar(
-                "coarse_detune",
-                VoicePar[nvoice]->
-                PFMCoarseDetune,
-                0,
-                16383);
-            VoicePar[nvoice]->PFMDetuneType   = xml->getpar127(
-                "detune_type",
-                VoicePar[nvoice]
-                ->PFMDetuneType);
+
+            VoicePar[nvoice]->FMDetuneSet.getFromXMLsection(xml);
 
             VoicePar[nvoice]->PFMFreqEnvelopeEnabled = xml->getparbool(
                 "freq_envelope_enabled",

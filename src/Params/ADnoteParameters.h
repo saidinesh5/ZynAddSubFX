@@ -35,6 +35,7 @@
 #include "../Controls/Ranger.h"
 #include "../Controls/Toggle.h"
 #include "../Controls/FakeChildFactory.h"
+#include "../Controls/DetuneControlSet.h"
 #include <vector>
 #include "PresetsArray.h"
 
@@ -58,7 +59,7 @@ class ADnoteVoiceParam:public Node
 {
     public:
 
-        ADnoteVoiceParam(Node *parent, std::string id);
+        ADnoteVoiceParam(Node *parent, std::string id, class ADnoteParameters *par);
 
         /** If the voice is enabled */
         Toggle Enabled;
@@ -115,17 +116,8 @@ class ADnoteVoiceParam:public Node
            if this parameter is 64, 1 MIDI halftone -> 1 frequency halftone */
         DescRanger fixedFreqET;
 
-        /** Fine detune */
-        DescRanger detune;
-
-        /** Octave detune */
-        DescRanger octaveDetune;
-
-        /** Coarse detune NOTE: this also included octave in old zyn */
-        DescRanger coarseDetune;
-
-        /** Detune type */
-        DescRanger detuneType;
+        /* Detune controls */
+        DetuneControlSet detuneSet;
 
         /* Frequency Envelope */
         Toggle   freqEnvelopeEnabled;
@@ -207,14 +199,8 @@ class ADnoteVoiceParam:public Node
         /* Modullator Velocity Sensing */
         unsigned char PFMVelocityScaleFunction;
 
-        /* Fine Detune of the Modullator*/
-        unsigned short int PFMDetune;
-
-        /* Coarse Detune of the Modullator */
-        unsigned short int PFMCoarseDetune;
-
-        /* The detune type */
-        unsigned char PFMDetuneType;
+        /* Detune of the Modullator*/
+        DetuneControlSet FMDetuneSet;
 
         /* Frequency Envelope of the Modullator */
         unsigned char   PFMFreqEnvelopeEnabled;
@@ -231,10 +217,6 @@ class ADnoteParameters : public PresetsArray
         ADnoteParameters(Node *parent, FFTwrapper *fft_);
         virtual ~ADnoteParameters();
 
-        Ranger volume;
-
-        FakeChildFactory voices;
-
         //ADnoteGlobalParam GlobalPar;
         //START PASTE GLOBALPAR FROM STRUCT
 
@@ -243,14 +225,16 @@ class ADnoteParameters : public PresetsArray
            Stereo=1, Mono=0. */
 
         unsigned char PStereo;
+        Ranger volume;
+
+
 
 
         /******************************************
          *     FREQUENCY GLOBAL PARAMETERS        *
          ******************************************/
-        unsigned short int PDetune; //fine detune
-        unsigned short int PCoarseDetune; //coarse detune+octave
-        unsigned char      PDetuneType; //detune type
+
+        DetuneControlSet globalDetuneSet;
 
         unsigned char      PBandwidth; //how much the relative fine detunes of the voices are changed
 
@@ -304,6 +288,7 @@ class ADnoteParameters : public PresetsArray
         //END PASTE GLOBALPAR
 
 
+        FakeChildFactory voices;
         std::vector<ADnoteVoiceParam *> VoicePar;
 
         void defaults();
@@ -317,7 +302,7 @@ class ADnoteParameters : public PresetsArray
     private:
         void defaults(int n); //n is the nvoice
 
-        void EnableVoice(int nvoice);
+        void EnableVoice(int nvoice, class ADnoteParameters *par);
         void KillVoice(int nvoice);
         FFTwrapper *fft;
 

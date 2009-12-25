@@ -39,9 +39,9 @@ extern REALTYPE getdetune(unsigned char type,
                           unsigned short int finedetune);
 
 extern REALTYPE newgetdetune(unsigned char type,
-                          unsigned short int octave,
-                          unsigned short int coarsedetune,
-                          unsigned short int finedetune);
+                          int octave,
+                          int coarsedetune,
+                          int finedetune);
 
 /**Try to set current thread to realtime priority program priority
  * \todo see if the right pid is being sent

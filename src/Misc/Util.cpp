@@ -106,9 +106,9 @@ REALTYPE getdetune(unsigned char type,
  * Get the detune in cents
  */
 REALTYPE newgetdetune(unsigned char type,
-                   unsigned short int octave,
-                   unsigned short int cdetune,
-                   unsigned short int finedetune)
+                   int octave,
+                   int cdetune,
+                   int finedetune)
 {
     REALTYPE det = 0.0, octdet = 0.0, cdet = 0.0, findet = 0.0;
 
@@ -130,27 +130,23 @@ REALTYPE newgetdetune(unsigned char type,
     switch(type) {
 //	case 1: is used for the default (see below)
     case 2:
-        cdet   = fabs(cdetune * 10.0);
-        findet = fabs(fdetune / 8192.0) * 10.0;
+        cdet   = cdetune * 10.0;
+        findet = (fdetune / 8192.0) * 10.0;
         break;
     case 3:
-        cdet   = fabs(cdetune * 100);
-        findet = pow(10, fabs(fdetune / 8192.0) * 3.0) / 10.0 - 0.1;
+        cdet   = cdetune * 100;
+        findet = pow(10, (fdetune / 8192.0) * 3.0) / 10.0 - 0.1;
         break;
     case 4:
-        cdet   = fabs(cdetune * 701.95500087); //perfect fifth
-        findet = (pow(2, fabs(fdetune / 8192.0) * 12.0) - 1.0) / 4095 * 1200;
+        cdet   = cdetune * 701.95500087; //perfect fifth
+        findet = (pow(2, (fdetune / 8192.0) * 12.0) - 1.0) / 4095 * 1200;
         break;
     //case ...: need to update N_DETUNE_TYPES, if you'll add more
     default:
-        cdet   = fabs(cdetune * 50.0);
-        findet = fabs(fdetune / 8192.0) * 35.0; //almost like "Paul's Sound Designer 2"
+        cdet   = cdetune * 50.0;
+        findet = fdetune / 8192.0 * 35.0; //almost like "Paul's Sound Designer 2"
         break;
     }
-    if(finedetune < 8192)
-        findet = -findet;
-    if(cdetune < 0)
-        cdet = -cdet;
 
     det = octdet + cdet + findet;
     return det;

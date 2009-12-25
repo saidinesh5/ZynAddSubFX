@@ -69,9 +69,8 @@ ADnote::ADnote(ADnoteParameters *pars,
     time   = 0.0;
     stereo = pars->PStereo;
 
-    NoteGlobalPar.Detune      = getdetune(pars->PDetuneType,
-                                          pars->PCoarseDetune,
-                                          pars->PDetune);
+    NoteGlobalPar.Detune      = pars->globalDetuneSet.get();
+
     bandwidthDetuneMultiplier = pars->getBandwidthDetuneMultiplier();
 
     if(pars->PPanning == 0)
@@ -241,40 +240,10 @@ ADnote::ADnote(ADnoteParameters *pars,
         NoteVoicePar[nvoice].fixedfreqET = pars->VoicePar[nvoice]->fixedFreqET();
 
         //use the Globalpars.detunetype if the detunetype is 0
-        if(pars->VoicePar[nvoice]->detuneType() != 0) {
-            NoteVoicePar[nvoice].Detune     = getdetune(
-                pars->VoicePar[nvoice]->detuneType(),
-                pars->VoicePar[nvoice]->coarseDetune(),
-                8192);                                                                         //coarse detune
-            NoteVoicePar[nvoice].FineDetune = getdetune(
-                pars->VoicePar[nvoice]->detuneType(),
-                0,
-                pars->VoicePar[nvoice]->detune());                               //fine detune
-        }
-        else {
-            NoteVoicePar[nvoice].Detune     = getdetune(
-                pars->PDetuneType,
-                pars->VoicePar[nvoice]->coarseDetune(),
-                8192);                                                                         //coarse detune
-            NoteVoicePar[nvoice].FineDetune = getdetune(
-                pars->PDetuneType,
-                0,
-                pars->VoicePar[nvoice]->detune());                               //fine detune
-        }
-        if(pars->VoicePar[nvoice]->PFMDetuneType != 0)
-            NoteVoicePar[nvoice].FMDetune = getdetune(
-                pars->VoicePar[nvoice]->PFMDetuneType,
-                pars->VoicePar[nvoice]->
-                PFMCoarseDetune,
-                pars->VoicePar[nvoice]->PFMDetune);
-        else
-            NoteVoicePar[nvoice].FMDetune = getdetune(
-                pars->PDetuneType,
-                pars->VoicePar[nvoice]->
-                PFMCoarseDetune,
-                pars->VoicePar[nvoice]->PFMDetune);
-        ;
+        NoteVoicePar[nvoice].Detune     = pars->VoicePar[nvoice]->detuneSet.getCoarse();
+        NoteVoicePar[nvoice].FineDetune = pars->VoicePar[nvoice]->detuneSet.getFine();
 
+        NoteVoicePar[nvoice].FMDetune = pars->VoicePar[nvoice]->FMDetuneSet.get();
 
         for(int k = 0; k < unison; k++) {
             oscposhi[nvoice][k]   = 0;
@@ -425,6 +394,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
                           int midinote_,
                           bool externcall)
 {
+#if 0
     ADnoteParameters *pars = partparams;
     //Controller *ctl_=ctl;
 
@@ -460,9 +430,8 @@ void ADnote::ADlegatonote(REALTYPE freq,
         velocity = 1.0;
     this->velocity = velocity;
 
-    NoteGlobalPar.Detune      = getdetune(pars->PDetuneType,
-                                          pars->PCoarseDetune,
-                                          pars->PDetune);
+    NoteGlobalPar.Detune      = pars->globalDetuneSet.get();
+
     bandwidthDetuneMultiplier = pars->getBandwidthDetuneMultiplier();
 
     if(pars->PPanning == 0)
@@ -487,25 +456,23 @@ void ADnote::ADlegatonote(REALTYPE freq,
         NoteVoicePar[nvoice].fixedfreqET = pars->VoicePar[nvoice]->fixedFreqET();
 
         //use the Globalpars.detunetype if the detunetype is 0
-        if(pars->VoicePar[nvoice]->detuneType() != 0) {
-            NoteVoicePar[nvoice].Detune     = getdetune(
-                pars->VoicePar[nvoice]->detuneType(),
-                pars->VoicePar[nvoice]->coarseDetune(),
-                8192);                                                                         //coarse detune
-            NoteVoicePar[nvoice].FineDetune = getdetune(
-                pars->VoicePar[nvoice]->detuneType(),
-                0,
-                pars->VoicePar[nvoice]->detune());                               //fine detune
+        if(pars->VoicePar[nvoice]->detuneSet.isEnabled()) {
+            NoteVoicePar[nvoice].Detune     = 
+                pars->VoicePar[nvoice]->detuneSet.getCoarse();
+
+            NoteVoicePar[nvoice].FineDetune = 
+                pars->VoicePar[nvoice]->detuneSet.getFine();
+
         }
         else {
             NoteVoicePar[nvoice].Detune     = getdetune(
                 pars->PDetuneType,
-                pars->VoicePar[nvoice]->coarseDetune(),
+                pars->VoicePar[nvoice]->detuneSet.coarseDetune(),
                 8192);                                                                         //coarse detune
             NoteVoicePar[nvoice].FineDetune = getdetune(
                 pars->PDetuneType,
                 0,
-                pars->VoicePar[nvoice]->detune());                               //fine detune
+                pars->VoicePar[nvoice]->detuneSet.detune());                               //fine detune
         }
         if(pars->VoicePar[nvoice]->PFMDetuneType != 0)
             NoteVoicePar[nvoice].FMDetune = getdetune(
@@ -700,6 +667,7 @@ void ADnote::ADlegatonote(REALTYPE freq,
     ///////////////
 
     // End of the ADlegatonote function.
+#endif
 }
 
 

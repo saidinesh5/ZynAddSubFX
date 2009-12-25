@@ -14,6 +14,7 @@ set(zynaddsubfx_controls_SRCS
     #CharControl.cpp
     #DelayCtl.cpp
     DescRanger.cpp
+    DetuneControlSet.cpp
     Ranger.cpp
     Selector.cpp
     Toggle.cpp
