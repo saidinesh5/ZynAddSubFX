@@ -75,18 +75,48 @@ REALTYPE DetuneControlSet::get()
 
 void DetuneControlSet::getFromXMLsection(XMLwrapper *xml)
 {
+    if (xml->versionAtLeast(3,0,0)) {
         detune.setValue         (xml->getpar(
-             "detune", detune(), 0, 16383));
+                    "detune", detune(), 0, 16383));
 
-        //TODO: sjekk argumenter
         octaveDetune.setValue   (xml->getpar(
-            "octave_detune", octaveDetune(), 0, 16383));
+                    "octave_detune", octaveDetune(), 0, 16383));
 
         coarseDetune.setValue   (xml->getpar(
-            "coarse_detune", coarseDetune(), 0, 16383));
+                    "coarse_detune", coarseDetune(), 0, 16383));
 
         detuneType.setValue     (xml->getpar127(
-            "detune_type", detuneType()));
+                    "detune_type", detuneType()));
+
+    }
+    else { //backwards compatible loading needed
+        printf("backwards\n");
+        detune.setValue         (xml->getpar(
+                    "detune", detune(), 0, 16383));
+
+        int coarse = xml->getpar(
+                    "coarse_detune", coarseDetune(), 0, 16383);
+
+        //Get Octave
+        int octave   = coarse / 1024;
+        if(octave >= 8)
+            octave -= 16;
+
+        int cdetune = coarse % 1024;
+        if(cdetune > 512)
+            cdetune -= 1024;
+
+
+        //TODO: sjekk argumenter
+        octaveDetune.setValue(octave);
+
+        coarseDetune.setValue(cdetune);
+
+        detuneType.setValue     (xml->getpar127(
+                    "detune_type", detuneType()));
+
+    }
+
 }
 
 void DetuneControlSet::add2XMLsection(XMLwrapper *xml)
