@@ -1,11 +1,9 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  MidiIn.h - This class is inherited by all the Midi input classes
-  Copyright (C) 2002-2005 Nasca Octavian Paul
+  Engine.h - Audio Driver base class
   Copyright (C) 2009-2010 Mark McCurry
-  Author: Nasca Octavian Paula
-          Mark McCurry
+  Author: Mark McCurry
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of version 2 of the GNU General Public License
@@ -22,20 +20,28 @@
 
 */
 
-#ifndef MIDI_IN_H
-#define MIDI_IN_H
-
-#include "Engine.h"
-
-/**This class is inherited by all the Midi input classes*/
-class MidiIn : public virtual Engine
+#ifndef ENGINE_H
+#define ENGINE_H
+#include <string>
+#include "../Misc/Atomic.h"
+/**Marker for input/output driver*/
+class Engine
 {
     public:
-        static int getcontroller(unsigned char b);
+        Engine();
+        virtual ~Engine();
 
-        virtual void setMidiEn(bool nval)=0;
-        virtual bool getMidiEn() const=0;
+        /**Start the Driver
+         * @return true on success*/
+        virtual bool Start()=0;
+        /**Stop the Driver*/
+        virtual void Stop()=0;
+
+        /**Retruns if engine is on*/
+        bool isRunning() const;
+
+        std::string name;
+    protected:
+        Atomic<bool> enabled;
 };
-
 #endif
-

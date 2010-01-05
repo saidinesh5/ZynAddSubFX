@@ -1,11 +1,9 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  MidiIn.h - This class is inherited by all the Midi input classes
-  Copyright (C) 2002-2005 Nasca Octavian Paul
+  Engine.cpp - Audio Driver base class
   Copyright (C) 2009-2010 Mark McCurry
-  Author: Nasca Octavian Paula
-          Mark McCurry
+  Author: Mark McCurry
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of version 2 of the GNU General Public License
@@ -21,21 +19,16 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
-
-#ifndef MIDI_IN_H
-#define MIDI_IN_H
-
 #include "Engine.h"
 
-/**This class is inherited by all the Midi input classes*/
-class MidiIn : public virtual Engine
+Engine::Engine()
+    :enabled(false)
+{};
+
+Engine::~Engine()
+{};
+
+bool Engine::isRunning() const
 {
-    public:
-        static int getcontroller(unsigned char b);
-
-        virtual void setMidiEn(bool nval)=0;
-        virtual bool getMidiEn() const=0;
-};
-
-#endif
-
+    return enabled();
+}

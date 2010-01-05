@@ -24,13 +24,14 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <jack/jack.h>
-#include <jack/ringbuffer.h>
+#include <pthread.h>
 
+#include "MidiIn.h"
 #include "AudioOut.h"
 
 typedef jack_default_audio_sample_t jsample_t;
 
-class JackEngine : public AudioOut
+class JackEngine : public AudioOut, MidiIn
 {
     public:
         JackEngine(OutMgr *out);
@@ -39,7 +40,13 @@ class JackEngine : public AudioOut
         bool setServer(std::string server);
         bool Start();
         void Stop();
-        
+
+        void setMidiEn(bool nval);
+        bool getMidiEn() const;
+
+        void setAudioEn(bool nval);
+        bool getAudioEn() const;
+
         unsigned int getSamplerate() { return audio.jackSamplerate; };
         unsigned int getBuffersize() { return audio.jackNframes; };
 
@@ -50,6 +57,8 @@ class JackEngine : public AudioOut
 
         int processCallback(jack_nframes_t nframes);
         static int _processCallback(jack_nframes_t nframes, void *arg);
+        int bufferSizeCallback(jack_nframes_t nframes);
+        static int _bufferSizeCallback(jack_nframes_t nframes, void *arg);
         static void _errorCallback(const char *msg);
         static void _infoCallback(const char *msg);
         static int _xrunCallback(void *arg);
@@ -57,15 +66,25 @@ class JackEngine : public AudioOut
     private:
         bool connectServer(std::string server);
         bool openAudio();
+        void stopAudio();
         bool processAudio(jack_nframes_t nframes);
+        bool openMidi();
+        void stopMidi();
 
         jack_client_t      *jackClient;
         struct {
+            bool en;
             unsigned int  jackSamplerate;
             unsigned int  jackNframes;
             jack_port_t  *ports[2];
             jsample_t    *portBuffs[2];
         } audio;
+        struct {
+            jack_port_t *inport;
+            bool en;
+        } midi;
+
+        void handleMidi(unsigned long frames);
 };
 
 #endif

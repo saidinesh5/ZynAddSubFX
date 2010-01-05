@@ -27,9 +27,9 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#ifdef OS_LINUX
+#if OS_LINUX || OS_CYGWIN
 #include <getopt.h>
-#elif OS_WINDOIWS
+#elif OS_WINDOWS
 #include <winbase.h>
 #include <windows.h>
 #endif
@@ -40,23 +40,11 @@
 extern Dump dump;
 
 int (*rand_func)();
+
+//Nio System
 #include "Nio/OutMgr.h"
-
-#ifdef ALSAMIDIIN
-#include "Input/ALSAMidiIn.h"
-#endif
-
-#ifdef OSSMIDIIN
-#include "Input/OSSMidiIn.h"
-#endif
-
-#if (defined(NONEMIDIIN) || defined(VSTMIDIIN))
-#include "Input/NULLMidiIn.h"
-#endif
-
-#ifdef WINMIDIIN
-#include "Input/WINMidiIn.h"
-#endif
+#include "Nio/InMgr.h"
+#include "Nio/EngineMgr.h"
 
 #ifndef DISABLE_GUI
 #ifdef QT_GUI
@@ -76,7 +64,7 @@ MasterUI *ui;
 
 using namespace std;
 
-pthread_t thr1, thr2, thr3, thr4;/**@deprecated*/
+pthread_t thr3, thr4;
 Master   *master;
 int  swaplr    = 0; //1 for left-right swapping
 bool usejackit = false;
@@ -89,42 +77,7 @@ bool usejackit = false;
 LASHClient *lash;
 #endif
 
-MidiIn *Midi;
 int     Pexitprogram = 0; //if the UI set this to 1, the program will exit
-
-/*
- * Midi input thread
- */
-#if !(defined(WINMIDIIN) || defined(VSTMIDIIN))
-void *thread1(void *arg)
-{
-    MidiCmdType   cmdtype = MidiNoteOFF;
-    unsigned char cmdchan = 0, note = 0, vel = 0;
-    int cmdparams[MP_MAX_BYTES];
-    for(int i = 0; i < MP_MAX_BYTES; ++i)
-        cmdparams[i] = 0;
-
-    set_realtime();
-    while(Pexitprogram == 0) {
-        Midi->getmidicmd(cmdtype, cmdchan, cmdparams);
-        note = cmdparams[0];
-        vel  = cmdparams[1];
-
-        if((cmdtype == MidiNoteON) && (note != 0))
-            master->NoteOn(cmdchan, note, vel);
-        if((cmdtype == MidiNoteOFF) && (note != 0))
-            master->NoteOff(cmdchan, note);
-        if(cmdtype == MidiController)
-            master->SetController(cmdchan,
-                    cmdparams[0],
-                    cmdparams[1],
-                    cmdparams[2]);
-    }
-
-    return 0;
-}
-#endif
-
 
 /*
  * User Interface thread
@@ -170,6 +123,9 @@ void *thread3(void *arg)
     return 0;
 }
 
+//this code is disabled for Nio testing
+//it should get moved out of here into the nio system soon
+#if 0
 /*
  * Sequencer thread (test)
  */
@@ -207,21 +163,16 @@ void *thread4(void *arg)
         }
 //if (!realtime player) atunci fac asta
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#ifdef OS_LINUX
-        usleep(1000);
-#elif OS_WINDOWS
-        Sleep(1);
-#endif
+		os_sleep(1000);
     }
 
     return 0;
 }
+#endif
 
 /*
  * Program initialisation
  */
-
-
 void initprogram()
 {
     cerr.precision(1);
@@ -245,19 +196,23 @@ void initprogram()
     master = new Master();
     master->swaplr = swaplr;
 
+    //Nio Initialization
 
-#ifdef ALSAMIDIIN
-    Midi = new ALSAMidiIn();
-#endif
-#ifdef OSSMIDIIN
-    Midi = new OSSMidiIn();
-#endif
-#if (defined(NONEMIDIIN) || (defined(VSTMIDIIN)))
-    Midi = new NULLMidiIn();
-#endif
+    //Enable input wrapper
+    sysIn     = new InMgr(master);
 
-    sysOut = new OutMgr(master);
+    //Initialize the Output Systems
+    sysOut    = new OutMgr(master);
+
+    //Initialize The Engines
+    sysEngine = new EngineMgr();
+
+    //Run the system
     sysOut->run();
+    sysIn->run();
+#warning remove welcome message when system is out of beta
+    cout << "\nThanks for using the Nio system :)" << endl;
+
 
 #ifndef DISABLE_GUI
 #ifdef FLTK_GUI
@@ -272,25 +227,27 @@ void initprogram()
 void exitprogram()
 {
     pthread_mutex_lock(&master->mutex);
+    pthread_mutex_unlock(&master->mutex);
     delete sysOut;
+    delete sysIn;
+    delete sysEngine;
 
 #ifndef DISABLE_GUI
 #ifdef FLTK_GUI
-    delete (ui);
+    delete ui;
 #endif
 #endif
-    delete (Midi);
-    delete (master);
+    delete master;
 
 #ifdef USE_LASH
-    delete (lash);
+    delete lash;
 #endif
 
 //    pthread_mutex_unlock(&master->mutex);
     delete [] denormalkillbuf;
 }
 
-#ifdef OS_WINDOWS
+#if OS_WINDOWS
 #define ARGSIZE 100
 char winoptarguments[ARGSIZE];
 char getopt(int argc, char *argv[], const char *shortopts, int *index)
@@ -340,13 +297,13 @@ int main(int argc, char *argv[])
     cerr << "Compiled: " << __DATE__ << " " << __TIME__ << endl;
     cerr << "This program is free software (GNU GPL v.2 or later) and \n";
     cerr << "it comes with ABSOLUTELY NO WARRANTY.\n" << endl;
-#ifdef OS_LINUX
-    if(argc == 1)
-        cerr << "Try 'zynaddsubfx --help' for command-line options." << endl;
-#else
-    if(argc == 1)
-        cerr << "Try 'zynaddsubfx -h' for command-line options.\n" << endl;
+	if(argc == 1)
+#if OS_LINUX || OS_CYGWIN
+    cerr << "Try 'zynaddsubfx --help' for command-line options." << endl;
+#else //assuming windows
+    cerr << "Try 'zynaddsubfx -h' for command-line options.\n" << endl;
 #endif
+
     /* Get the settings from the Config*/
     SAMPLE_RATE = config.cfg.SampleRate;
     SOUND_BUFFER_SIZE = config.cfg.SoundBufferSize;
@@ -355,7 +312,7 @@ int main(int argc, char *argv[])
 
 
     /* Parse command-line options */
-#ifdef OS_LINUX
+#if OS_LINUX || OS_CYGWIN
     struct option opts[] = {
         {"load", 2, NULL, 'l'},
         {"load-instrument", 2, NULL, 'L'
@@ -400,12 +357,14 @@ int main(int argc, char *argv[])
 
     while(1) {
         /**\todo check this process for a small memory leak*/
-#ifdef OS_LINUX
+#if OS_LINUX || OS_CYGWIN
         opt = getopt_long(argc, argv, "l:L:r:b:o:hSDUAY", opts, &option_index);
         char *optarguments = optarg;
-#else
+#elif OS_WINDOWS
         opt = getopt(argc, argv, "l:L:r:b:o:hSDUAY", &option_index);
         char *optarguments = &winoptarguments[0];
+#else
+#error Undefined OS
 #endif
 
         if(opt == -1)
@@ -519,7 +478,7 @@ int main(int argc, char *argv[])
              << endl;
 #endif
 #endif
-#ifdef OS_WINDOWS
+#if OS == WINDOWS
         cout
         <<
         "\nWARNING: On Windows systems, only short comandline parameters works."
@@ -583,26 +542,16 @@ int main(int argc, char *argv[])
     }
 
 
-#if !(defined(NONEMIDIIN) || defined(WINMIDIIN) || defined(VSTMIDIIN))
-    pthread_create(&thr1, NULL, thread1, NULL);
-#endif
-
-
-
     if(noui == 0)
         pthread_create(&thr3, NULL, thread3, NULL);
 
-    pthread_create(&thr4, NULL, thread4, NULL);
+//    pthread_create(&thr4, NULL, thread4, NULL);
 #ifdef WINMIDIIN
     InitWinMidi(master);
 #endif
 
     while(Pexitprogram == 0) {
-#ifdef OS_LINUX
-        usleep(100000);
-#elif OS_WINDOWS
-        Sleep(100);
-#endif
+		os_sleep(100000);
     }
 
 #ifdef WINMIDIIN

@@ -34,114 +34,265 @@
 #include <unistd.h>
 #include <iostream>
 
+#include "InMgr.h"
+
 using namespace std;
 
 OssEngine::OssEngine(OutMgr *out)
     :AudioOut(out)
 {
-    snd_fragment   = 0x00080009; //fragment size (?)
-    snd_stereo     = 1; //stereo
-    snd_format     = AFMT_S16_LE;
-    snd_samplerate = SAMPLE_RATE;
+    name = "OSS";
 
-    smps = new short[SOUND_BUFFER_SIZE * 2];
-    memset(smps, 0, sizeof(short) * SOUND_BUFFER_SIZE * 2);
+    midi.en  = true;
+    audio.en = true;
 
-    cerr << "hello?" << endl;
+    audio.smps = new short[SOUND_BUFFER_SIZE * 2];
+    memset(audio.smps, 0, sizeof(short) * SOUND_BUFFER_SIZE * 2);
 }
 
 OssEngine::~OssEngine()
 {
     Stop();
-    delete [] smps;
+    delete [] audio.smps;
 }
 
 bool OssEngine::openAudio()
 {
-    int snd_bitsize = 16;
-    snd_handle = open(config.cfg.LinuxOSSWaveOutDev, O_WRONLY, 0);
-    cerr << config.cfg.LinuxOSSWaveOutDev << endl;
-    if(snd_handle == -1) {
+    int snd_bitsize    = 16;
+    int snd_fragment   = 0x00080009; //fragment size (?);
+    int snd_stereo     = 1; //stereo;
+    int snd_format     = AFMT_S16_LE;
+    int snd_samplerate = SAMPLE_RATE;;
+
+    audio.snd_handle = open(config.cfg.LinuxOSSWaveOutDev, O_WRONLY, 0);
+    if(audio.snd_handle == -1) {
         cerr << "ERROR - I can't open the "
              << config.cfg.LinuxOSSWaveOutDev << '.' << endl;
         return false;
     }
-    ioctl(snd_handle, SNDCTL_DSP_RESET, NULL);
-    ioctl(snd_handle, SNDCTL_DSP_SETFMT, &snd_format);
-    ioctl(snd_handle, SNDCTL_DSP_STEREO, &snd_stereo);
-    ioctl(snd_handle, SNDCTL_DSP_SPEED, &snd_samplerate);
-    ioctl(snd_handle, SNDCTL_DSP_SAMPLESIZE, &snd_bitsize);
-    ioctl(snd_handle, SNDCTL_DSP_SETFRAGMENT, &snd_fragment);
+    ioctl(audio.snd_handle, SNDCTL_DSP_RESET, NULL);
+    ioctl(audio.snd_handle, SNDCTL_DSP_SETFMT, &snd_format);
+    ioctl(audio.snd_handle, SNDCTL_DSP_STEREO, &snd_stereo);
+    ioctl(audio.snd_handle, SNDCTL_DSP_SPEED, &snd_samplerate);
+    ioctl(audio.snd_handle, SNDCTL_DSP_SAMPLESIZE, &snd_bitsize);
+    ioctl(audio.snd_handle, SNDCTL_DSP_SETFRAGMENT, &snd_fragment);
+
     return true;
+}
+
+void OssEngine::stopAudio()
+{
+    int handle = audio.snd_handle;
+    if(handle == -1) //already closed
+        return;
+    audio.snd_handle = -1;
+    close(handle);
 }
 
 bool OssEngine::Start()
 {
-    if(!openAudio())
+    if(enabled())
+        return true;
+    enabled = true;
+
+    bool good = true;
+    if(audio.en)
+        if(!openAudio()) {
+            cerr << "Failed to open OSS audio" << endl;
+            good = false;
+        }
+
+    if(midi.en)
+        if(!openMidi()) {
+            cerr << "Failed to open OSS midi" << endl;
+            good = false;
+        }
+
+    if(!good) {
+        Stop();
         return false;
+    }
+
     pthread_attr_t attr;
     pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-    pthread_create(&pThread, &attr, _AudioThread, this);
-    cout << "Starting Oss";
-    enabled = true;
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    pthread_create(&pThread, &attr, _thread, this);
 
     return true;
 }
 
 void OssEngine::Stop()
 {
+    if(!enabled())
+        return;
     enabled = false;
-    close(snd_handle);
+    stopAudio();
+    stopMidi();
+    pthread_join(pThread, NULL);
 }
 
-void *OssEngine::_AudioThread(void *arg)
+void OssEngine::setMidiEn(bool nval)
 {
-    return (static_cast<OssEngine*>(arg))->AudioThread();
+    midi.en = nval;
+    if(enabled()) {
+        if(nval)
+            openMidi();
+        else
+            stopMidi();
+    }
+}
+
+bool OssEngine::getMidiEn() const
+{
+    if(enabled())
+        return midi.handle != -1;
+    else
+        return midi.en;
+}
+
+void OssEngine::setAudioEn(bool nval)
+{
+    audio.en = nval;
+    if(enabled()) { //lets rebind the ports
+        if(nval)
+            openAudio();
+        else
+            stopAudio();
+    }
+}
+
+bool OssEngine::getAudioEn() const
+{
+    if(enabled())
+        return audio.snd_handle != -1;
+    else
+        return audio.en;
+}
+
+bool OssEngine::openMidi()
+{
+    midi.handle = open(config.cfg.LinuxOSSSeqInDev, O_RDONLY, 0);
+
+    if(-1 == midi.handle)
+       return false;
+
+    midi.run = true;
+    return true;
+}
+
+void OssEngine::stopMidi()
+{
+    int tmp = midi.handle;
+    if(tmp == -1) //already closed
+        return;
+
+    midi.run = false;
+    midi.handle = -1;
+    close(tmp);
+}
+
+void *OssEngine::_thread(void *arg)
+{
+    return (static_cast<OssEngine*>(arg))->thread();
 }
 
 
-void *OssEngine::AudioThread()
-{  
-    //get some initial samples
-    manager->requestSamples();
-    manager->requestSamples();
-    manager->requestSamples();
+void *OssEngine::thread()
+{
+    MidiDriverEvent ev;
+    unsigned char tmp[4] = {0, 0, 0, 0};
     set_realtime();
-    while (enabled())
+    while (midi.run || audio.snd_handle != -1)
     {
-        const Stereo<Sample> smps = getNext();
-        OSSout(smps.l().c_buf(),smps.r().c_buf());
+        if(audio.snd_handle != -1)
+        {
+            const Stereo<Sample> smps = getNext();
+
+            REALTYPE l, r;
+            for(int i = 0; i < SOUND_BUFFER_SIZE; i++) {
+                l = smps.l()[i];
+                r = smps.r()[i];
+
+                if(l < -1.0)
+                    l = -1.0;
+                else
+                    if(l > 1.0)
+                        l = 1.0;
+                if(r < -1.0)
+                    r = -1.0;
+                else
+                    if(r > 1.0)
+                        r = 1.0;
+
+                audio.smps[i * 2]     = (short int) (l * 32767.0);
+                audio.smps[i * 2 + 1] = (short int) (r * 32767.0);
+            }
+            int handle = audio.snd_handle;
+            if(handle != -1)
+                write(handle, audio.smps, SOUND_BUFFER_SIZE * 4); // *2 because is 16 bit, again * 2 because is stereo
+            else
+                break;
+        }
+
+        //Collect up to 10 midi events
+        for (int k = 0; k < 10 && midi.run; ++k) {
+            getMidi(tmp);
+            unsigned char type = tmp[0];
+            unsigned char header = tmp[1];
+            if(header!=0xfe&&type==SEQ_MIDIPUTC&&header>=0x80)
+            {
+                getMidi(tmp);
+                unsigned char num = tmp[1];
+                getMidi(tmp);
+                unsigned char value = tmp[1];
+
+                midiProcess(header, num, value);
+            }
+        }
     }
+    pthread_exit(NULL);
     return NULL;
 }
 
-/*
- * Output the samples to the soundcard
- * The samples are bigger than -1.0 and smaller 1.0
- */
-void OssEngine::OSSout(const REALTYPE *smp_left, const REALTYPE *smp_right)
+void OssEngine::getMidi(unsigned char *midiPtr)
 {
-    int i;
-    REALTYPE l, r;
-    for(i = 0; i < SOUND_BUFFER_SIZE; i++) {
-        l = smp_left[i];
-        r = smp_right[i];
+    read(midi.handle, midiPtr, 4);
+}
 
-        if(l < -1.0)
-            l = -1.0;
-        else
-        if(l > 1.0)
-            l = 1.0;
-        if(r < -1.0)
-            r = -1.0;
-        else
-        if(r > 1.0)
-            r = 1.0;
-
-        smps[i * 2]     = (short int) (l * 32767.0);
-        smps[i * 2 + 1] = (short int) (r * 32767.0);
+void OssEngine::midiProcess(unsigned char head, unsigned char num, unsigned char value)
+{
+    MidiDriverEvent ev;
+    unsigned char chan = head & 0x0f;
+    switch(head & 0xf0)
+    {
+        case 0x80: //Note Off
+            ev.type    = M_NOTE;
+            ev.channel = chan;
+            ev.num     = num;
+            ev.value   = 0;
+            sysIn->putEvent(ev);
+            break;
+        case 0x90: //Note On
+            ev.type    = M_NOTE;
+            ev.channel = chan;
+            ev.num     = num;
+            ev.value   = value;
+            sysIn->putEvent(ev);
+            break;
+        case 0xb0: //Controller
+            ev.type    = M_CONTROLLER;
+            ev.channel = chan;
+            ev.num     = num;
+            ev.value   = value;
+            sysIn->putEvent(ev);
+            break;
+        case 0xe0: //Pitch Wheel
+            ev.type    = M_CONTROLLER;
+            ev.channel = chan;
+            ev.num     = C_pitchwheel;
+            ev.value   = (num + value * (int) 128) - 8192;
+            sysIn->putEvent(ev);
+            break;
     }
-    write(snd_handle, smps, SOUND_BUFFER_SIZE * 4); // *2 because is 16 bit, again * 2 because is stereo
 }
 

@@ -30,6 +30,7 @@ using namespace std;
 NulEngine::NulEngine(OutMgr *out)
     :AudioOut(out)
 {
+    name = "NULL";
     playing_until.tv_sec  = 0;
     playing_until.tv_usec = 0;
 }
@@ -49,7 +50,7 @@ void *NulEngine::AudioThread()
         const Stereo<Sample> smps = getNext();
         dummyOut();
     }
-    return NULL;
+    pthread_exit(NULL);
 }
 
 void NulEngine::dummyOut()
@@ -75,7 +76,6 @@ void NulEngine::dummyOut()
         playing_until.tv_usec -= remaining;
     playing_until.tv_sec  += playing_until.tv_usec / 1000000;
     playing_until.tv_usec %= 1000000;
-    return;
 }
 
 
@@ -86,10 +86,12 @@ NulEngine::~NulEngine()
 
 bool NulEngine::Start()
 {
+    if(enabled())
+        return true;
     pthread_attr_t attr;
     enabled = true;
     pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     pthread_create(&pThread, &attr, _AudioThread, this);
 
     return true;
@@ -97,6 +99,17 @@ bool NulEngine::Start()
 
 void NulEngine::Stop()
 {
-    enabled    = false;
+    if(!enabled())
+        return;
+    enabled = false;
+    pthread_join(pThread, NULL);
+}
+
+void NulEngine::setAudioEn(bool nval)
+{}
+
+bool NulEngine::getAudioEn() const
+{
+    return true;
 }
 

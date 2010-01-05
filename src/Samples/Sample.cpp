@@ -1,7 +1,7 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  Sample.C - Object for storing information on samples
+  Sample.cpp - Object for storing information on samples
   Copyright (C) 2009-2009 Mark McCurry
   Author: Mark McCurry
 
@@ -35,8 +35,7 @@ Sample::Sample(const Sample &smp)
     :bufferSize(smp.bufferSize)
 {
     buffer = new REALTYPE[bufferSize];
-    for(int i = 0; i < bufferSize; ++i)
-        *(i + buffer) = *(i + smp.buffer);
+    memcpy(buffer, smp.buffer, bufferSize * sizeof(float));
 }
 
 Sample::Sample(int length, REALTYPE fill)
@@ -45,8 +44,7 @@ Sample::Sample(int length, REALTYPE fill)
     if(length < 1)
         bufferSize = 1;
     buffer = new REALTYPE[bufferSize];
-    for(int i = 0; i < bufferSize; ++i)
-        buffer[i] = fill;
+    memset(buffer, fill, bufferSize * sizeof(float));
 }
 
 Sample::Sample(int length, const REALTYPE *input)
@@ -54,8 +52,7 @@ Sample::Sample(int length, const REALTYPE *input)
 {
     if(length > 0) {
         buffer = new REALTYPE[length];
-        for(int i = 0; i < length; ++i)
-            *(buffer + i) = *(input + i);
+        memcpy(buffer, input, bufferSize * sizeof(float));
     }
     else {
         buffer     = new REALTYPE[1];
@@ -77,17 +74,12 @@ void Sample::clear()
 
 void Sample::operator=(const Sample &smp)
 {
-    /**\todo rewrite to be less repetitive*/
-    if(bufferSize == smp.bufferSize)
-        for(int i = 0; i < bufferSize; ++i)
-            *(i + buffer) = *(i + smp.buffer);
-    else {
+    if(bufferSize != smp.bufferSize) {
         delete[] buffer;
         buffer     = new REALTYPE[smp.bufferSize];
         bufferSize = smp.bufferSize;
-        for(int i = 0; i < bufferSize; ++i)
-            *(i + buffer) = *(i + smp.buffer);
     }
+    memcpy(buffer, smp.buffer, bufferSize * sizeof(float));
 }
 
 bool Sample::operator==(const Sample &smp) const
@@ -134,7 +126,6 @@ void Sample::resample(const unsigned int rate, const unsigned int nrate)
     if(rate == nrate)
         return; //no resampling here
     else {//resampling occurs here
-        int   itr   = 0;
         float ratio = (nrate * 1.0) / (rate * 1.0);
 
         int    nBufferSize = (int)bufferSize * ratio;
@@ -155,7 +146,7 @@ void Sample::resample(const unsigned int rate, const unsigned int nrate)
     }
 }
 
-void Sample::append(const Sample &smp)
+Sample &Sample::append(const Sample &smp)
 {
     int nbufferSize = bufferSize + smp.bufferSize;
     float *nbuffer  = new float[nbufferSize];
@@ -166,6 +157,7 @@ void Sample::append(const Sample &smp)
 
     buffer     = nbuffer;
     bufferSize = nbufferSize;
+    return *this;
 }
 
 Sample Sample::subSample(int a, int b) const

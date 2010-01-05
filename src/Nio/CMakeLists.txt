@@ -8,6 +8,10 @@ set(zynaddsubfx_nio_SRCS
     NulEngine.cpp
     AudioOut.cpp
     OutMgr.cpp
+    InMgr.cpp
+    Engine.cpp
+    EngineMgr.cpp
+    MidiEvent.cpp
     )
 
 set(zynaddsubfx_nio_lib )
@@ -18,12 +22,11 @@ if(JackEnable)
     list(APPEND zynaddsubfx_nio_lib ${JACK_LIBRARIES})
 endif(JackEnable)
 
-#Uncomment when Port Audio is integrated
-#if(PortAudioOutput)
-#    include_directories(${PORTAUDIO_INCLUDE_DIR})
-#    list(APPEND zynaddsubfx_nio_SRCS PaEngine.cpp)
-#    list(zynaddsubfx_nio_lib ${PORTAUDIO_LIBRARIES})
-#endif(PortAudioOutput)
+if(PaEnable)
+    include_directories(${PORTAUDIO_INCLUDE_DIR})
+    list(APPEND zynaddsubfx_nio_SRCS PaEngine.cpp)
+    list(APPEND zynaddsubfx_nio_lib ${PORTAUDIO_LIBRARIES})
+endif(PaEnable)
 
 if(AlsaEnable)
     list(APPEND zynaddsubfx_nio_SRCS AlsaEngine.cpp)
@@ -39,4 +42,4 @@ add_library(zynaddsubfx_nio STATIC
     ${zynaddsubfx_nio_SRCS} 
     )
 
-target_link_libraries(zynaddsubfx_nio)
+target_link_libraries(zynaddsubfx_nio zynaddsubfx_misc) #for WavFile

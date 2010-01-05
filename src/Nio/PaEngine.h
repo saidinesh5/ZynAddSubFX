@@ -1,8 +1,8 @@
 /*
   ZynAddSubFX - a software synthesizer
 
-  NulEngine.h - Dummy In/Out driver
-  Copyright (C) 2002-2005 Nasca Octavian Paul
+  PAaudiooutput.h - Audio output for PortAudio
+  Copyright (C) 2002 Nasca Octavian Paul
   Author: Nasca Octavian Paul
 
   This program is free software; you can redistribute it and/or modify
@@ -19,35 +19,36 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
 */
+#ifndef PA_ENGINE_H
+#define PA_ENGINE_H
 
-#ifndef NUL_ENGINE_H
-#define NUL_ENGINE_H
+#include <portaudio.h>
 
-#include <sys/time.h>
 #include "../globals.h"
 #include "AudioOut.h"
 
-class NulEngine: public AudioOut
+class PaEngine: public AudioOut
 {
     public:
-        NulEngine(OutMgr *out);
-        ~NulEngine();
+        PaEngine(OutMgr *out);
+        ~PaEngine();
 
         bool Start();
         void Stop();
 
-        void setAudioEn(bool nval);
-        bool getAudioEn() const;
-
     protected:
-        void *AudioThread();
-        static void *_AudioThread(void *arg);
-
+        static int PAprocess(const void *inputBuffer, void *outputBuffer,
+                unsigned long framesPerBuffer,
+                const PaStreamCallbackTimeInfo *outTime, PaStreamCallbackFlags flags,
+                void *userData);
+        int process(float *out, unsigned long framesPerBuffer);
     private:
-        bool en;
-        void dummyOut();
-        struct timeval playing_until;
+        PaStream *stream;
 };
+
+
+void PAaudiooutputinit(Master *master_);
+void PAfinish();
 
 #endif
 

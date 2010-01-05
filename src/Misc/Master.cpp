@@ -63,21 +63,11 @@ Master::Master()
 
     tmpmixl   = new REALTYPE[SOUND_BUFFER_SIZE];
     tmpmixr   = new REALTYPE[SOUND_BUFFER_SIZE];
-    audiooutl = new REALTYPE[SOUND_BUFFER_SIZE];
-    audiooutr = new REALTYPE[SOUND_BUFFER_SIZE];
 
-    ksoundbuffersample    = -1; //this is only time when this is -1; this means that the GetAudioOutSamples was never called
-    ksoundbuffersamplelow = 0.0;
-    oldsamplel = 0.0;
-    oldsampler = 0.0;
+
     for(int npart = 0; npart < NUM_MIDI_PARTS; npart++) {
         vuoutpeakpart[npart] = 1e-9;
         fakepeakpart[npart]  = 0;
-    }
-
-    for(int i = 0; i < SOUND_BUFFER_SIZE; i++) {
-        audiooutl[i] = 0.0;
-        audiooutr[i] = 0.0;
     }
 
     parts.addType("Part");
@@ -86,8 +76,6 @@ Master::Master()
         part[npart] = p;
         parts << p;
     }
-
-
 
     //Insertion Effects init
     for(int nefx = 0; nefx < NUM_INS_EFX; nefx++)
@@ -154,23 +142,7 @@ bool Master::mutexLock(lockset request)
 /*
  * Note On Messages (velocity=0 for NoteOff)
  */
-void Master::NoteOn(unsigned char chan,
-                    unsigned char note,
-                    unsigned char velocity)
-{
-    pthread_mutex_lock(&mutex);
-    dump.dumpnote(chan, note, velocity);
-
-    noteon(chan, note, velocity);
-    pthread_mutex_unlock(&mutex);
-}
-
-/*
- * Internal Note On (velocity=0 for NoteOff)
- */
-void Master::noteon(unsigned char chan,
-                    unsigned char note,
-                    unsigned char velocity)
+void Master::noteOn(char chan, char note, char velocity)
 {
     int npart;
     if(velocity != 0) {
@@ -183,24 +155,14 @@ void Master::noteon(unsigned char chan,
         }
     }
     else
-        this->NoteOff(chan, note);
+        this->noteOff(chan, note);
     HDDRecorder.triggernow();
 }
 
 /*
  * Note Off Messages
  */
-void Master::NoteOff(unsigned char chan, unsigned char note)
-{
-    dump.dumpnote(chan, note, 0);
-
-    noteoff(chan, note);
-}
-
-/*
- * Internal Note Off
- */
-void Master::noteoff(unsigned char chan, unsigned char note)
+void Master::noteOff(char chan, char note)
 {
     int npart;
     for(npart = 0; npart < NUM_MIDI_PARTS; npart++)
@@ -212,6 +174,7 @@ void Master::noteoff(unsigned char chan, unsigned char note)
 /*
  * Controllers
  */
+/*
 void Master::SetController(unsigned char chan,
                            unsigned int type,
                            int par,
@@ -221,13 +184,15 @@ void Master::SetController(unsigned char chan,
 
     setcontroller(chan, type, par);
 
+    //TODO: FIX midievents
     forward(new MidiEvent(chan, rawtype, par));
 }
+*/
 
 /*
  * Internal Controllers
  */
-void Master::setcontroller(unsigned char chan, unsigned int type, int par)
+void Master::setController(char chan, int type, int par)
 {
     if((type == C_dataentryhi) || (type == C_dataentrylo)
        || (type == C_nrpnhi) || (type == C_nrpnlo)) { //Process RPN and NRPN by the Master (ignore the chan)
@@ -443,9 +408,11 @@ void Master::AudioOut(REALTYPE *outl, REALTYPE *outr)
 
     //Mix all parts
     for(npart = 0; npart < NUM_MIDI_PARTS; npart++) {
-        for(i = 0; i < SOUND_BUFFER_SIZE; i++) { //the volume did not changed
-            outl[i] += part[npart]->partoutl[i];
-            outr[i] += part[npart]->partoutr[i];
+        if(part[npart]->enabled()) { //only mix active parts
+            for(i = 0; i < SOUND_BUFFER_SIZE; i++) { //the volume did not changed
+                outl[i] += part[npart]->partoutl[i];
+                outr[i] += part[npart]->partoutr[i];
+            }
         }
     }
 
@@ -530,75 +497,6 @@ void Master::AudioOut(REALTYPE *outl, REALTYPE *outr)
     Job::handleJobs();
 }
 
-void Master::GetAudioOutSamples(int nsamples,
-                                int samplerate,
-                                REALTYPE *outl,
-                                REALTYPE *outr)
-{
-    if(ksoundbuffersample == -1) { //first time
-        AudioOut(&audiooutl[0], &audiooutr[0]);
-        ksoundbuffersample = 0;
-    }
-
-
-    if(samplerate == SAMPLE_RATE) { //no resample
-        int ksample = 0;
-        while(ksample < nsamples) {
-            outl[ksample] = audiooutl[ksoundbuffersample];
-            outr[ksample] = audiooutr[ksoundbuffersample];
-
-            ksample++;
-            ksoundbuffersample++;
-            if(ksoundbuffersample >= SOUND_BUFFER_SIZE) {
-                AudioOut(&audiooutl[0], &audiooutr[0]);
-                ksoundbuffersample = 0;
-            }
-        }
-    }
-    else {  //Resample
-        int      ksample = 0;
-        REALTYPE srinc   = SAMPLE_RATE / (REALTYPE)samplerate;
-
-        while(ksample < nsamples) {
-            if(ksoundbuffersample != 0) {
-                outl[ksample] = audiooutl[ksoundbuffersample]
-                                * ksoundbuffersamplelow
-                                + audiooutl[ksoundbuffersample
-                                            - 1] * (1.0 - ksoundbuffersamplelow);
-                outr[ksample] = audiooutr[ksoundbuffersample]
-                                * ksoundbuffersamplelow
-                                + audiooutr[ksoundbuffersample
-                                            - 1] * (1.0 - ksoundbuffersamplelow);
-            }
-            else {
-                outl[ksample] = audiooutl[ksoundbuffersample]
-                                * ksoundbuffersamplelow
-                                + oldsamplel * (1.0 - ksoundbuffersamplelow);
-                outr[ksample] = audiooutr[ksoundbuffersample]
-                                * ksoundbuffersamplelow
-                                + oldsampler * (1.0 - ksoundbuffersamplelow);
-            }
-
-            ksample++;
-
-            ksoundbuffersamplelow += srinc;
-            if(ksoundbuffersamplelow >= 1.0) {
-                ksoundbuffersample   += (int) floor(ksoundbuffersamplelow);
-                ksoundbuffersamplelow = ksoundbuffersamplelow - floor(
-                    ksoundbuffersamplelow);
-            }
-
-            if(ksoundbuffersample >= SOUND_BUFFER_SIZE) {
-                oldsamplel = audiooutl[SOUND_BUFFER_SIZE - 1];
-                oldsampler = audiooutr[SOUND_BUFFER_SIZE - 1];
-                AudioOut(&audiooutl[0], &audiooutr[0]);
-                ksoundbuffersample = 0;
-            }
-        }
-    }
-}
-
-
 static void recursiveRemoveDirections(Node *node)
 {
     node->removeRedirections(NULL);
@@ -626,8 +524,6 @@ Master::~Master()
     for(int nefx = 0; nefx < NUM_SYS_EFX; nefx++)
         delete sysefx[nefx];
 
-    delete [] audiooutl;
-    delete [] audiooutr;
     delete [] tmpmixl;
     delete [] tmpmixr;
     delete (fft);

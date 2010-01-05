@@ -23,40 +23,29 @@
 
 using namespace std;
 
-WavEngine::WavEngine(OutMgr *out, string _filename, int _samplerate, int _channels)
-    :AudioOut(out),filename(_filename),sampleswritten(0),
-    samplerate(_samplerate),channels(_channels),file(NULL)
+WavEngine::WavEngine(OutMgr *out, string filename, int samplerate, int channels)
+    :AudioOut(out), file(filename, samplerate, channels)
 {
-    pthread_mutex_init(&write_mutex, NULL);
-    pthread_cond_init(&stop_cond, NULL);
 }
-
 
 WavEngine::~WavEngine()
 {
-#warning TODO cleanup mutex
-    Close();
+    Stop();
 }
 
 bool WavEngine::openAudio()
 {
-    file = fopen(filename.c_str(), "w");
-    if(!file)
-        return false;
-    this->samplerate = samplerate;
-    this->channels   = channels;
-    sampleswritten   = 0;
-    char tmp[44];
-    fwrite(tmp, 1, 44, file);
-    return true;
+    return file.good();
 }
 
 bool WavEngine::Start()
 {
+    if(enabled())
+        return true;
     pthread_attr_t attr;
     enabled = true;
     pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     pthread_create(&pThread, &attr, _AudioThread, this);
 
     return true;
@@ -64,53 +53,24 @@ bool WavEngine::Start()
 
 void WavEngine::Stop()
 {
-        enabled = false;
-}
+    if(!enabled())
+        return;
+    enabled = false;
 
-void WavEngine::Close()
-{
-    //Stop();
+    //put something in the queue
+    pthread_mutex_lock(&outBuf_mutex);
+    outBuf.push(Stereo<Sample>(Sample(1,0.0),Sample(1,0.0)));
+    pthread_mutex_unlock(&outBuf_mutex);
 
-    pthread_mutex_lock(&write_mutex);
-    if(file) {
-        unsigned int chunksize;
-        rewind(file);
-
-        fwrite("RIFF", 4, 1, file);
-        chunksize = sampleswritten * 4 + 36;
-        fwrite(&chunksize, 4, 1, file);
-
-        fwrite("WAVEfmt ", 8, 1, file);
-        chunksize = 16;
-        fwrite(&chunksize, 4, 1, file);
-        unsigned short int formattag     = 1; //uncompresed wave
-        fwrite(&formattag, 2, 1, file);
-        unsigned short int nchannels     = channels; //stereo
-        fwrite(&nchannels, 2, 1, file);
-        unsigned int samplerate_         = samplerate; //samplerate
-        fwrite(&samplerate_, 4, 1, file);
-        unsigned int bytespersec         = samplerate * 2 * channels; //bytes/sec
-        fwrite(&bytespersec, 4, 1, file);
-        unsigned short int blockalign    = 2 * channels; //2 channels * 16 bits/8
-        fwrite(&blockalign, 2, 1, file);
-        unsigned short int bitspersample = 16;
-        fwrite(&bitspersample, 2, 1, file);
-
-        fwrite("data", 4, 1, file);
-        chunksize = sampleswritten * blockalign;
-        fwrite(&chunksize, 4, 1, file);
-
-        fclose(file);
-        file = NULL;
-    }
-    pthread_mutex_unlock(&write_mutex);
-    
+    //make sure it moves
+    pthread_cond_signal(&outBuf_cv);
+    pthread_mutex_unlock(&outBuf_mutex);
+    pthread_join(pThread, NULL);
 }
 
 //lazy getter
 const Stereo<Sample> WavEngine::getNext()
 {
-    //TODO make this write remaining sample to output when stopped.
     Stereo<Sample> ans;
     pthread_mutex_lock(&outBuf_mutex);
     bool isEmpty = outBuf.empty();
@@ -123,7 +83,7 @@ const Stereo<Sample> WavEngine::getNext()
     }
     pthread_mutex_lock(&outBuf_mutex);
     ans = outBuf.front();
-    outBuf.pop_front();
+    outBuf.pop();
     pthread_mutex_unlock(&outBuf_mutex);
     return ans;
 }
@@ -140,7 +100,7 @@ T limit(T val, T min, T max)
 }
 
 void *WavEngine::AudioThread()
-{  
+{
     short int *recordbuf_16bit = new short int [SOUND_BUFFER_SIZE*2];
     int size = SOUND_BUFFER_SIZE;
 
@@ -152,26 +112,8 @@ void *WavEngine::AudioThread()
             recordbuf_16bit[i*2]   = limit((int)(smps.l()[i] * 32767.0), -32768, 32767);
             recordbuf_16bit[i*2+1] = limit((int)(smps.r()[i] * 32767.0), -32768, 32767);
         }
-        write_stereo_samples(size, recordbuf_16bit);
+        file.writeStereoSamples(size, recordbuf_16bit);
     }
-    return NULL;
-}
-
-void WavEngine::write_stereo_samples(int nsmps, short int *smps)
-{
-    pthread_mutex_lock(&write_mutex);
-    if(!file)
-        return;
-    fwrite(smps, nsmps, 4, file);
-    pthread_mutex_unlock(&write_mutex);
-    sampleswritten += nsmps;
-}
-
-void WavEngine::write_mono_samples(int nsmps, short int *smps)
-{
-    if(!file)
-        return;
-    fwrite(smps, nsmps, 2, file);
-    sampleswritten += nsmps;
+    pthread_exit(NULL);
 }
 

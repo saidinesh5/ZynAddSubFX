@@ -19,12 +19,12 @@
 
 #include <iostream>
 
-//#include <jack/midiport.h>
+#include <jack/midiport.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 
+#include "InMgr.h"
 
-//#include "../Misc/Config.h"
 #include "../Misc/Master.h"
 #include "JackEngine.h"
 
@@ -33,6 +33,9 @@ using namespace std;
 JackEngine::JackEngine(OutMgr *out)
     :AudioOut(out), jackClient(NULL)
 {
+    midi.en = true;
+    audio.en = true;
+    name = "JACK";
     audio.jackSamplerate = 0;
     audio.jackNframes = 0;
     for (int i = 0; i < 2; ++i)
@@ -44,7 +47,6 @@ JackEngine::JackEngine(OutMgr *out)
 
 bool JackEngine::connectServer(string server)
 {
-    cout << "Bla" << endl;
     //temporary (move to a higher level configuation)
     bool autostart_jack = true;
 
@@ -74,17 +76,25 @@ bool JackEngine::connectServer(string server)
 
 bool JackEngine::Start()
 {
+    cout << "Starting Jack" << endl;
     if(enabled())
         return true;
+
     enabled = true;
     if(!connectServer(""))
-        return false;
-    openAudio();
+        goto bail_out;
+    if(midi.en)
+        openMidi();
+    if(audio.en)
+        openAudio();
     if (NULL != jackClient)
     {
+        setBufferSize(jack_get_buffer_size(jackClient));
         int chk;
         jack_set_error_function(_errorCallback);
         jack_set_info_function(_infoCallback);
+        if(jack_set_buffer_size_callback(jackClient, _bufferSizeCallback, this))
+            cerr << "Error setting the bufferSize callback" << endl;
         if ((chk = jack_set_xrun_callback(jackClient, _xrunCallback, this)))
             cerr << "Error setting jack xrun callback" << endl;
         if (jack_set_process_callback(jackClient, _processCallback, this))
@@ -109,20 +119,55 @@ bail_out:
 
 void JackEngine::Stop()
 {
+    cout << "Stopping Jack" << endl;
     if(!enabled())
         return;
     enabled = false;
     if (jackClient)
     {
-        for (int i = 0; i < 2; ++i)
-        {
-            if (NULL != audio.ports[i])
-                jack_port_unregister(jackClient, audio.ports[i]);
-            audio.ports[i] = NULL;
-        }
+        stopMidi();
+        stopAudio();
         jack_client_close(jackClient);
         jackClient = NULL;
     }
+}
+
+void JackEngine::setMidiEn(bool nval)
+{
+    midi.en = nval;
+    if(enabled()) { //lets rebind the ports
+        if(nval)
+            openMidi();
+        else
+            stopMidi();
+    }
+}
+
+bool JackEngine::getMidiEn() const
+{
+    if(enabled())
+        return midi.inport;
+    else
+        return midi.en;
+}
+
+void JackEngine::setAudioEn(bool nval)
+{
+    audio.en = nval;
+    if(enabled()) { //lets rebind the ports
+        if(nval)
+            openAudio();
+        else
+            stopAudio();
+    }
+}
+
+bool JackEngine::getAudioEn() const
+{
+    if(enabled())
+        return audio.ports[0];
+    else
+        return audio.en;
 }
 
 bool JackEngine::openAudio()
@@ -132,7 +177,7 @@ bool JackEngine::openAudio()
     {
         audio.ports[port] = jack_port_register(jackClient, portnames[port],
                                               JACK_DEFAULT_AUDIO_TYPE,
-                                              JackPortIsOutput, 0);
+                                              JackPortIsOutput | JackPortIsTerminal, 0);
     }
     if (NULL != audio.ports[0] && NULL != audio.ports[1])
     {
@@ -142,8 +187,33 @@ bool JackEngine::openAudio()
     }
     else
         cerr << "Error, failed to register jack audio ports" << endl;
-    Stop();
     return false;
+}
+
+void JackEngine::stopAudio()
+{
+    for (int i = 0; i < 2; ++i)
+    {
+        jack_port_t *port = audio.ports[i];
+        audio.ports[i] = NULL;
+        if (NULL != port)
+            jack_port_unregister(jackClient, port);
+    }
+}
+
+bool JackEngine::openMidi()
+{
+    return midi.inport = jack_port_register(jackClient, "midi_input",
+                                            JACK_DEFAULT_MIDI_TYPE,
+                                            JackPortIsInput | JackPortIsTerminal, 0);
+}
+
+void JackEngine::stopMidi()
+{
+    jack_port_t *port = midi.inport;
+    midi.inport = NULL;
+    if(port)
+        jack_port_unregister(jackClient, port);
 }
 
 int JackEngine::clientId()
@@ -179,7 +249,6 @@ int JackEngine::processCallback(jack_nframes_t nframes)
 
 bool JackEngine::processAudio(jack_nframes_t nframes)
 {
-    //cout << "I got called with: " << nframes << endl;
     for (int port = 0; port < 2; ++port)
     {
         audio.portBuffs[port] =
@@ -191,11 +260,13 @@ bool JackEngine::processAudio(jack_nframes_t nframes)
             return false;
         }
     }
-    
-    Stereo<Sample> smp = getNext(nframes);
-    //cout << "smp size of: " << smp.l().size() << endl;
+
+    Stereo<Sample> smp = getNext();
+
+    //Assumes smp.l().size() == nframes
     memcpy(audio.portBuffs[0], smp.l().c_buf(), smp.l().size()*sizeof(REALTYPE));
     memcpy(audio.portBuffs[1], smp.r().c_buf(), smp.r().size()*sizeof(REALTYPE));
+    handleMidi(nframes);
     return true;
 
 }
@@ -215,3 +286,67 @@ void JackEngine::_infoCallback(const char *msg)
 {
     cerr << "Jack info message: " << msg << endl;
 }
+
+int JackEngine::_bufferSizeCallback(jack_nframes_t nframes, void *arg)
+{
+    return static_cast<JackEngine*>(arg)->bufferSizeCallback(nframes);
+}
+
+int JackEngine::bufferSizeCallback(jack_nframes_t nframes)
+{
+    cerr << "Jack buffer resized" << endl;
+    setBufferSize(nframes);
+    return 0;
+}
+
+void JackEngine::handleMidi(unsigned long frames)
+{
+    if(!midi.inport)
+        return;
+    void *midi_buf = jack_port_get_buffer(midi.inport, frames);
+    jack_midi_event_t jack_midi_event;
+    jack_nframes_t    event_index = 0;
+    unsigned char    *midi_data;
+    unsigned char     type, chan;
+
+    while(jack_midi_event_get(&jack_midi_event, midi_buf,
+                event_index++) == 0) {
+        MidiDriverEvent ev;
+        midi_data  = jack_midi_event.buffer;
+        type       = midi_data[0] & 0xF0;
+        ev.channel = midi_data[0] & 0x0F;
+
+        switch(type) {
+            case 0x80: /* note-off */
+                ev.type    = M_NOTE;
+                ev.num     = midi_data[1];
+                ev.value   = 0;
+                sysIn->putEvent(ev);
+                break;
+
+            case 0x90: /* note-on */
+                ev.type    = M_NOTE;
+                ev.num     = midi_data[1];
+                ev.value   = midi_data[2];
+                sysIn->putEvent(ev);
+                break;
+
+            case 0xB0: /* controller */
+                ev.type    = M_CONTROLLER;
+                ev.num     = midi_data[1];
+                ev.value   = midi_data[2];
+                sysIn->putEvent(ev);
+                break;
+
+            case 0xE0: /* pitch bend */
+                ev.type    = M_CONTROLLER;
+                ev.num     = C_pitchwheel;
+                ev.value   = ((midi_data[2] << 7) | midi_data[1]);
+                sysIn->putEvent(ev);
+                break;
+
+                /* XXX TODO: handle MSB/LSB controllers and RPNs and NRPNs */
+        }
+    }
+}
+

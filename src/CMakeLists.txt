@@ -31,11 +31,11 @@ SET (JackEnable ${JACK_FOUND} CACHE BOOL
     "Enable support for JACK Audio Connection toolKit")
 SET (OssEnable ${ALSA_FOUND} CACHE BOOL #TODO perhaps check for /dev/dsp
     "Enable support for Open Sound System")
+SET (PaEnable ${PORTAUDIO_FOUND} CACHE BOOL
+    "Enable support for Port Audio System")
 
 # Now, handle the incoming settings and set define flags/variables based
 # on this
-
-
 
 if (GuiModule STREQUAL qt AND QT_FOUND)
 	message(STATUS "Using qt gui")
@@ -57,6 +57,8 @@ elseif(DefaultOutput STREQUAL oss)
         add_definitions(-DOSS_DEFAULT=1)
 elseif(DefaultOutput STREQUAL jack)
         add_definitions(-DJACK_DEFAULT=1)
+elseif(DefaultOutput STREQUAL portaudio)
+        add_definitions(-DPORTAUDIO_DEFAULT=1)
 endif()
 
 
@@ -68,19 +70,22 @@ if(AlsaEnable)
         list(APPEND AUDIO_LIBRARIES ${ASOUND_LIBRARY})
         add_definitions(-DALSA=1)
 endif(AlsaEnable)
+
 if(JackEnable)
         list(APPEND AUDIO_LIBRARIES ${JACK_LIBRARIES})
         add_definitions(-DJACK=1)
 endif(JackEnable)
+
 if(OssEnable)
 	add_definitions(-DOSSAUDIOOUT)
         list(APPEND AUDIO_LIBRARIES ${ASOUND_LIBRARY})
         add_definitions(-DOSS=1)
 endif(OssEnable)
 
-if(AlsaMidiOutput)
-	add_definitions(-DOSSAUDIOOUT)
-        set(AUDIO_LIBRARIES ${AUDIO_LIBRARIES} ${ASOUND_LIBRARY})
+if(PaEnable)
+	include_directories(${PORTAUDIO_INCLUDE_DIR})
+	add_definitions(-DPORTAUDIO=1)
+        list(APPEND AUDIO_LIBRARIES ${PORTAUDIO_LIBRARIES})
 endif()
 
 if (CompileTests)
@@ -93,20 +98,27 @@ if(JackOutput)
         set(AUDIO_LIBRARIES ${AUDIO_LIBRARIES} ${JACK_LIBRARIES})
 endif()
 
-if(PortAudioOutput)
-	include_directories(${PORTAUDIO_INCLUDE_DIR})
-	add_definitions(-DPAAUDIOOUT)
-        set(AUDIO_LIBRARIES ${AUDIO_LIBRARIES} ${PORTAUDIO_LIBRARIES})
-endif()
-
 add_definitions(-DFFTW_VERSION_${FFTW_VERSION}
-	 -DOS_LINUX
-	 -DALSAMIDIIN
 	 -DASM_F2I_YES
          -g #TODO #todo put in a better location
          -Wall
          -Wextra
 	 )
+
+#set os flag
+if(CYGWIN)
+	add_definitions(-DOS_CYGWIN=1)
+	set(OS_LIBRARIES "-Wl,--enable-auto-import")
+elseif(WINDOWS)
+	add_definitions(-DOS_WINDOWS=1)
+	set(OS_LIBRARIES "")
+elseif(UNIX)
+	add_definitions(-DOS_LINUX=1)
+	set(OS_LIBRARIES "")
+else()
+        message(STATUS "Error: building on unsupported OS")
+endif()
+
 
 if(FLTK_FOUND)
     mark_as_advanced(FORCE FLTK_BASE_LIBRARY)
@@ -193,19 +205,18 @@ macro(unit_test NAME CXX_FILE FILES)
             ${zlib_LIBRARIES}
             ${fftw_LIBRARIES}
             ${MXML_LIBRARIES}
+            ${OS_LIBRARIES}
             )
         add_test("${NAME}" "${EXECUTABLE_OUTPUT_PATH}/${NAME}")
     endif()
 endmacro(unit_test)
 
 set(NONGUI_LIBRARIES
-	zynaddsubfx_input
 	zynaddsubfx_misc
 	zynaddsubfx_synth
 	zynaddsubfx_seq
 	zynaddsubfx_effect
 	zynaddsubfx_params
-        zynaddsubfx_output
 	zynaddsubfx_dsp
 	zynaddsubfx_samples
 	zynaddsubfx_controls
@@ -213,19 +224,18 @@ set(NONGUI_LIBRARIES
     )
 
 set(CXXTEST_LINK_LIBS ${NONGUI_LIBRARIES})
-set(MIDIINPUT_LIBRARIES "")
 
 add_subdirectory(Misc)
-add_subdirectory(Input)
 add_subdirectory(Controls)
 add_subdirectory(Synth)
-add_subdirectory(Output)
 add_subdirectory(Seq)
 add_subdirectory(Effects)
 add_subdirectory(Params)
 add_subdirectory(DSP)
 add_subdirectory(Samples)
-add_subdirectory(Tests)
+if(CompileTests)
+    add_subdirectory(Tests)
+endif(CompileTests)
 add_subdirectory(Nio)
 
 set(zynaddsubfx_SRCS
@@ -244,6 +254,6 @@ target_link_libraries(zynaddsubfx
         ${MXML_LIBRARIES}
         ${NIO_LIBRARIES}
         ${AUDIO_LIBRARIES}
-        ${MIDIINPUT_LIBRARIES}
+        ${OS_LIBRARIES}
 	)
 
