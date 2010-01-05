@@ -220,6 +220,17 @@ class XMLwrapper
          */
         bool hasPadSynth() const;
 
+        /**
+         * Whether the xml format is earlier than X,Y,Z
+         */
+        bool versionAtMost(int major, int minor, int revision);
+
+        /**
+         * Whether the xml format is later than X,Y,Z
+         */
+        bool versionAtLeast(int major, int minor, int revision);
+
+
     private:
 
         /**

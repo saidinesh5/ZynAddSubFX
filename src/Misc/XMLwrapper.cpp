@@ -184,6 +184,33 @@ bool XMLwrapper::hasPadSynth() const
         return false;
 }
 
+bool XMLwrapper::versionAtMost(int major, int minor, int revision)
+{
+    return (
+            (version.Major < major) ||
+
+           ((version.Major == major) &&
+            (version.Minor < minor)) ||
+
+           ((version.Major == major) &&
+            (version.Minor == minor) &&
+            (version.Revision <= revision))
+           );
+}
+
+bool XMLwrapper::versionAtLeast(int major, int minor, int revision)
+{
+    return (
+            (version.Major > major) ||
+
+           ((version.Major == major) &&
+            (version.Minor > minor)) ||
+
+           ((version.Major == major) &&
+            (version.Minor == minor) &&
+            (version.Revision >= revision))
+           );
+}
 
 /* SAVE XML members */
 
