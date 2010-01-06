@@ -22,6 +22,7 @@ set(zynaddsubfx_gui_SRCS
     SiblingBar.cpp
     Slider.cpp
     SpectrumWidget.cpp
+    SpinBox.cpp
     UnitBox.cpp
 	)
 

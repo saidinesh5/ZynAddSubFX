@@ -286,16 +286,22 @@
        </layout>
       </item>
       <item>
-       <widget class="QSlider" name="horizontalSlider_4">
+       <widget class="Slider" name="horizontalSlider_4">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="controlId" stdset="0">
+         <string>Detune</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="octave_2">
+       <widget class="SpinBox" name="octave_2">
         <property name="prefix">
          <string>Octave </string>
+        </property>
+        <property name="controlId" stdset="0">
+         <string>OctaveDetune</string>
         </property>
        </widget>
       </item>
@@ -390,6 +396,11 @@
    <class>Slider</class>
    <extends>QSlider</extends>
    <header>Slider.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>SpinBox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
