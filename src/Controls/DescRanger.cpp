@@ -25,10 +25,10 @@
 using namespace std;
 
 DescRanger::DescRanger(Node *parent, std::string id, int defaultval, int min, int max)
-    :Control<int>(parent, id, defaultval),
-    min(min),
-    max(max)
+    :Control<int>(parent, id, defaultval)
 {
+    this->min = min;
+    this->max = max;
 }
 
 DescRanger::~DescRanger()

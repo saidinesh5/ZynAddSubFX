@@ -57,8 +57,12 @@ class Control:public GenControl
 
         virtual char getDefaults() const {return char(defaultval);}
         void defaults();
+
+        T getMin() const { return min; }
+        T getMax() const { return max; }
+
     protected:
-        T value;
+        T value, min, max;
         const T defaultval;
 };
 

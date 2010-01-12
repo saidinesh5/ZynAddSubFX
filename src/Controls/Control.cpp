@@ -22,7 +22,9 @@
 
 template<class T>
 Control<T>::Control(Node *parent, std::string id, T defaultval)
-    :GenControl(parent, id), value(defaultval), defaultval(defaultval)
+    :GenControl(parent, id), value(defaultval), defaultval(defaultval),
+    min(0),
+    max(127)
 {}
 
 template<class T>

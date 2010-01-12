@@ -40,11 +40,6 @@ class DescRanger:public Control<int>
         std::string getString() const
         {return "Example: 50%";}
 
-        int getMin() const { return min; }
-        int getMax() const { return max; }
-
-    private:
-        int min, max;
 };
 
 #endif

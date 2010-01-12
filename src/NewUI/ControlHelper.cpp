@@ -4,7 +4,6 @@
 #include <QStack>
 #include <QVariant>
 #include <QtDebug>
-#include "../Controls/DescRanger.h"
 
 
 //TODO: this class should also remove itself from the control its
