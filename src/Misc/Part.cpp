@@ -761,7 +761,7 @@ void Part::SetController(unsigned int type, int par)
         break;
     case C_panning:
         ctl.setpanning(par);
-        panning.setCharValue(panning.getCharValue() + ctl.panning.pan);
+        panning.setChar(panning.getChar() + ctl.panning.pan);
         break;
     case C_filtercutoff:
         ctl.setfiltercutoff(par);
@@ -781,7 +781,7 @@ void Part::SetController(unsigned int type, int par)
     case C_volume:
         ctl.setvolume(par);
         if(ctl.volume.receive != 0)
-            partVolume.setValue(ctl.volume.volume);
+            partVolume.setChar(ctl.volume.volume);
         else
             setPvolume(Pvolume);
         break;
@@ -797,11 +797,11 @@ void Part::SetController(unsigned int type, int par)
         ctl.resetall();
         RelaseSustainedKeys();
         if(ctl.volume.receive != 0)
-            partVolume.setValue(ctl.volume.volume);
+            partVolume.setChar(ctl.volume.volume);
         else
             setPvolume(Pvolume);
         setPvolume(Pvolume); //update the volume
-        panning.setCharValue(panning.getCharValue() + ctl.panning.pan);
+        panning.setChar(panning.getChar() + ctl.panning.pan);
 
         for(int item = 0; item < NUM_KIT_ITEMS; item++) {
             if(kit[item].adpars == NULL)
@@ -1115,7 +1115,7 @@ void Part::ComputePartSmps()
 void Part::setPvolume(char Pvolume_)
 {
     Pvolume = Pvolume_;
-    partVolume.setCharValue(Pvolume_);
+    partVolume.setChar(Pvolume_);
 }
 
 /*
@@ -1228,12 +1228,12 @@ void Part::add2XMLinstrument(XMLwrapper *xml)
 void Part::add2XML(XMLwrapper *xml)
 {
     //parameters
-    xml->addparbool("enabled", enabled.getCharValue());
+    xml->addparbool("enabled", enabled.getChar());
     if((enabled()) && (xml->minimal))
         return;
 
     xml->addpar("volume", Pvolume);
-    xml->addpar("panning", panning.getCharValue());
+    xml->addpar("panning", panning.getChar());
 
     xml->addpar("min_key", minKey());
     xml->addpar("max_key", maxKey());
@@ -1383,15 +1383,15 @@ void Part::getfromXMLinstrument(XMLwrapper *xml)
 
 void Part::getfromXML(XMLwrapper *xml)
 {
-    enabled.setCharValue(xml->getparbool("enabled", enabled.getCharValue()));
+    enabled.setChar(xml->getparbool("enabled", enabled.getChar()));
 
     setPvolume(xml->getpar127("volume", Pvolume));
-    panning.setCharValue(xml->getpar127("panning", panning.getCharValue()));
+    panning.setChar(xml->getpar127("panning", panning.getChar()));
 
     minKey.setValue(xml->getpar127("min_key", minKey()));
     maxKey.setValue(xml->getpar127("max_key", maxKey()));
     keyShift.setValue(xml->getpar127("key_shift", keyShift()));
-    receiveChannel.setCharValue(xml->getpar127("rcv_chn", receiveChannel()));
+    receiveChannel.setChar(xml->getpar127("rcv_chn", receiveChannel()));
 
     velSns.setValue(xml->getpar127("velocity_sensing", velSns()));
     velOffs.setValue(xml->getpar127("velocity_offset", velOffs()));
@@ -1421,7 +1421,7 @@ void Part::handleSyncEvent(Event *event)
         NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
 
         if(newValue->control == &instrumentControl) {
-            instrumentControl.bank->loadfromslot(instrumentControl.getCharValue(
+            instrumentControl.bank->loadfromslot(instrumentControl.getChar(
                                                                                ),
                                                  this);
             applyparameters();

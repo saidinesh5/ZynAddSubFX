@@ -36,18 +36,13 @@ string Toggle::getString() const
     return getValue() ? "On/Enabled" : "Off/Disabled";
 }
 
-void Toggle::setCharValue(char val)
+void Toggle::setChar(char val)
 {
-    Control<bool>::setValue(char(127 * val));
+    setValue(char(127 * val));
 }
 
-char Toggle::getCharValue() const
+char Toggle::getChar() const
 {
     return getValue() ? 127 : 0;
-}
-
-void Toggle::setValue(char val)
-{
-    Control<bool>::setValue(char(127 * val));
 }
 

@@ -38,23 +38,6 @@ T Control<T>::operator()() const
 }
 
 template<class T>
-void Control<T>::handleEvent(Event *ev)
-{
-    //this is when the control value is to be changed to
-    //something else
-    if(ev->type() == Event::ChangeEvent) {
-        char charval = static_cast<ChangeEvent *>(ev)->getVal();
-        setValue(charval);
-        forward(new NewValueEvent(this));
-
-        //and this is for reading the value of the control
-    }
-    else
-    if(ev->type() == Event::RequestValueEvent)
-        forward(new NewValueEvent(this));
-}
-
-template<class T>
 void Control<T>::setValue(const T &val)
 {
     bool changed = false;
@@ -80,26 +63,24 @@ T Control<T>::getValue() const
 }
 
 template<class T>
-void Control<T>::setCharValue(char val)
-{
-    setValue(T(val));
-}
-
-template<class T>
-char Control<T>::getCharValue() const
-{
-    return (char)getValue();
-}
-
-template<class T>
-void Control<T>::setValue(char val)
-{
-    setValue(T(val));
-}
-
-template<class T>
 void Control<T>::defaults()
 {
     setValue(defaultval);
+}
+
+template<class T>
+void Control<T>::setChar(char val)
+{
+    setValue(T(val));
+}
+
+template<class T>
+char Control<T>::getChar() const
+{
+    T v = getValue();
+    if (v < 0 || v > 127) {
+        std::cout << "getChar(): Warning, value truncated\n";
+    }
+    return char(v);
 }
 

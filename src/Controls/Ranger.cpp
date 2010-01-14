@@ -50,18 +50,12 @@ Ranger::~Ranger()
     delete func;
 }
 
-void Ranger::setCharValue(char val)
+void Ranger::setChar(char val)
 {
-    setValue(val);
+    setValue((REALTYPE)(*func)((char)val));
 }
 
-char Ranger::getCharValue() const
+char Ranger::getChar() const
 {
     return (*func)(getValue());
 }
-
-void Ranger::setValue(char val)
-{
-    Control<REALTYPE>::setValue((REALTYPE)(*func)((char)val));
-}
-

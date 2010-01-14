@@ -45,16 +45,6 @@ void ArrayControl::swapBuffers()
     m_back = tmp;
 }
 
-char ArrayControl::getCharValue() const
-{
-
-}
-
-void ArrayControl::setValue(char val)
-{
-
-}
-
 string ArrayControl::getString() const
 {
 

@@ -391,7 +391,7 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
     xml->addpar("panning", VoicePar[nvoice]->PPanning);
-    xml->addpar("volume", VoicePar[nvoice]->volume.getCharValue());
+    xml->addpar("volume", VoicePar[nvoice]->volume.getChar());
     xml->addparbool("volume_minus", VoicePar[nvoice]->PVolumeminus);
     xml->addpar("velocity_sensing", VoicePar[nvoice]->PAmpVelocityScaleFunction);
 
@@ -503,7 +503,7 @@ void ADnoteParameters::add2XML(XMLwrapper *xml)
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
     //xml->addpar("volume",PVolume);
-    xml->addpar("volume", volume.getCharValue());
+    xml->addpar("volume", volume.getChar());
     xml->addpar("panning", PPanning);
     xml->addpar("velocity_sensing", PAmpVelocityScaleFunction);
     xml->addpar("punch_strength", PPunchStrength);
@@ -572,7 +572,7 @@ void ADnoteParameters::getfromXML(XMLwrapper *xml)
 
     if(xml->enterbranch("AMPLITUDE_PARAMETERS")) {
         //PVolume=xml->getpar127("volume",PVolume);
-        volume.setCharValue(char(xml->getpar127("volume", volume.getCharValue())));
+        volume.setChar(char(xml->getpar127("volume", volume.getChar())));
         PPanning = xml->getpar127("panning", PPanning);
         PAmpVelocityScaleFunction = xml->getpar127(
             "velocity_sensing",
@@ -728,10 +728,10 @@ void ADnoteParameters::getfromXMLsection(XMLwrapper *xml, int n)
     if(xml->enterbranch("AMPLITUDE_PARAMETERS")) {
         VoicePar[nvoice]->PPanning =
             xml->getpar127("panning", VoicePar[nvoice]->PPanning);
-        VoicePar[nvoice]->volume.setCharValue(xml->getpar127("volume",
+        VoicePar[nvoice]->volume.setChar(xml->getpar127("volume",
                                                              VoicePar[nvoice]->
                                                              volume.
-                                                             getCharValue()));
+                                                             getChar()));
         VoicePar[nvoice]->PVolumeminus = xml->getparbool(
             "volume_minus",
             VoicePar[nvoice]->

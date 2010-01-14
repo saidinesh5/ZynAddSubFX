@@ -45,15 +45,11 @@ class Control:public GenControl
         virtual std::string getString() const {return
                                                    "hm, this should get implemented, but not yet :p";}
 
-        virtual void handleEvent(Event *ev);
+        void setValue(const T &val);
+        T getValue() const;
 
-        void setValue(const T &val); //sync
-        T getValue() const; //sync
-
-        virtual void setCharValue(char val); //sync
-        virtual char getCharValue() const; //sync
-
-        virtual void setValue(char val); //sync
+        virtual void setChar(char val);
+        virtual char getChar() const;
 
         virtual char getDefaults() const {return char(defaultval);}
         void defaults();

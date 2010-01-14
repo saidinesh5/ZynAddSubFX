@@ -181,7 +181,7 @@ void DynamicFilter::setpreset(unsigned char npreset)
     case 0:
         filterpars->category = 0;
         filterpars->type     = 2;
-        filterpars->frequency.setCharValue(45);
+        filterpars->frequency.setChar(45);
         filterpars->Pq      = 64;
         filterpars->Pstages = 1;
         filterpars->Pgain   = 64;
@@ -189,7 +189,7 @@ void DynamicFilter::setpreset(unsigned char npreset)
     case 1:
         filterpars->category = 2;
         filterpars->type     = 0;
-        filterpars->frequency.setCharValue(72);
+        filterpars->frequency.setChar(72);
         filterpars->Pq      = 64;
         filterpars->Pstages = 0;
         filterpars->Pgain   = 64;
@@ -197,7 +197,7 @@ void DynamicFilter::setpreset(unsigned char npreset)
     case 2:
         filterpars->category = 0;
         filterpars->type     = 4;
-        filterpars->frequency.setCharValue(64);
+        filterpars->frequency.setChar(64);
         filterpars->Pq      = 64;
         filterpars->Pstages = 2;
         filterpars->Pgain   = 64;
@@ -205,7 +205,7 @@ void DynamicFilter::setpreset(unsigned char npreset)
     case 3:
         filterpars->category     = 1;
         filterpars->type         = 0;
-        filterpars->frequency.setCharValue(50);
+        filterpars->frequency.setChar(50);
         filterpars->Pq            = 70;
         filterpars->Pstages       = 1;
         filterpars->Pgain         = 64;
@@ -235,7 +235,7 @@ void DynamicFilter::setpreset(unsigned char npreset)
     case 4:
         filterpars->category = 1;
         filterpars->type     = 0;
-        filterpars->frequency.setCharValue(64);
+        filterpars->frequency.setChar(64);
         filterpars->Pq      = 70;
         filterpars->Pstages = 1;
         filterpars->Pgain   = 64;

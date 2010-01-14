@@ -66,5 +66,5 @@ void Selector::clearOptions()
     pthread_mutex_lock(&localMute);
     options.clear();
     pthread_mutex_unlock(&localMute);
-}
 
+}

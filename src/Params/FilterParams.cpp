@@ -128,7 +128,7 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
         return;
 
     type      = pars->type();
-    frequency.setCharValue(pars->frequency.getCharValue());
+    frequency.setChar(pars->frequency.getChar());
     Pq         = pars->Pq;
 
     Pstages    = pars->Pstages;
@@ -152,7 +152,7 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
 
     Psequencestretch  = pars->Psequencestretch;
     Psequencereversed = pars->Psequencereversed;
-    centerFrequency.setCharValue(pars->centerFrequency.getCharValue());
+    centerFrequency.setChar(pars->centerFrequency.getChar());
     Poctavesfreq      = pars->Poctavesfreq;
     Pvowelclearness   = pars->Pvowelclearness;
 }
@@ -332,7 +332,7 @@ void FilterParams::add2XML(XMLwrapper *xml)
     //filter parameters
     xml->addpar("category", category());
     xml->addpar("type", type());
-    xml->addpar("freq", frequency.getCharValue());
+    xml->addpar("freq", frequency.getChar());
     xml->addpar("q", Pq);
     xml->addpar("stages", Pstages);
     xml->addpar("freq_track", Pfreqtrack);
@@ -344,7 +344,7 @@ void FilterParams::add2XML(XMLwrapper *xml)
         xml->addpar("num_formants", Pnumformants);
         xml->addpar("formant_slowness", Pformantslowness);
         xml->addpar("vowel_clearness", Pvowelclearness);
-        xml->addpar("center_freq", centerFrequency.getCharValue());
+        xml->addpar("center_freq", centerFrequency.getChar());
         xml->addpar("octaves_freq", Poctavesfreq);
         for(int nvowel = 0; nvowel < FF_MAX_VOWELS; nvowel++) {
             xml->beginbranch("VOWEL", nvowel);
@@ -389,7 +389,7 @@ void FilterParams::getfromXML(XMLwrapper *xml)
     //filter parameters
     category.setValue(xml->getpar127("category", category()));
     type      = xml->getpar127("type", type());
-    frequency.setCharValue(xml->getpar127("freq", frequency.getCharValue()));
+    frequency.setChar(xml->getpar127("freq", frequency.getChar()));
     Pq         = xml->getpar127("q", Pq);
     Pstages    = xml->getpar127("stages", Pstages);
     Pfreqtrack = xml->getpar127("freq_track", Pfreqtrack);
@@ -400,9 +400,9 @@ void FilterParams::getfromXML(XMLwrapper *xml)
         Pnumformants     = xml->getpar127("num_formants", Pnumformants);
         Pformantslowness = xml->getpar127("formant_slowness", Pformantslowness);
         Pvowelclearness  = xml->getpar127("vowel_clearness", Pvowelclearness);
-        centerFrequency.setCharValue(xml->getpar127("center_freq",
+        centerFrequency.setChar(xml->getpar127("center_freq",
                                                     centerFrequency.
-                                                    getCharValue()));
+                                                    getChar()));
         Poctavesfreq     = xml->getpar127("octaves_freq", Poctavesfreq);
 
         for(int nvowel = 0; nvowel < FF_MAX_VOWELS; nvowel++) {

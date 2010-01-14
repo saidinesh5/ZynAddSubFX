@@ -31,7 +31,7 @@ Trigger::Trigger(Node *parent, string id, string nlabel)
 Trigger::~Trigger()
 {}
 
-void Trigger::setValue(char val)
+void Trigger::setChar(char val)
 {
     if(val >= 64)
         //this will be useful when sources are identifyiable

@@ -33,8 +33,8 @@ class ArrayControl : public GenControl
         virtual ~ArrayControl();
 
 
-        virtual char getCharValue() const;
-        virtual void setValue(char val);
+        virtual char getChar() const {return 0;}
+        virtual void setChar(char val) {}
         virtual std::string getString() const;
         virtual void defaults();
 

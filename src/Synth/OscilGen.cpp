@@ -612,7 +612,7 @@ void OscilGen::changebasefunction()
     }
     oscilprepared = 0;
     oldbasefunc   = currentBaseFunc();
-    oldbasepar    = baseParam.getCharValue();
+    oldbasepar    = baseParam.getChar();
     oldbasefuncmodulation     = Pbasefuncmodulation;
     oldbasefuncmodulationpar1 = Pbasefuncmodulationpar1;
     oldbasefuncmodulationpar2 = Pbasefuncmodulationpar2;
@@ -869,7 +869,7 @@ void OscilGen::prepare()
     int      i, j, k;
     REALTYPE a, b, c, d, hmagnew;
 
-    if((oldbasepar != baseParam.getCharValue()) || (oldbasefunc != currentBaseFunc())
+    if((oldbasepar != baseParam.getChar()) || (oldbasefunc != currentBaseFunc())
        || (oldbasefuncmodulation != Pbasefuncmodulation)
        || (oldbasefuncmodulationpar1 != Pbasefuncmodulationpar1)
        || (oldbasefuncmodulationpar2 != Pbasefuncmodulationpar2)
@@ -1107,7 +1107,7 @@ short int OscilGen::get(REALTYPE *smps, REALTYPE freqHz, int resonance)
     int i;
     int nyquist, outpos;
 
-    if((oldbasepar != baseParam.getCharValue()) || (oldbasefunc != currentBaseFunc())
+    if((oldbasepar != baseParam.getChar()) || (oldbasefunc != currentBaseFunc())
        || (oldhmagtype != Phmagtype)
        || (oldwaveshaping != Pwaveshaping)
        || (oldwaveshapingfunction != Pwaveshapingfunction))
@@ -1330,7 +1330,7 @@ void OscilGen::add2XML(XMLwrapper *xml)
     xml->addpar("harmonic_mag_type", Phmagtype);
 
     xml->addpar("base_function", currentBaseFunc());
-    xml->addpar("base_function_par", baseParam.getCharValue());
+    xml->addpar("base_function_par", baseParam.getChar());
     xml->addpar("base_function_modulation", Pbasefuncmodulation);
     xml->addpar("base_function_modulation_par1", Pbasefuncmodulationpar1);
     xml->addpar("base_function_modulation_par2", Pbasefuncmodulationpar2);
@@ -1407,7 +1407,7 @@ void OscilGen::getfromXML(XMLwrapper *xml)
     Phmagtype = xml->getpar127("harmonic_mag_type", Phmagtype);
 
     currentBaseFunc.setValue(xml->getpar127("base_function", currentBaseFunc()));
-    baseParam.setCharValue(xml->getpar127("base_function_par", baseParam.getCharValue()));
+    baseParam.setChar(xml->getpar127("base_function_par", baseParam.getChar()));
 
     Pbasefuncmodulation = xml->getpar127("base_function_modulation",
                                          Pbasefuncmodulation);

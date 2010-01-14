@@ -39,11 +39,11 @@ class Trigger:public GenControl
 
         //since Trigger is a bit of a special case these three functiosn
         //will remain dummies
-        void setValue(char val);
+        void setChar(char val);
         void defaults() {};
-        char getCharValue() const { return 0; }
+        char getChar() const { return 0; }
 
-        inline void operator()() { setValue(127); }
+        inline void operator()() { setChar(127); }
 
     private:
         /**The transformation function for the control*/

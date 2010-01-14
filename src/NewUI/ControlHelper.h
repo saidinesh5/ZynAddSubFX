@@ -62,21 +62,13 @@ class ControlHelper:public QObject, public NodeUser
 
     public slots:
         /**
-        * @brief Set the value of the control.
-        *
-        * @param value the value to set
-        */
-        void setValue(char value);
-
-        /**
-        * @brief Convenience function due to many qt controls using int in their signals. Will just
-        * call setValue(char)
+        * @brief Change the value of the control
         */
         void setValue(int value);
 
         /**
         * @brief Convenience function for checkboxes. Will just
-        * call setValue(char)
+        * call setValue(int)
         */
         void setValue(bool value);
 

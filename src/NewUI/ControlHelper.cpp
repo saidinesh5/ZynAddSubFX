@@ -108,28 +108,19 @@ void ControlHelper::disconnect()
     emit disconnected();
 }
 
-void ControlHelper::setValue(char value)
-{
-    setValue(int(value));
-}
-
 void ControlHelper::setValue(int value)
 {
-    if (DescRanger* desc = dynamic_cast<DescRanger*>(m_control)) {
-        //if we do not explicitly do this, the char-variant of
-        //setValue will be called, and the value will be truncated
-        desc->setValue(value);
-        return;
+    if (Control<int>* intc = dynamic_cast<Control<int>*>(m_control)) {
+        intc->setValue(value);
     }
-
-    if(m_control) {
-        m_control->setValue(value);
+    else if (m_control) {
+        m_control->setChar(value);
     }
 }
 
 void ControlHelper::setValue(bool value)
 {
-    setValue(char(127 * value));
+    setValue(int(127 * value));
 }
 
 QString ControlHelper::getControlId()
@@ -142,11 +133,11 @@ QString ControlHelper::getControlId()
 
 int ControlHelper::getValue()
 {
-    if (DescRanger* desc = dynamic_cast<DescRanger*>(m_control)) {
-        return desc->getValue();
+    if (Control<int>* intc = dynamic_cast<Control<int>*>(m_control)) {
+        return intc->getValue();
     }
     if(m_control) {
-        return m_control->getCharValue();
+        return m_control->getChar();
     }
 
     qDebug() << "Error: value for nonconnected control requested";
