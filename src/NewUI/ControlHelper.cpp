@@ -5,15 +5,16 @@
 #include <QVariant>
 #include <QtDebug>
 
-
-//TODO: this class should also remove itself from the control its
-//connected to, whenever its deleted
-
 ControlHelper::ControlHelper(QObject *parent)
     :QObject(parent),
       m_control(NULL)
 {}
 
+ControlHelper::~ControlHelper()
+{
+    if (m_control)
+        m_control->removeRedirections(this);
+}
 
 ControlHelper::ControlHelper(QCoreApplication *app)
     :QObject(app)

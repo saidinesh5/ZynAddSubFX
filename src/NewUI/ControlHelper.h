@@ -26,6 +26,8 @@ class ControlHelper:public QObject, public NodeUser
          */
         ControlHelper(QObject *parent);
 
+        virtual ~ControlHelper();
+
         /**
          * A special variant of the controlhelper that monitors all events for property changes in
          * order to let the controlId property mechanism working
