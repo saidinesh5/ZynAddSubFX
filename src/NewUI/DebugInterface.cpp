@@ -1,4 +1,5 @@
 #include "DebugInterface.h"
+#include <QLineEdit>
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QTextEdit>
@@ -17,6 +18,7 @@ EventReceiver::EventReceiver(Node *node)
     :registeredNode(node)
 {
     registeredNode->addRedirection(this);
+    absoluteId = QString::fromStdString(registeredNode->getAbsoluteId());
 }
 
 EventReceiver::~EventReceiver()
@@ -30,10 +32,7 @@ void EventReceiver::handleEvent(Event *event)
     //this is the place to make it print actual useful info about the event
     QString info;
 
-    //note: right now safeprint is enabled always, because
-    //instrument loading is creating dangling pointers that don't work very well with getAbsoluteId
-    //calls that traverse parents.
-    bool    safeprint = true;
+    info += "<" + absoluteId + "> ";
 
     if(event->type() == Event::ChangeEvent) {
         info += "(ChangeEvent) ";
@@ -42,14 +41,24 @@ void EventReceiver::handleEvent(Event *event)
     }
     else
     if(event->type() == Event::NewValueEvent) {
+
+        NewValueEvent* ev = static_cast<NewValueEvent *>(event);
+
         info += "(NewValueEvent) ";
-        info += "val:" + QString::number(
-            static_cast<NewValueEvent *>(event)->control->getChar());
+        info += "val: " + QString::number(
+            ev->control->getChar());
+
+        if (const Control<int>* c = dynamic_cast<const Control<int>*>(ev->control)) {
+            info += ", " + QString::number( c->getValue());
+        }
+
+        if (const Control<float>* c = dynamic_cast<const Control<float>*>(ev->control)) {
+            info += ", " + QString::number( c->getValue());
+        }
+
     }
     else
     if(event->type() == Event::RemovalEvent) {
-        RemovalEvent *rem = static_cast<RemovalEvent *>(event);
-        safeprint      = true;
         info          += "(RemovalEvent) ";
         registeredNode = NULL;
     }
@@ -62,8 +71,9 @@ void EventReceiver::handleEvent(Event *event)
         info += QString::number(mid->par);
     }
     else
-        info += "(Unknown event type: " + int(event->type()) + QString(")");
-    emit newEvent(registeredNode, info, safeprint);
+        info += "(Unknown event type: " + QString::number(int(event->type())) + QString(")");
+
+    emit newEvent(registeredNode, info);
 }
 
 class Tree:public QTreeWidget
@@ -80,7 +90,7 @@ class Tree:public QTreeWidget
         QString makeConnections(Node *node)
         {
             QString connections;
-            for(int j = 0; j < (node)->m_rules.size(); ++j) {
+            for(unsigned int j = 0; j < (node)->m_rules.size(); ++j) {
                 NodeUser *user = (node)->m_rules.at(j).destination;
 
                 //we don't need the dynamic ones from this app
@@ -168,19 +178,24 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
 
     text = new QTextEdit(this);
 
+    filter = new QLineEdit(this);
+
+    layout->addWidget(filter);
+
     layout->addWidget(text);
 
-    layout->setStretchFactor(text, 1);
-    layout->setStretchFactor(tree, 3);
+    layout->setStretchFactor(text, 3);
+    layout->setStretchFactor(tree, 9);
+    layout->setStretchFactor(filter, 1);
 
-    connect(this, SIGNAL(newEvent(Node *, QString, bool)),
-            this, SLOT(receiveEvent(Node *, QString, bool)));
+    connect(this, SIGNAL(newEvent(Node *, QString)),
+            this, SLOT(receiveEvent(Node *, QString)));
 
     createEventReceivers(Node::getRoot());
     EventReceiver *receiver = new EventReceiver(Node::getRoot());
     receivers.append(receiver);
-    connect(receiver, SIGNAL(newEvent(Node *, QString, bool)),
-            this, SIGNAL(newEvent(Node *, QString, bool)));
+    connect(receiver, SIGNAL(newEvent(Node *, QString)),
+            this, SIGNAL(newEvent(Node *, QString)));
 
     resize(800, 600);
 }
@@ -192,20 +207,37 @@ void DebugInterface::createEventReceivers(class Node *parent)
         ++i) {
         EventReceiver *receiver = new EventReceiver(*i);
         receivers.append(receiver);
-        connect(receiver, SIGNAL(newEvent(Node *, QString, bool)),
-                this, SIGNAL(newEvent(Node *, QString, bool)));
+        connect(receiver, SIGNAL(newEvent(Node *, QString)),
+                this, SIGNAL(newEvent(Node *, QString)));
         createEventReceivers(*i);
     }
 }
 
-void DebugInterface::receiveEvent(Node *node, QString info, bool safeprint)
+bool containWords(QString terms, QString data)
+{
+    QStringList t = terms.split(" ");
+    foreach (const QString& term, terms) {
+        if (!data.contains(term)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void DebugInterface::receiveEvent(Node * /*node */, QString info)
 {
     static int counter = 0;
     counter++;
-    text->append(QString::number(counter) + "] ");
-    if(!safeprint)
-        text->append(QString::fromStdString(node->getAbsoluteId()) + ": ");
-    text->append(info);
+
+    QString msg;
+
+    msg += QString::number(counter) + "] ";
+
+    msg += info;
+
+    if (filter->text().isEmpty() || containWords(filter->text(), msg))
+        text->append(msg);
+
     text->verticalScrollBar()->setValue(text->verticalScrollBar()->maximum());
 }
 
