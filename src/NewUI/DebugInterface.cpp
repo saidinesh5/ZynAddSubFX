@@ -29,7 +29,11 @@ void EventReceiver::handleEvent(Event *event)
 {
     //this is the place to make it print actual useful info about the event
     QString info;
-    bool    safeprint = false;
+
+    //note: right now safeprint is enabled always, because
+    //instrument loading is creating dangling pointers that don't work very well with getAbsoluteId
+    //calls that traverse parents.
+    bool    safeprint = true;
 
     if(event->type() == Event::ChangeEvent) {
         info += "(ChangeEvent) ";
@@ -37,8 +41,11 @@ void EventReceiver::handleEvent(Event *event)
             static_cast<ChangeEvent *>(event)->getVal());
     }
     else
-    if(event->type() == Event::NewValueEvent)
+    if(event->type() == Event::NewValueEvent) {
         info += "(NewValueEvent) ";
+        info += "val:" + QString::number(
+            static_cast<NewValueEvent *>(event)->control->getChar());
+    }
     else
     if(event->type() == Event::RemovalEvent) {
         RemovalEvent *rem = static_cast<RemovalEvent *>(event);
