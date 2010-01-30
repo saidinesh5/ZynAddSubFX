@@ -6,7 +6,6 @@
 #include <QPainter>
 #include <QConicalGradient>
 #include <math.h>
-#include "Menu.h"
 
 //drawstyles: 0 - piechart
 //            1 - rotated dial
@@ -35,8 +34,6 @@ Dial::Dial(QWidget *parent)
             this, SLOT(slotConnected(GenControl *)));
     connect(helper, SIGNAL(disconnected()),
             this, SLOT(slotDisconnected()));
-
-    new Menu(this, helper);
 }
 
 void Dial::mousePressEvent(QMouseEvent *event)
@@ -74,7 +71,7 @@ void Dial::mouseMoveEvent(QMouseEvent *event)
     //QDial::mouseMoveEvent(event);
 }
 
-void Dial::slotConnected(GenControl *control)
+void Dial::slotConnected(GenControl * /*control*/)
 {
     m_isConnected = true;
     update();
@@ -86,7 +83,7 @@ void Dial::slotDisconnected()
     update();
 }
 
-void Dial::paintEvent(class QPaintEvent *event)
+void Dial::paintEvent(class QPaintEvent * /*event */)
 {
     QPainter p(this);
 
@@ -189,12 +186,6 @@ void Dial::wheelEvent(class QWheelEvent *event)
     QDial::wheelEvent(event);
     emit sliderMoved(value());
 }
-
-void Dial::setControl(GenControl *control)
-{}
-
-void Dial::slotUpdateSource()
-{}
 
 #include "Dial.moc"
 

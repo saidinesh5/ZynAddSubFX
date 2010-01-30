@@ -4,7 +4,6 @@
 #include <QMouseEvent>
 #include <QStyleOptionComplex>
 #include "../Controls/DescRanger.h"
-#include "Menu.h"
 
 Slider::Slider(QWidget *parent)
     : QSlider(parent),
@@ -25,7 +24,6 @@ Slider::Slider(QWidget *parent)
     connect(helper, SIGNAL(connected(GenControl *)),
             this, SLOT(connected(GenControl *)));
 
-    new Menu(this, helper);
 
 }
 

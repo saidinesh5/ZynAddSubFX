@@ -1,14 +1,20 @@
 #include "ControlHelper.h"
 #include <QCoreApplication>
+#include <QWidget>
 #include <QDynamicPropertyChangeEvent>
 #include <QStack>
 #include <QVariant>
 #include <QtDebug>
+#include "Menu.h"
 
 ControlHelper::ControlHelper(QObject *parent)
     :QObject(parent),
       m_control(NULL)
-{}
+{
+    if (QWidget* widget = qobject_cast<QWidget*>(parent)) {
+        new Menu(widget, this);
+    }
+}
 
 ControlHelper::~ControlHelper()
 {

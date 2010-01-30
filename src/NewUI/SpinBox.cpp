@@ -1,13 +1,11 @@
 #include "SpinBox.h"
 #include "ControlHelper.h"
-#include "Menu.h"
 #include "../Controls/DescRanger.h"
 
 SpinBox::SpinBox(QWidget *parent)
     : QSpinBox(parent)
 {
     ControlHelper *helper = new ControlHelper(this);
-    new Menu(this, helper);
 
     connect(this, SIGNAL(valueChanged(int)),
             helper, SLOT(setValue(int)));

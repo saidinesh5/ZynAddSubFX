@@ -34,7 +34,7 @@ class ArrayControl : public GenControl
 
 
         virtual char getChar() const {return 0;}
-        virtual void setChar(char val) {}
+        virtual void setChar(char) {}
         virtual std::string getString() const;
         virtual void defaults();
 

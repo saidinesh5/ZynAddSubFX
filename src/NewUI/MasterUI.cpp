@@ -19,9 +19,6 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     //this instance will monitor all dynamic event property changes
     new ControlHelper(QCoreApplication::instance());
 
-    qDebug() << "Trying to find control Master.Volume";
-    //qDebug() << "Returned " << Node::getRoot()->findControl("Master.Volume");
-
     qDebug() << "Got new child at " << QString::fromStdString(
         master->parts.createChild(0));
     qDebug() << "Got new child at " << QString::fromStdString(
@@ -32,23 +29,15 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     setupUi(this);
 
     partBar->setControlsWidget(partFrame);
-    //Node::lock();
     partBar->setNode(Node::get("Master.Parts"));
-    //Node::unlock();
-
-    //Node::getRoot()->printTree();
 
     (new DebugInterface(NULL, master))->show();
 }
 
 void MasterUI::refresh_master_ui()
 {
-    //TODO: do something here! right now this is only here because it is called from main.C
-}
-
-void MasterUI::on_partSelector_valueChanged(int value)
-{
-    //npart = value;
+    //TODO: do something here! right now this is only here because it is called from main.cpp
+    //in the original zyn sources
 }
 
 void MasterUI::on_editInstrument_clicked()
@@ -80,6 +69,8 @@ void MasterUI::on_buttonControllers_clicked()
 void MasterUI::on_action_Quit_triggered()
 {
     QCoreApplication::instance()->quit();
+
+    //TODO: this way of exiting does not work cleanly yet
     *Pexitprogram = 1;
 }
 #include "MasterUI.moc"

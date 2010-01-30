@@ -12,7 +12,18 @@
  * This class is the glue between the GUI and the Control tree. It will send out qt events whenever
  * the controls value is changed, and it can also change the controls value by calling setvalue.
  *
- * It is used by simply new'ing it in the constructor of the widget that is using it. Upon
+ * In the UI files, widgets may set custom properties "controlId" and "absoluteControlId". These
+ * specify what control they should be connected to in an hierarchical fashion. There are basically
+ * two ways to use this:
+ * (1) a widget has a absoluteControlId set. It will simply be connected to this control
+ * (2) a widget has controlId set, and a parent (or a parent's parent etc) has absoluteControlId
+ *     set. the widget will be connected to the first absoluteControlId + a concatenation of the
+ *     controlId's of the parent widgets. Example: a window has absoluteControlId = "Master.Synth",
+ *     a panel in this window has controlId = "Filter", and a widget inside has controlId = "Cutoff". 
+ *     This widget will be connected to the control with the path 
+ *     "Master.Synth.Filter.Cutoff"
+ *
+ * ControlHelper is used by simply new'ing it in the constructor of the widget that is using it. Upon
  * construction, it will search the parent for hints on what control id it should be connected to,
  * and after that generally just stay in the background until events come and go.
  */
@@ -25,7 +36,6 @@ class ControlHelper:public QObject, public NodeUser
          * @param parent The parent widget that uses this controlhelper.
          */
         ControlHelper(QObject *parent);
-
         virtual ~ControlHelper();
 
         /**
@@ -39,6 +49,7 @@ class ControlHelper:public QObject, public NodeUser
          * changes that would change the current control etc.
          */
         bool eventFilter(QObject *watched, QEvent *event);
+
         /**
          * @return The absolute id for the control this controlhelper is assigned to
          */
@@ -53,7 +64,7 @@ class ControlHelper:public QObject, public NodeUser
         void setControl(QString absoluteId);
 
         /**
-         * @breif Get the current char value of the control
+         * @breif Get the current value of the control
          */
         int getValue();
 
@@ -86,8 +97,9 @@ class ControlHelper:public QObject, public NodeUser
         void trigger();
 
         /**
-         * @brief Recurse up the parent chain and set control according to qt properties
-         */
+         * @brief Recurse up the parent chain and set control according to qt properties. These
+         * properties are controlId and absoluteControlId, used throughout the ui files.
+         * */
         void updateControlId();
 
         /**

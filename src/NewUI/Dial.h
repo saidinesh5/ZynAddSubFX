@@ -10,10 +10,8 @@ class Dial:public QDial
     Q_OBJECT
     public:
         Dial(QWidget *parent);
-        void setControl(GenControl *control);
 
     private slots:
-        void slotUpdateSource();
         void slotConnected(GenControl *control);
         void slotDisconnected();
 
