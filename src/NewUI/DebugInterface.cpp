@@ -152,6 +152,9 @@ class Tree:public QTreeWidget
             slider->setMaximum(127);
             slider->setOrientation(Qt::Horizontal);
             slider->setProperty("absoluteControlId", item->toolTip(0));
+
+            qDebug() << "Value is " << slider->value();
+
             setIndexWidget(indexFromItem(item, 1), slider);
         }
 

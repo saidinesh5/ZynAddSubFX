@@ -384,9 +384,22 @@
                 </widget>
                </item>
                <item>
-                <widget class="QSpinBox" name="octave_2">
+                <widget class="SpinBox" name="octave_2">
+                 <property name="prefix">
+                  <string>Coarse </string>
+                 </property>
+                 <property name="controlId" stdset="0">
+                  <string>CoarseDetune</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="SpinBox" name="octave_3">
                  <property name="prefix">
                   <string>Octave </string>
+                 </property>
+                 <property name="controlId" stdset="0">
+                  <string>OctaveDetune</string>
                  </property>
                 </widget>
                </item>
@@ -459,6 +472,23 @@
    <header>ComboBox.h</header>
   </customwidget>
   <customwidget>
+   <class>SiblingBar</class>
+   <extends>QWidget</extends>
+   <header>SiblingBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>CheckBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>EnvelopeBox</class>
+   <extends>QGroupBox</extends>
+   <header>EnvelopeBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>GroupBox</class>
    <extends>QGroupBox</extends>
    <header>GroupBox.h</header>
@@ -471,32 +501,20 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>EnvelopeBox</class>
-   <extends>QGroupBox</extends>
-   <header>EnvelopeBox.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Slider</class>
    <extends>QSlider</extends>
    <header>Slider.h</header>
-  </customwidget>
-  <customwidget>
-   <class>SiblingBar</class>
-   <extends>QWidget</extends>
-   <header>SiblingBar.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CheckBox</class>
-   <extends>QCheckBox</extends>
-   <header>CheckBox.h</header>
   </customwidget>
   <customwidget>
    <class>OscilWidget</class>
    <extends>QWidget</extends>
    <header>OscilWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>SpinBox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

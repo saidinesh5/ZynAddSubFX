@@ -80,10 +80,10 @@ void DetuneControlSet::getFromXMLsection(XMLwrapper *xml)
                     "detune", detune(), 0, 16383));
 
         octaveDetune.setValue   (xml->getpar(
-                    "octave_detune", octaveDetune(), 0, 16383));
+                    "octave_detune", octaveDetune(), -8, 7));
 
         coarseDetune.setValue   (xml->getpar(
-                    "coarse_detune", coarseDetune(), 0, 16383));
+                    "coarse_detune", coarseDetune(), -512, 511));
 
         detuneType.setValue     (xml->getpar127(
                     "detune_type", detuneType()));
