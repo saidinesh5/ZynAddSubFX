@@ -49,11 +49,14 @@ class OssEngine: public AudioOut, MidiIn
         static void *_thread(void *arg);
 
     private:
+        pthread_t *engThread;
+
         //Audio
         bool openAudio();
         void stopAudio();
-        struct {
-            int snd_handle;
+
+        struct audio{
+            int handle;
             short int *smps; //Samples to be sent to soundcard
             bool en;
         } audio;
@@ -61,11 +64,9 @@ class OssEngine: public AudioOut, MidiIn
         //Midi
         bool openMidi();
         void stopMidi();
-        void midiProcess(unsigned char head, unsigned char num, unsigned char value);
-
         void getMidi(unsigned char *midiPtr);
 
-        struct {
+        struct midi{
             int handle;
             bool en;
             bool run;
