@@ -73,6 +73,11 @@ class ControlHelper:public QObject, public NodeUser
          */
         void handleEvent(Event *event);
 
+        /** 
+         * @brief Will print some values useful for debugging
+         */
+        void debugPrint();
+
     public slots:
         /**
         * @brief Change the value of the control
@@ -152,7 +157,6 @@ class ControlHelper:public QObject, public NodeUser
         void disconnect();
 
         GenControl *m_control;
-        QString     m_controlId;
 };
 
 #endif /* ifndef _CONTROLHELPER_H_ */

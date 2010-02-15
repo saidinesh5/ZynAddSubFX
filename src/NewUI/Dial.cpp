@@ -1,5 +1,6 @@
 #include "Dial.h"
 #include <QMenu>
+#include <QResizeEvent>
 #include <QMouseEvent>
 #include <QtDebug>
 #include <QPaintEvent>
@@ -34,6 +35,7 @@ Dial::Dial(QWidget *parent)
             this, SLOT(slotConnected(GenControl *)));
     connect(helper, SIGNAL(disconnected()),
             this, SLOT(slotDisconnected()));
+
 }
 
 void Dial::mousePressEvent(QMouseEvent *event)
@@ -185,6 +187,12 @@ void Dial::wheelEvent(class QWheelEvent *event)
 {
     QDial::wheelEvent(event);
     emit sliderMoved(value());
+}
+
+void Dial::resizeEvent(QResizeEvent* event)
+{
+    QDial::resizeEvent(event);
+    setMaximumHeight(width());
 }
 
 #include "Dial.moc"

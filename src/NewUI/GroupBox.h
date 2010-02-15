@@ -12,6 +12,8 @@ class GroupBox : public QGroupBox
 
     private slots:
         void slotReset();
+        void slotCopy();
+        void slotPaste();
 
 };
 

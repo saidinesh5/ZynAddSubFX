@@ -16,9 +16,10 @@ void Menu::menuRequested(const QPoint& pos)
 {
     QAction *defaults = new QAction("Default value", NULL);
     QAction *midiLearn = new QAction("MIDI Learn", NULL);
+    QAction *debugPrint = new QAction("(Debug print)", NULL);
 
     QList<QAction*> actions;
-    actions << defaults << midiLearn;
+    actions << defaults << midiLearn << debugPrint;
 
     QWidget *widget = qobject_cast<QWidget*>(parent());
     if (!widget) return;
@@ -28,6 +29,8 @@ void Menu::menuRequested(const QPoint& pos)
         m_helper->MIDILearn();
     } else if (defaults == response) {
         m_helper->defaults();
+    } else if (debugPrint == response) {
+        m_helper->debugPrint();
     }
 }
 

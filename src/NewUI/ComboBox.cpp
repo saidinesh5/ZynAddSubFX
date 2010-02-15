@@ -33,7 +33,8 @@ void ComboBox::setOptions(QStringList options)
     clear();
     foreach(const QString &item, options)
     {
-        if (pixmapKeys.contains(item)) {
+        //if (pixmapKeys.contains(item)) {
+        if (false) {
             addItem(QPixmap(pixmapKeys.value(item)), item);
         } else {
             addItem(item);

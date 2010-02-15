@@ -95,6 +95,10 @@ void ControlHelper::setControl(QString absoluteId)
         qDebug() << "Assigning " << this << " to " << absoluteId;
         emit valueChanged(getValue());
 
+        if (QWidget *widget = qobject_cast<QWidget*>(parent())) {
+            widget->setToolTip(QString::fromStdString(m_control->getId()));
+        }
+
         ArrayControl *arr_control = dynamic_cast<ArrayControl*>(m_control);
         if (arr_control) {
             emit arrayUpdated(arr_control);
@@ -223,6 +227,19 @@ void ControlHelper::defaults()
 {
     if (m_control) {
         m_control->defaults();
+    }
+}
+
+void ControlHelper::debugPrint()
+{
+    qDebug() << "parent has controlId: " << parent()->property("controlId").toString() <<
+        " and absoluteControlId: " << parent()->property("absoluteControlId").toString();
+    if (m_control) {
+        qDebug() << "Currently connected to " << QString::fromStdString(m_control->getAbsoluteId());
+        qDebug() << "Current value is " << int(m_control->getChar());
+    }
+    else {
+        qDebug() << "Currently not connected.";
     }
 }
 
