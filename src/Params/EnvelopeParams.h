@@ -26,6 +26,8 @@
 #include "../globals.h"
 #include "../Misc/XMLwrapper.h"
 #include "Presets.h"
+#include "../Controls/Node.h"
+#include "../Controls/DescRanger.h"
 
 #define MAX_ENVELOPE_POINTS 40
 #define MIN_ENVELOPE_DB -40
@@ -33,9 +35,11 @@
 class EnvelopeParams:public Presets
 {
     public:
-        EnvelopeParams(unsigned char Penvstretch_,
+        EnvelopeParams(Node *parent,
+                       std::string id,
+                       unsigned char Penvstretch_,
                        unsigned char Pforcedrelease_);
-        ~EnvelopeParams();
+        virtual ~EnvelopeParams();
         void ADSRinit(char A_dt, char D_dt, char S_val, char R_dt);
         void ADSRinit_dB(char A_dt, char D_dt, char S_val, char R_dt);
         void ASRinit(char A_val, char A_dt, char R_val, char R_dt);
@@ -55,19 +59,19 @@ class EnvelopeParams:public Presets
         REALTYPE getdt(char i);
 
         /* MIDI Parameters */
-        unsigned char Pfreemode; //1 daca este in modul free sau 0 daca este in mod ADSR,ASR,...
-        unsigned char Penvpoints;
-        unsigned char Penvsustain; //127 pentru dezactivat
-        unsigned char Penvdt[MAX_ENVELOPE_POINTS];
-        unsigned char Penvval[MAX_ENVELOPE_POINTS];
-        unsigned char Penvstretch; //64=normal stretch (piano-like), 0=no stretch
-        unsigned char Pforcedrelease; //0 - OFF, 1 - ON
-        unsigned char Plinearenvelope; //if the amplitude envelope is linear
+        DescRanger freemode; //1 daca este in modul free sau 0 daca este in mod ADSR,ASR,...
+        DescRanger envpoints;
+        DescRanger envsustain; //127 pentru dezactivat
 
-        unsigned char PA_dt, PD_dt, PR_dt,
-                      PA_val, PD_val, PS_val, PR_val;
+        Node envdtNode;
+        DescRanger* envdt[MAX_ENVELOPE_POINTS];
+        Node envvalNode;
+        DescRanger* envval[MAX_ENVELOPE_POINTS];
+        DescRanger envstretch; //64=normal stretch (piano-like), 0=no stretch
+        DescRanger forcedrelease; //0 - OFF, 1 - ON
+        DescRanger linearenvelope; //if the amplitude envelope is linear
 
-
+        DescRanger A_dt, D_dt, R_dt, A_val, D_val, S_val, R_val;
 
         int Envmode; // 1 for ADSR parameters (linear amplitude)
         // 2 for ADSR_dB parameters (dB amplitude)
@@ -79,11 +83,11 @@ class EnvelopeParams:public Presets
         void store2defaults();
 
         /* Default parameters */
-        unsigned char Denvstretch;
-        unsigned char Dforcedrelease;
-        unsigned char Dlinearenvelope;
-        unsigned char DA_dt, DD_dt, DR_dt,
-                      DA_val, DD_val, DS_val, DR_val;
+        //unsigned char Denvstretch;
+        //unsigned char Dforcedrelease;
+        //unsigned char Dlinearenvelope;
+        //unsigned char DA_dt, DD_dt, DR_dt,
+                      //DA_val, DD_val, DS_val, DR_val;
 };
 
 #endif

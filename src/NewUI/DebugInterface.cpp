@@ -122,7 +122,7 @@ class Tree:public QTreeWidget
                 addChildren(*i, item);
             }
 
-            expandAll();
+            //expandAll();
             resizeColumnToContents(0);
         }
 

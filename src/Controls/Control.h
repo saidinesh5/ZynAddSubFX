@@ -51,15 +51,20 @@ class Control:public GenControl
         virtual void setChar(char val);
         virtual char getChar() const;
 
-        virtual char getDefaults() const {return char(defaultval);}
         void defaults();
+        //note: default value should only be changed during initialization
+        //because it will not lock the control (ie. not threadsafe)
+        void setDefaults( const T &val);
+
+        //will store the current value as defaults
+        void storeDefaults();
 
         T getMin() const { return min; }
         T getMax() const { return max; }
 
     protected:
         T value, min, max;
-        const T defaultval;
+        T defaultval;
 };
 
 #include "Control.cpp"

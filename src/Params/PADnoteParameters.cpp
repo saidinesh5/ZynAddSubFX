@@ -39,17 +39,17 @@ PADnoteParameters::PADnoteParameters(FFTwrapper *fft_,
     oscilgen = new OscilGen(fft_, resonance, NULL, "OscilGen");
     oscilgen->ADvsPAD = true;
 
-    FreqEnvelope      = new EnvelopeParams(0, 0);
+    FreqEnvelope      = new EnvelopeParams(this, "FreqEnvelope", 0, 0);
     FreqEnvelope->ASRinit(64, 50, 64, 60);
     FreqLfo     = new LFOParams(70, 0, 64, 0, 0, 0, 0, 0);
 
-    AmpEnvelope = new EnvelopeParams(64, 1);
+    AmpEnvelope = new EnvelopeParams(this, "AmpEnvelope", 64, 1);
     AmpEnvelope->ADSRinit_dB(0, 40, 127, 25);
     AmpLfo      = new LFOParams(80, 0, 64, 0, 0, 0, 0, 1);
 
     //TODO: controlify this
     GlobalFilter   = new FilterParams(NULL, 2, 94, 40);
-    FilterEnvelope = new EnvelopeParams(0, 1);
+    FilterEnvelope = new EnvelopeParams(this, "FilterEnvelope", 0, 1);
     FilterEnvelope->ADSRinit_filter(64, 40, 64, 70, 60, 64);
     FilterLfo      = new LFOParams(80, 0, 64, 0, 0, 0, 0, 2);
 

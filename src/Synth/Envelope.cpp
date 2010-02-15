@@ -26,15 +26,17 @@
 Envelope::Envelope(EnvelopeParams *envpars, REALTYPE basefreq)
 {
     int i;
-    envpoints      = envpars->Penvpoints;
+    envpoints      = envpars->envpoints();
     if(envpoints > MAX_ENVELOPE_POINTS)
         envpoints = MAX_ENVELOPE_POINTS;
-    envsustain     = (envpars->Penvsustain == 0) ? -1 : envpars->Penvsustain;
-    forcedrelase   = envpars->Pforcedrelease;
-    envstretch     = pow(440.0 / basefreq, envpars->Penvstretch / 64.0);
-    linearenvelope = envpars->Plinearenvelope;
+    envsustain     = (envpars->envsustain() == 0) ? -1 : envpars->envsustain();
+    forcedrelase   = envpars->forcedrelease();
+    envstretch     = pow(440.0 / basefreq, envpars->envstretch() / 64.0);
+    linearenvelope = envpars->linearenvelope();
 
-    if(envpars->Pfreemode == 0)
+    //TODO: this changes the actual envelope parameters, so whether or not this is necessary to do
+    //here needs to be checked because the Envelope class is potentially instantiated a lot
+    if(envpars->freemode() == 0)
         envpars->converttofree();
 
     REALTYPE bufferdt = SOUND_BUFFER_SIZE / (REALTYPE)SAMPLE_RATE;
@@ -56,23 +58,23 @@ Envelope::Envelope(EnvelopeParams *envpars, REALTYPE basefreq)
 
         switch(mode) {
         case 2:
-            envval[i] = (1.0 - envpars->Penvval[i] / 127.0) * MIN_ENVELOPE_DB;
+            envval[i] = (1.0 - envpars->envval[i]->getValue() / 127.0) * MIN_ENVELOPE_DB;
             break;
         case 3:
             envval[i] =
                 (pow(2, 6.0
-                     * fabs(envpars->Penvval[i] - 64.0) / 64.0) - 1.0) * 100.0;
-            if(envpars->Penvval[i] < 64)
+                     * fabs(envpars->envval[i]->getValue() - 64.0) / 64.0) - 1.0) * 100.0;
+            if(envpars->envval[i]->getValue() < 64)
                 envval[i] = -envval[i];
             break;
         case 4:
-            envval[i] = (envpars->Penvval[i] - 64.0) / 64.0 * 6.0; //6 octaves (filtru)
+            envval[i] = (envpars->envval[i]->getValue() - 64.0) / 64.0 * 6.0; //6 octaves (filtru)
             break;
         case 5:
-            envval[i] = (envpars->Penvval[i] - 64.0) / 64.0 * 10;
+            envval[i] = (envpars->envval[i]->getValue() - 64.0) / 64.0 * 10;
             break;
         default:
-            envval[i] = envpars->Penvval[i] / 127.0;
+            envval[i] = envpars->envval[i]->getValue() / 127.0;
         }
     }
 

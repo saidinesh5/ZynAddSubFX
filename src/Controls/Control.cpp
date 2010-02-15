@@ -69,6 +69,18 @@ void Control<T>::defaults()
 }
 
 template<class T>
+void Control<T>::setDefaults( const T &val)
+{
+    defaultval = val;
+}
+
+template<class T>
+void Control<T>::storeDefaults()
+{
+    setDefaults(value);
+}
+
+template<class T>
 void Control<T>::setChar(char val)
 {
     setValue(T(val));

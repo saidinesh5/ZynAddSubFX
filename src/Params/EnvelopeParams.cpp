@@ -25,43 +25,55 @@
 #include <math.h>
 #include <stdlib.h>
 #include "EnvelopeParams.h"
+#include <sstream>
+#include <iomanip>
 
-EnvelopeParams::EnvelopeParams(unsigned char Penvstretch_,
-                               unsigned char Pforcedrelease_):
-    Presets(NULL, "EnvelopeParams: FIXME")
+EnvelopeParams::EnvelopeParams(Node *parent,
+                               std::string id,
+                               unsigned char Penvstretch_,
+                               unsigned char Pforcedrelease_) :
+                               Presets(parent, id),
+                               freemode(this, "FreeMode", 1),
+                               envpoints(this, "EnvPoints", 1),
+                               envsustain(this, "EnvSustain", 1),
+                               envdtNode(this, "EnvDt"),
+                               envvalNode(this, "EnvVal"),
+                               envstretch(this, "EnvStretch", Penvstretch_),
+                               forcedrelease(this, "ForcedRelease", Pforcedrelease_),
+                               linearenvelope(this, "LinearEnvelope", 0),
+
+                               A_dt(this, "AttackDt", 10),
+                               D_dt(this, "DecayDt", 10),
+                               R_dt(this, "ReleaseDt", 10),
+                               A_val(this, "Attack", 64),
+                               D_val(this, "Decay", 64),
+                               S_val(this, "Sustain", 64),
+                               R_val(this, "Release", 64)
 {
-    int i;
-
-    PA_dt  = 10;
-    PD_dt  = 10;
-    PR_dt  = 10;
-    PA_val = 64;
-    PD_val = 64;
-    PS_val = 64;
-    PR_val = 64;
-
-    for(i = 0; i < MAX_ENVELOPE_POINTS; i++) {
-        Penvdt[i]  = 32;
-        Penvval[i] = 64;
+    for(int i = 0; i < MAX_ENVELOPE_POINTS; i++) {
+        std::stringstream s;
+        s << std::setfill('0') << std::setw(2) << i;
+        envdt[i]  = new DescRanger(&envdtNode, s.str(), 32);
+        envval[i] = new DescRanger(&envvalNode, s.str(), 64);
     }
-    Penvdt[0] = 0; //no used
-    Penvsustain     = 1;
-    Penvpoints      = 1;
+
+    envdt[0]->setValue(0); //not used
     Envmode         = 1;
-    Penvstretch     = Penvstretch_;
-    Pforcedrelease  = Pforcedrelease_;
-    Pfreemode       = 1;
-    Plinearenvelope = 0;
 
     store2defaults();
 }
 
 EnvelopeParams::~EnvelopeParams()
-{}
+{
+    for(int i = 0; i < MAX_ENVELOPE_POINTS; i++) {
+        delete envdt[i];
+        delete envval[i];
+    }
+}
 
 REALTYPE EnvelopeParams::getdt(char i)
 {
-    REALTYPE result = (pow(2.0, Penvdt[(int)i] / 127.0 * 12.0) - 1.0) * 10.0; //miliseconds
+    REALTYPE result = (pow(2.0, envdt[(int)i]->getValue() / 127.0 * 12.0) - 1.0) * 10.0; //miliseconds
     return result;
 }
 
@@ -73,11 +85,13 @@ void EnvelopeParams::ADSRinit(char A_dt, char D_dt, char S_val, char R_dt)
 {
     setpresettype("Penvamplitude");
     Envmode   = 1;
-    PA_dt     = A_dt;
-    PD_dt     = D_dt;
-    PS_val    = S_val;
-    PR_dt     = R_dt;
-    Pfreemode = 0;
+
+    this->A_dt.setValue(A_dt);
+    this->D_dt.setValue(D_dt);
+    this->S_val.setValue(S_val);
+    this->R_dt.setValue(R_dt);
+
+    freemode.setValue(0);
     converttofree();
 
     store2defaults();
@@ -87,11 +101,13 @@ void EnvelopeParams::ADSRinit_dB(char A_dt, char D_dt, char S_val, char R_dt)
 {
     setpresettype("Penvamplitude");
     Envmode   = 2;
-    PA_dt     = A_dt;
-    PD_dt     = D_dt;
-    PS_val    = S_val;
-    PR_dt     = R_dt;
-    Pfreemode = 0;
+
+    this->A_dt.setValue(A_dt);
+    this->D_dt.setValue(D_dt);
+    this->S_val.setValue(S_val);
+    this->R_dt.setValue(R_dt);
+
+    freemode.setValue(0);
     converttofree();
 
     store2defaults();
@@ -101,11 +117,13 @@ void EnvelopeParams::ASRinit(char A_val, char A_dt, char R_val, char R_dt)
 {
     setpresettype("Penvfrequency");
     Envmode   = 3;
-    PA_val    = A_val;
-    PA_dt     = A_dt;
-    PR_val    = R_val;
-    PR_dt     = R_dt;
-    Pfreemode = 0;
+
+    this->A_val.setValue(A_val);
+    this->A_dt.setValue(A_dt);
+    this->R_val.setValue(R_val);
+    this->R_dt.setValue(R_dt);
+
+    freemode.setValue(0);
     converttofree();
 
     store2defaults();
@@ -120,13 +138,15 @@ void EnvelopeParams::ADSRinit_filter(char A_val,
 {
     setpresettype("Penvfilter");
     Envmode   = 4;
-    PA_val    = A_val;
-    PA_dt     = A_dt;
-    PD_val    = D_val;
-    PD_dt     = D_dt;
-    PR_dt     = R_dt;
-    PR_val    = R_val;
-    Pfreemode = 0;
+
+    this->A_val.setValue(A_val);
+    this->A_dt.setValue(A_dt);
+    this->D_val.setValue(D_val);
+    this->D_dt.setValue(D_dt);
+    this->R_dt.setValue(R_dt);
+    this->R_val.setValue(R_val);
+
+    freemode.setValue(0);
     converttofree();
     store2defaults();
 }
@@ -135,11 +155,13 @@ void EnvelopeParams::ASRinit_bw(char A_val, char A_dt, char R_val, char R_dt)
 {
     setpresettype("Penvbandwidth");
     Envmode   = 5;
-    PA_val    = A_val;
-    PA_dt     = A_dt;
-    PR_val    = R_val;
-    PR_dt     = R_dt;
-    Pfreemode = 0;
+
+    this->A_val.setValue(A_val);
+    this->A_dt.setValue(A_dt);
+    this->R_val.setValue(R_val);
+    this->R_dt.setValue(R_dt);
+
+    freemode.setValue(0);
     converttofree();
     store2defaults();
 }
@@ -151,55 +173,55 @@ void EnvelopeParams::converttofree()
 {
     switch(Envmode) {
     case 1:
-        Penvpoints  = 4;
-        Penvsustain = 2;
-        Penvval[0]  = 0;
-        Penvdt[1]   = PA_dt;
-        Penvval[1]  = 127;
-        Penvdt[2]   = PD_dt;
-        Penvval[2]  = PS_val;
-        Penvdt[3]   = PR_dt;
-        Penvval[3]  = 0;
+        envpoints.setValue(4);
+        envsustain.setValue(2);
+        envval[0]->setValue(0);
+        envdt[1]->setValue(A_dt());
+        envval[1]->setValue(127);
+        envdt[2]->setValue(D_dt());
+        envval[2]->setValue(S_val());
+        envdt[3]->setValue(R_dt());
+        envval[3]->setValue(0);
         break;
     case 2:
-        Penvpoints  = 4;
-        Penvsustain = 2;
-        Penvval[0]  = 0;
-        Penvdt[1]   = PA_dt;
-        Penvval[1]  = 127;
-        Penvdt[2]   = PD_dt;
-        Penvval[2]  = PS_val;
-        Penvdt[3]   = PR_dt;
-        Penvval[3]  = 0;
+        envpoints.setValue(4);
+        envsustain.setValue(2);
+        envval[0]->setValue(0);
+        envdt[1]->setValue(A_dt());
+        envval[1]->setValue(127);
+        envdt[2]->setValue(D_dt());
+        envval[2]->setValue(S_val());
+        envdt[3]->setValue(R_dt());
+        envval[3]->setValue(0);
         break;
     case 3:
-        Penvpoints  = 3;
-        Penvsustain = 1;
-        Penvval[0]  = PA_val;
-        Penvdt[1]   = PA_dt;
-        Penvval[1]  = 64;
-        Penvdt[2]   = PR_dt;
-        Penvval[2]  = PR_val;
+        envpoints.setValue(3);
+        envsustain.setValue(1);
+        envval[0]->setValue(A_val());
+        envdt[1]->setValue(A_dt());
+        envval[1]->setValue(64);
+        envdt[2]->setValue(R_dt());
+        envval[2]->setValue(R_val());
         break;
     case 4:
-        Penvpoints  = 4;
-        Penvsustain = 2;
-        Penvval[0]  = PA_val;
-        Penvdt[1]   = PA_dt;
-        Penvval[1]  = PD_val;
-        Penvdt[2]   = PD_dt;
-        Penvval[2]  = 64;
-        Penvdt[3]   = PR_dt;
-        Penvval[3]  = PR_val;
+        envpoints.setValue(4);
+        envsustain.setValue(2);
+        envval[0]->setValue(A_val());
+        envdt[1]->setValue(A_dt());
+        envval[1]->setValue(D_val());
+        envdt[2]->setValue(D_dt());
+        envval[2]->setValue(64);
+        envdt[3]->setValue(R_dt());
+        envval[3]->setValue(R_val());
         break;
     case 5:
-        Penvpoints  = 3;
-        Penvsustain = 1;
-        Penvval[0]  = PA_val;
-        Penvdt[1]   = PA_dt;
-        Penvval[1]  = 64;
-        Penvdt[2]   = PR_dt;
-        Penvval[2]  = PR_val;
+        envpoints.setValue(3);
+        envsustain.setValue(1);
+        envval[0]->setValue(A_val());
+        envdt[1]->setValue(A_dt());
+        envval[1]->setValue(64);
+        envdt[2]->setValue(R_dt());
+        envval[2]->setValue(R_val());
         break;
     }
 }
@@ -209,26 +231,26 @@ void EnvelopeParams::converttofree()
 
 void EnvelopeParams::add2XML(XMLwrapper *xml)
 {
-    xml->addparbool("free_mode", Pfreemode);
-    xml->addpar("env_points", Penvpoints);
-    xml->addpar("env_sustain", Penvsustain);
-    xml->addpar("env_stretch", Penvstretch);
-    xml->addparbool("forced_release", Pforcedrelease);
-    xml->addparbool("linear_envelope", Plinearenvelope);
-    xml->addpar("A_dt", PA_dt);
-    xml->addpar("D_dt", PD_dt);
-    xml->addpar("R_dt", PR_dt);
-    xml->addpar("A_val", PA_val);
-    xml->addpar("D_val", PD_val);
-    xml->addpar("S_val", PS_val);
-    xml->addpar("R_val", PR_val);
+    xml->addparbool("free_mode", freemode());
+    xml->addpar("env_points", envpoints());
+    xml->addpar("env_sustain", envsustain());
+    xml->addpar("env_stretch", envstretch());
+    xml->addparbool("forced_release", forcedrelease());
+    xml->addparbool("linear_envelope", linearenvelope());
+    xml->addpar("A_dt", A_dt());
+    xml->addpar("D_dt", D_dt());
+    xml->addpar("R_dt", R_dt());
+    xml->addpar("A_val", A_val());
+    xml->addpar("D_val", D_val());
+    xml->addpar("S_val", S_val());
+    xml->addpar("R_val", R_val());
 
-    if((Pfreemode != 0) || (!xml->minimal)) {
-        for(int i = 0; i < Penvpoints; i++) {
+    if((freemode() != 0) || (!xml->minimal)) {
+        for(int i = 0; i < envpoints(); i++) {
             xml->beginbranch("POINT", i);
             if(i != 0)
-                xml->addpar("dt", Penvdt[i]);
-            xml->addpar("val", Penvval[i]);
+                xml->addpar("dt", (*envdt[i])());
+            xml->addpar("val", (*envval[i])());
             xml->endbranch();
         }
     }
@@ -238,62 +260,63 @@ void EnvelopeParams::add2XML(XMLwrapper *xml)
 
 void EnvelopeParams::getfromXML(XMLwrapper *xml)
 {
-    Pfreemode = xml->getparbool("free_mode", Pfreemode);
-    Penvpoints      = xml->getpar127("env_points", Penvpoints);
-    Penvsustain     = xml->getpar127("env_sustain", Penvsustain);
-    Penvstretch     = xml->getpar127("env_stretch", Penvstretch);
-    Pforcedrelease  = xml->getparbool("forced_release", Pforcedrelease);
-    Plinearenvelope = xml->getparbool("linear_envelope", Plinearenvelope);
+    freemode.setValue(xml->getparbool("free_mode", freemode()));
+    envpoints.setValue(xml->getpar127("env_points", envpoints()));
+    envsustain.setValue(xml->getpar127("env_sustain", envsustain()));
+    envstretch.setValue(xml->getpar127("env_stretch", envstretch()));
+    forcedrelease.setValue(xml->getparbool("forced_release", forcedrelease()));
+    linearenvelope.setValue(xml->getparbool("linear_envelope", linearenvelope()));
 
-    PA_dt  = xml->getpar127("A_dt", PA_dt);
-    PD_dt  = xml->getpar127("D_dt", PD_dt);
-    PR_dt  = xml->getpar127("R_dt", PR_dt);
-    PA_val = xml->getpar127("A_val", PA_val);
-    PD_val = xml->getpar127("D_val", PD_val);
-    PS_val = xml->getpar127("S_val", PS_val);
-    PR_val = xml->getpar127("R_val", PR_val);
+    A_dt.setValue(xml->getpar127("A_dt", A_dt()));
+    D_dt.setValue(xml->getpar127("D_dt", D_dt()));
+    R_dt.setValue(xml->getpar127("R_dt", R_dt()));
+    A_val.setValue(xml->getpar127("A_val", A_val()));
+    D_val.setValue(xml->getpar127("D_val", D_val()));
+    S_val.setValue(xml->getpar127("S_val", S_val()));
+    R_val.setValue(xml->getpar127("R_val", R_val()));
 
-    for(int i = 0; i < Penvpoints; i++) {
+    for(int i = 0; i < envpoints(); i++) {
         if(xml->enterbranch("POINT", i) == 0)
             continue;
         if(i != 0)
-            Penvdt[i] = xml->getpar127("dt", Penvdt[i]);
-        Penvval[i] = xml->getpar127("val", Penvval[i]);
+            envdt[i]->setValue(xml->getpar127("dt", (*envdt[i])()));
+        envval[i]->setValue(xml->getpar127("val", (*envval[i])()));
         xml->exitbranch();
     }
 
-    if(!Pfreemode)
+    if(!freemode())
         converttofree();
 }
 
 
 void EnvelopeParams::defaults()
 {
-    Penvstretch     = Denvstretch;
-    Pforcedrelease  = Dforcedrelease;
-    Plinearenvelope = Dlinearenvelope;
-    PA_dt     = DA_dt;
-    PD_dt     = DD_dt;
-    PR_dt     = DR_dt;
-    PA_val    = DA_val;
-    PD_val    = DD_val;
-    PS_val    = DS_val;
-    PR_val    = DR_val;
-    Pfreemode = 0;
+    envstretch.defaults();
+    forcedrelease.defaults();
+    linearenvelope.defaults();
+    A_dt.defaults();
+    D_dt.defaults();
+    R_dt.defaults();
+    A_val.defaults();
+    D_val.defaults();
+    S_val.defaults();
+    R_val.defaults();
+
+    freemode.setValue(0);
     converttofree();
 }
 
 void EnvelopeParams::store2defaults()
 {
-    Denvstretch     = Penvstretch;
-    Dforcedrelease  = Pforcedrelease;
-    Dlinearenvelope = Plinearenvelope;
-    DA_dt  = PA_dt;
-    DD_dt  = PD_dt;
-    DR_dt  = PR_dt;
-    DA_val = PA_val;
-    DD_val = PD_val;
-    DS_val = PS_val;
-    DR_val = PR_val;
+    envstretch.storeDefaults();
+    forcedrelease.storeDefaults();
+    linearenvelope.storeDefaults();
+    A_dt.storeDefaults();
+    D_dt.storeDefaults();
+    R_dt.storeDefaults();
+    A_val.storeDefaults();
+    D_val.storeDefaults();
+    S_val.storeDefaults();
+    R_val.storeDefaults();
 }
 
