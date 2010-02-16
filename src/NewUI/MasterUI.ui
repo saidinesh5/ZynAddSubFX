@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>608</width>
-    <height>536</height>
+    <width>609</width>
+    <height>537</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -637,16 +637,9 @@
           </widget>
          </item>
          <item>
-          <widget class="ComboBox" name="comboBox">
-           <property name="controlId" stdset="0">
-            <string>Bank</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ComboBox" name="comboBox_2">
-           <property name="controlId" stdset="0">
-            <string>BankInstrument</string>
+          <widget class="QPushButton" name="loadInstrumentButton">
+           <property name="text">
+            <string>Load instrument</string>
            </property>
           </widget>
          </item>
@@ -904,8 +897,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>608</width>
-     <height>24</height>
+     <width>609</width>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

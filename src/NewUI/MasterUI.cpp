@@ -6,6 +6,7 @@
 #include <QtDebug>
 #include "DebugInterface.h"
 #include <Oscil.h>
+#include "BankLoader.h"
 
 MasterUI::MasterUI(Master *master_, int *exitprogram_)
     :QMainWindow(NULL),
@@ -73,5 +74,13 @@ void MasterUI::on_action_Quit_triggered()
     //TODO: this way of exiting does not work cleanly yet
     *Pexitprogram = 1;
 }
+
+void MasterUI::on_loadInstrumentButton_clicked()
+{
+    QString id = partBar->getCurrentChild();
+    BankLoader *loaderPopup = new BankLoader(id);
+    loaderPopup->show();
+}
+
 #include "MasterUI.moc"
 
