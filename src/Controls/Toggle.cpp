@@ -46,3 +46,13 @@ char Toggle::getChar() const
     return getValue() ? 127 : 0;
 }
 
+void Toggle::addpar(XMLwrapper *xml, const std::string& name)
+{
+    xml->addparbool(name, getValue());
+}
+
+void Toggle::getpar(XMLwrapper *xml, const std::string& name)
+{
+    setValue(xml->getparbool(name, getValue()));
+}
+

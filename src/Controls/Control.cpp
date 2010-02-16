@@ -96,3 +96,16 @@ char Control<T>::getChar() const
     return char(v);
 }
 
+template<class T>
+void Control<T>::addpar(XMLwrapper *xml, const std::string& name)
+{
+    xml->addpar(name, getchar());
+}
+
+template<class T>
+void Control<T>::getpar(XMLwrapper *xml, const std::string& name)
+{
+    setChar(xml->getpar127(name, getChar()));
+}
+
+

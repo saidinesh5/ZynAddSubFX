@@ -28,6 +28,10 @@
 #include "EventClasses.h"
 #include "JobClasses.h"
 #include <pthread.h>
+#include "../Misc/XMLwrapper.h"
+
+#define GETPAR(X,Y) (X).getpar(xml, (Y));
+#define ADDPAR(X,Y) (X).addpar(xml, (Y));
 
 /**
  * A control of interal type T
@@ -61,6 +65,9 @@ class Control:public GenControl
 
         T getMin() const { return min; }
         T getMax() const { return max; }
+
+        virtual void addpar(class XMLwrapper *xml, const std::string& name);
+        virtual void getpar(class XMLwrapper *xml, const std::string& name);
 
     protected:
         T value, min, max;

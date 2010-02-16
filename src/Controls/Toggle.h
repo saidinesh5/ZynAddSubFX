@@ -42,6 +42,9 @@ class Toggle:public Control<bool>
         inline void operator=(bool b) {
             setValue(b);
         }
+
+        virtual void addpar(class XMLwrapper *xml, const std::string& name);
+        virtual void getpar(class XMLwrapper *xml, const std::string& name);
 };
 
 #endif

@@ -231,26 +231,26 @@ void EnvelopeParams::converttofree()
 
 void EnvelopeParams::add2XML(XMLwrapper *xml)
 {
-    xml->addparbool("free_mode", freemode());
-    xml->addpar("env_points", envpoints());
-    xml->addpar("env_sustain", envsustain());
-    xml->addpar("env_stretch", envstretch());
-    xml->addparbool("forced_release", forcedrelease());
-    xml->addparbool("linear_envelope", linearenvelope());
-    xml->addpar("A_dt", A_dt());
-    xml->addpar("D_dt", D_dt());
-    xml->addpar("R_dt", R_dt());
-    xml->addpar("A_val", A_val());
-    xml->addpar("D_val", D_val());
-    xml->addpar("S_val", S_val());
-    xml->addpar("R_val", R_val());
+    ADDPAR(freemode, "free_mode");
+    ADDPAR(forcedrelease, "forced_release");
+    ADDPAR(linearenvelope, "linear_envelope");
+    ADDPAR(envpoints, "env_points");
+    ADDPAR(envsustain, "env_sustain");
+    ADDPAR(envstretch, "env_stretch");
+    ADDPAR(A_dt, "A_dt");
+    ADDPAR(D_dt, "D_dt");
+    ADDPAR(R_dt, "R_dt");
+    ADDPAR(A_val, "A_val");
+    ADDPAR(D_val, "D_val");
+    ADDPAR(S_val, "S_val");
+    ADDPAR(R_val, "R_val");
 
     if((freemode() != 0) || (!xml->minimal)) {
         for(int i = 0; i < envpoints(); i++) {
             xml->beginbranch("POINT", i);
             if(i != 0)
-                xml->addpar("dt", (*envdt[i])());
-            xml->addpar("val", (*envval[i])());
+                ADDPAR(*envdt[i], "dt");
+            ADDPAR(*envval[i], "val");
             xml->endbranch();
         }
     }
@@ -260,27 +260,28 @@ void EnvelopeParams::add2XML(XMLwrapper *xml)
 
 void EnvelopeParams::getfromXML(XMLwrapper *xml)
 {
-    freemode.setValue(xml->getparbool("free_mode", freemode()));
-    envpoints.setValue(xml->getpar127("env_points", envpoints()));
-    envsustain.setValue(xml->getpar127("env_sustain", envsustain()));
-    envstretch.setValue(xml->getpar127("env_stretch", envstretch()));
-    forcedrelease.setValue(xml->getparbool("forced_release", forcedrelease()));
-    linearenvelope.setValue(xml->getparbool("linear_envelope", linearenvelope()));
 
-    A_dt.setValue(xml->getpar127("A_dt", A_dt()));
-    D_dt.setValue(xml->getpar127("D_dt", D_dt()));
-    R_dt.setValue(xml->getpar127("R_dt", R_dt()));
-    A_val.setValue(xml->getpar127("A_val", A_val()));
-    D_val.setValue(xml->getpar127("D_val", D_val()));
-    S_val.setValue(xml->getpar127("S_val", S_val()));
-    R_val.setValue(xml->getpar127("R_val", R_val()));
+    GETPAR(freemode, "free_mode");
+    GETPAR(envpoints, "env_points");
+    GETPAR(envsustain, "env_sustain");
+    GETPAR(envstretch, "env_stretch");
+    GETPAR(forcedrelease, "forced_release");
+    GETPAR(linearenvelope, "linear_envelope");
+
+    GETPAR(A_dt, "A_dt");
+    GETPAR(D_dt, "D_dt");
+    GETPAR(R_dt, "R_dt");
+    GETPAR(A_val, "A_val");
+    GETPAR(D_val, "D_val");
+    GETPAR(S_val, "S_val");
+    GETPAR(R_val, "R_val");
 
     for(int i = 0; i < envpoints(); i++) {
         if(xml->enterbranch("POINT", i) == 0)
             continue;
         if(i != 0)
-            envdt[i]->setValue(xml->getpar127("dt", (*envdt[i])()));
-        envval[i]->setValue(xml->getpar127("val", (*envval[i])()));
+            GETPAR(*envdt[i], "dt");
+        GETPAR(*envval[i], "val");
         xml->exitbranch();
     }
 

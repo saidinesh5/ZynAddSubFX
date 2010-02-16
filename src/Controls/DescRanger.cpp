@@ -33,4 +33,16 @@ DescRanger::DescRanger(Node *parent, std::string id, int defaultval, int min, in
 
 DescRanger::~DescRanger()
 {
+
 }
+
+void DescRanger::addpar(XMLwrapper *xml, const std::string& name)
+{
+    xml->addpar(name, getValue());
+}
+
+void DescRanger::getpar(XMLwrapper *xml, const std::string& name)
+{
+    setValue(xml->getpar(name, getValue(), getMin(), getMax()));
+}
+
