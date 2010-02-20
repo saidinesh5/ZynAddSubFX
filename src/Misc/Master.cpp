@@ -39,9 +39,9 @@
 using namespace std;
 
 Master::Master()
-    :Node(NULL, "Master"),
+    :Node(NULL, "MASTER"),
       panic(this, "Panic", "Panic!"),
-      masterVolume(this, "Volume", -6.66,
+      masterVolume(this, "volume", -6.66,
                    new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
       parts(this, "Parts")
 {

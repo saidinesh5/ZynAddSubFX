@@ -47,19 +47,19 @@ Part::Part(Node *parent,
            FFTwrapper *fft_,
            pthread_mutex_t *mutex_)
     :Node(parent, "Part"),
-      partVolume        (this, "Volume", 30, new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
-      enabled           (this, "Enabled", false),
+      partVolume        (this, "volume", 30, new db2rapInjFunc<REALTYPE>(-40, 12.91666)),
+      enabled           (this, "enabled", false),
       instrument        (this, "Instrument"),
       instrumentKit     (&instrument, "InstrumentKit"),
       instrumentControl (this),
       bankControl       (this),
-      minKey            (this, "MinKey", 0),
-      maxKey            (this, "MaxKey", 127),
-      keyShift          (this, "KeyShift", 64),
+      minKey            (this, "min_key", 0),
+      maxKey            (this, "max_key", 127),
+      keyShift          (this, "key_shift", 64),
       receiveChannel    (this, "ReceiveChannel", 0),
-      panning           (this, "Panning", pan2real(64), new panningFunc()),
-      velSns            (this, "VelocitySense", 64),
-      velOffs           (this, "VelocityOffset", 64)
+      panning           (this, "panning", pan2real(64), new panningFunc()),
+      velSns            (this, "velocity_sensing", 64),
+      velOffs           (this, "velocity_offset", 64)
 {
     instrumentControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));
     bankControl.addRedirection(this, new TypeFilter(Event::NewValueEvent));

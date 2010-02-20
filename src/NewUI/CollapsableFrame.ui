@@ -48,7 +48,7 @@
         <string notr="true"/>
        </property>
        <property name="controlId" stdset="0">
-        <string>Enabled</string>
+        <string>enabled</string>
        </property>
       </widget>
      </item>

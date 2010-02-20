@@ -446,7 +446,7 @@
       <string>Filter Parameters</string>
      </property>
      <property name="controlId" stdset="0">
-      <string>FilterParams</string>
+      <string>FILTER_PARAMETERS</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <property name="margin">
@@ -473,12 +473,12 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>CenterFrequency</string>
+         <string>center_freq</string>
         </property>
        </widget>
       </item>
       <item row="0" column="4">
-       <widget class="Dial" name="masterVolume_11">
+       <widget class="Dial" name="mastervolume_11">
         <property name="maximum">
          <number>127</number>
         </property>
@@ -495,12 +495,12 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>Frequency</string>
+         <string>freq</string>
         </property>
        </widget>
       </item>
       <item row="0" column="5">
-       <widget class="Dial" name="masterVolume_12">
+       <widget class="Dial" name="mastervolume_12">
         <property name="maximum">
          <number>127</number>
         </property>
@@ -517,12 +517,12 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>Frequency</string>
+         <string>freq</string>
         </property>
        </widget>
       </item>
       <item row="0" column="6">
-       <widget class="Dial" name="masterVolume_13">
+       <widget class="Dial" name="mastervolume_13">
         <property name="maximum">
          <number>127</number>
         </property>
@@ -539,12 +539,12 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>Frequency</string>
+         <string>freq</string>
         </property>
        </widget>
       </item>
       <item row="0" column="7">
-       <widget class="Dial" name="masterVolume_14">
+       <widget class="Dial" name="mastervolume_14">
         <property name="maximum">
          <number>127</number>
         </property>
@@ -561,12 +561,12 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>Frequency</string>
+         <string>freq</string>
         </property>
        </widget>
       </item>
       <item row="0" column="8">
-       <widget class="Dial" name="masterVolume_15">
+       <widget class="Dial" name="mastervolume_15">
         <property name="maximum">
          <number>127</number>
         </property>
@@ -583,7 +583,7 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>Frequency</string>
+         <string>freq</string>
         </property>
        </widget>
       </item>
@@ -671,14 +671,14 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Category</string>
+            <string>category</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="ComboBox" name="comboBox_5">
            <property name="controlId" stdset="0">
-            <string>Type</string>
+            <string>type</string>
            </property>
           </widget>
          </item>
@@ -698,7 +698,7 @@
          <item>
           <widget class="ComboBox" name="comboBox_6">
            <property name="controlId" stdset="0">
-            <string>Category</string>
+            <string>category</string>
            </property>
           </widget>
          </item>
@@ -724,7 +724,7 @@
             <string/>
            </property>
            <property name="controlId" stdset="0">
-            <string>OctaveDetune</string>
+            <string>Octavedetune</string>
            </property>
           </widget>
          </item>
@@ -1168,7 +1168,7 @@
       <string>Amplitude Envelope</string>
      </property>
      <property name="controlId" stdset="0">
-      <string>AmpEnvelope</string>
+      <string>AMPLITUDE_ENVELOPE</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="margin">
@@ -1186,7 +1186,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>AttackDt</string>
+         <string>A_valDt</string>
         </property>
        </widget>
       </item>
@@ -1199,7 +1199,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>DecayDt</string>
+         <string>D_valDt</string>
         </property>
        </widget>
       </item>
@@ -1225,7 +1225,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>ReleaseDt</string>
+         <string>R_valDt</string>
         </property>
        </widget>
       </item>
@@ -1238,7 +1238,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>EnvStretch</string>
+         <string>env_stretch</string>
         </property>
        </widget>
       </item>
@@ -1324,7 +1324,7 @@
             <string>frcR</string>
            </property>
            <property name="controlId" stdset="0">
-            <string>ForcedRelease</string>
+            <string>forced_release</string>
            </property>
           </widget>
          </item>
@@ -2302,10 +2302,10 @@
       </palette>
      </property>
      <property name="title">
-      <string>Frequency Envelope</string>
+      <string>freq Envelope</string>
      </property>
      <property name="controlId" stdset="0">
-      <string>FreqEnvelope</string>
+      <string>FREQUENCY_ENVELOPE</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_6">
       <property name="margin">
@@ -2323,7 +2323,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>Attack</string>
+         <string>A_val</string>
         </property>
        </widget>
       </item>
@@ -2336,7 +2336,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>AttackDt</string>
+         <string>A_valDt</string>
         </property>
        </widget>
       </item>
@@ -2349,7 +2349,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>ReleaseDt</string>
+         <string>R_valDt</string>
         </property>
        </widget>
       </item>
@@ -2362,7 +2362,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>EnvStretch</string>
+         <string>env_stretch</string>
         </property>
        </widget>
       </item>
@@ -2438,7 +2438,7 @@
             <string>frcR</string>
            </property>
            <property name="controlId" stdset="0">
-            <string>ForcedRelease</string>
+            <string>forced_release</string>
            </property>
           </widget>
          </item>
@@ -2454,7 +2454,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>Release</string>
+         <string>R_val</string>
         </property>
        </widget>
       </item>
@@ -2892,7 +2892,7 @@
       </palette>
      </property>
      <property name="title">
-      <string>Frequency LFO</string>
+      <string>freq LFO</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_10">
       <property name="margin">
@@ -3611,7 +3611,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>&lt;h3&gt;Frequency&lt;/h3&gt;</string>
+         <string>&lt;h3&gt;freq&lt;/h3&gt;</string>
         </property>
        </widget>
       </item>
@@ -3620,7 +3620,7 @@
         <item>
          <widget class="QLabel" name="label_12">
           <property name="text">
-           <string>Detune</string>
+           <string>detune</string>
           </property>
          </widget>
         </item>
@@ -3645,7 +3645,7 @@
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="controlId" stdset="0">
-         <string>Detune</string>
+         <string>detune</string>
         </property>
        </widget>
       </item>
@@ -3670,7 +3670,7 @@
         <string>Octave </string>
        </property>
        <property name="controlId" stdset="0">
-        <string>OctaveDetune</string>
+        <string>Octavedetune</string>
        </property>
       </widget>
      </item>
@@ -3680,7 +3680,7 @@
         <string>Coarse </string>
        </property>
        <property name="controlId" stdset="0">
-        <string>CoarseDetune</string>
+        <string>coarse_detune</string>
        </property>
       </widget>
      </item>
@@ -3700,7 +3700,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Detune type</string>
+        <string>detune type</string>
        </property>
       </widget>
      </item>
@@ -4127,7 +4127,7 @@
       <string>Filter Envelope</string>
      </property>
      <property name="controlId" stdset="0">
-      <string>FilterEnvelope</string>
+      <string>FILTER_ENVELOPE</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <property name="margin">
@@ -4228,7 +4228,7 @@
             <string>frcR</string>
            </property>
            <property name="controlId" stdset="0">
-            <string>ForcedRelease</string>
+            <string>forced_release</string>
            </property>
           </widget>
          </item>
@@ -4244,7 +4244,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>Attack</string>
+         <string>A_val</string>
         </property>
        </widget>
       </item>
@@ -4257,7 +4257,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>AttackDt</string>
+         <string>A_valDt</string>
         </property>
        </widget>
       </item>
@@ -4270,7 +4270,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>DecayDt</string>
+         <string>D_valDt</string>
         </property>
        </widget>
       </item>
@@ -4283,7 +4283,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>Decay</string>
+         <string>D_val</string>
         </property>
        </widget>
       </item>
@@ -4296,7 +4296,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>ReleaseDt</string>
+         <string>R_valDt</string>
         </property>
        </widget>
       </item>
@@ -4309,7 +4309,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>Release</string>
+         <string>R_val</string>
         </property>
        </widget>
       </item>
@@ -4322,7 +4322,7 @@
          </sizepolicy>
         </property>
         <property name="controlId" stdset="0">
-         <string>EnvStretch</string>
+         <string>env_stretch</string>
         </property>
        </widget>
       </item>
@@ -4770,7 +4770,7 @@
        <number>0</number>
       </property>
       <item row="0" column="0">
-       <widget class="Dial" name="masterVolume">
+       <widget class="Dial" name="mastervolume">
         <property name="maximum">
          <number>127</number>
         </property>
@@ -4787,7 +4787,7 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>Volume</string>
+         <string>volume</string>
         </property>
        </widget>
       </item>
@@ -4820,7 +4820,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_76">
         <property name="text">
-         <string>Volume</string>
+         <string>volume</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

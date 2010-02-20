@@ -43,10 +43,10 @@
       <item>
        <widget class="CheckBox" name="enabledCheck">
         <property name="text">
-         <string>Enabled</string>
+         <string>enabled</string>
         </property>
         <property name="controlId" stdset="0">
-         <string>Enabled</string>
+         <string>enabled</string>
         </property>
        </widget>
       </item>
@@ -106,7 +106,7 @@
             <string>Filter</string>
            </property>
            <property name="controlId" stdset="0">
-            <string>FilterParams</string>
+            <string>FILTER_PARAMETERS</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <property name="spacing">
@@ -120,14 +120,14 @@
               <item>
                <widget class="ComboBox" name="comboBox_7">
                 <property name="controlId" stdset="0">
-                 <string>Type</string>
+                 <string>type</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="ComboBox" name="comboBox_8">
                 <property name="controlId" stdset="0">
-                 <string>Category</string>
+                 <string>category</string>
                 </property>
                </widget>
               </item>
@@ -149,12 +149,12 @@
                  <bool>true</bool>
                 </property>
                 <property name="controlId" stdset="0">
-                 <string>CenterFrequency</string>
+                 <string>center_freq</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="Dial" name="masterVolume_12">
+               <widget class="Dial" name="mastervolume_12">
                 <property name="maximum">
                  <number>127</number>
                 </property>
@@ -171,7 +171,7 @@
                  <bool>true</bool>
                 </property>
                 <property name="controlId" stdset="0">
-                 <string>Frequency</string>
+                 <string>freq</string>
                 </property>
                </widget>
               </item>
@@ -312,7 +312,7 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>OscilSmp.OscilBaseFunc</string>
+               <string>OscilSmp.base_function</string>
               </property>
              </widget>
             </item>
@@ -322,7 +322,7 @@
          <item row="2" column="0" colspan="2">
           <widget class="QGroupBox" name="groupBox_3">
            <property name="title">
-            <string>Frequency</string>
+            <string>freq</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_3">
             <property name="margin">
@@ -351,7 +351,7 @@
                  <item>
                   <widget class="QLabel" name="label_12">
                    <property name="text">
-                    <string>Detune</string>
+                    <string>detune</string>
                    </property>
                   </widget>
                  </item>
@@ -379,7 +379,7 @@
                   <enum>Qt::Horizontal</enum>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Detune</string>
+                  <string>detune</string>
                  </property>
                 </widget>
                </item>
@@ -389,7 +389,7 @@
                   <string>Coarse </string>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>CoarseDetune</string>
+                  <string>coarse_detune</string>
                  </property>
                 </widget>
                </item>
@@ -399,7 +399,7 @@
                   <string>Octave </string>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>OctaveDetune</string>
+                  <string>Octavedetune</string>
                  </property>
                 </widget>
                </item>
@@ -409,14 +409,14 @@
             <item row="1" column="0">
              <widget class="EnvelopeBox" name="frequencyEnvelope">
               <property name="title">
-               <string>Frequency Envelope</string>
+               <string>freq Envelope</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
              <widget class="LFOBox" name="frequencyLFO">
               <property name="title">
-               <string>Frequency LFO</string>
+               <string>freq LFO</string>
               </property>
              </widget>
             </item>
@@ -445,7 +445,7 @@
             <item>
              <widget class="EnvelopeBox" name="frequencyEnvelope_2">
               <property name="title">
-               <string>Frequency Envelope </string>
+               <string>freq Envelope </string>
               </property>
              </widget>
             </item>
@@ -522,7 +522,7 @@
   <tabstop>comboBox_7</tabstop>
   <tabstop>comboBox_8</tabstop>
   <tabstop>partPan_4</tabstop>
-  <tabstop>masterVolume_12</tabstop>
+  <tabstop>mastervolume_12</tabstop>
   <tabstop>horizontalSlider</tabstop>
  </tabstops>
  <resources/>
@@ -531,7 +531,7 @@
    <sender>enabledCheck</sender>
    <signal>toggled(bool)</signal>
    <receiver>groupWidget</receiver>
-   <slot>setEnabled(bool)</slot>
+   <slot>setenabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>42</x>

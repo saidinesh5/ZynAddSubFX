@@ -32,7 +32,7 @@
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Volume:</string>
+         <string>volume:</string>
         </property>
        </widget>
       </item>
@@ -45,14 +45,14 @@
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="controlId" stdset="0">
-         <string>Volume</string>
+         <string>volume</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Detune:</string>
+         <string>detune:</string>
         </property>
        </widget>
       </item>
@@ -120,20 +120,20 @@
          <string>Filter</string>
         </property>
         <property name="controlId" stdset="0">
-         <string>FilterParams</string>
+         <string>FILTER_PARAMETERS</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">
           <widget class="ComboBox" name="comboBox_5">
            <property name="controlId" stdset="0">
-            <string>Type</string>
+            <string>type</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
           <widget class="ComboBox" name="comboBox_6">
            <property name="controlId" stdset="0">
-            <string>Category</string>
+            <string>category</string>
            </property>
           </widget>
          </item>
@@ -155,12 +155,12 @@
             <bool>true</bool>
            </property>
            <property name="controlId" stdset="0">
-            <string>CenterFrequency</string>
+            <string>center_freq</string>
            </property>
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="Dial" name="masterVolume_11">
+          <widget class="Dial" name="mastervolume_11">
            <property name="maximum">
             <number>127</number>
            </property>
@@ -177,7 +177,7 @@
             <bool>true</bool>
            </property>
            <property name="controlId" stdset="0">
-            <string>Frequency</string>
+            <string>freq</string>
            </property>
           </widget>
          </item>
@@ -187,14 +187,14 @@
       <item row="3" column="0">
        <widget class="EnvelopeBox" name="frequencyEnvelope">
         <property name="title">
-         <string>Frequency Envelope</string>
+         <string>freq Envelope</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
        <widget class="LFOBox" name="frequencyLFO">
         <property name="title">
-         <string>Frequency LFO</string>
+         <string>freq LFO</string>
         </property>
        </widget>
       </item>

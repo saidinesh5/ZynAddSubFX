@@ -40,7 +40,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Master volume</string>
+         <string>MASTER volume</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -48,7 +48,7 @@
        </widget>
       </item>
       <item row="0" column="0" rowspan="2">
-       <widget class="Dial" name="masterVolume">
+       <widget class="Dial" name="mastervolume">
         <property name="maximum">
          <number>127</number>
         </property>
@@ -65,14 +65,14 @@
          <bool>true</bool>
         </property>
         <property name="absoluteControlId" stdset="0">
-         <string>Master.Volume</string>
+         <string>MASTER.volume</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Master KeyShift</string>
+         <string>MASTER key_shift</string>
         </property>
        </widget>
       </item>
@@ -513,7 +513,7 @@
          <string>Esc</string>
         </property>
         <property name="absoluteControlId" stdset="0">
-         <string>Master.Panic</string>
+         <string>MASTER.Panic</string>
         </property>
        </widget>
       </item>
@@ -595,7 +595,7 @@
        <number>0</number>
       </property>
       <property name="absoluteControlId" stdset="0">
-       <string>Master.Parts.Part1.Instrument.InstrumentKit.ADnoteParameters.FilterParams</string>
+       <string>MASTER.Parts.Part1.Instrument.InstrumentKit.ADnoteParameters.FILTER_PARAMETERS</string>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -629,10 +629,10 @@
          <item>
           <widget class="CheckBox" name="enabledCheck">
            <property name="text">
-            <string>Enabled</string>
+            <string>enabled</string>
            </property>
            <property name="controlId" stdset="0">
-            <string>Enabled</string>
+            <string>enabled</string>
            </property>
           </widget>
          </item>
@@ -657,7 +657,7 @@
           <item>
            <layout class="QGridLayout" name="gridLayout_2">
             <item row="0" column="0" rowspan="2">
-             <widget class="Dial" name="partVolume">
+             <widget class="Dial" name="partvolume">
               <property name="maximum">
                <number>127</number>
               </property>
@@ -674,7 +674,7 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>Volume</string>
+               <string>volume</string>
               </property>
              </widget>
             </item>
@@ -696,12 +696,12 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>Panning</string>
+               <string>panning</string>
               </property>
              </widget>
             </item>
             <item row="0" column="2" rowspan="2">
-             <widget class="Dial" name="masterVolume_4">
+             <widget class="Dial" name="mastervolume_4">
               <property name="maximum">
                <number>127</number>
               </property>
@@ -718,12 +718,12 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>VelocitySense</string>
+               <string>velocity_sensing</string>
               </property>
              </widget>
             </item>
             <item row="0" column="3" rowspan="2">
-             <widget class="Dial" name="masterVolume_5">
+             <widget class="Dial" name="mastervolume_5">
               <property name="maximum">
                <number>127</number>
               </property>
@@ -740,14 +740,14 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>VelocityOffset</string>
+               <string>velocity_offset</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="label_3">
               <property name="text">
-               <string>Volume</string>
+               <string>volume</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -787,7 +787,7 @@
             <item row="2" column="4">
              <widget class="QLabel" name="label_7">
               <property name="text">
-               <string>KeyShift</string>
+               <string>key_shift</string>
               </property>
              </widget>
             </item>
@@ -973,7 +973,7 @@
    <sender>enabledCheck</sender>
    <signal>toggled(bool)</signal>
    <receiver>partWidget</receiver>
-   <slot>setEnabled(bool)</slot>
+   <slot>setenabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>366</x>

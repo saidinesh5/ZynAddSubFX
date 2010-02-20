@@ -33,22 +33,22 @@ EnvelopeParams::EnvelopeParams(Node *parent,
                                unsigned char Penvstretch_,
                                unsigned char Pforcedrelease_) :
                                Presets(parent, id),
-                               freemode(this, "FreeMode", 1),
+                               freemode(this, "free_mode", 1),
                                envpoints(this, "EnvPoints", 1),
-                               envsustain(this, "EnvSustain", 1),
+                               envsustain(this, "env_sustain", 1),
                                envdtNode(this, "EnvDt"),
                                envvalNode(this, "EnvVal"),
-                               envstretch(this, "EnvStretch", Penvstretch_),
-                               forcedrelease(this, "ForcedRelease", Pforcedrelease_),
+                               envstretch(this, "env_stretch", Penvstretch_),
+                               forcedrelease(this, "forced_release", Pforcedrelease_),
                                linearenvelope(this, "LinearEnvelope", 0),
 
-                               A_dt(this, "AttackDt", 10),
-                               D_dt(this, "DecayDt", 10),
-                               R_dt(this, "ReleaseDt", 10),
-                               A_val(this, "Attack", 64),
-                               D_val(this, "Decay", 64),
+                               A_dt(this, "A_dt", 10),
+                               D_dt(this, "D_dt", 10),
+                               R_dt(this, "R_dt", 10),
+                               A_val(this, "A_val", 64),
+                               D_val(this, "D_val", 64),
                                S_val(this, "Sustain", 64),
-                               R_val(this, "Release", 64)
+                               R_val(this, "R_val", 64)
 {
     for(int i = 0; i < MAX_ENVELOPE_POINTS; i++) {
         std::stringstream s;

@@ -28,11 +28,11 @@ SUBnoteParameters::SUBnoteParameters():
     Presets(NULL, "SUBnoteParameters: FIXME")
 {
     setpresettype("Psubsyth");
-    AmpEnvelope = new EnvelopeParams(this, "AmpEnvelope", 64, 1);
+    AmpEnvelope = new EnvelopeParams(this, "AMPLITUDE_ENVELOPE", 64, 1);
     AmpEnvelope->ADSRinit_dB(0, 40, 127, 25);
-    FreqEnvelope      = new EnvelopeParams(this, "FreqEnvelope", 64, 0);
+    FreqEnvelope      = new EnvelopeParams(this, "FREQUENCY_ENVELOPE", 64, 0);
     FreqEnvelope->ASRinit(30, 50, 64, 60);
-    BandWidthEnvelope = new EnvelopeParams(this, "BandWidthEnvelope", 64, 0);
+    BandWidthEnvelope = new EnvelopeParams(this, "BANDWIDTH_ENVELOPE", 64, 0);
     BandWidthEnvelope->ASRinit_bw(100, 70, 64, 60);
 
     //TODO: controlify this
