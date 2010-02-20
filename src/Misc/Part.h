@@ -118,6 +118,9 @@ class Part:public Node
         Node instrument;
         Node instrumentKit;
 
+        //temporary until actual instrument kit items are implemented.
+        Node tempInstrumentKitItem1;
+
         //for setting instruments loaded from bank
         InstrumentControl instrumentControl;
         BankControl bankControl;
