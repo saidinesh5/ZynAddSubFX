@@ -7,6 +7,7 @@
 #include "DebugInterface.h"
 #include <Oscil.h>
 #include "BankLoader.h"
+#include "../Misc/XMLwrapper.h"
 
 MasterUI::MasterUI(Master *master_, int *exitprogram_)
     :QMainWindow(NULL),
@@ -33,6 +34,12 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     partBar->setNode(Node::get("Master.Parts"));
 
     (new DebugInterface(NULL, master))->show();
+
+    XMLwrapper file;
+    master->saveXml(&file);
+    //qDebug() << file.getXMLdata();
+    file.saveXMLfile("/tmp/inst.xml");
+
 }
 
 void MasterUI::refresh_master_ui()

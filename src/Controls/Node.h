@@ -101,6 +101,7 @@ class Node:public NodeUser
         static void lock();
         static void unlock();
 
+        virtual void saveXml(class XMLwrapper *xml);
 
     private:
         struct Redirection {

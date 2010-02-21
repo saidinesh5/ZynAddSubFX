@@ -72,6 +72,7 @@ class OscilGen:public Presets
          * 2-nd harmonic has index 1, ..the 128 harminic has index 127
          */
         unsigned char Phphase[MAX_AD_HARMONICS]; //the MIDI parameters for mag. and phases
+        Node harmonics;
         DescRanger* magnitude[MAX_AD_HARMONICS];
 
         ArrayControl oscilSpectrum;

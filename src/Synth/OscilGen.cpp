@@ -33,6 +33,7 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
     :Presets(parent, id),
       currentBaseFunc(this, "BaseFunc", 0),
       baseParam(this, "BASE_PARAMETERS", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0)),
+      harmonics(this, "HARMONICS"),
       oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE/2),
       oscilBaseFunc(this, "base_function", OSCIL_SIZE)
 {
@@ -53,9 +54,10 @@ OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
 
     for (int i = 0; i < MAX_AD_HARMONICS; ++i) {
         std::stringstream ss;
-        ss << "Magnitude" << i;
-        magnitude[i] = new DescRanger(this, ss.str(), 64);
+        ss << "HARMONIC#" << i;
+        magnitude[i] = new DescRanger(&harmonics, ss.str(), 64);
         magnitude[i]->addRedirection(this, new TypeFilter(Event::NewValueEvent));
+        magnitude[i]->setOptions(NoXmlIfDefault);
     }
     baseParam.addRedirection(this, new TypeFilter(Event::NewValueEvent));
     currentBaseFunc.addRedirection(this, new TypeFilter(Event::NewValueEvent));

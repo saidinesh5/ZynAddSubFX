@@ -6,6 +6,7 @@
 
 #include <pthread.h>
 #include "../globals.h"
+#include "../Misc/XMLwrapper.h"
 
 using namespace std;
 
@@ -255,6 +256,19 @@ void Node::lock()
 void Node::unlock()
 {
     pthread_mutex_unlock(&treeMutex);
+}
+
+void Node::saveXml(XMLwrapper *xml)
+{
+    if (hasChildren()) {
+        xml->beginbranch(getId());
+        for(NodeIterator it = m_children.begin();
+                it != m_children.end();
+                it++) {
+            (*it)->saveXml(xml);
+        }
+        xml->endbranch();
+    }
 }
 
 // vim: sw=4 sts=4 et tw=100

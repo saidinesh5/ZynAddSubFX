@@ -24,7 +24,8 @@ template<class T>
 Control<T>::Control(Node *parent, std::string id, T defaultval)
     :GenControl(parent, id), value(defaultval), defaultval(defaultval),
     min(0),
-    max(127)
+    max(127),
+    options(0)
 {}
 
 template<class T>
@@ -99,7 +100,7 @@ char Control<T>::getChar() const
 template<class T>
 void Control<T>::addpar(XMLwrapper *xml, const std::string& name)
 {
-    xml->addpar(name, getchar());
+    xml->addpar(name, getChar());
 }
 
 template<class T>
@@ -108,4 +109,24 @@ void Control<T>::getpar(XMLwrapper *xml, const std::string& name)
     setChar(xml->getpar127(name, getChar()));
 }
 
+template<class T>
+void Control<T>::saveXml(XMLwrapper *xml)
+{
+    if (options & NoXml) return;
+    if (options & NoXmlIfDefault &&
+            value == defaultval) return;
+
+    addpar(xml, getId());
+    Node::saveXml(xml);
+    //xml->addpar(getId(), getChar());
+}
+
+template<class T>
+void Control<T>::setOptions(ControlOptions opt, bool enable)
+{
+    if (enable)
+        options |= opt;
+    else
+        options &= ~opt;
+}
 

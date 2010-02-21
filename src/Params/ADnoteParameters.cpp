@@ -221,7 +221,7 @@ void ADnoteParameters::EnableVoice(int nvoice, ADnoteParameters *par)
     voices.createChild("Voice");
 
     VoicePar[nvoice]->OscilSmp = new OscilGen(fft, Reson,
-                                              param, "OscilSmp");
+                                              param, "OSCIL");
     VoicePar[nvoice]->FMSmp    = new OscilGen(fft, NULL,
                                               param, "FMSmp");
 

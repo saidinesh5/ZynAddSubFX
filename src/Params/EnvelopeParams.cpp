@@ -55,6 +55,9 @@ EnvelopeParams::EnvelopeParams(Node *parent,
         s << std::setfill('0') << std::setw(2) << i;
         envdt[i]  = new DescRanger(&envdtNode, s.str(), 32);
         envval[i] = new DescRanger(&envvalNode, s.str(), 64);
+
+        envdt[i]->setOptions(NoXmlIfDefault);
+        envval[i]->setOptions(NoXmlIfDefault);
     }
 
     envdt[0]->setValue(0); //not used
