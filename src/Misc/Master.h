@@ -97,6 +97,8 @@ class Master:public Node
 
         Trigger panic;
 
+        void vuUpdate(const REALTYPE *outl, const REALTYPE *outr);
+
         /**Audio Output*/
         void AudioOut(REALTYPE *outl, REALTYPE *outr);
         /**Audio Output (for callback mode). This allows the program to be controled by an external program*/
