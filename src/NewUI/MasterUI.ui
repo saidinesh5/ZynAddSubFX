@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>609</width>
-    <height>537</height>
+    <width>620</width>
+    <height>614</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -887,6 +887,16 @@
          </layout>
         </widget>
        </item>
+       <item>
+        <widget class="Keyboard" name="keyboard" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -897,7 +907,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>609</width>
+     <width>620</width>
      <height>23</height>
     </rect>
    </property>
@@ -963,6 +973,12 @@
    <class>Button</class>
    <extends>QPushButton</extends>
    <header>Button.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Keyboard</class>
+   <extends>QWidget</extends>
+   <header>Keyboard.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

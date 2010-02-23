@@ -16,6 +16,7 @@ set(zynaddsubfx_gui_SRCS
     Dial.cpp
     EnvelopeBox.cpp
 	GroupBox.cpp
+    Keyboard.cpp
     LFOBox.cpp
     MasterUI.cpp
     Menu.cpp
