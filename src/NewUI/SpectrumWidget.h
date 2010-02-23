@@ -2,7 +2,8 @@
 #define SPECTRUMWIDGET_H
 
 #include <QWidget>
-#include "ControlHelper.h"
+#include "ArrayControlHelper.h"
+#include "../Controls/ArrayControl.h"
 
 class SpectrumWidget : public QWidget
 {

@@ -1,5 +1,5 @@
 #include "BankLoader.h"
-#include "ControlHelper.cpp"
+#include "ControlHelper.h"
 
 BankLoader::BankLoader(QString partId, QWidget *parent) :
     QWidget(parent)

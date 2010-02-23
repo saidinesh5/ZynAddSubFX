@@ -11,6 +11,7 @@ ControlHelper::ControlHelper(QObject *parent)
     :QObject(parent),
       m_control(NULL)
 {
+    //attach a menu to the parent object if it is a QWidget
     if (QWidget* widget = qobject_cast<QWidget*>(parent)) {
         new Menu(widget, this);
     }
@@ -22,48 +23,19 @@ ControlHelper::~ControlHelper()
         m_control->removeRedirections(this);
 }
 
-ControlHelper::ControlHelper(QCoreApplication *app)
-    :QObject(app)
-{
-    app->installEventFilter(this);
-}
-
-bool ControlHelper::eventFilter(QObject *object, QEvent *event)
-{
-    //remember that this functions is called for _all_ events
-
-    if(event->type() == QEvent::QEvent::DynamicPropertyChange) {
-        QDynamicPropertyChangeEvent *ev =
-            static_cast<QDynamicPropertyChangeEvent *>(event);
-        if((ev->propertyName() == "absoluteControlId")
-           || (ev->propertyName() == "controlId")) {
-            QList<ControlHelper *> controlHelpers =
-                object->findChildren<ControlHelper *>();
-            foreach(ControlHelper * helper, controlHelpers)
-            {
-                helper->updateControlId();
-            }
-        }
-    }
-    return false;
-}
-
 void ControlHelper::handleEvent(Event *event)
 {
-    //will be called from the engine thread, so be careful (threadwise)
+    //will be called from the engine/backend thread, so be careful (threadwise)
     //and efficient about all processing in this function
 
     if(event->type() == Event::NewValueEvent) {
 
+        //sanity check
         if (static_cast<NewValueEvent *>(event)->control != m_control) {
             qDebug() << "ControlHelper: Weird, events from a control we don't know?";
             return;
         }
-        emit valueChanged(getValue());
-
-        if (ArrayControl *arr_control = dynamic_cast<ArrayControl*>(m_control)) {
-            emit arrayUpdated(arr_control);
-        }
+        newValueEvent();
     }
     else
     if(event->type() == Event::RemovalEvent) {
@@ -74,6 +46,25 @@ void ControlHelper::handleEvent(Event *event)
     else
     if(event->type() == Event::OptionsChangedEvent)
         emitOptions();
+}
+
+void ControlHelper::connectedEvent()
+{
+    if (QWidget *widget = qobject_cast<QWidget*>(parent())) {
+        widget->setToolTip(QString::fromStdString(m_control->getId()));
+    }
+
+    emit connected(m_control);
+}
+
+void ControlHelper::disconnectedEvent()
+{
+    emit disconnected();
+}
+
+void ControlHelper::newValueEvent()
+{
+    emit valueChanged(getValue());
 }
 
 void ControlHelper::setControl(QString absoluteId)
@@ -90,20 +81,10 @@ void ControlHelper::setControl(QString absoluteId)
     if(m_control) {
         m_control->addRedirection(this);
 
-        emit connected(m_control);
         emitOptions();
         qDebug() << "Assigning " << this << " to " << absoluteId;
-        emit valueChanged(getValue());
-
-        if (QWidget *widget = qobject_cast<QWidget*>(parent())) {
-            widget->setToolTip(QString::fromStdString(m_control->getId()));
-        }
-
-        ArrayControl *arr_control = dynamic_cast<ArrayControl*>(m_control);
-        if (arr_control) {
-            emit arrayUpdated(arr_control);
-        }
-        //m_control->requestValue();
+        connectedEvent();
+        newValueEvent();
     }
     else
         qDebug() << "Could not find a control named " << absoluteId;
@@ -116,7 +97,7 @@ void ControlHelper::disconnect()
     if(m_control) {
         m_control = NULL;
     }
-    emit disconnected();
+    disconnectedEvent();
 }
 
 void ControlHelper::setValue(int value)
@@ -157,8 +138,10 @@ int ControlHelper::getValue()
 
 void ControlHelper::MIDILearn()
 {
-    if(m_control)
-        bool result = m_control->MIDILearn();
+    if(m_control) {
+        //TODO: handle result
+        m_control->MIDILearn();
+    }
 }
 
 void ControlHelper::trigger()

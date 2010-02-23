@@ -8,7 +8,7 @@
 OscilWidget::OscilWidget(QWidget *parent)
     : QWidget(parent)
 {
-    ControlHelper *helper = new ControlHelper(this);
+    ControlHelper *helper = new ArrayControlHelper(this);
     connect(helper, SIGNAL(arrayUpdated(ArrayControl*)),
             this, SLOT(readArray(ArrayControl*)));
 

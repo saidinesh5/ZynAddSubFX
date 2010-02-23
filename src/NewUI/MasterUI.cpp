@@ -7,6 +7,7 @@
 #include "DebugInterface.h"
 #include <Oscil.h>
 #include "BankLoader.h"
+#include "PropertyWatch.h"
 
 MasterUI::MasterUI(Master *master_, int *exitprogram_)
     :QMainWindow(NULL),
@@ -18,7 +19,7 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     Q_INIT_RESOURCE(main);
 
     //this instance will monitor all dynamic event property changes
-    new ControlHelper(QCoreApplication::instance());
+    new PropertyWatch(this);
 
     qDebug() << "Got new child at " << QString::fromStdString(
         master->parts.createChild(0));

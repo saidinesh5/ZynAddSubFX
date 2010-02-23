@@ -2,7 +2,6 @@
 #define _CONTROLHELPER_H_
 
 #include "../Controls/Control.h"
-#include "../Controls/ArrayControl.h"
 #include "../Controls/ControlUser.h"
 #include <QObject>
 #include <QMutex>
@@ -39,18 +38,6 @@ class ControlHelper:public QObject, public NodeUser
         virtual ~ControlHelper();
 
         /**
-         * A special variant of the controlhelper that monitors all events for property changes in
-         * order to let the controlId property mechanism working
-         */
-        ControlHelper(class QCoreApplication *app);
-
-        /**
-         * @brief The Qt event handler, reimplementedfor watching the parent widget for property
-         * changes that would change the current control etc.
-         */
-        bool eventFilter(QObject *watched, QEvent *event);
-
-        /**
          * @return The absolute id for the control this controlhelper is assigned to
          */
         QString getControlId();
@@ -78,6 +65,12 @@ class ControlHelper:public QObject, public NodeUser
          */
         void debugPrint();
 
+        virtual void connectedEvent();
+
+        virtual void disconnectedEvent();
+
+        virtual void newValueEvent();
+
     public slots:
         /**
         * @brief Change the value of the control
@@ -102,12 +95,6 @@ class ControlHelper:public QObject, public NodeUser
         void trigger();
 
         /**
-         * @brief Recurse up the parent chain and set control according to qt properties. These
-         * properties are controlId and absoluteControlId, used throughout the ui files.
-         * */
-        void updateControlId();
-
-        /**
          * @brief Find the absolute control id for this widget, if there is one
          *
          * @param widget the widget to start recursion from
@@ -121,6 +108,12 @@ class ControlHelper:public QObject, public NodeUser
          * @brief Revert the control to its defaults
          */
         void defaults();
+
+        /**
+         * @brief Recurse up the parent chain and set control according to qt properties. These
+         * properties are controlId and absoluteControlId, used throughout the ui files.
+         * */
+        void updateControlId();
 
     signals:
         /**
@@ -136,8 +129,6 @@ class ControlHelper:public QObject, public NodeUser
          */
         void optionsChanged(QStringList options);
 
-        void arrayUpdated(ArrayControl *control);
-
         /** 
          * @brief The ControlHelper.has been connected to a node in the tree.
          * 
@@ -151,12 +142,14 @@ class ControlHelper:public QObject, public NodeUser
          */
         void disconnected();
 
+    protected:
+        GenControl *m_control;
+
     private:
         void emitOptions();
 
         void disconnect();
 
-        GenControl *m_control;
 };
 
 #endif /* ifndef _CONTROLHELPER_H_ */

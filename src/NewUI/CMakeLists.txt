@@ -4,6 +4,7 @@ set(zynaddsubfx_gui_SRCS
     Addnote/VoiceList.cpp
     Addnote/VoiceWidget.cpp
     Addnote/VoiceParameters.cpp
+    ArrayControlHelper.cpp
     BankUI.cpp
     BankLoader.cpp
     Button.cpp
@@ -20,6 +21,7 @@ set(zynaddsubfx_gui_SRCS
     Menu.cpp
     Oscil.cpp
     OscilWidget.cpp
+    PropertyWatch.cpp
     SiblingBar.cpp
     Slider.cpp
     SpectrumWidget.cpp
