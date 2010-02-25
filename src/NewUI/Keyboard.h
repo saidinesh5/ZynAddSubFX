@@ -16,6 +16,8 @@ class Keyboard : public QWidget
 
     private:
         int toNote(const QPoint& p);
+        void singleNoteOn(int note);
+        void singleNoteOff();
 
         class Master *m_master;
         int m_currentMouseNote;

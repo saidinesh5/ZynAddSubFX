@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>620</width>
-    <height>614</height>
+    <height>684</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -888,6 +888,30 @@
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="pushButton_8">
+           <property name="text">
+            <string>Virtual Keyboard</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_9">
+           <property name="text">
+            <string>PushButton</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="Keyboard" name="keyboard" native="true">
          <property name="minimumSize">
           <size>
@@ -992,12 +1016,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>366</x>
-     <y>413</y>
+     <x>307</x>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
-     <x>366</x>
-     <y>549</y>
+     <x>377</x>
+     <y>444</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_8</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>keyboard</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>177</x>
+     <y>502</y>
     </hint>
    </hints>
   </connection>

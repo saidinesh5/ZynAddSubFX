@@ -99,24 +99,42 @@ void Keyboard::paintEvent(QPaintEvent *event)
     }
 }
 
+void Keyboard::singleNoteOn(int note)
+{
+    if (note == m_currentMouseNote) return;
+
+    Master *master = static_cast<Master*>(Node::getRoot());
+    master->mutexLock(MUTEX_LOCK);
+
+    if (-1 != m_currentMouseNote) {
+        master->noteOff(channel, m_currentMouseNote);
+    }
+
+    master->noteOn(channel, note, 127);
+    m_currentMouseNote = note;
+    master->mutexLock(MUTEX_UNLOCK);
+}
+
+void Keyboard::singleNoteOff()
+{
+    if (-1 == m_currentMouseNote) return;
+
+    Master *master = static_cast<Master*>(Node::getRoot());
+    master->mutexLock(MUTEX_LOCK);
+
+    master->noteOff(channel, m_currentMouseNote);
+
+    master->mutexLock(MUTEX_UNLOCK);
+
+    m_currentMouseNote = -1;
+}
+
 void Keyboard::mousePressEvent(QMouseEvent *event)
 {
     QWidget::mousePressEvent(event);
 
     int note = toNote(event->pos());
-
-    Master *master = static_cast<Master*>(Node::getRoot());
-    qDebug() << "Noteon";
-    master->mutexLock(MUTEX_LOCK);
-
-    if (-1 != m_currentMouseNote) {
-        qDebug() << "Noteoff";
-        master->noteOff(channel, m_currentMouseNote);
-    }
-    master->noteOn(channel, note, 127);
-    m_currentMouseNote = note;
-    master->mutexLock(MUTEX_UNLOCK);
-
+    singleNoteOn(note);
     update();
 }
 
@@ -125,21 +143,7 @@ void Keyboard::mouseMoveEvent(QMouseEvent *event)
     QWidget::mouseMoveEvent(event);
 
     int note = toNote(event->pos());
-
-    if (note == m_currentMouseNote) return;
-
-    Master *master = static_cast<Master*>(Node::getRoot());
-    master->mutexLock(MUTEX_LOCK);
-
-    if (-1 != m_currentMouseNote) {
-        qDebug() << "Noteoff";
-        master->noteOff(channel, m_currentMouseNote);
-    }
-    qDebug() << "Noteon";
-    master->noteOn(channel, note, 127);
-    m_currentMouseNote = note;
-    master->mutexLock(MUTEX_UNLOCK);
-
+    singleNoteOn(note);
     update();
 }
 
@@ -148,14 +152,7 @@ void Keyboard::mouseReleaseEvent(QMouseEvent *event)
 {
     QWidget::mouseReleaseEvent(event);
 
-    if (-1 != m_currentMouseNote) {
-        Master *master = static_cast<Master*>(Node::getRoot());
-        qDebug() << "Noteoff";
-        master->mutexLock(MUTEX_LOCK);
-        master->noteOff(channel, m_currentMouseNote);
-        master->mutexLock(MUTEX_UNLOCK);
-        m_currentMouseNote = -1;
-    }
+    singleNoteOff();
     update();
 }
 
