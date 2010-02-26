@@ -125,6 +125,7 @@ void Dial::paintEvent(class QPaintEvent * /*event */)
         const int span = -v*(360 - spaceAtBottom);
 
         //center circle
+        p.setBrush(palette().button());
         p.drawEllipse(r);
 
         p.translate(r.center());
@@ -143,9 +144,9 @@ void Dial::paintEvent(class QPaintEvent * /*event */)
         smallRect.moveCenter(QPoint(0, 0));
 
         if (m_isConnected)
-            p.setBrush(palette().alternateBase());
+            p.setBrush(palette().light());
         else
-            p.setBrush(palette().dark());
+            p.setBrush(palette().button());
 
         p.drawPie(smallRect, start * 16, span * 16);
         //p.rotate(v);

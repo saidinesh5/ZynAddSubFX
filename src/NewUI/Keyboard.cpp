@@ -66,6 +66,7 @@ void Keyboard::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
+    p.setPen(Qt::black);
 
     const float whiteKeyWidth = float(width()) / (7*octaves);
     const float blackKeyWidth = whiteKeyWidth * blackKeyMult;
