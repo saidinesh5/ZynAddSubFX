@@ -194,6 +194,8 @@ void Master::SetController(unsigned char chan,
  */
 void Master::setController(char chan, int type, int par)
 {
+    forward(new MidiEvent(chan, type, par));
+
     if((type == C_dataentryhi) || (type == C_dataentrylo)
        || (type == C_nrpnhi) || (type == C_nrpnlo)) { //Process RPN and NRPN by the Master (ignore the chan)
         ctl.setparameternumber(type, par);
