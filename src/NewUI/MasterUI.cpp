@@ -8,6 +8,7 @@
 #include <Oscil.h>
 #include "BankLoader.h"
 #include "PropertyWatch.h"
+#include "../Misc/XMLwrapper.h"
 
 MasterUI::MasterUI(Master *master_, int *exitprogram_)
     :QMainWindow(NULL),
@@ -31,9 +32,18 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     setupUi(this);
 
     partBar->setControlsWidget(partFrame);
-    partBar->setNode(Node::get("Master.Parts"));
+    partBar->setNode(Node::get("MASTER.PARTS"));
 
     (new DebugInterface(NULL, master))->show();
+
+    /*
+        //testcode for experimental recursive xml loading
+    XMLwrapper file;
+    master->saveXml(&file);
+    //qDebug() << file.getXMLdata();
+    file.saveXMLfile("/tmp/inst.xml");
+    */
+
 }
 
 void MasterUI::refresh_master_ui()
@@ -51,13 +61,13 @@ void MasterUI::on_editInstrument_clicked()
 
     QString id = partBar->getCurrentChild();
     QWidget *w = new VoiceList(
-        id + ".Instrument.InstrumentKit.ADnoteParameters.Voices");
+        id + ".INSTRUMENT.INSTRUMENT_KIT.ADnoteParameters.Voices");
     w->show();
 
     if(!id.isEmpty())
         (w = new AddnoteUI(id))->show();
 
-    w->setProperty("absoluteControlId", id + ".Instrument.InstrumentKit.ADnoteParameters");
+    w->setProperty("absoluteControlId", id + ".INSTRUMENT.INSTRUMENT_KIT.ADnoteParameters");
 }
 
 void MasterUI::on_buttonControllers_clicked()

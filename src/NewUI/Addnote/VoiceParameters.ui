@@ -55,7 +55,7 @@
     </sizepolicy>
    </property>
    <property name="controlId" stdset="0">
-    <string>Volume</string>
+    <string>volume</string>
    </property>
   </widget>
  </widget>

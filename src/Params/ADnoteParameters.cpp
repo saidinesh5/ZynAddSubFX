@@ -54,27 +54,27 @@ class VoiceVolumeConv:public InjFunction<char, REALTYPE>
 
 ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id, ADnoteParameters *par)
     :Node(parent, id),
-      Enabled              (this, "Enabled", false),
-      type                 (this, "Type", 0),
-      delay                (this, "Delay",0),
+      Enabled              (this, "enabled", false),
+      type                 (this, "type", 0),
+      delay                (this, "delay",0),
       resonance            (this, "Resonance",1),
-      extoscil             (this, "ExtOscil",-1),
-      extFMoscil           (this, "ExtFMOscil",-1),
-      oscilphase           (this, "OscilPhase",64),
+      extoscil             (this, "ext_oscil",-1),
+      extFMoscil           (this, "ext_fm_oscil",-1),
+      oscilphase           (this, "oscil_phase",64),
       FMoscilphase         (this, "FMOscilPhase",64),
-      filterBypass         (this, "FilterBypass",0),
-      fixedFreq            (this, "FixedFreq",0),
-      fixedFreqET          (this, "FixedFreqET", 0),
+      filterBypass         (this, "filter_bypass",0),
+      fixedFreq            (this, "fixed_freq",0),
+      fixedFreqET          (this, "fixed_freq_et", 0),
       detuneSet            (this, "", 0, &par->globalDetuneSet),
       FMDetuneSet          (this, "FM", 0, &par->globalDetuneSet),
-      freqEnvelopeEnabled  (this, "FreqEnvelopeEnabled", 0),
-      freqLfoEnabled       (this, "FreqLfoEnabled", 0),
-      volume               (this, "Volume", 0.23, new VoiceVolumeConv)
+      freqEnvelopeEnabled  (this, "freq_envelope_enabled", 0),
+      freqLfoEnabled       (this, "freq_lfo_enabled", 0),
+      volume               (this, "volume", 0.23, new VoiceVolumeConv)
 {}
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
     :PresetsArray(parent, "ADnoteParameters"),
-      volume               (this, "Volume", 10, new VolumeConv),
+      volume               (this, "volume", 10, new VolumeConv),
       //note: the original conversion functon is found in ADnote.cpp:337
       globalDetuneSet      (this, "", 1),
       voices               (this, "Voices")
@@ -84,16 +84,16 @@ ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
 
     voices.addType("Voice");
 
-    FreqEnvelope = new EnvelopeParams(this, "FreqEnvelope", 0, 0);
+    FreqEnvelope = new EnvelopeParams(this, "FREQUENCY_ENVELOPE", 0, 0);
     FreqEnvelope->ASRinit(64, 50, 64, 60);
     FreqLfo      = new LFOParams(this, "FREQUENCY_LFO", 70, 0, 64, 0, 0, 0, 0, 0);
 
-    AmpEnvelope  = new EnvelopeParams(this, "AmpEnvelope", 64, 1);
+    AmpEnvelope  = new EnvelopeParams(this, "AMPLITUDE_ENVELOPE", 64, 1);
     AmpEnvelope->ADSRinit_dB(0, 40, 127, 25);
     AmpLfo = new LFOParams(this, "AMPLITUDE_LFO", 80, 0, 64, 0, 0, 0, 0, 1);
 
     GlobalFilter   = new FilterParams(this, 2, 94, 40);
-    FilterEnvelope = new EnvelopeParams(this, "FilterEnvelope", 0, 1);
+    FilterEnvelope = new EnvelopeParams(this, "FILTER_ENVELOPE", 0, 1);
     FilterEnvelope->ADSRinit_filter(64, 40, 64, 70, 60, 64);
     FilterLfo      = new LFOParams(this, "FILTER_LFO", 80, 0, 64, 0, 0, 0, 0, 2);
     Reson = new Resonance();
@@ -221,20 +221,20 @@ void ADnoteParameters::EnableVoice(int nvoice, ADnoteParameters *par)
     voices.createChild("Voice");
 
     VoicePar[nvoice]->OscilSmp = new OscilGen(fft, Reson,
-                                              param, "OscilSmp");
+                                              param, "OSCIL");
     VoicePar[nvoice]->FMSmp    = new OscilGen(fft, NULL,
                                               param, "FMSmp");
 
-    VoicePar[nvoice]->AmpEnvelope    = new EnvelopeParams(param, "AmpEnvelope", 64, 1);
+    VoicePar[nvoice]->AmpEnvelope    = new EnvelopeParams(param, "AMPLITUDE_ENVELOPE", 64, 1);
     VoicePar[nvoice]->AmpEnvelope->ADSRinit_dB(0, 100, 127, 100);
     VoicePar[nvoice]->AmpLfo         = new LFOParams(param, "AMPLITUDE_LFO", 90, 32, 64, 0, 0, 30, 0, 1);
 
-    VoicePar[nvoice]->FreqEnvelope   = new EnvelopeParams(param, "FreqEnvelope", 0, 0);
+    VoicePar[nvoice]->FreqEnvelope   = new EnvelopeParams(param, "FREQUENCY_ENVELOPE", 0, 0);
     VoicePar[nvoice]->FreqEnvelope->ASRinit(30, 40, 64, 60);
     VoicePar[nvoice]->FreqLfo        = new LFOParams(param, "FREQUENCY_LFO", 50, 40, 0, 0, 0, 0, 0, 0);
 
     VoicePar[nvoice]->VoiceFilter    = new FilterParams(param, 2, 50, 60);
-    VoicePar[nvoice]->FilterEnvelope = new EnvelopeParams(param, "FilterEnvelope", 0, 0);
+    VoicePar[nvoice]->FilterEnvelope = new EnvelopeParams(param, "FILTER_ENVELOPE", 0, 0);
     VoicePar[nvoice]->FilterEnvelope->ADSRinit_filter(90, 70, 40, 70, 10, 40);
     VoicePar[nvoice]->FilterLfo      = new LFOParams(param, "FILTER_LFO", 50, 20, 64, 0, 0, 0, 0, 2);
 

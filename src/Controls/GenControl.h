@@ -42,6 +42,9 @@ class GenControl:public Node
 
         virtual int numOptions() const {return 0;}
         virtual std::string getOption(int /*i*/) const {return "";}
+
+        virtual void addpar(class XMLwrapper *, const std::string&) {};
+        virtual void getpar(class XMLwrapper *, const std::string&) {};
     protected:
         GenControl(Node *parent, std::string id);
         virtual ~GenControl();

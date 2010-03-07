@@ -38,10 +38,16 @@
  *
  */
 
+enum ControlOptions {
+    NoXml = 1,
+    NoXmlIfDefault = 2
+};
+
 template<class T>
 class Control:public GenControl
 {
     public:
+
         Control(Node *parent, std::string id, T defaultval);
         virtual ~Control();
 
@@ -66,12 +72,17 @@ class Control:public GenControl
         T getMin() const { return min; }
         T getMax() const { return max; }
 
+        void setOptions(ControlOptions opt, bool enable = true);
+
+        virtual void saveXml(class XMLwrapper *xml);
+
         virtual void addpar(class XMLwrapper *xml, const std::string& name);
         virtual void getpar(class XMLwrapper *xml, const std::string& name);
 
     protected:
         T value, min, max;
         T defaultval;
+        int options;
 };
 
 #include "Control.cpp"

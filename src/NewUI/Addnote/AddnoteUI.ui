@@ -78,7 +78,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Frequency</string>
+      <string>freq</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <property name="margin">
@@ -113,7 +113,7 @@
          <item>
           <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>Detune type</string>
+            <string>detune type</string>
            </property>
           </widget>
          </item>

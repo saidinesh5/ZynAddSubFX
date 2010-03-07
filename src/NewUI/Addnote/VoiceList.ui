@@ -46,7 +46,7 @@
          <string>Enabled</string>
         </property>
         <property name="controlId" stdset="0">
-         <string>Enabled</string>
+         <string>enabled</string>
         </property>
        </widget>
       </item>
@@ -501,7 +501,7 @@
                <string>Amplitude Envelope</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>AmpEnvelope</string>
+               <string>AMPLITUDE_ENVELOPE</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_4">
                <property name="margin">
@@ -519,7 +519,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>AttackDt</string>
+                  <string>A_dt</string>
                  </property>
                 </widget>
                </item>
@@ -532,7 +532,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>DecayDt</string>
+                  <string>D_dt</string>
                  </property>
                 </widget>
                </item>
@@ -545,7 +545,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Sustain</string>
+                  <string>S_val</string>
                  </property>
                 </widget>
                </item>
@@ -558,7 +558,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>ReleaseDt</string>
+                  <string>R_dt</string>
                  </property>
                 </widget>
                </item>
@@ -571,7 +571,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>EnvStretch</string>
+                  <string>env_stretch</string>
                  </property>
                 </widget>
                </item>
@@ -647,7 +647,7 @@
                      <string>Lin</string>
                     </property>
                     <property name="controlId" stdset="0">
-                     <string>LinearEnvelope</string>
+                     <string>linear_envelope</string>
                     </property>
                    </widget>
                   </item>
@@ -657,7 +657,7 @@
                      <string>frcR</string>
                     </property>
                     <property name="controlId" stdset="0">
-                     <string>ForcedRelease</string>
+                     <string>forced_release</string>
                     </property>
                    </widget>
                   </item>
@@ -1226,7 +1226,7 @@
             <string>Filter</string>
            </property>
            <property name="controlId" stdset="0">
-            <string>FilterParams</string>
+            <string>FILTER_PARAMETERS</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <property name="spacing">
@@ -1656,7 +1656,7 @@
                <string>Filter Parameters</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>FilterParams</string>
+               <string>FILTER_PARAMETERS</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_13">
                <property name="margin">
@@ -1705,7 +1705,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Frequency</string>
+                  <string>freq</string>
                  </property>
                 </widget>
                </item>
@@ -1727,7 +1727,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Frequency</string>
+                  <string>freq</string>
                  </property>
                 </widget>
                </item>
@@ -1749,7 +1749,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Frequency</string>
+                  <string>freq</string>
                  </property>
                 </widget>
                </item>
@@ -1771,7 +1771,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Frequency</string>
+                  <string>freq</string>
                  </property>
                 </widget>
                </item>
@@ -1793,7 +1793,7 @@
                   <bool>true</bool>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Frequency</string>
+                  <string>freq</string>
                  </property>
                 </widget>
                </item>
@@ -1888,7 +1888,7 @@
                   <item>
                    <widget class="ComboBox" name="comboBox_5">
                     <property name="controlId" stdset="0">
-                     <string>Type</string>
+                     <string>type</string>
                     </property>
                    </widget>
                   </item>
@@ -1908,7 +1908,7 @@
                   <item>
                    <widget class="ComboBox" name="comboBox_6">
                     <property name="controlId" stdset="0">
-                     <string>Category</string>
+                     <string>category</string>
                     </property>
                    </widget>
                   </item>
@@ -2378,7 +2378,7 @@
                <string>Filter Envelope</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>FilterEnvelope</string>
+               <string>FILTER_ENVELOPE</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_5">
                <property name="margin">
@@ -2479,7 +2479,7 @@
                      <string>frcR</string>
                     </property>
                     <property name="controlId" stdset="0">
-                     <string>ForcedRelease</string>
+                     <string>forced_release</string>
                     </property>
                    </widget>
                   </item>
@@ -2495,7 +2495,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Attack</string>
+                  <string>A_val</string>
                  </property>
                 </widget>
                </item>
@@ -2508,7 +2508,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>AttackDt</string>
+                  <string>A_dt</string>
                  </property>
                 </widget>
                </item>
@@ -2521,7 +2521,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>DecayDt</string>
+                  <string>D_dt</string>
                  </property>
                 </widget>
                </item>
@@ -2534,7 +2534,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Decay</string>
+                  <string>D_val</string>
                  </property>
                 </widget>
                </item>
@@ -2547,7 +2547,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>ReleaseDt</string>
+                  <string>R_dt</string>
                  </property>
                 </widget>
                </item>
@@ -2560,7 +2560,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Release</string>
+                  <string>R_val</string>
                  </property>
                 </widget>
                </item>
@@ -2573,7 +2573,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>EnvStretch</string>
+                  <string>env_stretch</string>
                  </property>
                 </widget>
                </item>
@@ -3324,7 +3324,7 @@
                   <enum>Qt::Horizontal</enum>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Detune</string>
+                  <string>detune</string>
                  </property>
                 </widget>
                </item>
@@ -3334,7 +3334,7 @@
                   <string>Coarse </string>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>CoarseDetune</string>
+                  <string>coarse_detune</string>
                  </property>
                 </widget>
                </item>
@@ -3344,7 +3344,7 @@
                   <string>Octave </string>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>OctaveDetune</string>
+                  <string>octave_detune</string>
                  </property>
                 </widget>
                </item>
@@ -4315,7 +4315,7 @@
                <string>Frequency Envelope</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>FreqEnvelope</string>
+               <string>FREQUENCY_ENVELOPE</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_6">
                <property name="margin">
@@ -4333,7 +4333,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Attack</string>
+                  <string>A_val</string>
                  </property>
                 </widget>
                </item>
@@ -4346,7 +4346,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>AttackDt</string>
+                  <string>A_dt</string>
                  </property>
                 </widget>
                </item>
@@ -4359,7 +4359,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>ReleaseDt</string>
+                  <string>R_dt</string>
                  </property>
                 </widget>
                </item>
@@ -4372,7 +4372,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>EnvStretch</string>
+                  <string>env_stretch</string>
                  </property>
                 </widget>
                </item>
@@ -4448,7 +4448,7 @@
                      <string>frcR</string>
                     </property>
                     <property name="controlId" stdset="0">
-                     <string>ForcedRelease</string>
+                     <string>forced_release</string>
                     </property>
                    </widget>
                   </item>
@@ -4464,7 +4464,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Release</string>
+                  <string>R_val</string>
                  </property>
                 </widget>
                </item>
@@ -4920,8 +4920,8 @@
                <string>Amplitude Envelope</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>AmpEnvelope</string>
-              </property>
+				  <string>AMPLITUDE_ENVELOPE</string>
+			  </property>
               <layout class="QGridLayout" name="gridLayout_10">
                <property name="margin">
                 <number>0</number>
@@ -4938,7 +4938,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>AttackDt</string>
+                  <string>A_dt</string>
                  </property>
                 </widget>
                </item>
@@ -4951,7 +4951,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>DecayDt</string>
+                  <string>D_dt</string>
                  </property>
                 </widget>
                </item>
@@ -4964,7 +4964,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Sustain</string>
+                  <string>S_val</string>
                  </property>
                 </widget>
                </item>
@@ -4977,7 +4977,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>ReleaseDt</string>
+                  <string>R_dt</string>
                  </property>
                 </widget>
                </item>
@@ -4990,7 +4990,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>EnvStretch</string>
+                  <string>env_stretch</string>
                  </property>
                 </widget>
                </item>
@@ -5066,7 +5066,7 @@
                      <string>Lin</string>
                     </property>
                     <property name="controlId" stdset="0">
-                     <string>LinearEnvelope</string>
+                     <string>linear_envelope</string>
                     </property>
                    </widget>
                   </item>
@@ -5076,7 +5076,7 @@
                      <string>frcR</string>
                     </property>
                     <property name="controlId" stdset="0">
-                     <string>ForcedRelease</string>
+                     <string>forced_release</string>
                     </property>
                    </widget>
                   </item>
@@ -5520,7 +5520,7 @@
                <string>Frequency Envelope</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>FreqEnvelope</string>
+               <string>FREQUENCY_ENVELOPE</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_12">
                <property name="margin">
@@ -5538,7 +5538,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Attack</string>
+                  <string>A_val</string>
                  </property>
                 </widget>
                </item>
@@ -5551,7 +5551,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>AttackDt</string>
+                  <string>A_dt</string>
                  </property>
                 </widget>
                </item>
@@ -5564,7 +5564,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>ReleaseDt</string>
+                  <string>R_dt</string>
                  </property>
                 </widget>
                </item>
@@ -5577,7 +5577,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>EnvStretch</string>
+                  <string>env_stretch</string>
                  </property>
                 </widget>
                </item>
@@ -5653,7 +5653,7 @@
                      <string>frcR</string>
                     </property>
                     <property name="controlId" stdset="0">
-                     <string>ForcedRelease</string>
+                     <string>forced_release</string>
                     </property>
                    </widget>
                   </item>
@@ -5669,7 +5669,7 @@
                   </sizepolicy>
                  </property>
                  <property name="controlId" stdset="0">
-                  <string>Release</string>
+                  <string>R_val</string>
                  </property>
                 </widget>
                </item>
