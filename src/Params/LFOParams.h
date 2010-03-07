@@ -28,6 +28,7 @@
 #include "../Controls/Toggle.h"
 #include "../Controls/Ranger.h"
 #include "../Controls/DescRanger.h"
+#include "../Controls/Selector.h"
 
 class LFOParams:public Presets
 {
@@ -53,7 +54,7 @@ class LFOParams:public Presets
         Ranger     freq; /**<frequency*/
         DescRanger intensity; /**<intensity*/
         DescRanger startphase; /**<start phase (0=random)*/
-        DescRanger LFOtype; /**<LFO type (sin,triangle,square,ramp,...)*/
+        Selector LFOtype; /**<LFO type (sin,triangle,square,ramp,...)*/
         DescRanger randomness; /**<randomness (0=off)*/
         DescRanger freqrand; /**<frequency randomness (0=off)*/
         DescRanger delay; /**<delay (0=off)*/

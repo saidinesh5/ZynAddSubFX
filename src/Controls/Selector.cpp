@@ -68,3 +68,13 @@ void Selector::clearOptions()
     pthread_mutex_unlock(&localMute);
 
 }
+
+void Selector::addpar(XMLwrapper *xml, const std::string& name)
+{
+    xml->addpar(name, getValue());
+}
+
+void Selector::getpar(XMLwrapper *xml, const std::string& name)
+{
+    setValue(xml->getpar127(name, getValue()));
+}

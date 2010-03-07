@@ -52,6 +52,15 @@ LFOParams::LFOParams(Node *parent,
     continous  (this, "continous", Pcontinous_),
     stretch    (this, "stretch", 64)
 {
+
+    LFOtype.addOption("Sine"); //0
+    LFOtype.addOption("Triangle"); //1
+    LFOtype.addOption("Square"); //2
+    LFOtype.addOption("Ramp up"); //3
+    LFOtype.addOption("Ramp down"); //4
+    LFOtype.addOption("Exp down 1"); //5
+    LFOtype.addOption("Exp down 2"); //6
+
     switch(fel_) {
     case 0:
         setpresettype("Plfofrequency");

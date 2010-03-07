@@ -49,6 +49,9 @@ class Selector:public Control<int>
             setValue(v);
         }
 
+        virtual void addpar(class XMLwrapper *xml, const std::string& name);
+        virtual void getpar(class XMLwrapper *xml, const std::string& name);
+
     private:
         StringVector options;
 };
