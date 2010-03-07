@@ -25,11 +25,16 @@
 
 #include "../Misc/XMLwrapper.h"
 #include "Presets.h"
+#include "../Controls/Toggle.h"
+#include "../Controls/Ranger.h"
+#include "../Controls/DescRanger.h"
 
 class LFOParams:public Presets
 {
     public:
-        LFOParams(char Pfreq_,
+        LFOParams(Node *parent,
+                  std::string id,
+                  char Pfreq_,
                   char Pintensity_,
                   char Pstartphase_,
                   char PLFOtype_,
@@ -37,7 +42,7 @@ class LFOParams:public Presets
                   char Pdelay_,
                   char Pcontinous,
                   char fel_);
-        ~LFOParams();
+        virtual ~LFOParams();
 
         void add2XML(XMLwrapper *xml);
         void defaults();
@@ -45,27 +50,18 @@ class LFOParams:public Presets
         void getfromXML(XMLwrapper *xml);
 
         /*  MIDI Parameters*/
-        REALTYPE      Pfreq; /**<frequency*/
-        unsigned char Pintensity; /**<intensity*/
-        unsigned char Pstartphase; /**<start phase (0=random)*/
-        unsigned char PLFOtype; /**<LFO type (sin,triangle,square,ramp,...)*/
-        unsigned char Prandomness; /**<randomness (0=off)*/
-        unsigned char Pfreqrand; /**<frequency randomness (0=off)*/
-        unsigned char Pdelay; /**<delay (0=off)*/
-        unsigned char Pcontinous; /**<1 if LFO is continous*/
-        unsigned char Pstretch; /**<how the LFO is "stretched" according the note frequency (64=no stretch)*/
+        Ranger     freq; /**<frequency*/
+        DescRanger intensity; /**<intensity*/
+        DescRanger startphase; /**<start phase (0=random)*/
+        DescRanger LFOtype; /**<LFO type (sin,triangle,square,ramp,...)*/
+        DescRanger randomness; /**<randomness (0=off)*/
+        DescRanger freqrand; /**<frequency randomness (0=off)*/
+        DescRanger delay; /**<delay (0=off)*/
+        Toggle continous; /**<1 if LFO is continous*/
+        DescRanger stretch; /**<how the LFO is "stretched" according the note frequency (64=no stretch)*/
 
         int fel; //what kind is the LFO (0 - frequency, 1 - amplitude, 2 - filter)
         static int time; //is used by Pcontinous parameter
-    private:
-        /* Default parameters */
-        unsigned char Dfreq;
-        unsigned char Dintensity;
-        unsigned char Dstartphase;
-        unsigned char DLFOtype;
-        unsigned char Drandomness;
-        unsigned char Ddelay;
-        unsigned char Dcontinous;
 };
 
 #endif

@@ -29,24 +29,24 @@
 
 LFO::LFO(LFOParams *lfopars, REALTYPE basefreq)
 {
-    if(lfopars->Pstretch == 0)
-        lfopars->Pstretch = 1;
+    if(lfopars->stretch() == 0)
+        lfopars->stretch.setValue(1);
     REALTYPE lfostretch = pow(basefreq / 440.0,
-                              (lfopars->Pstretch - 64.0) / 63.0);         //max 2x/octave
+                              (lfopars->stretch() - 64.0) / 63.0);         //max 2x/octave
 
     REALTYPE lfofreq    =
-        (pow(2, lfopars->Pfreq * 10.0) - 1.0) / 12.0 * lfostretch;
+        (pow(2, lfopars->freq() * 10.0) - 1.0) / 12.0 * lfostretch;
     incx = fabs(lfofreq) * (REALTYPE)SOUND_BUFFER_SIZE / (REALTYPE)SAMPLE_RATE;
 
-    if(lfopars->Pcontinous == 0) {
-        if(lfopars->Pstartphase == 0)
+    if(lfopars->continous() == 0) {
+        if(lfopars->startphase() == 0)
             x = RND;
         else
-            x = fmod((lfopars->Pstartphase - 64.0) / 127.0 + 1.0, 1.0);
+            x = fmod((lfopars->startphase() - 64.0) / 127.0 + 1.0, 1.0);
     }
     else {
         REALTYPE tmp = fmod(lfopars->time * incx, 1.0);
-        x = fmod((lfopars->Pstartphase - 64.0) / 127.0 + 1.0 + tmp, 1.0);
+        x = fmod((lfopars->startphase() - 64.0) / 127.0 + 1.0 + tmp, 1.0);
     }
 
     //Limit the Frequency(or else...)
@@ -54,7 +54,7 @@ LFO::LFO(LFOParams *lfopars, REALTYPE basefreq)
         incx = 0.499999999;
 
 
-    lfornd = lfopars->Prandomness / 127.0;
+    lfornd = lfopars->randomness() / 127.0;
     if(lfornd < 0.0)
         lfornd = 0.0;
     else
@@ -62,27 +62,27 @@ LFO::LFO(LFOParams *lfopars, REALTYPE basefreq)
         lfornd = 1.0;
 
 //    lfofreqrnd=pow(lfopars->Pfreqrand/127.0,2.0)*2.0*4.0;
-    lfofreqrnd = pow(lfopars->Pfreqrand / 127.0, 2.0) * 4.0;
+    lfofreqrnd = pow(lfopars->freqrand() / 127.0, 2.0) * 4.0;
 
     switch(lfopars->fel) {
     case 1:
-        lfointensity = lfopars->Pintensity / 127.0;
+        lfointensity = lfopars->intensity() / 127.0;
         break;
     case 2:
-        lfointensity = lfopars->Pintensity / 127.0 * 4.0;
+        lfointensity = lfopars->intensity() / 127.0 * 4.0;
         break; //in octave
     default:
-        lfointensity = pow(2, lfopars->Pintensity / 127.0 * 11.0) - 1.0; //in centi
+        lfointensity = pow(2, lfopars->intensity() / 127.0 * 11.0) - 1.0; //in centi
         x -= 0.25; //chance the starting phase
         break;
     }
 
     amp1     = (1 - lfornd) + lfornd * RND;
     amp2     = (1 - lfornd) + lfornd * RND;
-    lfotype  = lfopars->PLFOtype;
-    lfodelay = lfopars->Pdelay / 127.0 * 4.0; //0..4 sec
+    lfotype  = lfopars->LFOtype();
+    lfodelay = lfopars->delay() / 127.0 * 4.0; //0..4 sec
     incrnd   = nextincrnd = 1.0;
-    freqrndenabled = (lfopars->Pfreqrand != 0);
+    freqrndenabled = (lfopars->freqrand() != 0);
     computenextincrnd();
     computenextincrnd(); //twice because I want incrnd & nextincrnd to be random
 }

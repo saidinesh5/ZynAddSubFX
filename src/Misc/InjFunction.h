@@ -24,6 +24,33 @@
 
 #include "../globals.h"
 
+
+/*
+ * The two macros REALINJFUNC and REALINJFUNCFUNC are convenience macros for making injfunction
+ * classes to be used locally in the code. REALINJFUNC will define a class that does the REAL/char
+ * conversion, and REALINJFUNCFUNC will in addition define two functions that can be used for
+ * performing the conversion without making an instance of the injfunction class. This is useful for
+ * example when you need to perform such a conversion during the initialization of the controls in
+ * the class constructor.
+ *
+ * Here's an example, taken from FilterParams.cpp:
+ *
+ * REALINJFUNCFUNC(FreqInj,
+ *              freq2char, freq2real,
+ *              ((x / 5.0) + 1.0) * 64.0,
+ *              (x / 64.0 - 1.0) * 5.0
+ *             );
+*
+* Here FreqInj is the name of the class, freq2char is the function that will do REAL->char
+* conversion, freq2real is the vice versa. The next two inputs are the actual conversions that will
+* be done, with the parameter 'x' as the input.
+*
+* NOTE: These two conversions should be the inverse of each other! ie, if you convert a char to a
+* real and back, you should have the same number.
+*
+* TIP: use the round function for mathematical rounding
+*/
+
 #define REALINJFUNC(NAME, TOCHAR, TOREAL) \
     class NAME:public InjFunction < char, REALTYPE > { \
         public: inline char operator()(const REALTYPE &x) const \

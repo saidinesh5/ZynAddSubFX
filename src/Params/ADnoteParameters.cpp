@@ -86,16 +86,16 @@ ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
 
     FreqEnvelope = new EnvelopeParams(this, "FreqEnvelope", 0, 0);
     FreqEnvelope->ASRinit(64, 50, 64, 60);
-    FreqLfo      = new LFOParams(70, 0, 64, 0, 0, 0, 0, 0);
+    FreqLfo      = new LFOParams(this, "FREQUENCY_LFO", 70, 0, 64, 0, 0, 0, 0, 0);
 
     AmpEnvelope  = new EnvelopeParams(this, "AmpEnvelope", 64, 1);
     AmpEnvelope->ADSRinit_dB(0, 40, 127, 25);
-    AmpLfo = new LFOParams(80, 0, 64, 0, 0, 0, 0, 1);
+    AmpLfo = new LFOParams(this, "AMPLITUDE_LFO", 80, 0, 64, 0, 0, 0, 0, 1);
 
     GlobalFilter   = new FilterParams(this, 2, 94, 40);
     FilterEnvelope = new EnvelopeParams(this, "FilterEnvelope", 0, 1);
     FilterEnvelope->ADSRinit_filter(64, 40, 64, 70, 60, 64);
-    FilterLfo      = new LFOParams(80, 0, 64, 0, 0, 0, 0, 2);
+    FilterLfo      = new LFOParams(this, "FILTER_LFO", 80, 0, 64, 0, 0, 0, 0, 2);
     Reson = new Resonance();
 
     for(int nvoice = 0; nvoice < NUM_VOICES; nvoice++)
@@ -227,16 +227,16 @@ void ADnoteParameters::EnableVoice(int nvoice, ADnoteParameters *par)
 
     VoicePar[nvoice]->AmpEnvelope    = new EnvelopeParams(param, "AmpEnvelope", 64, 1);
     VoicePar[nvoice]->AmpEnvelope->ADSRinit_dB(0, 100, 127, 100);
-    VoicePar[nvoice]->AmpLfo         = new LFOParams(90, 32, 64, 0, 0, 30, 0, 1);
+    VoicePar[nvoice]->AmpLfo         = new LFOParams(param, "AMPLITUDE_LFO", 90, 32, 64, 0, 0, 30, 0, 1);
 
     VoicePar[nvoice]->FreqEnvelope   = new EnvelopeParams(param, "FreqEnvelope", 0, 0);
     VoicePar[nvoice]->FreqEnvelope->ASRinit(30, 40, 64, 60);
-    VoicePar[nvoice]->FreqLfo        = new LFOParams(50, 40, 0, 0, 0, 0, 0, 0);
+    VoicePar[nvoice]->FreqLfo        = new LFOParams(param, "FREQUENCY_LFO", 50, 40, 0, 0, 0, 0, 0, 0);
 
     VoicePar[nvoice]->VoiceFilter    = new FilterParams(param, 2, 50, 60);
     VoicePar[nvoice]->FilterEnvelope = new EnvelopeParams(param, "FilterEnvelope", 0, 0);
     VoicePar[nvoice]->FilterEnvelope->ADSRinit_filter(90, 70, 40, 70, 10, 40);
-    VoicePar[nvoice]->FilterLfo      = new LFOParams(50, 20, 64, 0, 0, 0, 0, 2);
+    VoicePar[nvoice]->FilterLfo      = new LFOParams(param, "FILTER_LFO", 50, 20, 64, 0, 0, 0, 0, 2);
 
     VoicePar[nvoice]->FMFreqEnvelope = new EnvelopeParams(param, "FMFreqEnvelope", 0, 0);
     VoicePar[nvoice]->FMFreqEnvelope->ASRinit(20, 90, 40, 80);

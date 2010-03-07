@@ -27,7 +27,13 @@
 
 int LFOParams::time;
 
-LFOParams::LFOParams(char Pfreq_,
+REALINJFUNCFUNC(LFOFreqInj,
+               lfofreq2char, lfofreq2real,
+               x * 127.0, x / 127.0);
+
+LFOParams::LFOParams(Node *parent,
+                     std::string id,
+                     char Pfreq_,
                      char Pintensity_,
                      char Pstartphase_,
                      char PLFOtype_,
@@ -35,7 +41,16 @@ LFOParams::LFOParams(char Pfreq_,
                      char Pdelay_,
                      char Pcontinous_,
                      char fel_):
-    Presets(NULL, "LFOParams: FIXME")
+    Presets    (parent, id),
+    freq       (this, "freq", lfofreq2real(Pfreq_), new LFOFreqInj),
+    intensity  (this, "intensity", Pintensity_),
+    startphase (this, "start_phase", Pstartphase_),
+    LFOtype    (this, "lfo_type", PLFOtype_),
+    randomness (this, "randomness_amplitude", Prandomness_),
+    freqrand   (this, "randomness_frequency", 0),
+    delay      (this, "delay", Pdelay_),
+    continous  (this, "continous", Pcontinous_),
+    stretch    (this, "stretch", 64)
 {
     switch(fel_) {
     case 0:
@@ -48,13 +63,6 @@ LFOParams::LFOParams(char Pfreq_,
         setpresettype("Plfofilter");
         break;
     }
-    Dfreq = Pfreq_;
-    Dintensity  = Pintensity_;
-    Dstartphase = Pstartphase_;
-    DLFOtype    = PLFOtype_;
-    Drandomness = Prandomness_;
-    Ddelay      = Pdelay_;
-    Dcontinous  = Pcontinous_;
     fel  = fel_;
     time = 0;
 
@@ -66,41 +74,48 @@ LFOParams::~LFOParams()
 
 void LFOParams::defaults()
 {
-    Pfreq = Dfreq / 127.0;
-    Pintensity  = Dintensity;
-    Pstartphase = Dstartphase;
-    PLFOtype    = DLFOtype;
-    Prandomness = Drandomness;
-    Pdelay      = Ddelay;
-    Pcontinous  = Dcontinous;
-    Pfreqrand   = 0;
-    Pstretch    = 64;
+    freq.defaults();
+    intensity.defaults();
+    startphase.defaults();
+    LFOtype.defaults();
+    randomness.defaults();
+    delay.defaults();
+    continous.defaults();
+    freqrand.defaults();
+    stretch.defaults();
 }
 
 
 void LFOParams::add2XML(XMLwrapper *xml)
 {
-    xml->addparreal("freq", Pfreq);
-    xml->addpar("intensity", Pintensity);
-    xml->addpar("start_phase", Pstartphase);
-    xml->addpar("lfo_type", PLFOtype);
-    xml->addpar("randomness_amplitude", Prandomness);
-    xml->addpar("randomness_frequency", Pfreqrand);
-    xml->addpar("delay", Pdelay);
-    xml->addpar("stretch", Pstretch);
-    xml->addparbool("continous", Pcontinous);
+    xml->addparreal("freq", freq());
+    //see TODO in getFromXML below
+    //ADDPAR(freq       , "freq");
+
+    ADDPAR(intensity  , "intensity");
+    ADDPAR(startphase , "start_phase");
+    ADDPAR(LFOtype    , "lfo_type");
+    ADDPAR(randomness , "randomness_amplitude");
+    ADDPAR(freqrand   , "randomness_amplitude");
+    ADDPAR(delay      , "delay");
+    ADDPAR(continous  , "continous");
+    ADDPAR(stretch    , "stretch");
 }
 
 void LFOParams::getfromXML(XMLwrapper *xml)
 {
-    Pfreq = xml->getparreal("freq", Pfreq, 0.0, 1.0);
-    Pintensity  = xml->getpar127("intensity", Pintensity);
-    Pstartphase = xml->getpar127("start_phase", Pstartphase);
-    PLFOtype    = xml->getpar127("lfo_type", PLFOtype);
-    Prandomness = xml->getpar127("randomness_amplitude", Prandomness);
-    Pfreqrand   = xml->getpar127("randomness_frequency", Pfreqrand);
-    Pdelay      = xml->getpar127("delay", Pdelay);
-    Pstretch    = xml->getpar127("stretch", Pstretch);
-    Pcontinous  = xml->getparbool("continous", Pcontinous);
+    freq.setValue(xml->getparreal("freq", freq(), 0.0, 1.0));
+    //TODO: let the freq have an option that makes it write itself as a real and not a char, and
+    //then uses the following form
+    //GETPAR(freq       , "freq");
+
+    GETPAR(intensity  , "intensity");
+    GETPAR(startphase , "start_phase");
+    GETPAR(LFOtype    , "lfo_type");
+    GETPAR(randomness , "randomness_amplitude");
+    GETPAR(freqrand   , "randomness_amplitude");
+    GETPAR(delay      , "delay");
+    GETPAR(continous  , "continous");
+    GETPAR(stretch    , "stretch");
 }
 
