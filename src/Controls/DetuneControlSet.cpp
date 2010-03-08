@@ -3,10 +3,10 @@
 #include "../Misc/XMLwrapper.h"
 
 DetuneControlSet::DetuneControlSet(Node *parent, std::string prefix, int defaultType, DetuneControlSet *defaultSet)
-:detune              (parent, prefix + "Detune", 8192, 0, 16383),
-    octaveDetune         (parent, prefix + "OctaveDetune", 0, -8, 7),
-    coarseDetune         (parent, prefix + "CoarseDetune", 0, -512, 511),
-    detuneType           (parent, prefix + "DetuneType", defaultType),
+:detune              (parent, prefix + "detune", 8192, 0, 16383),
+    octaveDetune         (parent, prefix + "octave_detune", 0, -8, 7),
+    coarseDetune         (parent, prefix + "coarse_detune", 0, -512, 511),
+    detuneType           (parent, prefix + "detune_type", defaultType),
     m_defaultSet(defaultSet)
 {
 

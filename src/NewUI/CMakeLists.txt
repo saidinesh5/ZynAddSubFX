@@ -31,7 +31,7 @@ set(zynaddsubfx_gui_SRCS
 	)
 
 SET( zynaddsubfx_gui_UIS
-    Addnote/NewAddNote.ui
+    Addnote/AddnoteUI.ui
     Addnote/VoiceList.ui
     Addnote/VoiceWidgetExpanded.ui
     Addnote/VoiceParameters.ui
