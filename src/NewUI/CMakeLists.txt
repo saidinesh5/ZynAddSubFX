@@ -5,7 +5,6 @@ set(zynaddsubfx_gui_SRCS
     Addnote/VoiceWidget.cpp
     Addnote/VoiceParameters.cpp
     ArrayControlHelper.cpp
-    BankUI.cpp
     BankLoader.cpp
     Button.cpp
     CheckBox.cpp
@@ -14,10 +13,8 @@ set(zynaddsubfx_gui_SRCS
     ControlHelper.cpp
     DebugInterface.cpp
     Dial.cpp
-    EnvelopeBox.cpp
 	GroupBox.cpp
     Keyboard.cpp
-    LFOBox.cpp
     MasterUI.cpp
     Menu.cpp
     Oscil.cpp
@@ -27,7 +24,6 @@ set(zynaddsubfx_gui_SRCS
     Slider.cpp
     SpectrumWidget.cpp
     SpinBox.cpp
-    UnitBox.cpp
 	)
 
 SET( zynaddsubfx_gui_UIS
@@ -37,8 +33,6 @@ SET( zynaddsubfx_gui_UIS
     Addnote/VoiceParameters.ui
     BankLoader.ui
     CollapsableFrame.ui
-    EnvelopeBox.ui
-    LFOBox.ui
     MasterUI.ui
     Oscil.ui
 )
