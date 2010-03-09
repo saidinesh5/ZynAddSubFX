@@ -52,6 +52,9 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
 
     setupUi(this);
 
+    //make the app-wide colorsheme the one set for this dialog
+    QApplication::setPalette(palette());
+
     partBar->setControlsWidget(partFrame);
     partBar->setNode(Node::get("MASTER.PARTS"));
 
