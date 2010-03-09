@@ -21,7 +21,6 @@
 */
 
 #include "MasterUI.h"
-#include "BankUI.h"
 #include "AddnoteUI.h"
 #include "VoiceList.h"
 #include "../Controls/Node.h"

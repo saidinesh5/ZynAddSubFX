@@ -2,8 +2,6 @@
 set(zynaddsubfx_gui_SRCS
     Addnote/AddnoteUI.cpp
     Addnote/VoiceList.cpp
-    Addnote/VoiceWidget.cpp
-    Addnote/VoiceParameters.cpp
     ArrayControlHelper.cpp
     BankLoader.cpp
     Button.cpp
@@ -29,8 +27,6 @@ set(zynaddsubfx_gui_SRCS
 SET( zynaddsubfx_gui_UIS
     Addnote/AddnoteUI.ui
     Addnote/VoiceList.ui
-    Addnote/VoiceWidgetExpanded.ui
-    Addnote/VoiceParameters.ui
     BankLoader.ui
     CollapsableFrame.ui
     MasterUI.ui
