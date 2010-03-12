@@ -159,7 +159,6 @@ class Master:public Node
         int swaplr; //1 if L and R are swapped
 
         //Sequencer
-#warning TODO move Sequencer out of master
         Sequencer seq;
 
         //other objects
