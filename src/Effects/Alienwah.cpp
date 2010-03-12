@@ -46,7 +46,7 @@ Alienwah::~Alienwah()
 /*
  * Apply the effect
  */
-void Alienwah::out(REALTYPE *smpsl, REALTYPE *smpsr)
+void Alienwah::out(REALTYPE * /*smpsl*/, REALTYPE *smpsr)
 {
     REALTYPE lfol, lfor; //Left/Right LFOs
     complex<REALTYPE> clfol, clfor, out, tmp;

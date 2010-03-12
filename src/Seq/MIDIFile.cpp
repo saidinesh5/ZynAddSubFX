@@ -294,7 +294,7 @@ void MIDIFile::parsecontrolchange(char ntrack, char chan, unsigned int dt)
     me->writeevent(&me->miditrack[(int)ntrack].record, &me->tmpevent);
 }
 
-void MIDIFile::parsepitchwheel(char ntrack, char chan, unsigned int dt)
+void MIDIFile::parsepitchwheel(char /*ntrack*/, char chan, unsigned int dt)
 {
     unsigned char valhi, vallo;
     vallo = getbyte();

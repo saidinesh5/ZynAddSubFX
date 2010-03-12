@@ -84,7 +84,7 @@ int Keyboard::toNote(const QPoint& pos)
     }
 }
 
-void Keyboard::paintEvent(QPaintEvent *event)
+void Keyboard::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);

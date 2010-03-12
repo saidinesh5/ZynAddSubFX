@@ -31,11 +31,11 @@
 OscilGen::OscilGen(FFTwrapper *fft_, Resonance *res_,
                    Node *parent, std::string id)
     :Presets(parent, id),
-      currentBaseFunc(this, "BaseFunc", 0),
-      baseParam(this, "BASE_PARAMETERS", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0)),
       harmonics(this, "HARMONICS"),
       oscilSpectrum(this, "OscilSpectrum", OSCIL_SIZE/2),
-      oscilBaseFunc(this, "base_function", OSCIL_SIZE)
+      oscilBaseFunc(this, "base_function", OSCIL_SIZE),
+      currentBaseFunc(this, "BaseFunc", 0),
+      baseParam(this, "BASE_PARAMETERS", 0.5, new LinInjFunc<REALTYPE>(0.0, 1.0))
 {
     currentBaseFunc.addOption("Sin"); //0
     currentBaseFunc.addOption("Triangle"); //1
@@ -165,7 +165,7 @@ void OscilGen::defaults()
     prepare();
 }
 
-void OscilGen::convert2sine(int magtype)
+void OscilGen::convert2sine(int /*magtype*/)
 {
     REALTYPE mag[MAX_AD_HARMONICS], phase[MAX_AD_HARMONICS];
     REALTYPE oscil[OSCIL_SIZE];
@@ -1199,7 +1199,7 @@ short int OscilGen::get(REALTYPE *smps, REALTYPE freqHz, int resonance)
 
     //Harmonic Amplitude Randomness
     if((freqHz > 0.1) && (!ADvsPAD)) {
-        unsigned int realrnd = rand_func();
+        //unsigned int realrnd = rand_func();
         REALTYPE power     = Pamprandpower / 127.0;
         REALTYPE normalize = 1.0 / (1.2 - power);
         switch(Pamprandtype) {

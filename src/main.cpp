@@ -82,7 +82,7 @@ int     Pexitprogram = 0; //if the UI set this to 1, the program will exit
 /*
  * User Interface thread
  */
-void *thread3(void *arg)
+void *thread3(void * /*arg*/)
 {
 #ifndef DISABLE_GUI
 

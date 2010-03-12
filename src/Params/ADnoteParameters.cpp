@@ -66,10 +66,10 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id, ADnoteParameter
       fixedFreq            (this, "fixed_freq",0),
       fixedFreqET          (this, "fixed_freq_et", 0),
       detuneSet            (this, "", 0, &par->globalDetuneSet),
-      FMDetuneSet          (this, "FM", 0, &par->globalDetuneSet),
       freqEnvelopeEnabled  (this, "freq_envelope_enabled", 0),
       freqLfoEnabled       (this, "freq_lfo_enabled", 0),
-      volume               (this, "volume", 0.23, new VoiceVolumeConv)
+      volume               (this, "volume", 0.23, new VoiceVolumeConv),
+      FMDetuneSet          (this, "FM", 0, &par->globalDetuneSet)
 {}
 
 ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)

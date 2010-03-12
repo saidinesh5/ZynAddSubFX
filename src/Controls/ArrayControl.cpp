@@ -47,7 +47,7 @@ void ArrayControl::swapBuffers()
 
 string ArrayControl::getString() const
 {
-
+    return "dummy";
 }
 
 void ArrayControl::defaults()

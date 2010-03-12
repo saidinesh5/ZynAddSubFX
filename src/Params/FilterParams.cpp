@@ -43,12 +43,12 @@ FilterParams::FilterParams(Node *parent,
                            unsigned char Pfreq_,
                            unsigned char Pq_)
     :PresetsArray(parent, "FILTER_PARAMETERS"),
-      frequency(this, "freq", freq2real(Pfreq_), new FreqInj),
 
 // 1 kHz
-      centerFrequency(this, "center_freq", cfreq2real(64), new CFreqInj),
       category(this, "category", 0),
-      type(this, "type", Ptype_)
+      type(this, "type", Ptype_),
+      frequency(this, "freq", freq2real(Pfreq_), new FreqInj),
+      centerFrequency(this, "center_freq", cfreq2real(64), new CFreqInj)
 {
 
     category.addOption("Analog");

@@ -109,6 +109,7 @@ bool GenControl::MIDILearn()
     std::cout << "Learned!! " << learnNode->learnedtype << "\n";
     //getRoot()->removeRedirections(learnNode);
     //delete learnNode;
+    return true;
 }
 
 

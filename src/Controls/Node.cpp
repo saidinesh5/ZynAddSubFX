@@ -158,13 +158,15 @@ void Node::clearChildren()
     m_children.clear();
 }
 
-string Node::doCreateChild(int type)
+string Node::doCreateChild(int /*type*/)
 {
     return string();
 }
 
-void Node::doRemoveChild(std::string name)
-{}
+void Node::doRemoveChild(std::string /*name*/)
+{
+
+}
 
 const std::vector<std::string> Node::getTypes()
 {
@@ -184,7 +186,7 @@ void Node::removeChild(std::string name)
 string Node::createChild(string name)
 {
     //convenience function
-    for(int i = 0; i < m_types.size(); ++i)
+    for(unsigned int i = 0; i < m_types.size(); ++i)
         if(m_types.at(i) == name)
             return createChild(i);
     return string();
@@ -194,7 +196,6 @@ void Node::printTree()
 {
     std::cout << getAbsoluteId() << std::endl;
 
-    Node *ret = NULL;
     for(NodeIterator it = m_children.begin();
         it != m_children.end();
         it++)

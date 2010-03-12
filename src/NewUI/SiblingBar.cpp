@@ -96,7 +96,7 @@ void SiblingBar::mouseReleaseEvent(QMouseEvent *event)
     QMenu menu(this);
 
     QList<QAction *> typeActions;
-    for(int i = 0; i < m_childContainer->getTypes().size(); ++i)
+    for(unsigned int i = 0; i < m_childContainer->getTypes().size(); ++i)
         typeActions.append(menu.addAction("&Add new "
                                           + QString::fromStdString(
                                               m_childContainer->getTypes().at(i))));

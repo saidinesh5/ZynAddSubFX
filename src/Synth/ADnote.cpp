@@ -388,11 +388,11 @@ ADnote::ADnote(ADnoteParameters *pars,
 // initparameters() stuck together with some lines removed so that it
 // only alter the already playing note (to perform legato). It is
 // possible I left stuff that is not required for this.
-void ADnote::ADlegatonote(REALTYPE freq,
-                          REALTYPE velocity,
-                          int portamento_,
-                          int midinote_,
-                          bool externcall)
+void ADnote::ADlegatonote(REALTYPE /*freq*/,
+                          REALTYPE /*velocity*/,
+                          int /*portamento_*/,
+                          int /*midinote_*/,
+                          bool /*externcall*/)
 {
 #if 0
     ADnoteParameters *pars = partparams;
@@ -1549,7 +1549,7 @@ inline void ADnote::ComputeVoiceOscillatorFrequencyModulation(int nvoice,
 
 
 /*Calculeaza Oscilatorul cu PITCH MODULATION*/
-inline void ADnote::ComputeVoiceOscillatorPitchModulation(int nvoice)
+inline void ADnote::ComputeVoiceOscillatorPitchModulation(int /*nvoice*/)
 {
 //TODO
 }

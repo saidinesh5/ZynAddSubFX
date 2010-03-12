@@ -491,9 +491,9 @@ void PADnoteParameters::generatespectrum_bandwidthMode(REALTYPE *spectrum,
 void PADnoteParameters::generatespectrum_otherModes(REALTYPE *spectrum,
                                                     int size,
                                                     REALTYPE basefreq,
-                                                    REALTYPE *profile,
-                                                    int profilesize,
-                                                    REALTYPE bwadjust)
+                                                    REALTYPE * /*profile*/,
+                                                    int /*profilesize*/,
+                                                    REALTYPE /*bwadjust*/)
 {
     for(int i = 0; i < size; i++)
         spectrum[i] = 0.0;

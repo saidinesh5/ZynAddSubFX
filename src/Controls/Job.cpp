@@ -17,7 +17,7 @@ Job::Job()
 void Job::handleJobs()
 {
     Job *job = NULL;
-    while(job = Job::pop()) {
+    while((job = Job::pop())) {
         //this must be cached, since the job might be deleted
         //during the function that's waiting for the job (ie pushAndWait)
         bool isWaitingForSignal = job->isWaitingForSignal;

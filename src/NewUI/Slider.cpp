@@ -76,7 +76,7 @@ void Slider::mousePressEvent(QMouseEvent *e)
     }
 }
 
-void Slider::mouseReleaseEvent(QMouseEvent *event)
+void Slider::mouseReleaseEvent(QMouseEvent *)
 {
     m_sliding = false;
     m_outside = false;
