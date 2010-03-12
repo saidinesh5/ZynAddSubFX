@@ -540,7 +540,9 @@ int main(int argc, char *argv[])
 
 #ifndef DISABLE_GUI
     if(noui == 0) {
+#ifdef FLTK_GUI
         ui = new MasterUI(master, &Pexitprogram);
+#endif
         pthread_create(&thr3, NULL, thread3, NULL);
     }
 #endif
