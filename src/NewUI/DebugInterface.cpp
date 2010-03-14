@@ -33,6 +33,14 @@
 #include <QtDebug>
 #include "Slider.h"
 
+/**
+ * The debuginterface provides some simple tools usable for debugging the application, and as such
+ * not much time is really spent on making the ui userfriendly.
+ * Disclaimer: Because it is also open to be changed rapidly for the developer's convenience, I
+ * (harald) haven't spent very much making it modular and pretty, mostly just focusing on getting
+ * the information I need.
+ */
+
 
 static class Tree * tree;
 
