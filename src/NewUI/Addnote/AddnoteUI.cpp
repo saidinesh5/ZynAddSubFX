@@ -21,14 +21,21 @@
 */
 
 #include "AddnoteUI.h"
+#include "VoiceList.h"
 
 AddnoteUI::AddnoteUI(QString id)
     :QDialog(NULL),
-      id(id)
+      m_id(id)
 {
     setupUi(this);
+    setProperty("absoluteControlId", id);
 }
 
+void AddnoteUI::on_buttonShowVoicelist_clicked()
+{
+    QWidget *w = new VoiceList(m_id + ".Voices");
+    w->show();
+}
 
 #include "AddnoteUI.moc"
 

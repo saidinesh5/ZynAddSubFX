@@ -34,8 +34,11 @@ class AddnoteUI:public QDialog, Ui::AddnoteUI
     public:
         AddnoteUI(QString id);
 
+    private slots:
+        void on_buttonShowVoicelist_clicked();
+
     private:
-        QString id;
+        QString m_id;
 };
 
 

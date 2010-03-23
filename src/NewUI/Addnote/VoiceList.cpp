@@ -22,7 +22,9 @@
 
 #include "VoiceList.h"
 #include "CollapsableFrame.h"
+#include "Oscil.h"
 #include <QtDebug>
+#include "ControlHelper.h"
 
 VoiceList::VoiceList(QString absoluteId, QWidget *parent)
     :QDialog(parent)
@@ -37,5 +39,14 @@ VoiceList::VoiceList(QString absoluteId, QWidget *parent)
     partBar->setNode(node);
 }
 
+void VoiceList::on_buttonOscillator_clicked()
+{
+    Oscil *oscil = new Oscil(NULL);
+    oscil->setProperty("absoluteControlId",
+            partBar->getCurrentChild() + ".OSCIL");
+    oscil->show();
+}
+
+#include "VoiceList.moc"
 // vim: sw=4 sts=4 et tw=100
 

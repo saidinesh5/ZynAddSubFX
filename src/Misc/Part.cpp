@@ -1290,11 +1290,11 @@ int Part::loadXMLinstrument(const char *filename)
 }
 
 
-void Part::applyparameters()
+void Part::applyparameters(bool lockmutex)
 {
     for(int n = 0; n < NUM_KIT_ITEMS; n++)
         if((kit[n].padpars != NULL) && (kit[n].Ppadenabled != 0))
-            kit[n].padpars->applyparameters(true);
+            kit[n].padpars->applyparameters(lockmutex);
     ;
 }
 
@@ -1422,10 +1422,11 @@ void Part::handleSyncEvent(Event *event)
         NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
 
         if(newValue->control == &instrumentControl) {
-            instrumentControl.bank->loadfromslot(instrumentControl.getChar(
-                                                                               ),
-                                                 this);
-            applyparameters();
+            instrumentControl.bank-> loadfromslot(instrumentControl.getChar(), this);
+
+            //The current nio implementation locks the master mutex before handling jobs etc, which
+            //means that we have to be careful not to lock the mutex from here.
+            applyparameters(false);
         }
     }
 }

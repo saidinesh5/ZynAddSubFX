@@ -27,8 +27,13 @@
 
 class VoiceList:public QDialog, public Ui::VoiceList
 {
+    Q_OBJECT
+
     public:
         VoiceList(QString absoluteId, QWidget *parent = NULL);
+
+    private slots:
+        void on_buttonOscillator_clicked();
 };
 
 #endif // VOICELIST_H

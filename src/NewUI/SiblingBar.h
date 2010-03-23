@@ -26,15 +26,36 @@
 #include <QTabBar>
 #include <QSet>
 
+/**
+ * The siblingbar lets you control multiple siblings in the tree by the same controls. This works
+ * by first defining a node whose children should appear in the tabbar, and then choose the widgets
+ * that should change controlId whenever the current tab is changed.
+ * The widget selected will have all it's children controlhelpers collected, and updated at tab
+ * change.
+ */
 class SiblingBar:public QTabBar
 {
     Q_OBJECT
 
     public:
         SiblingBar(QWidget *parent = NULL);
+
+        /** 
+         * @brief Set the widget whose children controls should be connected to the current child of
+         * this siblingbar
+         */
         void setControlsWidget(QWidget *widget);
+
+        /** 
+         * @brief Set the supplied node to the one that this siblingbar will show the children of.
+         */
         void setNode(class Node * container);
+
         void mouseReleaseEvent(class QMouseEvent * event);
+
+        /** 
+         * @return the absolute id of the current child
+         */
         QString getCurrentChild();
 
     private slots:

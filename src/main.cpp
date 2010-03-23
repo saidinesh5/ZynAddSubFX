@@ -111,7 +111,12 @@ void *thread3(void * /*arg*/)
     }
 
 #elif defined QT_GUI
-    app = new QApplication(0, 0);
+    //TODO: provide proper args here
+    int fakeargc = 1;
+    const char* fakeargv = "zynaddsubfx";
+
+
+    app = new QApplication(fakeargc, const_cast<char**>(&fakeargv));
     ui  = new MasterUI(master, &Pexitprogram);
     ui->show();
     app->exec();
@@ -215,6 +220,7 @@ void initprogram()
 
 #warning remove welcome message when system is out of beta
     cout << "\nThanks for using the Nio system :)" << endl;
+
 
 
 #ifndef DISABLE_GUI

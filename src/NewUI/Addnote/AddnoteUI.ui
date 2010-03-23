@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>AddSynth Global Parameters</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0,0,0,0,0">
    <property name="margin">
@@ -102,7 +102,7 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>freq</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -124,7 +124,7 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>freq</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -146,7 +146,7 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>freq</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -168,7 +168,7 @@
          <bool>true</bool>
         </property>
         <property name="controlId" stdset="0">
-         <string>freq</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -215,7 +215,7 @@
       <item row="1" column="7">
        <widget class="QLabel" name="label_83">
         <property name="text">
-         <string>freq.tr.</string>
+         <string>Freq.tr.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -225,7 +225,7 @@
       <item row="1" column="8">
        <widget class="QLabel" name="label_84">
         <property name="text">
-         <string>gain</string>
+         <string>Gain</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -256,7 +256,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>category</string>
+            <string>Category</string>
            </property>
           </widget>
          </item>
@@ -504,7 +504,7 @@
          <item>
           <widget class="CheckBox" name="checkBox_7">
            <property name="text">
-            <string>frcR</string>
+            <string>FrcR</string>
            </property>
            <property name="controlId" stdset="0">
             <string>forced_release</string>
@@ -707,7 +707,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>type</string>
+            <string>Type</string>
            </property>
           </widget>
          </item>
@@ -721,7 +721,7 @@
          <item>
           <widget class="CheckBox" name="checkBox_8">
            <property name="text">
-            <string>continous</string>
+            <string>Continous</string>
            </property>
            <property name="controlId" stdset="0">
             <string>continous</string>
@@ -796,7 +796,7 @@
    <item row="5" column="0">
     <widget class="GroupBox" name="frequencyEnvelope">
      <property name="title">
-      <string>Freq Envelope</string>
+      <string>Frequency Envelope</string>
      </property>
      <property name="controlId" stdset="0">
       <string>FREQUENCY_ENVELOPE</string>
@@ -929,7 +929,7 @@
          <item>
           <widget class="CheckBox" name="checkBox_4">
            <property name="text">
-            <string>frcR</string>
+            <string>FrcR</string>
            </property>
            <property name="controlId" stdset="0">
             <string>forced_release</string>
@@ -997,7 +997,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="buttonShowVoicelist">
         <property name="text">
          <string>Show voicelist</string>
         </property>
@@ -1005,6 +1005,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Copy</string>
         </property>
@@ -1012,6 +1015,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Paste</string>
         </property>
@@ -1038,7 +1044,11 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>&lt;h3&gt;freq&lt;/h3&gt;</string>
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Frequency&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -1047,7 +1057,7 @@
         <item>
          <widget class="QLabel" name="label_12">
           <property name="text">
-           <string>detune</string>
+           <string>Detune</string>
           </property>
          </widget>
         </item>
@@ -1114,7 +1124,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_62">
        <property name="text">
-        <string>relBW</string>
+        <string>Rel. BW</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -1131,7 +1141,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>detune type</string>
+        <string>Detune type</string>
        </property>
       </widget>
      </item>
@@ -1254,7 +1264,7 @@
          <item>
           <widget class="CheckBox" name="checkBox_6">
            <property name="text">
-            <string>frcR</string>
+            <string>FrcR</string>
            </property>
            <property name="controlId" stdset="0">
             <string>forced_release</string>
@@ -1447,7 +1457,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_76">
         <property name="text">
-         <string>volume</string>
+         <string>Volume</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1668,7 +1678,7 @@
          <item>
           <widget class="CheckBox" name="checkBox_10">
            <property name="text">
-            <string>continous</string>
+            <string>Continous</string>
            </property>
            <property name="controlId" stdset="0">
             <string>continous</string>
@@ -1743,7 +1753,7 @@
    <item row="5" column="1">
     <widget class="GroupBox" name="amplitudeLFO_3">
      <property name="title">
-      <string>Freq LFO</string>
+      <string>Frequency LFO</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1904,7 +1914,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>type</string>
+            <string>Type</string>
            </property>
           </widget>
          </item>
@@ -1918,7 +1928,7 @@
          <item>
           <widget class="CheckBox" name="checkBox_11">
            <property name="text">
-            <string>continous</string>
+            <string>Continous</string>
            </property>
            <property name="controlId" stdset="0">
             <string>continous</string>
@@ -2026,5 +2036,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_13</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>533</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>105</x>
+     <y>538</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

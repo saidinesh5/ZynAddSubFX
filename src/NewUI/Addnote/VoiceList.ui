@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1072</width>
+    <width>1078</width>
     <height>896</height>
    </rect>
   </property>
@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Voicelist</string>
+   <string>AddSynth Voice List</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <property name="margin">
@@ -80,13 +80,6 @@
             <property name="margin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QRadioButton" name="radioButton">
-              <property name="text">
-               <string>RadioButton</string>
-              </property>
-             </widget>
-            </item>
             <item>
              <widget class="GroupBox" name="amplitudeEnvelope">
               <property name="title">
@@ -246,7 +239,7 @@
                   <item>
                    <widget class="CheckBox" name="checkBox_7">
                     <property name="text">
-                     <string>frcR</string>
+                     <string>FrcR</string>
                     </property>
                     <property name="controlId" stdset="0">
                      <string>forced_release</string>
@@ -602,7 +595,7 @@
                <item row="1" column="7">
                 <widget class="QLabel" name="label_83">
                  <property name="text">
-                  <string>freq.tr.</string>
+                  <string>Freq.tr.</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -612,7 +605,7 @@
                <item row="1" column="8">
                 <widget class="QLabel" name="label_84">
                  <property name="text">
-                  <string>gain</string>
+                  <string>Gain</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1093,15 +1086,28 @@
                </widget>
               </item>
               <item>
-               <widget class="QSlider" name="horizontalSlider">
+               <widget class="Slider" name="horizontalSlider">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="maximum">
+                 <number>127</number>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="controlId" stdset="0">
+                 <string>OSCIL.BASE_PARAMETERS</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="buttonOscillator">
+                <property name="text">
+                 <string>Oscillator parameters</string>
                 </property>
                </widget>
               </item>
@@ -1189,7 +1195,7 @@
                <bool>true</bool>
               </property>
               <property name="controlId" stdset="0">
-               <string>OscilSmp.OscilBaseFunc</string>
+               <string>OSCIL.base_function</string>
               </property>
              </widget>
             </item>
@@ -1607,7 +1613,7 @@
                <string>Amplitude Envelope</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>AMPLITUDE_ENVELOPE</string>
+               <string/>
               </property>
               <layout class="QGridLayout" name="gridLayout_10">
                <property name="margin">
@@ -1760,7 +1766,7 @@
                   <item>
                    <widget class="CheckBox" name="checkBox_8">
                     <property name="text">
-                     <string>frcR</string>
+                     <string>FrcR</string>
                     </property>
                     <property name="controlId" stdset="0">
                      <string>forced_release</string>
@@ -1792,7 +1798,7 @@
                <string>Frequency Envelope</string>
               </property>
               <property name="controlId" stdset="0">
-               <string>FREQUENCY_ENVELOPE</string>
+               <string/>
               </property>
               <layout class="QGridLayout" name="gridLayout_12">
                <property name="margin">
@@ -1922,7 +1928,7 @@
                   <item>
                    <widget class="CheckBox" name="checkBox_5">
                     <property name="text">
-                     <string>frcR</string>
+                     <string>FrcR</string>
                     </property>
                     <property name="controlId" stdset="0">
                      <string>forced_release</string>
@@ -2046,12 +2052,12 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>151</x>
-     <y>522</y>
+     <x>197</x>
+     <y>628</y>
     </hint>
     <hint type="destinationlabel">
-     <x>42</x>
-     <y>532</y>
+     <x>44</x>
+     <y>634</y>
     </hint>
    </hints>
   </connection>

@@ -66,7 +66,6 @@ void OscilWidget::paintEvent(QPaintEvent* event)
     }
     max=max*1.05;
 
-    //draws the spectrum
     for (int i=0;i<m_size;i++){
         REALTYPE x=m_data[i];
         float val=height() * 0.5 - (0.5 * height() * (x/max));

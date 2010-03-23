@@ -102,13 +102,13 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>ZynAddSubFX - Pre-Alpha</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="4">
+      <item row="2" column="3" colspan="2">
        <widget class="QPushButton" name="pushButton_3">
         <property name="enabled">
          <bool>false</bool>
@@ -121,7 +121,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>MASTER volume</string>
+         <string>Master volume</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -147,20 +147,6 @@
         </property>
         <property name="absoluteControlId" stdset="0">
          <string>MASTER.volume</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>MASTER key_shift</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="spinBox">
-        <property name="enabled">
-         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -598,25 +584,26 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="3" colspan="2">
-       <widget class="QPushButton" name="pushButton_7">
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="spinBox">
         <property name="enabled">
          <bool>false</bool>
         </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Panel Window</string>
+         <string>Key shift</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2" rowspan="3">
-       <widget class="QFrame" name="frame">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>Wav recorder</string>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QPushButton" name="pushButton_4">
            <property name="enabled">
@@ -668,6 +655,16 @@
         </layout>
        </widget>
       </item>
+      <item row="1" column="3" colspan="2">
+       <widget class="QPushButton" name="pushButton_7">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Panel Window</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -682,11 +679,29 @@
        <attribute name="title">
         <string>System effects</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Effects UI is TODO</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
         <string>Insertion effects</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Effects UI is TODO</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -710,7 +725,7 @@
          <item>
           <widget class="CheckBox" name="enabledCheck">
            <property name="text">
-            <string>enabled</string>
+            <string>Enabled</string>
            </property>
            <property name="controlId" stdset="0">
             <string>enabled</string>
@@ -828,7 +843,7 @@
             <item row="2" column="0">
              <widget class="QLabel" name="label_3">
               <property name="text">
-               <string>volume</string>
+               <string>Volume</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -848,7 +863,7 @@
             <item row="2" column="2">
              <widget class="QLabel" name="label_5">
               <property name="text">
-               <string>Vel. Sense</string>
+               <string>Velocity Sense</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -858,7 +873,7 @@
             <item row="2" column="3">
              <widget class="QLabel" name="label_6">
               <property name="text">
-               <string>Vel. Offset</string>
+               <string>Velocity Offset</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -868,7 +883,7 @@
             <item row="2" column="4">
              <widget class="QLabel" name="label_7">
               <property name="text">
-               <string>key_shift</string>
+               <string>Key shift</string>
               </property>
              </widget>
             </item>
@@ -895,7 +910,7 @@
             <item row="2" column="5">
              <widget class="QLabel" name="label_8">
               <property name="text">
-               <string>Midi chn Rcv</string>
+               <string>Midi channel</string>
               </property>
              </widget>
             </item>
@@ -938,28 +953,21 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Edit instrument</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1" colspan="2">
-             <widget class="QPushButton" name="buttonControllers">
-              <property name="text">
-               <string>Controllers</string>
+               <string>Edit AddSynth</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QSpinBox" name="spinBox_4">
-              <property name="prefix">
-               <string>Min K. </string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
              <widget class="QSpinBox" name="spinBox_5">
               <property name="prefix">
                <string>Max K. </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="spinBox_4">
+              <property name="prefix">
+               <string>Min K. </string>
               </property>
              </widget>
             </item>
@@ -986,7 +994,7 @@
          <item>
           <widget class="QPushButton" name="pushButton_9">
            <property name="text">
-            <string>PushButton</string>
+            <string>[UNUSED]</string>
            </property>
           </widget>
          </item>
@@ -1013,7 +1021,7 @@
      <x>0</x>
      <y>0</y>
      <width>620</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1094,11 +1102,11 @@
    <sender>enabledCheck</sender>
    <signal>toggled(bool)</signal>
    <receiver>partWidget</receiver>
-   <slot>setenabled(bool)</slot>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>307</x>
-     <y>255</y>
+     <y>335</y>
     </hint>
     <hint type="destinationlabel">
      <x>377</x>
@@ -1113,12 +1121,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>467</y>
+     <x>179</x>
+     <y>547</y>
     </hint>
     <hint type="destinationlabel">
-     <x>177</x>
-     <y>502</y>
+     <x>188</x>
+     <y>652</y>
     </hint>
    </hints>
   </connection>

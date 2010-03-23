@@ -22,11 +22,9 @@
 
 #include "MasterUI.h"
 #include "AddnoteUI.h"
-#include "VoiceList.h"
 #include "../Controls/Node.h"
 #include <QtDebug>
 #include "DebugInterface.h"
-#include <Oscil.h>
 #include "BankLoader.h"
 #include "PropertyWatch.h"
 #include "../Misc/XMLwrapper.h"
@@ -43,11 +41,11 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     //this instance will monitor all dynamic event property changes
     new PropertyWatch(this);
 
-    qDebug() << "Got new child at " << QString::fromStdString(
+    qDebug() << "Created new part at " << QString::fromStdString(
         master->parts.createChild(0));
-    qDebug() << "Got new child at " << QString::fromStdString(
+    qDebug() << "Created new part at " << QString::fromStdString(
         master->parts.createChild(0));
-    qDebug() << "Got new child at " << QString::fromStdString(
+    qDebug() << "Created new part at " << QString::fromStdString(
         master->parts.createChild(0));
 
     setupUi(this);
@@ -78,28 +76,11 @@ void MasterUI::refresh_master_ui()
 
 void MasterUI::on_editInstrument_clicked()
 {
-    //m_bankUI = new BankUI(NULL, master, new int(0));
-    //m_bankUI->setProperty("absoluteControlId", partBar->getCurrentChild());
-    //m_bankUI->show();
-    //return;
-
-    QString id = partBar->getCurrentChild();
-    QWidget *w = new VoiceList(
-        id + ".INSTRUMENT.INSTRUMENT_KIT.ADnoteParameters.Voices");
-    w->show();
+    QString id = partBar->getCurrentChild() + ".INSTRUMENT.INSTRUMENT_KIT.ADnoteParameters";
+    QWidget *w;
 
     if(!id.isEmpty())
         (w = new AddnoteUI(id))->show();
-
-    w->setProperty("absoluteControlId", id + ".INSTRUMENT.INSTRUMENT_KIT.ADnoteParameters");
-}
-
-void MasterUI::on_buttonControllers_clicked()
-{
-    Oscil *oscil = new Oscil(NULL);
-    oscil->setProperty("absoluteControlId",
-            "Master.Parts.Part1.Instrument.InstrumentKit.ADnoteParameters.Voices.VoiceParam1.OscilSmp");
-    oscil->show();
 }
 
 void MasterUI::on_action_Quit_triggered()

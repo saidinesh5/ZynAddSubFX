@@ -23,6 +23,7 @@
 
 #include "GroupBox.h"
 #include "ControlHelper.h"
+#include <QMessageBox>
 #include <QtDebug>
 #include <QToolButton>
 #include <QAction>
@@ -30,6 +31,7 @@
 GroupBox::GroupBox(QWidget *parent)
     : QGroupBox(parent)
 {
+    //Menu button
     QToolButton *b = new QToolButton(this);
     b->move(5, 5);
     b->resize(20, 20);
@@ -38,6 +40,7 @@ GroupBox::GroupBox(QWidget *parent)
     b->setAutoRaise(true);
     b->setPopupMode(QToolButton::InstantPopup);
 
+    //Copy button
     QToolButton *copy = new QToolButton(this);
     copy->move(25, 5);
     copy->resize(20, 20);
@@ -47,6 +50,7 @@ GroupBox::GroupBox(QWidget *parent)
     copy->setPopupMode(QToolButton::InstantPopup);
     copy->setText("C");
 
+    //Paste button
     QToolButton *paste = new QToolButton(this);
     paste->move(45, 5);
     paste->resize(20, 20);
@@ -89,12 +93,12 @@ void GroupBox::slotReset()
 
 void GroupBox::slotCopy()
 {
-    qDebug() << "copy! TODO";
+    QMessageBox::information(this, QString(), "Copy is not yet implemented");
 }
 
 void GroupBox::slotPaste()
 {
-    qDebug() << "paste! TODO";
+    QMessageBox::information(this, QString(), "Paste is not yet implemented");
 }
 
 #include "GroupBox.moc"

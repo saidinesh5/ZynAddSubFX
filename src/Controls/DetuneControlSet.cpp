@@ -90,7 +90,6 @@ void DetuneControlSet::getFromXMLsection(XMLwrapper *xml)
 
     }
     else { //backwards compatible loading needed
-        printf("backwards\n");
         detune.setValue         (xml->getpar(
                     "detune", detune(), 0, 16383));
 

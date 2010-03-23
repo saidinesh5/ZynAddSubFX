@@ -38,7 +38,6 @@ class MasterUI:public QMainWindow, Ui::MainWindow
     private slots:
         void on_action_Quit_triggered();
         void on_editInstrument_clicked();
-        void on_buttonControllers_clicked();
         void on_loadInstrumentButton_clicked();
     private:
 

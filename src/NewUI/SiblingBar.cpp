@@ -63,8 +63,6 @@ void SiblingBar::setNode(Node *container)
 
 void SiblingBar::updateFoundControls()
 {
-    qDebug() << "updateFoundControls";
-
     if(!m_childContainer || !m_controlsWidget)
         return;
 

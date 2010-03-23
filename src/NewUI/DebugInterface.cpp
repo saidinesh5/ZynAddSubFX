@@ -195,6 +195,9 @@ DebugInterface::DebugInterface(QWidget *parent, Master *master)
     :QDialog(parent),
       master(master)
 {
+
+    setWindowTitle("Debug Interface");
+
     QVBoxLayout *layout = new QVBoxLayout(this);
     setLayout(layout);
 
