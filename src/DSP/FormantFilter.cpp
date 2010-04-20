@@ -26,9 +26,9 @@
 
 FormantFilter::FormantFilter(FilterParams *pars)
 {
-    numformants = pars->Pnumformants;
+    numformants = pars->numformants();
     for(int i = 0; i < numformants; i++)
-        formant[i] = new AnalogFilter(4 /*BPF*/, 1000.0, 10.0, pars->Pstages);
+        formant[i] = new AnalogFilter(4 /*BPF*/, 1000.0, 10.0, pars->stages());
     cleanup();
     inbuffer = new REALTYPE [SOUND_BUFFER_SIZE];
     tmpbuf   = new REALTYPE [SOUND_BUFFER_SIZE];
@@ -51,18 +51,18 @@ FormantFilter::FormantFilter(FilterParams *pars)
         currentformants[i].q    = 2.0;
     }
 
-    formantslowness = pow(1.0 - (pars->Pformantslowness / 128.0), 3.0);
+    formantslowness = pow(1.0 - (pars->formantslowness() / 128.0), 3.0);
 
-    sequencesize    = pars->Psequencesize;
+    sequencesize    = pars->sequencesize();
     if(sequencesize == 0)
         sequencesize = 1;
     for(int k = 0; k < sequencesize; k++)
         sequence[k].nvowel = pars->Psequence[k].nvowel;
 
-    vowelclearness  = pow(10.0, (pars->Pvowelclearness - 32.0) / 48.0);
+    vowelclearness  = pow(10.0, (pars->vowelclearness() - 32.0) / 48.0);
 
-    sequencestretch = pow(0.1, (pars->Psequencestretch - 32.0) / 48.0);
-    if(pars->Psequencereversed)
+    sequencestretch = pow(0.1, (pars->sequencestretch() - 32.0) / 48.0);
+    if(pars->sequencereversed())
         sequencestretch *= -1.0;
 
     outgain    = dB2rap(pars->getgain());

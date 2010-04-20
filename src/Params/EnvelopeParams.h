@@ -28,6 +28,7 @@
 #include "Presets.h"
 #include "../Controls/Node.h"
 #include "../Controls/DescRanger.h"
+#include "../Controls/Toggle.h"
 
 #define MAX_ENVELOPE_POINTS 40
 #define MIN_ENVELOPE_DB -40
@@ -59,7 +60,7 @@ class EnvelopeParams:public Presets
         REALTYPE getdt(char i);
 
         /* MIDI Parameters */
-        DescRanger freemode; //1 daca este in modul free sau 0 daca este in mod ADSR,ASR,...
+        Toggle freemode; //1 daca este in modul free sau 0 daca este in mod ADSR,ASR,...
         DescRanger envpoints;
         DescRanger envsustain; //127 pentru dezactivat
 
@@ -68,8 +69,8 @@ class EnvelopeParams:public Presets
         Node envvalNode;
         DescRanger* envval[MAX_ENVELOPE_POINTS];
         DescRanger envstretch; //64=normal stretch (piano-like), 0=no stretch
-        DescRanger forcedrelease; //0 - OFF, 1 - ON
-        DescRanger linearenvelope; //if the amplitude envelope is linear
+        Toggle forcedrelease; //0 - OFF, 1 - ON
+        Toggle linearenvelope; //if the amplitude envelope is linear
 
         DescRanger A_dt, D_dt, R_dt, A_val, D_val, S_val, R_val;
 

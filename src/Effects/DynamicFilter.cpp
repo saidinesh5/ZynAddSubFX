@@ -182,35 +182,35 @@ void DynamicFilter::setpreset(unsigned char npreset)
         filterpars->category = 0;
         filterpars->type     = 2;
         filterpars->frequency.setChar(45);
-        filterpars->Pq      = 64;
-        filterpars->Pstages = 1;
-        filterpars->Pgain   = 64;
+        filterpars->q.setChar( 64);
+        filterpars->stages.setChar( 1);
+        filterpars->gain.setChar( 64);
         break;
     case 1:
         filterpars->category = 2;
         filterpars->type     = 0;
         filterpars->frequency.setChar(72);
-        filterpars->Pq      = 64;
-        filterpars->Pstages = 0;
-        filterpars->Pgain   = 64;
+        filterpars->q.setChar( 64);
+        filterpars->stages.setChar( 0);
+        filterpars->gain.setChar( 64);
         break;
     case 2:
         filterpars->category = 0;
         filterpars->type     = 4;
         filterpars->frequency.setChar(64);
-        filterpars->Pq      = 64;
-        filterpars->Pstages = 2;
-        filterpars->Pgain   = 64;
+        filterpars->q.setChar( 64);
+        filterpars->stages.setChar( 2);
+        filterpars->gain.setChar( 64);
         break;
     case 3:
         filterpars->category     = 1;
         filterpars->type         = 0;
         filterpars->frequency.setChar(50);
-        filterpars->Pq            = 70;
-        filterpars->Pstages       = 1;
-        filterpars->Pgain         = 64;
+        filterpars->q.setChar( 70);
+        filterpars->stages.setChar( 1);
+        filterpars->gain.setChar( 64);
 
-        filterpars->Psequencesize = 2;
+        filterpars->sequencesize.setChar(2);
         // "I"
         filterpars->Pvowels[0].formants[0].freq = 34;
         filterpars->Pvowels[0].formants[0].amp  = 127;
@@ -236,13 +236,13 @@ void DynamicFilter::setpreset(unsigned char npreset)
         filterpars->category = 1;
         filterpars->type     = 0;
         filterpars->frequency.setChar(64);
-        filterpars->Pq      = 70;
-        filterpars->Pstages = 1;
-        filterpars->Pgain   = 64;
+        filterpars->q.setChar( 70);
+        filterpars->stages.setChar( 1);
+        filterpars->gain.setChar( 64);
 
-        filterpars->Psequencesize   = 2;
-        filterpars->Pnumformants    = 2;
-        filterpars->Pvowelclearness = 0;
+        filterpars->sequencesize.setChar( 2);
+        filterpars->numformants.setChar( 2);
+        filterpars->vowelclearness.setChar( 0);
 
         filterpars->Pvowels[0].formants[0].freq = 70;
         filterpars->Pvowels[0].formants[0].amp  = 127;

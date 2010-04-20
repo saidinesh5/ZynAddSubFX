@@ -45,10 +45,22 @@ FilterParams::FilterParams(Node *parent,
     :PresetsArray(parent, "FILTER_PARAMETERS"),
 
 // 1 kHz
-      category(this, "category", 0),
-      type(this, "type", Ptype_),
-      frequency(this, "freq", freq2real(Pfreq_), new FreqInj),
-      centerFrequency(this, "center_freq", cfreq2real(64), new CFreqInj)
+      category          (this, "category", 0),
+      type              (this, "type", Ptype_),
+      frequency         (this, "freq", freq2real(Pfreq_), new FreqInj),
+      q                 (this, "q", Pq_),
+      stages            (this, "stages", 0),
+      freqtrack         (this, "freq_track", 64),
+      gain              (this, "gain", 64),
+      formantFilter     (this, "FORMANT_FILTER"),
+      numformants       (&formantFilter, "num_formants", 3),
+      formantslowness   (&formantFilter, "formant_slowness", 64),
+      vowelclearness    (&formantFilter, "vowel_clearness", 64),
+      octavesfreq       (&formantFilter, "octaves_freq", 64),
+      centerFrequency   (&formantFilter, "center_freq", cfreq2real(64), new CFreqInj),
+      sequencesize      (&formantFilter, "sequence_size", 3),
+      sequencestretch   (&formantFilter, "sequence_stretch", 40),
+      sequencereversed  (&formantFilter, "sequence_reversed", 0)
 {
 
     category.addOption("Analog");
@@ -81,28 +93,29 @@ void FilterParams::defaults()
     type.defaults();
 
     frequency.defaults();
-    Pq         = Dq;
+    q.defaults();
 
-    Pstages    = 0;
-    Pfreqtrack = 64;
-    Pgain     = 64;
+    stages.defaults();
+    freqtrack.defaults();
+    gain.defaults();
     category.defaults();
 
-    Pnumformants     = 3;
-    Pformantslowness = 64;
+    numformants.defaults();
+    formantslowness.defaults();
+
     for(int j = 0; j < FF_MAX_VOWELS; j++)
         defaults(j);
     ;
 
-    Psequencesize = 3;
+    sequencesize.defaults();
     for(int i = 0; i < FF_MAX_SEQUENCE; i++)
         Psequence[i].nvowel = i % FF_MAX_VOWELS;
 
-    Psequencestretch  = 40;
-    Psequencereversed = 0;
+    sequencestretch.defaults();
+    sequencereversed.defaults();
     centerFrequency.defaults();
-    Poctavesfreq      = 64;
-    Pvowelclearness   = 64;
+    octavesfreq.defaults();
+    vowelclearness.defaults();
 }
 
 void FilterParams::defaults(int n)
@@ -129,15 +142,15 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
 
     type      = pars->type();
     frequency.setChar(pars->frequency.getChar());
-    Pq         = pars->Pq;
+    q.setChar(pars->q());
 
-    Pstages    = pars->Pstages;
-    Pfreqtrack = pars->Pfreqtrack;
-    Pgain     = pars->Pgain;
+    stages.setChar(pars->stages());
+    freqtrack.setChar(pars->freqtrack());
+    gain.setChar( pars->gain());
     category.setValue(pars->category());
 
-    Pnumformants     = pars->Pnumformants;
-    Pformantslowness = pars->Pformantslowness;
+    numformants.setChar(pars->numformants());
+    formantslowness.setChar(pars->formantslowness());
     for(int j = 0; j < FF_MAX_VOWELS; j++) {
         for(int i = 0; i < FF_MAX_FORMANTS; i++) {
             Pvowels[j].formants[i].freq = pars->Pvowels[j].formants[i].freq;
@@ -146,15 +159,15 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
         }
     }
 
-    Psequencesize = pars->Psequencesize;
+    sequencesize.setChar(pars->sequencesize());
     for(int i = 0; i < FF_MAX_SEQUENCE; i++)
         Psequence[i].nvowel = pars->Psequence[i].nvowel;
 
-    Psequencestretch  = pars->Psequencestretch;
-    Psequencereversed = pars->Psequencereversed;
+    sequencestretch.setChar(pars->sequencestretch());
+    sequencereversed.setChar(pars->sequencereversed());
     centerFrequency.setChar(pars->centerFrequency.getChar());
-    Poctavesfreq      = pars->Poctavesfreq;
-    Pvowelclearness   = pars->Pvowelclearness;
+    octavesfreq.setChar(pars->octavesfreq());
+    vowelclearness.setChar(pars->vowelclearness());
 }
 
 
@@ -169,16 +182,16 @@ REALTYPE FilterParams::getfreq()
 
 REALTYPE FilterParams::getq()
 {
-    return exp(pow((REALTYPE) Pq / 127.0, 2) * log(1000.0)) - 0.9;
+    return exp(pow((REALTYPE) q() / 127.0, 2) * log(1000.0)) - 0.9;
 }
 REALTYPE FilterParams::getfreqtracking(REALTYPE notefreq)
 {
-    return log(notefreq / 440.0) * (Pfreqtrack - 64.0) / (64.0 * LOG_2);
+    return log(notefreq / 440.0) * (freqtrack() - 64.0) / (64.0 * LOG_2);
 }
 
 REALTYPE FilterParams::getgain()
 {
-    return (Pgain / 64.0 - 1.0) * 30.0; //-30..30dB
+    return (gain() / 64.0 - 1.0) * 30.0; //-30..30dB
 }
 
 /*
@@ -195,7 +208,7 @@ REALTYPE FilterParams::getcenterfreq()
  */
 REALTYPE FilterParams::getoctavesfreq()
 {
-    return 0.25 + 10.0 * Poctavesfreq / 127.0;
+    return 0.25 + 10.0 * octavesfreq() / 127.0;
 }
 
 /*
@@ -231,13 +244,13 @@ void FilterParams::formantfilterH(int nvowel, int nfreqs, REALTYPE *freqs)
         freqs[i] = 0.0;
 
     //for each formant...
-    for(int nformant = 0; nformant < Pnumformants; nformant++) {
+    for(int nformant = 0; nformant < numformants(); nformant++) {
         //compute formant parameters(frequency,amplitude,etc.)
         filter_freq = getformantfreq(Pvowels[nvowel].formants[nformant].freq);
         filter_q    = getformantq(Pvowels[nvowel].formants[nformant].q) * getq();
-        if(Pstages > 0)
+        if(stages() > 0)
             filter_q =
-                (filter_q > 1.0 ? pow(filter_q, 1.0 / (Pstages + 1)) : filter_q);
+                (filter_q > 1.0 ? pow(filter_q, 1.0 / (stages() + 1)) : filter_q);
 
         filter_amp = getformantamp(Pvowels[nvowel].formants[nformant].amp);
 
@@ -280,7 +293,7 @@ void FilterParams::formantfilterH(int nvowel, int nfreqs, REALTYPE *freqs)
             }
             h = h / (x * x + y * y);
 
-            freqs[i] += pow(h, (Pstages + 1.0) / 2.0) * filter_amp;
+            freqs[i] += pow(h, (stages() + 1.0) / 2.0) * filter_amp;
         }
     }
     for(int i = 0; i < nfreqs; i++) {
@@ -330,30 +343,32 @@ void FilterParams::add2XMLsection(XMLwrapper *xml, int n)
 void FilterParams::add2XML(XMLwrapper *xml)
 {
     //filter parameters
-    xml->addpar("category", category());
-    xml->addpar("type", type());
-    xml->addpar("freq", frequency.getChar());
-    xml->addpar("q", Pq);
-    xml->addpar("stages", Pstages);
-    xml->addpar("freq_track", Pfreqtrack);
-    xml->addpar("gain", Pgain);
+    ADDPAR(category, "category");
+    ADDPAR(type, "type");
+    ADDPAR(frequency, "freq");
+    ADDPAR(q, "q");
+    ADDPAR(stages, "stages");
+    ADDPAR(freqtrack, "freq_track");
+    ADDPAR(gain, "gain");
 
     //formant filter parameters
     if((category() == 1) || (!xml->minimal)) {
         xml->beginbranch("FORMANT_FILTER");
-        xml->addpar("num_formants", Pnumformants);
-        xml->addpar("formant_slowness", Pformantslowness);
-        xml->addpar("vowel_clearness", Pvowelclearness);
-        xml->addpar("center_freq", centerFrequency.getChar());
-        xml->addpar("octaves_freq", Poctavesfreq);
+
+        ADDPAR(numformants, "num_formants");
+        ADDPAR(formantslowness, "formant_slowness");
+        ADDPAR(vowelclearness, "vowel_clearness");
+        ADDPAR(centerFrequency, "center_freq");
+        ADDPAR(octavesfreq, "octaves_freq");
+
         for(int nvowel = 0; nvowel < FF_MAX_VOWELS; nvowel++) {
             xml->beginbranch("VOWEL", nvowel);
             add2XMLsection(xml, nvowel);
             xml->endbranch();
         }
-        xml->addpar("sequence_size", Psequencesize);
-        xml->addpar("sequence_stretch", Psequencestretch);
-        xml->addparbool("sequence_reversed", Psequencereversed);
+        ADDPAR(sequencesize, "sequence_size");
+        ADDPAR(sequencestretch, "sequence_stretch");
+        ADDPAR(sequencereversed, "sequence_reversed");
         for(int nseq = 0; nseq < FF_MAX_SEQUENCE; nseq++) {
             xml->beginbranch("SEQUENCE_POS", nseq);
             xml->addpar("vowel_id", Psequence[nseq].nvowel);
@@ -387,23 +402,21 @@ void FilterParams::getfromXMLsection(XMLwrapper *xml, int n)
 void FilterParams::getfromXML(XMLwrapper *xml)
 {
     //filter parameters
-    category.setValue(xml->getpar127("category", category()));
-    type      = xml->getpar127("type", type());
-    frequency.setChar(xml->getpar127("freq", frequency.getChar()));
-    Pq         = xml->getpar127("q", Pq);
-    Pstages    = xml->getpar127("stages", Pstages);
-    Pfreqtrack = xml->getpar127("freq_track", Pfreqtrack);
-    Pgain      = xml->getpar127("gain", Pgain);
+    GETPAR(category, "category");
+    GETPAR(type, "type");
+    GETPAR(frequency, "freq");
+    GETPAR(q, "q");
+    GETPAR(stages, "stages");
+    GETPAR(freqtrack, "freq_track");
+    GETPAR(gain, "gain");
 
     //formant filter parameters
     if(xml->enterbranch("FORMANT_FILTER")) {
-        Pnumformants     = xml->getpar127("num_formants", Pnumformants);
-        Pformantslowness = xml->getpar127("formant_slowness", Pformantslowness);
-        Pvowelclearness  = xml->getpar127("vowel_clearness", Pvowelclearness);
-        centerFrequency.setChar(xml->getpar127("center_freq",
-                                                    centerFrequency.
-                                                    getChar()));
-        Poctavesfreq     = xml->getpar127("octaves_freq", Poctavesfreq);
+        GETPAR(numformants, "num_formants");
+        GETPAR(formantslowness, "formant_slowness");
+        GETPAR(vowelclearness, "vowel_clearness");
+        GETPAR(centerFrequency, "center_freq");
+        GETPAR(octavesfreq, "octaves_freq");
 
         for(int nvowel = 0; nvowel < FF_MAX_VOWELS; nvowel++) {
             if(xml->enterbranch("VOWEL", nvowel) == 0)
@@ -411,10 +424,11 @@ void FilterParams::getfromXML(XMLwrapper *xml)
             getfromXMLsection(xml, nvowel);
             xml->exitbranch();
         }
-        Psequencesize     = xml->getpar127("sequence_size", Psequencesize);
-        Psequencestretch  = xml->getpar127("sequence_stretch", Psequencestretch);
-        Psequencereversed = xml->getparbool("sequence_reversed",
-                                            Psequencereversed);
+
+        GETPAR(sequencesize, "sequence_size");
+        GETPAR(sequencestretch, "sequence_stretch");
+        GETPAR(sequencereversed, "sequence_reversed");
+
         for(int nseq = 0; nseq < FF_MAX_SEQUENCE; nseq++) {
             if(xml->enterbranch("SEQUENCE_POS", nseq) == 0)
                 continue;
