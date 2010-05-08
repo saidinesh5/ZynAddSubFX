@@ -31,6 +31,8 @@
 #include "../Misc/XMLwrapper.h"
 #include "../Params/FilterParams.h"
 
+#include <iostream>
+using namespace std;
 
 EffectMgr::EffectMgr(int insertion_, pthread_mutex_t *mutex_)
     :
@@ -112,6 +114,9 @@ void EffectMgr::changeeffect(int nefx_)
         break;
     case 8:
         efx = new DynamicFilter(insertion, efxoutl, efxoutr);
+        break;
+    case 9:
+        efx = new Analog_Phaser(insertion, efxoutl, efxoutr);
         break;
     //put more effect here
     default:

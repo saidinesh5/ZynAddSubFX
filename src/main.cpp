@@ -20,9 +20,10 @@
 
 */
 
-#include <stdio.h> //remove once iostream is used
 #include <iostream>
 #include <cmath>
+#include <cctype>
+#include <algorithm>
 
 #include <unistd.h>
 #include <pthread.h>
@@ -42,6 +43,8 @@ extern Dump dump;
 int (*rand_func)();
 
 //Nio System
+#include "Nio/MidiIn.h"
+#include "Nio/AudioOut.h"
 #include "Nio/OutMgr.h"
 #include "Nio/InMgr.h"
 #include "Nio/EngineMgr.h"
@@ -67,10 +70,6 @@ using namespace std;
 pthread_t thr3, thr4;
 Master   *master;
 int  swaplr    = 0; //1 for left-right swapping
-bool usejackit = false;
-
-#include "Nio/OutMgr.h"
-
 
 #ifdef USE_LASH
 #include "Misc/LASHClient.h"
@@ -87,6 +86,8 @@ void *thread3(void * /*arg*/)
 #ifndef DISABLE_GUI
 
 #ifdef FLTK_GUI
+
+    ui = new MasterUI(master, &Pexitprogram);
     ui->showUI();
 
     while(Pexitprogram == 0) {
@@ -182,17 +183,12 @@ void initprogram()
 {
     cerr.precision(1);
     cerr << std::fixed;
-#ifndef JACKAUDIOOUT
-#ifndef JACK_RTAUDIOOUT
     cerr << "\nSample Rate = \t\t" << SAMPLE_RATE << endl;
-#endif
-#endif
     cerr << "Sound Buffer Size = \t" << SOUND_BUFFER_SIZE << " samples" << endl;
     cerr << "Internal latency = \t" << SOUND_BUFFER_SIZE * 1000.0
     / SAMPLE_RATE << " ms" << endl;
     cerr << "ADsynth Oscil.Size = \t" << OSCIL_SIZE << " samples" << endl;
 
-    //fflush(stderr);
     srand(time(NULL));
     denormalkillbuf = new REALTYPE [SOUND_BUFFER_SIZE];
     for(int i = 0; i < SOUND_BUFFER_SIZE; i++)
@@ -211,16 +207,6 @@ void initprogram()
 
     //Initialize The Engines
     sysEngine = new EngineMgr();
-
-    //Run the system
-    sysOut->run();
-    sysIn->run();
-
-    sysIn->setSource("ALSA");
-
-#warning remove welcome message when system is out of beta
-    cout << "\nThanks for using the Nio system :)" << endl;
-
 
 
 #ifndef DISABLE_GUI
@@ -253,7 +239,6 @@ void exitprogram()
     delete lash;
 #endif
 
-//    pthread_mutex_unlock(&master->mutex);
     delete [] denormalkillbuf;
 }
 
@@ -273,9 +258,7 @@ char getopt(int argc, char *argv[], const char *shortopts, int *index)
             result = argv[*index][1];
             if(*index + 1 < argc)
                 snprintf(winoptarguments, ARGSIZE, "%s", argv[*index + 1]);
-            ;
         }
-    ;
     (*index)++;
     return result;
 }
@@ -298,9 +281,6 @@ int main(int argc, char *argv[])
     config.init();
     dump.startnow();
     int noui = 0;
-#ifdef JACKAUDIOOUT
-    usejackit = true; //use jack by default
-#endif
     cerr
     << "\nZynAddSubFX - Copyright (c) 2002-2009 Nasca Octavian Paul and others"
     << endl;
@@ -325,62 +305,44 @@ int main(int argc, char *argv[])
 #if OS_LINUX || OS_CYGWIN
     struct option opts[] = {
         {"load", 2, NULL, 'l'},
-        {"load-instrument", 2, NULL, 'L'
-        },
+        {"load-instrument", 2, NULL, 'L'},
         {"sample-rate", 2, NULL, 'r'},
-        {
-            "buffer-size", 2, NULL, 'b'
-        },
-        {
-            "oscil-size", 2, NULL, 'o'
-        },
-        {
-            "dump", 2, NULL, 'D'
-        },
-        {
-            "swap", 2, NULL, 'S'
-        },
-        {
-            "no-gui", 2, NULL, 'U'
-        },
-        {
-            "not-use-jack", 2, NULL, 'A'
-        },
-        {
-            "dummy", 2, NULL, 'Y'
-        },
-        {
-            "help", 2, NULL, 'h'
-        },
-        {
-            0, 0, 0, 0
-        }
+        {"buffer-size", 2, NULL, 'b'},
+        {"oscil-size", 2, NULL, 'o'},
+        {"dump", 2, NULL, 'D'},
+        {"swap", 2, NULL, 'S'},
+        {"no-gui", 2, NULL, 'U'},
+        {"dummy", 2, NULL, 'Y'},
+        {"help", 2, NULL, 'h'},
+        {"output", 1, NULL, 'O'},
+        {"input", 1, NULL, 'I'},
+        {0, 0, 0, 0}
     };
 #endif
     opterr = 0;
     int option_index = 0, opt, exitwithhelp = 0;
 
-    char loadfile[1001];
-    ZERO(loadfile, 1001);
-    char loadinstrument[1001];
-    ZERO(loadinstrument, 1001);
+    string loadfile, loadinstrument, input, output;
 
     while(1) {
         /**\todo check this process for a small memory leak*/
 #if OS_LINUX || OS_CYGWIN
-        opt = getopt_long(argc, argv, "l:L:r:b:o:hSDUAY", opts, &option_index);
+        opt = getopt_long(argc, argv, "l:L:r:b:o:I:O:hSDUY", opts, &option_index);
         char *optarguments = optarg;
 #elif OS_WINDOWS
-        opt = getopt(argc, argv, "l:L:r:b:o:hSDUAY", &option_index);
+        opt = getopt(argc, argv, "l:L:r:b:o:I:O:hSDUY", &option_index);
         char *optarguments = &winoptarguments[0];
 #else
 #error Undefined OS
 #endif
 
+#define GETOP(x) if(optarguments) x = optarguments
+#define GETOPNUM(x) if(optarguments) x = atoi(optarguments)
+
+
         if(opt == -1)
             break;
 
-        int tmp;
         switch(opt) {
         case 'h':
             exitwithhelp = 1;
@@ -395,60 +357,36 @@ int main(int argc, char *argv[])
         case 'U':
             noui = 1;
             break;
-        case 'A':
-#ifdef JACKAUDIOOUT
-#ifdef OSSAUDIOOUT
-            usejackit = false;
-#endif
-#endif
-            break;
         case 'l':
-            tmp = 0;
-            if(optarguments != NULL)
-                snprintf(loadfile, 1000, "%s", optarguments);
-            ;
+            GETOP(loadfile);
             break;
         case 'L':
-            tmp = 0;
-            if(optarguments != NULL)
-                snprintf(loadinstrument, 1000, "%s", optarguments);
-            ;
+            GETOP(loadinstrument);
             break;
         case 'r':
-            tmp = 0;
-            if(optarguments != NULL)
-                tmp = atoi(optarguments);
-            if(tmp >= 4000)
-                SAMPLE_RATE = tmp;
-            else {
+            GETOPNUM(SAMPLE_RATE);
+            if(SAMPLE_RATE <  4000) {
                 cerr << "ERROR:Incorrect sample rate: " << optarguments << endl;
                 exit(1);
             }
             break;
         case 'b':
-            tmp = 0;
-            if(optarguments != NULL)
-                tmp = atoi(optarguments);
-            if(tmp >= 2)
-                SOUND_BUFFER_SIZE = tmp;
-            else {
+            GETOPNUM(SOUND_BUFFER_SIZE);
+            if(SOUND_BUFFER_SIZE < 2) {
                 cerr << "ERROR:Incorrect buffer size: " << optarguments << endl;
                 exit(1);
             }
             break;
         case 'o':
-            tmp = 0;
-            if(optarguments != NULL)
-                tmp = atoi(optarguments);
-            OSCIL_SIZE = tmp;
+            int tmp;
+            if(optarguments)
+                OSCIL_SIZE = tmp = atoi(optarguments);
             if(OSCIL_SIZE < MAX_AD_HARMONICS * 2)
                 OSCIL_SIZE = MAX_AD_HARMONICS * 2;
             OSCIL_SIZE = (int) pow(2, ceil(log(OSCIL_SIZE - 1.0) / log(2.0)));
             if(tmp != OSCIL_SIZE) {
-                cerr
-                <<
-                "\nOSCIL_SIZE is wrong (must be 2^n) or too small. Adjusting to ";
-                cerr << OSCIL_SIZE << "." << endl;
+                cerr << "OSCIL_SIZE is wrong (must be 2^n) or too small. Adjusting to "
+                     <<  OSCIL_SIZE << "." << endl;
             }
             break;
         case 'S':
@@ -456,6 +394,12 @@ int main(int argc, char *argv[])
             break;
         case 'D':
             dump.startnow();
+            break;
+        case 'I':
+            GETOP(input);
+            break;
+        case 'O':
+            GETOP(output);
             break;
         case '?':
             cerr << "ERROR:Bad option or parameter.\n" << endl;
@@ -465,44 +409,29 @@ int main(int argc, char *argv[])
     }
 
     if(exitwithhelp != 0) {
-        cout << "Usage: zynaddsubfx [OPTION]\n" << endl;
-        cout << "  -h , --help \t\t\t\t display command-line help and exit"
-             << endl;
-        cout << "  -l file, --load=FILE\t\t\t loads a .xmz file" << endl;
-        cout << "  -L file, --load-instrument=FILE\t\t loads a .xiz file"
-             << endl;
-        cout << "  -r SR, --sample-rate=SR\t\t set the sample rate SR" << endl;
-        cout
-        << "  -b BS, --buffer-size=SR\t\t set the buffer size (granularity)"
-        << endl;
-        cout << "  -o OS, --oscil-size=OS\t\t set the ADsynth oscil. size"
-             << endl;
-        cout << "  -S , --swap\t\t\t\t swap Left <--> Right" << endl;
-        cout << "  -D , --dump\t\t\t\t Dumps midi note ON/OFF commands" << endl;
-        cout
-        << "  -U , --no-gui\t\t\t\t Run ZynAddSubFX without user interface"
-        << endl;
-#ifdef JACKAUDIOOUT
-#ifdef OSSAUDIOOUT
-        cout << "  -A , --not-use-jack\t\t\t Use OSS/ALSA instead of JACK"
-             << endl;
-#endif
-#endif
+        cout << "Usage: zynaddsubfx [OPTION]\n\n"
+             << "  -h , --help \t\t\t\t Display command-line help and exit\n"
+             << "  -l file, --load=FILE\t\t\t Loads a .xmz file\n"
+             << "  -L file, --load-instrument=FILE\t Loads a .xiz file\n"
+             << "  -r SR, --sample-rate=SR\t\t Set the sample rate SR\n"
+             << "  -b BS, --buffer-size=SR\t\t Set the buffer size (granularity)\n"
+             << "  -o OS, --oscil-size=OS\t\t Set the ADsynth oscil. size\n"
+             << "  -S , --swap\t\t\t\t Swap Left <--> Right\n"
+             << "  -D , --dump\t\t\t\t Dumps midi note ON/OFF commands\n"
+             << "  -U , --no-gui\t\t\t\t Run ZynAddSubFX without user interface\n"
+             << "  -O , --output\t\t\t\t Set Output Engine\n"
+             << "  -I , --input\t\t\t\t Set Input Engine" << endl;
+
 #if OS_WINDOWS
-        cout
-        <<
-        "\nWARNING: On Windows systems, only short comandline parameters works."
-        << endl;
-        cout << "  eg. instead '--buffer-size=512' use '-b 512'" << endl;
+        cout << "nWARNING: On Windows systems, only short comandline parameters works.\n"
+             << "  eg. instead '--buffer-size=512' use '-b 512'" << endl;
 #endif
-        cout << '\n' << endl;
         return 0;
     }
 
-    //---------
-
     initprogram();
 
+#if 0 //TODO update this code
 #ifdef USE_LASH
 #ifdef ALSAMIDIIN
     ALSAMidiIn *alsamidi = dynamic_cast<ALSAMidiIn *>(Midi);
@@ -513,14 +442,14 @@ int main(int argc, char *argv[])
     lash->setjackname(JACKgetname());
 #endif
 #endif
+#endif
 
 
-    if(strlen(loadfile) > 1) {
-        int tmp = master->loadXML(loadfile);
+    if(!loadfile.empty()) {
+        int tmp = master->loadXML(loadfile.c_str());
         if(tmp < 0) {
-            fprintf(stderr,
-                    "ERROR:Could not load master file  %s .\n",
-                    loadfile);
+            cerr << "ERROR: Could not load master file " << loadfile
+                 << "." << endl;
             exit(1);
         }
         else {
@@ -529,11 +458,11 @@ int main(int argc, char *argv[])
         }
     }
 
-    if(strlen(loadinstrument) > 1) {
+    if(!loadinstrument.empty()) {
         int loadtopart = 0;
-        int tmp = master->part[loadtopart]->loadXMLinstrument(loadinstrument);
+        int tmp = master->part[loadtopart]->loadXMLinstrument(loadinstrument.c_str());
         if(tmp < 0) {
-            cerr << "ERROR:Could not load instrument file "
+            cerr << "ERROR: Could not load instrument file "
                  << loadinstrument << '.' << endl;
             exit(1);
         }
@@ -543,6 +472,27 @@ int main(int argc, char *argv[])
         }
     }
 
+
+    if(!input.empty()) {
+        if(!sysEngine->setInDefault(input)) {
+            cerr << "There is no input for " << input << endl;
+            exit(1);
+        }
+        cout << input << " selected." << endl;
+    }
+    if(!output.empty()) {
+        if(!sysEngine->setOutDefault(output)) {
+            cerr << "There is no output for " << output << endl;
+            exit(1);
+        }
+        cout << output << " selected." << endl;
+    }
+
+    //Run the Nio system
+    sysEngine->start(); //Drivers start your engines!
+
+#warning remove welcome message when system is out of beta
+    cout << "\nThanks for using the Nio system :)" << endl;
 
 #ifndef DISABLE_GUI
     if(noui == 0) {
@@ -558,6 +508,7 @@ int main(int argc, char *argv[])
     InitWinMidi(master);
 #endif
 
+    //TODO look into a conditional variable here, it seems to match usage
     while(Pexitprogram == 0) {
 #ifdef OS_LINUX
         usleep(100000);

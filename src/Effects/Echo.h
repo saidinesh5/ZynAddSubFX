@@ -25,13 +25,12 @@
 
 #include "../globals.h"
 #include "Effect.h"
-#include "../Samples/AuSample.h"
 #include "../Misc/Stereo.h"
-#include "../Controls/Ranger.h"
-#include "../Controls/Node.h"
+#include "../Samples/Sample.h"
+#include "../Controls/DelayCtl.h"
 
 /**Echo Effect*/
-class Echo:public Effect, NodeUser
+class Echo:public Effect
 {
     public:
 
@@ -52,15 +51,7 @@ class Echo:public Effect, NodeUser
          */
         ~Echo();
 
-        /**
-         * Outputs the echo to efxoutl and efxoutr
-         * @param smpsl Sample from Left channel
-         * @param smpsr Sample from Right channel
-         * \todo try to figure out if smpsl should be const *const
-         * or not (It should be)
-         */
-        void out(REALTYPE *const smpsl, REALTYPE *const smpr);
-        void out(const Stereo<AuSample> &input);
+        void out(const Stereo<float *> &input);
 
         /**
          * Sets the state of Echo to the specified preset
@@ -82,7 +73,7 @@ class Echo:public Effect, NodeUser
          * @param npar number of chosen parameter
          * @param value the new value
          */
-        void changepar(const int &npar, const unsigned char &value);
+        void changepar(int npar, unsigned char value);
 
         /**
          * Gets the specified parameter
@@ -98,12 +89,9 @@ class Echo:public Effect, NodeUser
          * @param npar number of chosen parameter
          * @return value of parameter
          */
-        unsigned char getpar(const int &npar) const;
+        unsigned char getpar(int npar) const;
 
-        void handleEvent(Event *ev);
-
-        /**\todo see if this needs to get implemented*/
-        int getnumparams() const;
+        int getnumparams();
 
         /**Zeros out the state of the Echo*/
         void cleanup();
@@ -112,33 +100,38 @@ class Echo:public Effect, NodeUser
         void setdryonly();
     private:
         //Parameters
-        char   Pvolume; /**<#1 Volume or Dry/Wetness*/
-        Ranger panning; /**<#2 Panning*/
-        Ranger delay; /**<#3 Delay of the Echo (seconds)*/
-        /**#4 L/R delay difference (seconds that right channel is longer than mean
-         * delay or seconds that the left channel is shorter than the mean delay)*/
-        Ranger lrdelay;
-        Ranger lrcross; /**<#5 L/R Mixing*/
-        Ranger fb; /**<#6Feedback (multiplier)*/
-        Ranger hidamp; /**<#7Dampening of the Echo*/
+        char     Pvolume;  /**<#1 Volume or Dry/Wetness*/
+        char     Ppanning; /**<#2 Panning*/
+        DelayCtl delayCtl;    /**<#3 Delay of the Echo*/
+        char     Plrdelay; /**<#4 L/R delay difference*/
+        char     Plrcross; /**<#5 L/R Mixing*/
+        char     Pfb;      /**<#6Feedback*/
+        char     Phidamp;  /**<#7Dampening of the Echo*/
 
-        void setvolume(char Pvolume);
-        //void setpanning(char Ppanning);
-        //void setdelay(char Pdelay);
-        //void setlrdelay(char Plrdelay);
-        //void setlrcross(char Plrcross);
-        //void setfb(char Pfb);
-        //void sethidamp(char Phidamp);
+        void setvolume(unsigned char Pvolume);
+        void setpanning(unsigned char Ppanning);
+        void setdelay(unsigned char Pdelay);
+        void setlrdelay(unsigned char Plrdelay);
+        void setlrcross(unsigned char Plrcross);
+        void setfb(unsigned char Pfb);
+        void sethidamp(unsigned char Phidamp);
 
         //Real Parameters
-        //REALTYPE panning,lrcross,fb,hidamp; //needs better names
-        int dl, dr; //,lrdelay; //needs better names
+        REALTYPE panning, lrcross, fb, hidamp;
+        //Left/Right delay lengths
+        Stereo<int> delayTime;
+        float lrdelay;
 
         void initdelays();
-        Stereo<AuSample> delaySample;
+        //2 channel ring buffer
+        Stereo<REALTYPE *> delay;
         Stereo<REALTYPE> old;
 
-        int kl, kr;
+        //position of reading/writing from delaysample
+        Stereo<int> pos;
+        //step size for delay buffer
+        Stereo<int> delta;
+        Stereo<int> ndelta;
 };
 
 #endif

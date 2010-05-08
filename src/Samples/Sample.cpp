@@ -20,7 +20,11 @@
 */
 #include <cmath>
 #include <cstring>//for memcpy/memset
+
+#include <iostream>
 #include "Sample.h"
+
+using namespace std;
 
 #warning TODO Think about renaming Sample to Frame
 /**\TODO start using pointer math here as these will be Frequency called

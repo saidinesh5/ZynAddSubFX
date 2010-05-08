@@ -4,6 +4,8 @@
 #include "AudioOut.h"
 #include "Engine.h"
 #include "EngineMgr.h"
+#include "InMgr.h"
+#include "WavEngine.h"
 #include "../Misc/Master.h"
 #include "../Misc/Util.h"//for set_realtime()
 
@@ -12,13 +14,12 @@ using namespace std;
 OutMgr *sysOut;
 
 OutMgr::OutMgr(Master *nmaster)
-    :running(false)
+    :wave(new WavEngine(this)),
+    priBuf(new REALTYPE[4096],new REALTYPE[4096]),priBuffCurrent(priBuf)
 {
+    currentOut = NULL;
+    stales = 0;
     master = nmaster;
-
-    //initialize mutex
-    pthread_mutex_init(&mutex, NULL);
-    sem_init(&requested, PTHREAD_PROCESS_PRIVATE, 0);
 
     //init samples
     outr = new REALTYPE[SOUND_BUFFER_SIZE];
@@ -27,62 +28,39 @@ OutMgr::OutMgr(Master *nmaster)
 
 OutMgr::~OutMgr()
 {
-    running = false;
-    sem_post(&requested);
-
-    pthread_join(outThread, NULL);
-
-    pthread_mutex_destroy(&mutex);
-    sem_destroy(&requested);
+    delete [] outr;
+    delete [] outl;
 }
 
-void OutMgr::add(AudioOut *driver)
+/* Sequence of a tick
+ * 1) lets see if we have any stuff to do via midi
+ * 2) Lets do that stuff
+ * 3) Lets see if the event queue has anything for us
+ * 4) Lets empty that out
+ * 5) Lets remove old/stale samples
+ * 6) Lets see if we need to generate samples
+ * 7) Lets generate some
+ * 8) Lets return those samples to the primary and secondary outputs
+ * 9) Lets wait for another tick
+ */
+const Stereo<REALTYPE *> OutMgr::tick(unsigned int frameSize)
 {
-    pthread_mutex_lock(&mutex);
-    unmanagedOuts.push_back(driver);
-    if(running())//hotplug
-        driver->Start();
-    pthread_mutex_unlock(&mutex);
-}
-
-void OutMgr::remove(AudioOut *out)
-{
-    pthread_mutex_lock(&mutex);
-    unmanagedOuts.remove(out);
-    out->Stop();//tells engine to stop
-
-    //gives a dummy sample to make sure it is not stuck
-    out->out(Stereo<Sample>(Sample(SOUND_BUFFER_SIZE, 0.0),
-                            Sample(SOUND_BUFFER_SIZE, 0.0)));
-    pthread_mutex_unlock(&mutex);
-}
-
-void OutMgr::requestSamples(unsigned int n)
-{
-    for(unsigned int i = 0; i < n; ++i)
-        sem_post(&requested);
-}
-
-int OutMgr::getRunning()
-{
-    int tmp;
-    sem_getvalue(&requested, &tmp);
-    if(tmp < 0)
-        tmp = 0;
-    return tmp;
-}
-
-void *_outputThread(void *arg)
-{
-    return (static_cast<OutMgr*>(arg))->outputThread();
-}
-
-void OutMgr::run()
-{
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-    pthread_create(&outThread, &attr, _outputThread, this);
+    pthread_mutex_lock(&(master->mutex));
+    sysIn->flush();
+    pthread_mutex_unlock(&(master->mutex));
+    //SysEv->execute();
+    removeStaleSmps();
+    while(frameSize > storedSmps()) {
+        pthread_mutex_lock(&(master->mutex));
+        master->AudioOut(outl, outr);
+        pthread_mutex_unlock(&(master->mutex));
+        addSmps(outl,outr);
+    }
+    Stereo<REALTYPE *> ans = priBuffCurrent;
+    ans.l() -= frameSize;
+    ans.r() -= frameSize;
+    //cout << storedSmps() << '=' << frameSize << endl;
+    return priBuf;
 }
 
 AudioOut *OutMgr::getOut(string name)
@@ -92,113 +70,66 @@ AudioOut *OutMgr::getOut(string name)
 
 string OutMgr::getDriver() const
 {
-    for(list<Engine*>::iterator itr = sysEngine->engines.begin();
-            itr != sysEngine->engines.end(); ++itr) {
-        AudioOut *out = dynamic_cast<AudioOut *>(*itr);
-        if(out && out->getAudioEn())
-            return out->name;
-    }
-    return "ERROR";
-}
-
-bool OutMgr::setDriver(string /*name*/)
-{
-    return false;
-}
-
-void *OutMgr::outputThread()
-{
-    defaultOut = dynamic_cast<AudioOut *>(sysEngine->defaultEng);
-    if(!defaultOut) {
-        cerr << "ERROR: It looks like someone broke the Nio Output\n"
-             << "       Attempting to recover by defaulting to the\n"
-             << "       Null Engine." << endl;
-        defaultOut = dynamic_cast<AudioOut *>(sysEngine->getEng("NULL"));
-    }
-
-    set_realtime();
-    //open up the default output
-    if(!defaultOut->Start())//there should be a better failsafe
-        cerr << "ERROR: The default Audio Output Failed to Open!" << endl;
-
-
-    //setup
-    running     = true;
-    init        = true;
-    while(running()) {
-
-        if(false) {
-            cout << "Status: ";
-            pthread_mutex_lock(&mutex);
-            cout << unmanagedOuts.size();
-            pthread_mutex_unlock(&mutex);
-            cout << " outs, ";
-            cout << getRunning();
-            cout << " requests" << endl;
-        }
-
-
-        pthread_mutex_lock(&(master->mutex));
-        master->AudioOut(outl,outr);
-        pthread_mutex_unlock(&(master->mutex));
-
-        smps = Stereo<Sample>(Sample(SOUND_BUFFER_SIZE, outl),
-                Sample(SOUND_BUFFER_SIZE, outr));
-
-        //this mutex might be redundant
-        pthread_mutex_lock(&mutex);
-
-        for(list<Engine*>::iterator itr = sysEngine->engines.begin();
-                itr != sysEngine->engines.end(); ++itr) {
-            AudioOut *out = dynamic_cast<AudioOut *>(*itr);
-            if(out && out->getAudioEn())
-                out->out(smps);
-        }
-
-        for(list<AudioOut*>::iterator itr = unmanagedOuts.begin();
-                itr != unmanagedOuts.end(); ++itr) {
-            (*itr)->out(smps);
-        }
-
-        pthread_mutex_unlock(&mutex);
-
-        //wait for next run
-        sem_wait(&requested);
-    }
-    pthread_exit(NULL);
-    return NULL;
+    return currentOut->name;
 }
 
 bool OutMgr::setSink(string name)
 {
-    AudioOut *sink = NULL;
-    for(list<Engine*>::iterator itr = sysEngine->engines.begin();
-            itr != sysEngine->engines.end(); ++itr) {
-        AudioOut *out = dynamic_cast<AudioOut *>(*itr);
-        if(out) {
-            if(out->name == name)
-                sink = out;
-            else
-                out->setAudioEn(false);
-        }
-    }
+    AudioOut *sink = getOut(name);
 
     if(!sink)
         return false;
 
-    sink->setAudioEn(true);
+    if(currentOut)
+        currentOut->setAudioEn(false);
 
-    return sink->getAudioEn();
+    currentOut = sink;
+    currentOut->setAudioEn(true);
+    return currentOut->getAudioEn();
 }
 
 string OutMgr::getSink() const
 {
-    for(list<Engine*>::iterator itr = sysEngine->engines.begin();
-            itr != sysEngine->engines.end(); ++itr) {
-        AudioOut *out = dynamic_cast<AudioOut *>(*itr);
-        if(out && out->getAudioEn())
-            return out->name;
+    if(currentOut)
+        return currentOut->name;
+    else {
+        cerr << "BUG: No current output in OutMgr " << __LINE__ << endl;
+        return "ERROR";
     }
     return "ERROR";
+}
+
+void OutMgr::addSmps(REALTYPE *l, REALTYPE *r)
+{
+    //allow wave file to syphon off stream
+    wave->push(Stereo<REALTYPE *>(l,r),SOUND_BUFFER_SIZE);
+
+    Stereo<Sample> smps(Sample(SOUND_BUFFER_SIZE, l), Sample(SOUND_BUFFER_SIZE, r));
+
+    if(currentOut->getSampleRate() != SAMPLE_RATE) { //we need to resample
+        //cout << "BAD RESAMPLING" << endl;
+        smps.l().resample(SAMPLE_RATE,currentOut->getSampleRate());
+        smps.r().resample(SAMPLE_RATE,currentOut->getSampleRate());
+    }
+
+    memcpy(priBuffCurrent.l(), smps.l().c_buf(), SOUND_BUFFER_SIZE*sizeof(REALTYPE));
+    memcpy(priBuffCurrent.r(), smps.r().c_buf(), SOUND_BUFFER_SIZE*sizeof(REALTYPE));
+    priBuffCurrent.l() += SOUND_BUFFER_SIZE;
+    priBuffCurrent.r() += SOUND_BUFFER_SIZE;
+    stales += SOUND_BUFFER_SIZE;
+}
+
+void OutMgr::removeStaleSmps()
+{
+    int toShift = storedSmps() - stales;
+    //cout << "toShift: " << toShift << endl << "stales: " << stales << endl << priBuf.l() << ' ' << priBuffCurrent.l() << endl;
+    if(!stales)
+        return;
+
+    memset(priBuf.l(), '0', 4096*sizeof(REALTYPE));
+    memset(priBuf.r(), '0', 4096*sizeof(REALTYPE));
+    priBuffCurrent = priBuf;
+    stales = 0;
+
 }
 
