@@ -227,7 +227,6 @@ set(CXXTEST_LINK_LIBS ${NONGUI_LIBRARIES})
 
 add_subdirectory(Misc)
 add_subdirectory(Controls)
-add_subdirectory(Input)
 add_subdirectory(Synth)
 add_subdirectory(Seq)
 add_subdirectory(Effects)
