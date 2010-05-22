@@ -204,13 +204,13 @@ void Part::defaultsinstrument()
 /*
  * Cleanup the part
  */
-void Part::cleanup()
+void Part::cleanup(bool final)
 {
     for(int k = 0; k < POLIPHONY; k++)
         KillNotePos(k);
     for(int i = 0; i < SOUND_BUFFER_SIZE; i++) {
-        partoutl[i] = denormalkillbuf[i];
-        partoutr[i] = denormalkillbuf[i];
+        partoutl[i] = final ? 0.0 : denormalkillbuf[i];
+        partoutr[i] = final ? 0.0 : denormalkillbuf[i];
         tmpoutl[i]  = 0.0;
         tmpoutr[i]  = 0.0;
     }
@@ -219,15 +219,15 @@ void Part::cleanup()
         partefx[nefx]->cleanup();
     for(int n = 0; n < NUM_PART_EFX + 1; n++) {
         for(int i = 0; i < SOUND_BUFFER_SIZE; i++) {
-            partfxinputl[n][i] = denormalkillbuf[i];
-            partfxinputr[n][i] = denormalkillbuf[i];
+            partfxinputl[n][i] = final ? 0.0 : denormalkillbuf[i];
+            partfxinputr[n][i] = final ? 0.0 : denormalkillbuf[i];
         }
     }
 }
 
 Part::~Part()
 {
-    cleanup();
+    cleanup(true);
     for(int n = 0; n < NUM_KIT_ITEMS; n++) {
         if(kit[n].adpars != NULL)
             delete (kit[n].adpars);
@@ -1258,7 +1258,7 @@ void Part::add2XML(XMLwrapper *xml)
     xml->endbranch();
 }
 
-int Part::saveXML(char *filename)
+int Part::saveXML(const char *filename)
 {
     XMLwrapper *xml;
     xml = new XMLwrapper();
@@ -1295,7 +1295,6 @@ void Part::applyparameters(bool lockmutex)
     for(int n = 0; n < NUM_KIT_ITEMS; n++)
         if((kit[n].padpars != NULL) && (kit[n].Ppadenabled != 0))
             kit[n].padpars->applyparameters(lockmutex);
-    ;
 }
 
 void Part::getfromXMLinstrument(XMLwrapper *xml)

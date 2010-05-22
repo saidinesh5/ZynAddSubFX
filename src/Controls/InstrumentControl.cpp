@@ -14,9 +14,9 @@ InstrumentControl::~InstrumentControl()
     delete bank;
 }
 
-void InstrumentControl::loadBank(char *dir)
+void InstrumentControl::loadBank(std::string dir)
 {
-    if(!dir) {
+    if(!dir.empty()) {
         cerr << dir << " is empty, returning...\n";
         return;
     }

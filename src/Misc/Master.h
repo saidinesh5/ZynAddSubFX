@@ -55,10 +55,12 @@ typedef struct vuData_t {
 class Master:public Node
 {
     public:
-        /** Constructor*/
+        /** Constructor TODO make private*/
         Master();
         /** Destructor*/
         virtual ~Master();
+
+        static Master &getInstance();
 
         /**Saves all settings to a XML file
          * @return 0 for ok or <0 if there is an error*/
@@ -72,7 +74,7 @@ class Master:public Node
         /**loads all settings from a XML file
          * @return 0 for ok or -1 if there is an error*/
         int loadXML(const char *filename);
-        void applyparameters();
+        void applyparameters(bool lockmutex = true);
 
         void getfromXML(XMLwrapper *xml);
 

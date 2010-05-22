@@ -11,9 +11,9 @@ BankControl::BankControl(Node *parent)
         bank->rescanforbanks();
     }
 
-    for(int i = 0; i < MAX_NUM_BANKS; ++i) {
-        const char *name = bank->banks[i].name;
-        if(!name)
+    for(int i = 0; i < bank->banks.size(); ++i) {
+        std::string name = bank->banks[i].name;
+        if(name.empty())
             addOption(std::string("Empty bank"));
         else
             addOption(std::string(name));

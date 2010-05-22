@@ -12,7 +12,7 @@ class InstrumentControl:public Selector
         //virtual int numOptions() const;
         //private:
         class Bank * bank;
-        void loadBank(char *dir);
+        void loadBank(std::string dir);
 };
 
 #endif // INSTRUMENTCONTROL_H
