@@ -16,7 +16,7 @@ InstrumentControl::~InstrumentControl()
 
 void InstrumentControl::loadBank(std::string dir)
 {
-    if(!dir.empty()) {
+    if(dir.empty()) {
         cerr << dir << " is empty, returning...\n";
         return;
     }
