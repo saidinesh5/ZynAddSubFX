@@ -1391,6 +1391,9 @@ base_func getBaseFunction(unsigned char func)
     if(!func)
         return NULL;
 
+    if(func == 127) //should be the custom wave
+        return NULL;
+
     func--;
     assert(func < 13);
     base_func functions[] = {
