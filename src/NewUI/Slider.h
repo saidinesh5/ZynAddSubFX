@@ -43,7 +43,7 @@ class Slider : public QSlider
         void slotIncomingValue(int value);
 
     private:
-        bool m_sliding, m_outside;
+        bool m_outside;
         int m_prevValue;
 };
 
