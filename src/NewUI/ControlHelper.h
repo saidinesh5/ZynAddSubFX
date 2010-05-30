@@ -73,11 +73,6 @@ class ControlHelper:public QObject, public NodeUser
         void setControl(QString absoluteId);
 
         /**
-         * @breif Get the current value of the control
-         */
-        int getValue();
-
-        /**
          * @brief The reimplemented event handler from the control tree.
          */
         void handleEvent(Event *event);
@@ -91,7 +86,7 @@ class ControlHelper:public QObject, public NodeUser
 
         virtual void disconnectedEvent();
 
-        virtual void newValueEvent();
+        virtual void newValueEvent(NewValueEvent *event);
 
     public slots:
         /**

@@ -61,7 +61,7 @@ void ArrayControl::finishWrite()
     swapBuffers();
     unlock();
 
-    forward(new NewValueEvent(this));
+    forward(new NewValueEvent(this, 0));
 }
 
 REALTYPE* ArrayControl::writeBuffer()

@@ -8,9 +8,14 @@ UpdateEvent::UpdateEvent()
     :Event(Event::UpdateEvent)
 {}
 
-NewValueEvent::NewValueEvent(GenControl *control)
+NewValueEvent::NewValueEvent(GenControl *control, int value)
     :Event(Event::NewValueEvent),
-      control(control)
+      control(control),
+      value(value)
+{}
+
+RequestValueEvent::RequestValueEvent()
+    :Event(Event::RequestValueEvent)
 {}
 
 CreateNodeEvent::CreateNodeEvent(unsigned int ntype)

@@ -58,7 +58,7 @@ void ControlHelper::handleEvent(Event *event)
             qDebug() << "ControlHelper: Weird, events from a control we don't know?";
             return;
         }
-        newValueEvent();
+        newValueEvent(static_cast<NewValueEvent *>(event));
     }
     else
     if(event->type() == Event::RemovalEvent) {
@@ -85,9 +85,9 @@ void ControlHelper::disconnectedEvent()
     emit disconnected();
 }
 
-void ControlHelper::newValueEvent()
+void ControlHelper::newValueEvent(NewValueEvent *event)
 {
-    emit valueChanged(getValue());
+    emit valueChanged(event->value);
 }
 
 void ControlHelper::setControl(QString absoluteId)
@@ -107,7 +107,7 @@ void ControlHelper::setControl(QString absoluteId)
         emitOptions();
         qDebug() << "Assigning" << this << "to" << absoluteId;
         connectedEvent();
-        newValueEvent();
+        m_control->queueGetInt();
     } else {
         qDebug() << "Could not find a control named " << absoluteId;
     }
@@ -125,11 +125,8 @@ void ControlHelper::disconnect()
 
 void ControlHelper::setValue(int value)
 {
-    if (Control<int>* intc = dynamic_cast<Control<int>*>(m_control)) {
-        intc->setValue(value);
-    }
-    else if (m_control) {
-        m_control->setInt(value);
+    if (m_control) {
+        m_control->queueSetInt(value);
     }
 }
 
@@ -144,19 +141,6 @@ QString ControlHelper::getControlId()
         return QString::fromStdString(m_control->getAbsoluteId());
     else
         return "Undefined";
-}
-
-int ControlHelper::getValue()
-{
-    if (Control<int>* intc = dynamic_cast<Control<int>*>(m_control)) {
-        return intc->getValue();
-    }
-    if(m_control) {
-        return m_control->getInt();
-    }
-
-    qDebug() << "Warning: value for nonconnected control requested";
-    return 0;
 }
 
 void ControlHelper::MIDILearn()

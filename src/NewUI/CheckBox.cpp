@@ -33,7 +33,6 @@ CheckBox::CheckBox(QWidget *parent)
     connect(helper, SIGNAL(valueChanged(int)),
             this, SLOT(setChecked(int)));
 
-    QAbstractButton::setChecked((bool)helper->getValue());
 }
 
 void CheckBox::setChecked(int val)

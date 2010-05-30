@@ -41,9 +41,9 @@ void ArrayControlHelper::disconnectedEvent()
 {
 }
 
-void ArrayControlHelper::newValueEvent()
+void ArrayControlHelper::newValueEvent(NewValueEvent *event)
 {
-    ControlHelper::newValueEvent();
+    ControlHelper::newValueEvent(event);
 
     if (ArrayControl* c = static_cast<ArrayControl*>(m_control)) {
         emit arrayUpdated(c);

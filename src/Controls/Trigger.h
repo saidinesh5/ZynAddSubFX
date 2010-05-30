@@ -42,6 +42,8 @@ class Trigger:public GenControl
         void setInt(int val);
         void defaults() {};
         int getInt() const { return 0; }
+        void queueGetInt(){}
+        void queueSetInt(int ){}
 
         inline void operator()() { setInt(127); }
 

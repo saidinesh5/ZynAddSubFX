@@ -67,7 +67,7 @@ void EventReceiver::handleEvent(Event *event)
     if(event->type() == Event::ChangeEvent) {
         info += "(ChangeEvent) ";
         info += "val:" + QString::number(
-            static_cast<ChangeEvent *>(event)->getVal());
+            static_cast<ChangeEvent *>(event)->val);
     }
     else
     if(event->type() == Event::NewValueEvent) {
@@ -76,7 +76,7 @@ void EventReceiver::handleEvent(Event *event)
 
         info += "(NewValueEvent) ";
         info += "val: " + QString::number(
-            ev->control->getInt());
+            ev->value);
 
         if (const Control<int>* c = dynamic_cast<const Control<int>*>(ev->control)) {
             info += ", " + QString::number( c->getValue());

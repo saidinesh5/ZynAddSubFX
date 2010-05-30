@@ -36,6 +36,6 @@ void Trigger::setInt(int val)
     if(val >= 64)
         //this will be useful when sources are identifyiable
         //or if there is a more generic event
-        forward(new NewValueEvent(this));
+        forward(new NewValueEvent(this, val));
 }
 

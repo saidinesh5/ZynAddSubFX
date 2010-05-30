@@ -46,6 +46,9 @@ enum ControlOptions {
 template<class T>
 class Control:public GenControl
 {
+    friend class RequestGetIntJob;
+    friend class RequestSetIntJob;
+
     public:
 
         Control(Node *parent, std::string id, T defaultval);
@@ -60,6 +63,9 @@ class Control:public GenControl
 
         virtual void setInt(int val);
         virtual int getInt() const;
+
+        void queueGetInt();
+        void queueSetInt(int value);
 
         void defaults();
         //note: default value should only be changed during initialization

@@ -56,6 +56,8 @@ class Node:public NodeUser
     friend class DebugInterface;
     friend class Tree;
     friend class NodeJob;
+    friend class RequestGetIntJob;
+    friend class RequestSetIntJob;
 
     protected:
         virtual std::string doCreateChild(int type);

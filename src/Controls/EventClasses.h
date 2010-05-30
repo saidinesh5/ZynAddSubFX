@@ -23,9 +23,14 @@ class ChangeEvent:public Event
 {
     public:
         ChangeEvent(int nval);
-        int getVal() const {return val;}
-    private:
         const int val;
+};
+
+/**Request Value Event*/
+class RequestValueEvent:public Event
+{
+    public:
+        RequestValueEvent();
 };
 
 /**Notification Event*/
@@ -39,8 +44,9 @@ class UpdateEvent:public Event
 class NewValueEvent:public Event
 {
     public:
-        NewValueEvent(GenControl *control);
+        NewValueEvent(GenControl *control, int value);
         const GenControl *control;
+        int value;
 };
 
 /**Event for Child creation*/

@@ -34,7 +34,7 @@ class ArrayControlHelper : public ControlHelper
         ArrayControlHelper(QObject *parent);
         virtual void connectedEvent();
         virtual void disconnectedEvent();
-        virtual void newValueEvent();
+        virtual void newValueEvent(NewValueEvent *event);
 
     signals:
         void arrayUpdated(ArrayControl *control);

@@ -52,7 +52,7 @@ void Control<T>::setValue(const T &val)
     unlock();
     //std::cout << "Setting to " << val << " " << (long long)(this) << std::endl;
     if(changed)
-        forward(new NewValueEvent(this));
+        forward(new NewValueEvent(this, getInt()));
 }
 
 template<class T>
@@ -94,6 +94,58 @@ int Control<T>::getInt() const
 {
     T v = getValue();
     return int(v);
+}
+
+class RequestGetIntJob:public Job
+{
+    public:
+        explicit RequestGetIntJob(GenControl *control)
+            : control(control)
+        {
+            uid = control->m_uid;
+        }
+        void exec() {
+            if (!Job::isRecentlyDeleted(uid)) {
+                control->forward(new NewValueEvent(control, control->getInt()));
+            }
+        }
+
+    protected:
+        GenControl * control;
+        unsigned int uid;
+};
+
+class RequestSetIntJob:public Job
+{
+    public:
+        explicit RequestSetIntJob(GenControl *control, int value)
+            : control(control),
+            value(value)
+        {
+            uid = control->m_uid;
+        }
+        void exec() {
+            if (!Job::isRecentlyDeleted(uid)) {
+                control->setInt(value);
+            }
+        }
+
+    protected:
+        GenControl * control;
+        unsigned int uid;
+        int value;
+};
+
+template<class T>
+void Control<T>::queueGetInt()
+{
+    Job::push(new RequestGetIntJob(this));
+}
+
+template<class T>
+void Control<T>::queueSetInt(int value)
+{
+    Job::push(new RequestSetIntJob(this, value));
 }
 
 template<class T>

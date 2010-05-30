@@ -31,14 +31,15 @@
 class GenControl:public Node
 {
     public:
-        virtual int getInt() const     = 0;
-        virtual void setInt(int val)       = 0;
+        virtual int getInt() const            = 0;
+        virtual void setInt(int val)          = 0;
         virtual std::string getString() const = 0;
         virtual void defaults()               = 0;
 
         bool MIDILearn();
 
-        //virtual void requestValue()=0;
+        virtual void queueGetInt()           = 0;
+        virtual void queueSetInt(int value)  = 0;
 
         virtual int numOptions() const {return 0;}
         virtual std::string getOption(int /*i*/) const {return "";}

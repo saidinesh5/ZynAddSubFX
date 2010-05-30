@@ -37,6 +37,8 @@ class ArrayControl : public GenControl
         virtual void setInt(int) {}
         virtual std::string getString() const;
         virtual void defaults();
+        void queueGetInt(){}
+        void queueSetInt(int ){}
 
         void readArray(REALTYPE *buffer, int *size);
 
