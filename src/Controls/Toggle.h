@@ -36,8 +36,8 @@ class Toggle:public Control<bool>
         ~Toggle();
 
         std::string getString() const;
-        void setChar(char val);
-        char getChar() const;
+        void setInt(int val);
+        int getInt() const;
 
         inline void operator=(bool b) {
             setValue(b);

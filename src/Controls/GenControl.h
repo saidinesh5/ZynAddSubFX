@@ -31,8 +31,8 @@
 class GenControl:public Node
 {
     public:
-        virtual char getChar() const     = 0;
-        virtual void setChar(char val)       = 0;
+        virtual int getInt() const     = 0;
+        virtual void setInt(int val)       = 0;
         virtual std::string getString() const = 0;
         virtual void defaults()               = 0;
 

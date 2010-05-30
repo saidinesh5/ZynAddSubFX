@@ -36,19 +36,19 @@ class Ranger:public Control<REALTYPE>
         Ranger(Node *parent,
                std::string id,
                REALTYPE defaultval,
-               const InjFunction<char, REALTYPE> *nfunc);
+               const InjFunction<int, REALTYPE> *nfunc);
         virtual ~Ranger();
 
         /**@todo get some toString function in here (it only needs to be one way*/
         std::string getString() const
         {return "Example: 50%";}
 
-        void setChar(char val);
-        char getChar() const;
+        void setInt(int val);
+        int getInt() const;
 
     private:
         /**The transformation function for the control*/
-        const InjFunction<char, REALTYPE> *func;
+        const InjFunction<int, REALTYPE> *func;
 };
 
 #endif

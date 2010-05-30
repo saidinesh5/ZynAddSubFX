@@ -58,8 +58,8 @@ class Control:public GenControl
         void setValue(const T &val);
         T getValue() const;
 
-        virtual void setChar(char val);
-        virtual char getChar() const;
+        virtual void setInt(int val);
+        virtual int getInt() const;
 
         void defaults();
         //note: default value should only be changed during initialization
@@ -80,9 +80,12 @@ class Control:public GenControl
         virtual void getpar(class XMLwrapper *xml, const std::string& name);
 
     protected:
-        T value, min, max;
-        T defaultval;
         int options;
+        T min, max;
+
+    private:
+        T value;
+        T defaultval;
 };
 
 #include "Control.cpp"

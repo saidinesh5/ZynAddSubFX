@@ -1,6 +1,6 @@
 #include "EventClasses.h"
 
-ChangeEvent::ChangeEvent(char nval)
+ChangeEvent::ChangeEvent(int nval)
     :Event(Event::ChangeEvent), val(nval)
 {}
 

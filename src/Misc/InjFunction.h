@@ -27,7 +27,7 @@
 
 /*
  * The two macros REALINJFUNC and REALINJFUNCFUNC are convenience macros for making injfunction
- * classes to be used locally in the code. REALINJFUNC will define a class that does the REAL/char
+ * classes to be used locally in the code. REALINJFUNC will define a class that does the REAL/int
  * conversion, and REALINJFUNCFUNC will in addition define two functions that can be used for
  * performing the conversion without making an instance of the injfunction class. This is useful for
  * example when you need to perform such a conversion during the initialization of the controls in
@@ -36,33 +36,33 @@
  * Here's an example, taken from FilterParams.cpp:
  *
  * REALINJFUNCFUNC(FreqInj,
- *              freq2char, freq2real,
+ *              freq2int, freq2real,
  *              ((x / 5.0) + 1.0) * 64.0,
  *              (x / 64.0 - 1.0) * 5.0
  *             );
 *
-* Here FreqInj is the name of the class, freq2char is the function that will do REAL->char
+* Here FreqInj is the name of the class, freq2int is the function that will do REAL->int
 * conversion, freq2real is the vice versa. The next two inputs are the actual conversions that will
 * be done, with the parameter 'x' as the input.
 *
-* NOTE: These two conversions should be the inverse of each other! ie, if you convert a char to a
+* NOTE: These two conversions should be the inverse of each other! ie, if you convert a int to a
 * real and back, you should have the same number.
 *
 * TIP: use the round function for mathematical rounding
 */
 
-#define REALINJFUNC(NAME, TOCHAR, TOREAL) \
-    class NAME:public InjFunction < char, REALTYPE > { \
-        public: inline char operator()(const REALTYPE &x) const \
-            {return round(TOCHAR);} \
-            inline REALTYPE operator()(const char &x) const \
+#define REALINJFUNC(NAME, TOINT, TOREAL) \
+    class NAME:public InjFunction < int, REALTYPE > { \
+        public: inline int operator()(const REALTYPE &x) const \
+            {return round(TOINT);} \
+            inline REALTYPE operator()(const int &x) const \
             {return (TOREAL);} };
 
-#define REALINJFUNCFUNC(NAME, TOCHARNAME, TOREALNAME, TOCHAR, TOREAL) \
-    REALINJFUNC(NAME, TOCHAR, TOREAL); \
-    inline char TOCHARNAME(const REALTYPE & x) \
-    { return round(TOCHAR); } \
-    inline REALTYPE TOREALNAME(const char &x) \
+#define REALINJFUNCFUNC(NAME, TOINTNAME, TOREALNAME, TOINT, TOREAL) \
+    REALINJFUNC(NAME, TOINT, TOREAL); \
+    inline int TOINTNAME(const REALTYPE & x) \
+    { return round(TOINT); } \
+    inline REALTYPE TOREALNAME(const int &x) \
     { return (TOREAL); }
 
 
@@ -79,8 +79,8 @@ class InjFunction
         virtual B operator()(const A &x) const = 0;
         virtual A operator()(const B &x) const = 0;
 
-        char round(REALTYPE val) const {
-            return char(val + 0.5);
+        int round(REALTYPE val) const {
+            return int(val + 0.5);
         }
 };
 #endif

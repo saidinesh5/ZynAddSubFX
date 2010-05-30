@@ -93,7 +93,7 @@ Master::Master()
 
 void Master::defaults()
 {
-    masterVolume.setChar((char)80);
+    masterVolume.setInt((char)80);
     setPkeyshift(64);
 
     for(int npart = 0; npart < NUM_MIDI_PARTS; npart++) {
@@ -551,7 +551,7 @@ Master::~Master()
  */
 void Master::setPvolume(char Pvolume_)
 {
-    masterVolume.setChar(Pvolume_);
+    masterVolume.setInt(Pvolume_);
     //Pvolume=Pvolume_;
     //volume=dB2rap((Pvolume-96.0)/96.0*40.0);
 }

@@ -27,13 +27,13 @@
 #include "../Misc/LinInjFunc.h"
 
 REALINJFUNCFUNC(FreqInj,
-                freq2char, freq2real,
+                freq2int, freq2real,
                 ((x / 5.0) + 1.0) * 64.0,
                 (x / 64.0 - 1.0) * 5.0
                );
 
 REALINJFUNCFUNC(CFreqInj,
-                cfreq2char, cfreq2real,
+                cfreq2int, cfreq2real,
                 127 * (1.0 - (-(log(x / 10000.0) / log(10)) / 2.0)),
                 10000.0*pow(10,-(1.0-x/127.0)*2.0)
                );
@@ -141,16 +141,16 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
         return;
 
     type      = pars->type();
-    frequency.setChar(pars->frequency.getChar());
-    q.setChar(pars->q());
+    frequency.setInt(pars->frequency.getInt());
+    q.setInt(pars->q());
 
-    stages.setChar(pars->stages());
-    freqtrack.setChar(pars->freqtrack());
-    gain.setChar( pars->gain());
+    stages.setInt(pars->stages());
+    freqtrack.setInt(pars->freqtrack());
+    gain.setInt( pars->gain());
     category.setValue(pars->category());
 
-    numformants.setChar(pars->numformants());
-    formantslowness.setChar(pars->formantslowness());
+    numformants.setInt(pars->numformants());
+    formantslowness.setInt(pars->formantslowness());
     for(int j = 0; j < FF_MAX_VOWELS; j++) {
         for(int i = 0; i < FF_MAX_FORMANTS; i++) {
             Pvowels[j].formants[i].freq = pars->Pvowels[j].formants[i].freq;
@@ -159,15 +159,15 @@ void FilterParams::getfromFilterParams(FilterParams *pars)
         }
     }
 
-    sequencesize.setChar(pars->sequencesize());
+    sequencesize.setInt(pars->sequencesize());
     for(int i = 0; i < FF_MAX_SEQUENCE; i++)
         Psequence[i].nvowel = pars->Psequence[i].nvowel;
 
-    sequencestretch.setChar(pars->sequencestretch());
-    sequencereversed.setChar(pars->sequencereversed());
-    centerFrequency.setChar(pars->centerFrequency.getChar());
-    octavesfreq.setChar(pars->octavesfreq());
-    vowelclearness.setChar(pars->vowelclearness());
+    sequencestretch.setInt(pars->sequencestretch());
+    sequencereversed.setInt(pars->sequencereversed());
+    centerFrequency.setInt(pars->centerFrequency.getInt());
+    octavesfreq.setInt(pars->octavesfreq());
+    vowelclearness.setInt(pars->vowelclearness());
 }
 
 

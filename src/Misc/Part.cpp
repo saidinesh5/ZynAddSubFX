@@ -38,7 +38,7 @@
 using namespace std;
 
 REALINJFUNCFUNC(panningFunc,
-        pan2char, pan2real,
+        pan2int, pan2real,
         x * 127.0,
         x / 127.0)
 
@@ -762,7 +762,7 @@ void Part::SetController(unsigned int type, int par)
         break;
     case C_panning:
         ctl.setpanning(par);
-        panning.setChar(panning.getChar() + ctl.panning.pan);
+        panning.setInt(panning.getInt() + ctl.panning.pan);
         break;
     case C_filtercutoff:
         ctl.setfiltercutoff(par);
@@ -782,7 +782,7 @@ void Part::SetController(unsigned int type, int par)
     case C_volume:
         ctl.setvolume(par);
         if(ctl.volume.receive != 0)
-            partVolume.setChar(ctl.volume.volume);
+            partVolume.setInt(ctl.volume.volume);
         else
             setPvolume(Pvolume);
         break;
@@ -798,11 +798,11 @@ void Part::SetController(unsigned int type, int par)
         ctl.resetall();
         RelaseSustainedKeys();
         if(ctl.volume.receive != 0)
-            partVolume.setChar(ctl.volume.volume);
+            partVolume.setInt(ctl.volume.volume);
         else
             setPvolume(Pvolume);
         setPvolume(Pvolume); //update the volume
-        panning.setChar(panning.getChar() + ctl.panning.pan);
+        panning.setInt(panning.getInt() + ctl.panning.pan);
 
         for(int item = 0; item < NUM_KIT_ITEMS; item++) {
             if(kit[item].adpars == NULL)
@@ -1116,7 +1116,7 @@ void Part::ComputePartSmps()
 void Part::setPvolume(char Pvolume_)
 {
     Pvolume = Pvolume_;
-    partVolume.setChar(Pvolume_);
+    partVolume.setInt(Pvolume_);
 }
 
 /*
@@ -1229,12 +1229,12 @@ void Part::add2XMLinstrument(XMLwrapper *xml)
 void Part::add2XML(XMLwrapper *xml)
 {
     //parameters
-    xml->addparbool("enabled", enabled.getChar());
+    xml->addparbool("enabled", enabled.getInt());
     if((enabled()) && (xml->minimal))
         return;
 
     xml->addpar("volume", Pvolume);
-    xml->addpar("panning", panning.getChar());
+    xml->addpar("panning", panning.getInt());
 
     xml->addpar("min_key", minKey());
     xml->addpar("max_key", maxKey());
@@ -1383,15 +1383,15 @@ void Part::getfromXMLinstrument(XMLwrapper *xml)
 
 void Part::getfromXML(XMLwrapper *xml)
 {
-    enabled.setChar(xml->getparbool("enabled", enabled.getChar()));
+    enabled.setInt(xml->getparbool("enabled", enabled.getInt()));
 
     setPvolume(xml->getpar127("volume", Pvolume));
-    panning.setChar(xml->getpar127("panning", panning.getChar()));
+    panning.setInt(xml->getpar127("panning", panning.getInt()));
 
     minKey.setValue(xml->getpar127("min_key", minKey()));
     maxKey.setValue(xml->getpar127("max_key", maxKey()));
     keyShift.setValue(xml->getpar127("key_shift", keyShift()));
-    receiveChannel.setChar(xml->getpar127("rcv_chn", receiveChannel()));
+    receiveChannel.setInt(xml->getpar127("rcv_chn", receiveChannel()));
 
     velSns.setValue(xml->getpar127("velocity_sensing", velSns()));
     velOffs.setValue(xml->getpar127("velocity_offset", velOffs()));
@@ -1421,7 +1421,7 @@ void Part::handleSyncEvent(Event *event)
         NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
 
         if(newValue->control == &instrumentControl) {
-            instrumentControl.bank-> loadfromslot(instrumentControl.getChar(), this);
+            instrumentControl.bank-> loadfromslot(instrumentControl.getInt(), this);
 
             //The current nio implementation locks the master mutex before handling jobs etc, which
             //means that we have to be careful not to lock the mutex from here.

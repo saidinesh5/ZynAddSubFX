@@ -26,14 +26,14 @@
 #include <iostream>
 
 template<class T>
-class db2rapInjFunc:public InjFunction<char, T>
+class db2rapInjFunc:public InjFunction<int, T>
 {
     public:
         db2rapInjFunc(T min, T max)
             :b(min), m((max - min)) {}
 
-        inline T operator()(const char &x) const {return dB2rap(b + m * x / 127); }
-        inline char operator()(const T &x) const {return round(127.0
+        inline T operator()(const int &x) const {return dB2rap(b + m * x / 127); }
+        inline int operator()(const T &x) const {return round(127.0
                                                                * (rap2dB(
                                                                       x)
                                                                   - b) / m);  }

@@ -32,23 +32,23 @@
 int ADnote_unison_sizes[] =
 {1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30, 40, 50, 0};
 
-class VolumeConv:public InjFunction<char, REALTYPE>
+class VolumeConv:public InjFunction<int, REALTYPE>
 {
     public:
-        inline REALTYPE operator()(const char &x) const
+        inline REALTYPE operator()(const int &x) const
         {return 4.0 * pow(0.1, 3.0 * (1.0 - x / 96.0)); }
 
-        inline char operator()(const REALTYPE &x) const
+        inline int operator()(const REALTYPE &x) const
         { return round(96 * (1 - (1 / (3 * log(0.1))) * (log(x) - log(4)))); }
 };
 
-class VoiceVolumeConv:public InjFunction<char, REALTYPE>
+class VoiceVolumeConv:public InjFunction<int, REALTYPE>
 {
     public:
-        inline REALTYPE operator()(const char &x) const
+        inline REALTYPE operator()(const int &x) const
         {return pow(0.1, 3.0 * (1.0 - x / 127.0)); }
 
-        inline char operator()(const REALTYPE &x) const
+        inline int operator()(const REALTYPE &x) const
         { return round(127 * (1 - (1 / (3 * log(0.1))) * (log(x)))); }
 };
 
@@ -391,7 +391,7 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
     xml->addpar("panning", VoicePar[nvoice]->PPanning);
-    xml->addpar("volume", VoicePar[nvoice]->volume.getChar());
+    xml->addpar("volume", VoicePar[nvoice]->volume.getInt());
     xml->addparbool("volume_minus", VoicePar[nvoice]->PVolumeminus);
     xml->addpar("velocity_sensing", VoicePar[nvoice]->PAmpVelocityScaleFunction);
 
@@ -503,7 +503,7 @@ void ADnoteParameters::add2XML(XMLwrapper *xml)
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
     //xml->addpar("volume",PVolume);
-    xml->addpar("volume", volume.getChar());
+    xml->addpar("volume", volume.getInt());
     xml->addpar("panning", PPanning);
     xml->addpar("velocity_sensing", PAmpVelocityScaleFunction);
     xml->addpar("punch_strength", PPunchStrength);
@@ -572,7 +572,7 @@ void ADnoteParameters::getfromXML(XMLwrapper *xml)
 
     if(xml->enterbranch("AMPLITUDE_PARAMETERS")) {
         //PVolume=xml->getpar127("volume",PVolume);
-        volume.setChar(char(xml->getpar127("volume", volume.getChar())));
+        volume.setInt(int(xml->getpar127("volume", volume.getInt())));
         PPanning = xml->getpar127("panning", PPanning);
         PAmpVelocityScaleFunction = xml->getpar127(
             "velocity_sensing",
@@ -728,10 +728,10 @@ void ADnoteParameters::getfromXMLsection(XMLwrapper *xml, int n)
     if(xml->enterbranch("AMPLITUDE_PARAMETERS")) {
         VoicePar[nvoice]->PPanning =
             xml->getpar127("panning", VoicePar[nvoice]->PPanning);
-        VoicePar[nvoice]->volume.setChar(xml->getpar127("volume",
+        VoicePar[nvoice]->volume.setInt(xml->getpar127("volume",
                                                              VoicePar[nvoice]->
                                                              volume.
-                                                             getChar()));
+                                                             getInt()));
         VoicePar[nvoice]->PVolumeminus = xml->getparbool(
             "volume_minus",
             VoicePar[nvoice]->

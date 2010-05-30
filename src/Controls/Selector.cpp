@@ -33,7 +33,7 @@ Selector::~Selector()
 
 string Selector::getString() const
 {
-    return getOption(value);
+    return getOption(getValue());
 }
 
 string Selector::getOption(int idx) const

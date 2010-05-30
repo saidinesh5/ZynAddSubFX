@@ -27,16 +27,16 @@ using namespace std;
 Ranger::Ranger(Node *parent,
                std::string id,
                REALTYPE defaultval,
-               const InjFunction<char, REALTYPE> *nfunc)
+               const InjFunction<int, REALTYPE> *nfunc)
     :Control<REALTYPE>(parent, id, defaultval), func(nfunc)
 {
     if(func == NULL)
         cerr << "func == NULL, THIS SHOULD NEVER HAPPEN!" << __FILE__ << __LINE__ << endl;
 
     //test func
-    for(char c = 0; c < 127; ++c) {
+    for(int c = 0; c < 127; ++c) {
         REALTYPE v = (*func)(c);
-        char     backval = char((*func)(v));
+        int     backval = int((*func)(v));
         if(backval != c) {
             cerr << " Warning (Control.cpp:" << __LINE__ << "): (" << int(c)
                  << " != " << int(backval) << ") function is not reflective\n";
@@ -50,12 +50,12 @@ Ranger::~Ranger()
     delete func;
 }
 
-void Ranger::setChar(char val)
+void Ranger::setInt(int val)
 {
-    setValue((REALTYPE)(*func)((char)val));
+    setValue((REALTYPE)(*func)((int)val));
 }
 
-char Ranger::getChar() const
+int Ranger::getInt() const
 {
     return (*func)(getValue());
 }

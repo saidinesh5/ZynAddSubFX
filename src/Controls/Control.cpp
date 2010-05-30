@@ -23,11 +23,11 @@
 template<class T>
 Control<T>::Control(Node *parent, std::string id, T defaultval)
     :GenControl(parent, id),
-    value(defaultval),
+    options(0),
     min(0),
     max(127),
-    defaultval(defaultval),
-    options(0)
+    value(defaultval),
+    defaultval(defaultval)
 {}
 
 template<class T>
@@ -84,31 +84,28 @@ void Control<T>::storeDefaults()
 }
 
 template<class T>
-void Control<T>::setChar(char val)
+void Control<T>::setInt(int val)
 {
     setValue(T(val));
 }
 
 template<class T>
-char Control<T>::getChar() const
+int Control<T>::getInt() const
 {
     T v = getValue();
-    if (v < 0 || v > 127) {
-        std::cout << "getChar(): Warning, value truncated\n";
-    }
-    return char(v);
+    return int(v);
 }
 
 template<class T>
 void Control<T>::addpar(XMLwrapper *xml, const std::string& name)
 {
-    xml->addpar(name, getChar());
+    xml->addpar(name, getInt());
 }
 
 template<class T>
 void Control<T>::getpar(XMLwrapper *xml, const std::string& name)
 {
-    setChar(xml->getpar127(name, getChar()));
+    setInt(xml->getpar127(name, getInt()));
 }
 
 template<class T>
@@ -120,7 +117,7 @@ void Control<T>::saveXml(XMLwrapper *xml)
 
     addpar(xml, getId());
     Node::saveXml(xml);
-    //xml->addpar(getId(), getChar());
+    //xml->addpar(getId(), getInt());
 }
 
 template<class T>

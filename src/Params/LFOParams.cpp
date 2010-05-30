@@ -28,7 +28,7 @@
 int LFOParams::time;
 
 REALINJFUNCFUNC(LFOFreqInj,
-               lfofreq2char, lfofreq2real,
+               lfofreq2int, lfofreq2real,
                x * 127.0, x / 127.0);
 
 LFOParams::LFOParams(Node *parent,

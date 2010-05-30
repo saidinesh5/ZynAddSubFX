@@ -129,7 +129,7 @@ void ControlHelper::setValue(int value)
         intc->setValue(value);
     }
     else if (m_control) {
-        m_control->setChar(value);
+        m_control->setInt(value);
     }
 }
 
@@ -152,7 +152,7 @@ int ControlHelper::getValue()
         return intc->getValue();
     }
     if(m_control) {
-        return m_control->getChar();
+        return m_control->getInt();
     }
 
     qDebug() << "Warning: value for nonconnected control requested";
@@ -248,7 +248,7 @@ void ControlHelper::debugPrint()
         " and absoluteControlId: " << parent()->property("absoluteControlId").toString();
     if (m_control) {
         qDebug() << "Currently connected to " << QString::fromStdString(m_control->getAbsoluteId());
-        qDebug() << "Current value is " << int(m_control->getChar());
+        qDebug() << "Current value is " << int(m_control->getInt());
     }
     else {
         qDebug() << "Currently not connected.";

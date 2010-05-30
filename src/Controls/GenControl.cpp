@@ -83,7 +83,7 @@ class MidiLearnNode:public Node
             }
             else
             if((learnedchan == mid->chan) && (learnedtype == mid->type))
-                parent->setChar(mid->par);
+                parent->setInt(mid->par);
 
         }
 

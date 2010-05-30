@@ -76,7 +76,7 @@ void EventReceiver::handleEvent(Event *event)
 
         info += "(NewValueEvent) ";
         info += "val: " + QString::number(
-            ev->control->getChar());
+            ev->control->getInt());
 
         if (const Control<int>* c = dynamic_cast<const Control<int>*>(ev->control)) {
             info += ", " + QString::number( c->getValue());

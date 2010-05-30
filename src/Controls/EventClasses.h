@@ -22,10 +22,10 @@
 class ChangeEvent:public Event
 {
     public:
-        ChangeEvent(char nval);
-        char getVal() const {return val;}
+        ChangeEvent(int nval);
+        int getVal() const {return val;}
     private:
-        const char val;
+        const int val;
 };
 
 /**Notification Event*/
