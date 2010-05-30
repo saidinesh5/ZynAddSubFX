@@ -44,13 +44,10 @@ template<class T>
 void Control<T>::setValue(const T &val)
 {
     bool changed = false;
-    lock();
     if(value != val) {
         value   = val;
         changed = true;
     }
-    unlock();
-    //std::cout << "Setting to " << val << " " << (long long)(this) << std::endl;
     if(changed)
         forward(new NewValueEvent(this, getInt()));
 }
@@ -58,11 +55,7 @@ void Control<T>::setValue(const T &val)
 template<class T>
 T Control<T>::getValue() const
 {
-    T tmp;
-    lock();
-    tmp = value;
-    unlock();
-    return tmp;
+    return value;
 }
 
 template<class T>
