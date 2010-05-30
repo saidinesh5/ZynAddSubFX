@@ -37,6 +37,7 @@ class Dial:public QDial
     private slots:
         void slotConnected(GenControl *control);
         void slotDisconnected();
+        void slotIncomingValue(int value);
 
     private:
         void mousePressEvent(class QMouseEvent * event);

@@ -40,6 +40,7 @@ class Slider : public QSlider
 
     private slots:
         void connected(class GenControl *control);
+        void slotIncomingValue(int value);
 
     private:
         bool m_sliding, m_outside;

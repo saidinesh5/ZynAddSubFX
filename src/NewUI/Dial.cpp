@@ -51,13 +51,20 @@ Dial::Dial(QWidget *parent)
     connect(this, SIGNAL(sliderMoved(int)),
             helper, SLOT(setValue(int)));
     connect(helper, SIGNAL(valueChanged(int)),
-            this, SLOT(setValue(int)));
+            this, SLOT(slotIncomingValue(int)));
 
     connect(helper, SIGNAL(connected(GenControl *)),
             this, SLOT(slotConnected(GenControl *)));
     connect(helper, SIGNAL(disconnected()),
             this, SLOT(slotDisconnected()));
 
+}
+
+void Dial::slotIncomingValue(int value)
+{
+    if (!isSliderDown()) {
+        setValue(value);
+    }
 }
 
 void Dial::mousePressEvent(QMouseEvent *event)

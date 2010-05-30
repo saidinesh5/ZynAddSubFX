@@ -29,7 +29,6 @@
 
 Slider::Slider(QWidget *parent)
     : QSlider(parent),
-    m_sliding(false),
     m_outside(false),
     m_prevValue(0)
 {
@@ -40,13 +39,20 @@ Slider::Slider(QWidget *parent)
     connect(this, SIGNAL(valueChanged(int)),
             helper, SLOT(setValue(int)));
     connect(helper, SIGNAL(valueChanged(int)),
-            this, SLOT(setValue(int)));
+            this, SLOT(slotIncomingValue(int)));
+
     connect(this, SIGNAL(defaults()),
             helper, SLOT(defaults()));
     connect(helper, SIGNAL(connected(GenControl *)),
             this, SLOT(connected(GenControl *)));
 
+}
 
+void Slider::slotIncomingValue(int value)
+{
+    if (!isSliderDown()) {
+        setValue(value);
+    }
 }
 
 void Slider::connected(class GenControl *control)
@@ -65,7 +71,7 @@ void Slider::mousePressEvent(QMouseEvent *e)
     if ( e->button() == Qt::LeftButton &&
             !rect.contains( e->pos() ) ) {
 
-        m_sliding   = true;
+        setSliderDown(true);
         m_prevValue = QSlider::value();
         mouseMoveEvent( e );
 
@@ -78,13 +84,13 @@ void Slider::mousePressEvent(QMouseEvent *e)
 
 void Slider::mouseReleaseEvent(QMouseEvent *)
 {
-    m_sliding = false;
+    setSliderDown(false);
     m_outside = false;
 }
 
 void Slider::mouseMoveEvent(QMouseEvent *e)
 {
-    if ( m_sliding )
+    if ( isSliderDown() )
     {
         //feels better, but using set value of 20 is bad of course
         QRect rect( -20, -20, width()+40, height()+40 );
