@@ -88,6 +88,8 @@ class ControlHelper:public QObject, public NodeUser
 
         virtual void newValueEvent(NewValueEvent *event);
 
+        static void setGlobalUndoStack(class QUndoStack *stack);
+
     public slots:
         /**
         * @brief Change the value of the control
@@ -166,6 +168,11 @@ class ControlHelper:public QObject, public NodeUser
         void emitOptions();
 
         void disconnect();
+
+        //needs to be kept between changes for undo functionality
+        int m_oldIntValue;
+
+        static class QUndoStack *m_undoStack;
 
 };
 

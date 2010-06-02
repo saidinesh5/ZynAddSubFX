@@ -86,6 +86,8 @@ class Node:public NodeUser
         void clearChildren();
         Node *getChild(std::string id);
 
+        unsigned int getUid() const;
+
         const std::vector<std::string> getTypes();
         bool removeFromParent();
 
@@ -115,7 +117,7 @@ class Node:public NodeUser
 
         //these give us unique id's for every instantiated node. used (so far) for uniquely identifying nodes
         //and their nodejobs together.
-        unsigned int m_uid;
+        const unsigned int m_uid;
         static unsigned int m_nextUid;
 
         std::string m_id, m_description;

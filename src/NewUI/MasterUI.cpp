@@ -24,6 +24,8 @@
 #include "AddnoteUI.h"
 #include "../Controls/Node.h"
 #include <QtDebug>
+#include <QUndoStack>
+#include <QUndoView>
 #include "DebugInterface.h"
 #include "BankLoader.h"
 #include "PropertyWatch.h"
@@ -36,6 +38,8 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
       m_bankUI(NULL)
 
 {
+
+
     Q_INIT_RESOURCE(main);
 
     //this instance will monitor all dynamic event property changes
@@ -65,6 +69,11 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
     //qDebug() << file.getXMLdata();
     file.saveXMLfile("/tmp/inst.xml");
     */
+
+    QUndoStack *undoStack = new QUndoStack(this);
+    ControlHelper::setGlobalUndoStack(undoStack);
+    QUndoView *undoView = new QUndoView(undoStack, NULL);
+    undoView->show();
 
 }
 

@@ -16,12 +16,10 @@ static pthread_mutex_t treeMutex;
 unsigned int Node::m_nextUid = 0;
 
 Node::Node(Node *parent, std::string id)
-    :m_parent(parent)
+    : m_uid(m_nextUid),
+    m_parent(parent)
 {
-    Node::lock();
-    m_uid = m_nextUid;
     m_nextUid++;
-    Node::unlock();
 
     rename(id);
     if(m_parent)
@@ -257,6 +255,11 @@ void Node::lock()
 void Node::unlock()
 {
     pthread_mutex_unlock(&treeMutex);
+}
+
+unsigned int Node::getUid() const
+{
+    return m_uid;
 }
 
 void Node::saveXml(XMLwrapper *xml)

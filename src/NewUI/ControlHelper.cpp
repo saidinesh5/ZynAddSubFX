@@ -22,6 +22,8 @@
 
 #include "ControlHelper.h"
 #include <QCoreApplication>
+#include <QUndoCommand>
+#include <QUndoStack>
 #include <QMessageBox>
 #include <QWidget>
 #include <QDynamicPropertyChangeEvent>
@@ -30,9 +32,12 @@
 #include <QtDebug>
 #include "Menu.h"
 
+QUndoStack * ControlHelper::m_undoStack = NULL;
+
 ControlHelper::ControlHelper(QObject *parent)
     :QObject(parent),
-      m_control(NULL)
+      m_control(NULL),
+      m_oldIntValue(0)
 {
     //attach a menu to the parent object if it is a QWidget
     if (QWidget* widget = qobject_cast<QWidget*>(parent)) {
@@ -44,6 +49,11 @@ ControlHelper::~ControlHelper()
 {
     if (m_control)
         m_control->removeRedirections(this);
+}
+
+void ControlHelper::setGlobalUndoStack(class QUndoStack *stack)
+{
+    m_undoStack = stack;
 }
 
 void ControlHelper::handleEvent(Event *event)
@@ -64,7 +74,6 @@ void ControlHelper::handleEvent(Event *event)
     if(event->type() == Event::RemovalEvent) {
         //clear the current connected control
         disconnect();
-        qDebug() << "Got removalevent, clearing...";
     }
     else
     if(event->type() == Event::OptionsChangedEvent)
@@ -87,6 +96,7 @@ void ControlHelper::disconnectedEvent()
 
 void ControlHelper::newValueEvent(NewValueEvent *event)
 {
+    m_oldIntValue = event->value;
     emit valueChanged(event->value);
 }
 
@@ -123,11 +133,75 @@ void ControlHelper::disconnect()
     disconnectedEvent();
 }
 
+class ControlChange : public QUndoCommand, public NodeUser
+{
+    private:
+        int m_newValue, m_oldValue, m_id;
+        GenControl *m_control;
+
+    public:
+
+        ControlChange(GenControl *control, int newValue, int oldValue) : 
+            QUndoCommand(QString::fromStdString(control->getAbsoluteId())),
+            m_newValue(newValue),
+            m_oldValue(oldValue),
+            m_id(control->getUid()),
+            m_control(control)
+        {
+            m_control->addRedirection(this, new TypeFilter(Event::RemovalEvent));
+        }
+
+        void handleEvent(Event *event)
+        {
+            if(event->type() == Event::RemovalEvent) {
+                //clear the current connected control
+                m_control = NULL;
+            }
+        }
+
+        virtual ~ControlChange()
+        {
+            if (m_control) m_control->removeRedirections(this);
+        }
+
+        bool mergeWith(const QUndoCommand* command)
+        {
+            if (command->id() != id())
+                return false;
+            m_newValue = static_cast<const ControlChange*>(command)->m_newValue;
+            return true;
+        }
+
+        int id() const
+        {
+            return m_id;
+        }
+
+        void redo()
+        {
+            if (m_control) m_control->queueSetInt(m_newValue);
+        }
+
+        void undo()
+        {
+            if (m_control) m_control->queueSetInt(m_oldValue);
+        }
+
+};
+
 void ControlHelper::setValue(int value)
 {
+    if (m_undoStack && m_control) {
+        m_undoStack->push(new ControlChange(m_control, value, m_oldIntValue));
+        m_oldIntValue = value;
+    }
+
+#if 0
     if (m_control) {
         m_control->queueSetInt(value);
     }
+#endif
+
 }
 
 void ControlHelper::setValue(bool value)
