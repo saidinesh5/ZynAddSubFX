@@ -23,6 +23,7 @@
 #include "MasterUI.h"
 #include "AddnoteUI.h"
 #include "../Controls/Node.h"
+#include <QDockWidget>
 #include <QtDebug>
 #include <QUndoStack>
 #include <QUndoView>
@@ -72,8 +73,14 @@ MasterUI::MasterUI(Master *master_, int *exitprogram_)
 
     QUndoStack *undoStack = new QUndoStack(this);
     ControlHelper::setGlobalUndoStack(undoStack);
+
+    //QVBoxLayout *undoLayout = new QVBoxLayout(undoHistory);
+    //undoHistory->setLayout(undoLayout);
+
     QUndoView *undoView = new QUndoView(undoStack, NULL);
-    undoView->show();
+    //undoLayout->addWidget(undoView);
+
+    undoHistory->setWidget(undoView);
 
 }
 
