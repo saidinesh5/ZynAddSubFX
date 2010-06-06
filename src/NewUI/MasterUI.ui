@@ -979,30 +979,6 @@
          </layout>
         </widget>
        </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QPushButton" name="pushButton_8">
-           <property name="text">
-            <string>Virtual Keyboard</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_9">
-           <property name="text">
-            <string>[UNUSED]</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
       </layout>
      </widget>
     </item>
@@ -1141,22 +1117,6 @@
     <hint type="destinationlabel">
      <x>377</x>
      <y>444</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_8</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>keyboard</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>179</x>
-     <y>547</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>188</x>
-     <y>652</y>
     </hint>
    </hints>
   </connection>
