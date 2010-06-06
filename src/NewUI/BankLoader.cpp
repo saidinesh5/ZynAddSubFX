@@ -22,28 +22,57 @@
 
 #include "BankLoader.h"
 #include "ControlHelper.h"
+#include <QTableWidgetItem>
+#include <QtDebug>
+
+static const int colsize = 16;
 
 BankLoader::BankLoader(QString partId, QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    ControlHelper *instrumentHelper = new ControlHelper(instrumentList);
+    ControlHelper *instrumentHelper = new ControlHelper(instrumentTable);
 
     connect(instrumentHelper, SIGNAL(optionsChanged(QStringList)),
             this, SLOT(slotBankChanged(QStringList)));
 
-    connect(instrumentList, SIGNAL(currentRowChanged(int)),
+    connect(instrumentTable, SIGNAL(currentCellChanged(int , int , int , int)),
+            this, SLOT(slotCurrentCellChanged(int, int, int, int)));
+
+    connect(this, SIGNAL(currentInstrumentChanged(int)),
             instrumentHelper, SLOT(setValue(int)));
 
 
     setProperty("absoluteControlId", partId);
     setWindowTitle(partId.split(".").last());
+
+    for (int i = 0; i < instrumentTable->horizontalHeader()->count(); ++i) {
+        instrumentTable->horizontalHeader()->setResizeMode(i, QHeaderView::Stretch);
+    }
+
+    for (int i = 0; i < instrumentTable->verticalHeader()->count(); ++i) {
+        instrumentTable->verticalHeader()->setResizeMode(i, QHeaderView::Stretch);
+    }
+
 }
 
 void BankLoader::slotBankChanged(QStringList instruments)
 {
-    instrumentList->clear();
-    instrumentList->addItems(instruments);
+    instrumentTable->clearContents();
+
+    for (int i = 0; i < instruments.size(); ++i) {
+        instrumentTable->setItem(i % colsize, i / colsize, new QTableWidgetItem(instruments.at(i)));
+    }
+    //instrumentList->addItems(instruments);
+}
+
+void BankLoader::slotCurrentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    int instrumentIndex = currentColumn * colsize + currentRow;
+
+    if (loadOnSelectChange->isChecked()) {
+        emit currentInstrumentChanged(instrumentIndex);
+    }
 }
 
 #include "BankLoader.moc"
