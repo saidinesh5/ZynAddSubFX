@@ -31,8 +31,12 @@ class BankLoader : public QWidget, public Ui::BankLoader
     public:
         BankLoader(QString partId, QWidget *parent = NULL);
 
+    signals:
+        void currentInstrumentChanged(int index);
+
     private slots:
         void slotBankChanged(QStringList instruments);
+        void slotCurrentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 };
 
