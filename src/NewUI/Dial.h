@@ -32,7 +32,8 @@ class Dial:public QDial
     Q_OBJECT
     public:
         Dial(QWidget *parent);
-        virtual void resizeEvent(class QResizeEvent*);
+        //QSize minimumSizeHint() const;
+        //QSize sizeHint() const;
 
     private slots:
         void slotConnected(GenControl *control);

@@ -35,6 +35,8 @@
 //            2 - rectangular
 //            3 - image
 static int drawStyle = 1;
+static const int labelHeight = 20;
+
 
 Dial::Dial(QWidget *parent)
     :QDial(parent),
@@ -127,8 +129,9 @@ void Dial::paintEvent(class QPaintEvent * /*event */)
     if(r.height() < r.width())
         r.setWidth(r.height());
 
-    r.setSize(r.size() * 0.9);
+    r.setSize(r.size() * 0.8);
     r.moveCenter(rect().center());
+    r.moveTop(r.top() - r.height() * 0.1);
 
     float v = (float(value()) / (maximum() - minimum()));
 
@@ -155,18 +158,24 @@ void Dial::paintEvent(class QPaintEvent * /*event */)
 
         //center circle
         p.setBrush(palette().button());
+
+        QPen oldPen(p.pen());
+
+        p.setPen(palette().color(QPalette::Dark));
+
+
         p.drawEllipse(r);
 
         p.translate(r.center());
 
-        for(float i = start*(2*(PI/360)); i >= (-90+spaceAtBottom/2)*(2*(PI/360)); i -= PI / 12)
+        for(float i = start*(2*(PI/360)); i >= (-90+spaceAtBottom/2)*(2*(PI/360)); i -= PI / 12) {
 
             //draw lots of markers
             p.drawLine(
                 r.width() * 0.4 * cos(i), -r.height() * 0.4 * sin(i),
                 r.width() * 0.5 * cos(i), -r.height() * 0.5 * sin(i));
 
-
+        }
 
         QRect smallRect = r;
         smallRect.setSize(smallRect.size() * 0.6);
@@ -178,12 +187,29 @@ void Dial::paintEvent(class QPaintEvent * /*event */)
             p.setBrush(palette().button());
 
         p.drawPie(smallRect, start * 16, span * 16);
-        //p.rotate(v);
 
-        //QPoint point = r.center();
-        //point.setY(point.y() - r.height() / 2);
+        p.setPen(oldPen);
 
-        //p.drawEllipse(QPoint(0, r.height() / 3), 4, 4);
+        QVariant caption = property("caption");
+
+        if (!caption.isValid()) {
+            caption = property("controlId");
+        }
+
+        if (caption.isValid()) {
+
+            int textFlags = Qt::AlignCenter | Qt::TextWordWrap;
+            QRect textRect(0, 0, r.width(), labelHeight*2);
+            QString captionString = caption.toString();
+
+            textRect = p.boundingRect(textRect, textFlags, captionString);
+            textRect.setWidth(textRect.width() * 1.1);
+            textRect.moveCenter(QPoint(0, r.width() * 0.5));
+
+            p.drawRoundedRect(textRect, 5, 5);
+            p.drawText(textRect, textFlags, captionString);
+        }
+
     }
     else
     if(drawStyle == 2) {
@@ -219,11 +245,16 @@ void Dial::wheelEvent(class QWheelEvent *event)
     emit sliderMoved(value());
 }
 
-void Dial::resizeEvent(QResizeEvent* event)
-{
-    QDial::resizeEvent(event);
-    setMaximumHeight(width());
-}
+//QSize Dial::minimumSizeHint() const
+//{
+    //return QSize(0, width() + labelHeight);
+//}
+
+//QSize Dial::sizeHint() const
+//{
+    //return QSize(0, width() + labelHeight);
+//
+//}
 
 #include "Dial.moc"
 

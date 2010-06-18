@@ -755,7 +755,7 @@
           </property>
           <item>
            <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="0" rowspan="2">
+            <item row="0" column="0" rowspan="3">
              <widget class="Dial" name="partvolume">
               <property name="maximum">
                <number>127</number>
@@ -775,9 +775,12 @@
               <property name="controlId" stdset="0">
                <string>volume</string>
               </property>
+              <property name="caption" stdset="0">
+               <string>Volume</string>
+              </property>
              </widget>
             </item>
-            <item row="0" column="1" rowspan="2">
+            <item row="0" column="1" rowspan="3">
              <widget class="Dial" name="partPan">
               <property name="maximum">
                <number>127</number>
@@ -797,9 +800,12 @@
               <property name="controlId" stdset="0">
                <string>panning</string>
               </property>
+              <property name="caption" stdset="0">
+               <string>Pan</string>
+              </property>
              </widget>
             </item>
-            <item row="0" column="2" rowspan="2">
+            <item row="0" column="2" rowspan="3">
              <widget class="Dial" name="mastervolume_4">
               <property name="maximum">
                <number>127</number>
@@ -819,9 +825,12 @@
               <property name="controlId" stdset="0">
                <string>velocity_sensing</string>
               </property>
+              <property name="caption" stdset="0">
+               <string>Velocity Sense</string>
+              </property>
              </widget>
             </item>
-            <item row="0" column="3" rowspan="2">
+            <item row="0" column="3" rowspan="3">
              <widget class="Dial" name="mastervolume_5">
               <property name="maximum">
                <number>127</number>
@@ -841,45 +850,8 @@
               <property name="controlId" stdset="0">
                <string>velocity_offset</string>
               </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Volume</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Pan</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>Velocity Sense</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="QLabel" name="label_6">
-              <property name="text">
+              <property name="caption" stdset="0">
                <string>Velocity Offset</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -888,22 +860,37 @@
               <property name="text">
                <string>Key shift</string>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
              </widget>
             </item>
-            <item row="1" column="4">
+            <item row="0" column="4" rowspan="2">
              <widget class="QSpinBox" name="spinBox_3">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="prefix">
                <string/>
               </property>
              </widget>
             </item>
-            <item row="1" column="5">
+            <item row="0" column="5" rowspan="2">
              <widget class="ComboBox" name="partChannelReceiver">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="controlId" stdset="0">
                <string>ReceiveChannel</string>
@@ -915,33 +902,10 @@
               <property name="text">
                <string>Midi channel</string>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
              </widget>
-            </item>
-            <item row="0" column="4">
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="0" column="5">
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -1078,15 +1042,15 @@
    <header>ComboBox.h</header>
   </customwidget>
   <customwidget>
+   <class>CheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>CheckBox.h</header>
+  </customwidget>
+  <customwidget>
    <class>SiblingBar</class>
    <extends>QWidget</extends>
    <header>SiblingBar.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CheckBox</class>
-   <extends>QCheckBox</extends>
-   <header>CheckBox.h</header>
   </customwidget>
   <customwidget>
    <class>Button</class>
