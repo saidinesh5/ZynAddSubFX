@@ -73,10 +73,10 @@ ADnote::ADnote(ADnoteParameters *pars,
 
     bandwidthDetuneMultiplier = pars->getBandwidthDetuneMultiplier();
 
-    if(pars->PPanning == 0)
+    if(pars->panning() == 0)
         NoteGlobalPar.Panning = RND;
     else
-        NoteGlobalPar.Panning = pars->PPanning / 128.0;
+        NoteGlobalPar.Panning = pars->panning() / 128.0;
 
 
     NoteGlobalPar.FilterCenterPitch = pars->GlobalFilter->getfreq() //center freq
@@ -593,7 +593,7 @@ void ADnote::ADlegatonote(REALTYPE /*freq*/,
             partparams->VoicePar[nvoice]->
             PAmpVelocityScaleFunction);                                                                     //velocity
 
-        if(partparams->VoicePar[nvoice]->PVolumeminus != 0)
+        if(partparams->VoicePar[nvoice]->volumeMinus != 0)
             NoteVoicePar[nvoice].Volume = -NoteVoicePar[nvoice].Volume;
 
         if(partparams->VoicePar[nvoice]->PPanning == 0)
@@ -847,14 +847,14 @@ void ADnote::initparameters()
             partparams->VoicePar[nvoice]->
             PAmpVelocityScaleFunction);                                                                     //velocity
 
-        if(partparams->VoicePar[nvoice]->PVolumeminus != 0)
+        if(partparams->VoicePar[nvoice]->volumeMinus() != 0)
             NoteVoicePar[nvoice].Volume = -NoteVoicePar[nvoice].Volume;
 
-        if(partparams->VoicePar[nvoice]->PPanning == 0)
+        if(partparams->VoicePar[nvoice]->panning() == 0)
             NoteVoicePar[nvoice].Panning = RND; // random panning
         else
             NoteVoicePar[nvoice].Panning =
-                partparams->VoicePar[nvoice]->PPanning / 128.0;
+                partparams->VoicePar[nvoice]->panning() / 128.0;
 
         newamplitude[nvoice] = 1.0;
         if(partparams->VoicePar[nvoice]->PAmpEnvelopeEnabled != 0) {

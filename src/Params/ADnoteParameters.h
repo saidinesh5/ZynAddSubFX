@@ -137,14 +137,14 @@ class ADnoteVoiceParam:public Node
                     64 - center
                    127 - right
            The Panning is ignored if the instrument is mono */
-        unsigned char PPanning;
+        DescRanger panning;
 
         /* Voice Volume */
         //unsigned char PVolume;
         Ranger volume;
 
         /* If the Volume negative */
-        unsigned char PVolumeminus;
+        Toggle volumeMinus;
 
         /* Velocity sensing */
         unsigned char PAmpVelocityScaleFunction;
@@ -250,7 +250,7 @@ class ADnoteParameters : public PresetsArray
            1 - left
            64 - center
            127 - right */
-        unsigned char PPanning;
+        DescRanger panning;
 
         //unsigned char PVolume;
 

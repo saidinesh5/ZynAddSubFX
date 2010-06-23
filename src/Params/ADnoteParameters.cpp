@@ -68,7 +68,9 @@ ADnoteVoiceParam::ADnoteVoiceParam(Node *parent, std::string id, ADnoteParameter
       detuneSet            (this, "", 0, &par->globalDetuneSet),
       freqEnvelopeEnabled  (this, "freq_envelope_enabled", 0),
       freqLfoEnabled       (this, "freq_lfo_enabled", 0),
+      panning              (this, "panning", 64),
       volume               (this, "volume", 0.23, new VoiceVolumeConv),
+      volumeMinus          (this, "volume_minus", 0),
       FMDetuneSet          (this, "FM", 0, &par->globalDetuneSet)
 {}
 
@@ -77,6 +79,8 @@ ADnoteParameters::ADnoteParameters(Node *parent, FFTwrapper *fft_)
       volume               (this, "volume", 10, new VolumeConv),
       //note: the original conversion functon is found in ADnote.cpp:337
       globalDetuneSet      (this, "", 1),
+      panning              (this, "panning", 64),
+
       voices               (this, "Voices")
 {
     setpresettype("Padsyth");
@@ -117,7 +121,7 @@ void ADnoteParameters::defaults()
     //GlobalPar.PVolume=90;
     volume.defaults();
 
-    PPanning = 64; //center
+    panning.defaults(); //center
     PAmpVelocityScaleFunction = 64;
     AmpEnvelope->defaults();
     AmpLfo->defaults();
@@ -168,8 +172,8 @@ void ADnoteParameters::defaults(int n)
     VoicePar[nvoice]->FMoscilphase.defaults();
     VoicePar[nvoice]->delay.defaults();
     //VoicePar[nvoice]->PVolume=100;
-    VoicePar[nvoice]->PVolumeminus    = 0;
-    VoicePar[nvoice]->PPanning        = 64; //center
+    VoicePar[nvoice]->volumeMinus.defaults();
+    VoicePar[nvoice]->panning.defaults(); //center
     VoicePar[nvoice]->detuneSet.defaults();
     VoicePar[nvoice]->freqLfoEnabled.defaults();
     VoicePar[nvoice]->freqEnvelopeEnabled.defaults();
@@ -390,9 +394,9 @@ void ADnoteParameters::add2XMLsection(XMLwrapper *xml, int n)
 
 
     xml->beginbranch("AMPLITUDE_PARAMETERS");
-    xml->addpar("panning", VoicePar[nvoice]->PPanning);
+    ADDPAR(VoicePar[nvoice]->panning, "panning");
     xml->addpar("volume", VoicePar[nvoice]->volume.getInt());
-    xml->addparbool("volume_minus", VoicePar[nvoice]->PVolumeminus);
+    ADDPAR(VoicePar[nvoice]->volumeMinus, "volume_minus");
     xml->addpar("velocity_sensing", VoicePar[nvoice]->PAmpVelocityScaleFunction);
 
     xml->addparbool("amp_envelope_enabled",
@@ -504,7 +508,7 @@ void ADnoteParameters::add2XML(XMLwrapper *xml)
     xml->beginbranch("AMPLITUDE_PARAMETERS");
     //xml->addpar("volume",PVolume);
     xml->addpar("volume", volume.getInt());
-    xml->addpar("panning", PPanning);
+    ADDPAR(panning, "panning");
     xml->addpar("velocity_sensing", PAmpVelocityScaleFunction);
     xml->addpar("punch_strength", PPunchStrength);
     xml->addpar("punch_time", PPunchTime);
@@ -573,7 +577,7 @@ void ADnoteParameters::getfromXML(XMLwrapper *xml)
     if(xml->enterbranch("AMPLITUDE_PARAMETERS")) {
         //PVolume=xml->getpar127("volume",PVolume);
         volume.setInt(int(xml->getpar127("volume", volume.getInt())));
-        PPanning = xml->getpar127("panning", PPanning);
+        GETPAR(panning, "panning");
         PAmpVelocityScaleFunction = xml->getpar127(
             "velocity_sensing",
             
@@ -726,16 +730,15 @@ void ADnoteParameters::getfromXMLsection(XMLwrapper *xml, int n)
 
 
     if(xml->enterbranch("AMPLITUDE_PARAMETERS")) {
-        VoicePar[nvoice]->PPanning =
-            xml->getpar127("panning", VoicePar[nvoice]->PPanning);
+        GETPAR(VoicePar[nvoice]->panning, "panning");
+
         VoicePar[nvoice]->volume.setInt(xml->getpar127("volume",
                                                              VoicePar[nvoice]->
                                                              volume.
                                                              getInt()));
-        VoicePar[nvoice]->PVolumeminus = xml->getparbool(
-            "volume_minus",
-            VoicePar[nvoice]->
-            PVolumeminus);
+
+        GETPAR(VoicePar[nvoice]->volumeMinus, "volume_minus");
+
         VoicePar[nvoice]->PAmpVelocityScaleFunction = xml->getpar127(
             "velocity_sensing",
             VoicePar[nvoice]->PAmpVelocityScaleFunction);
