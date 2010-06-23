@@ -1421,7 +1421,7 @@ void Part::handleSyncEvent(Event *event)
         NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
 
         if(newValue->control == &instrumentControl) {
-            instrumentControl.bank-> loadfromslot(instrumentControl.getInt(), this);
+            instrumentControl.bank->loadfromslot(instrumentControl.getInt(), this);
 
             //The current nio implementation locks the master mutex before handling jobs etc, which
             //means that we have to be careful not to lock the mutex from here.
@@ -1435,12 +1435,23 @@ void Part::handleEvent(Event *event)
     if(event->type() == Event::NewValueEvent) {
         NewValueEvent *newValue = static_cast<NewValueEvent *>(event);
 
-        if(newValue->control == &bankControl)
-            instrumentControl.loadBank(
-                bankControl.bank->banks[bankControl()].dir);
-        else
-            Job::push(new NodeJob(this, new NewValueEvent(*newValue)));
+        if (newValue->wasChanged) {
 
+            if(newValue->control == &bankControl)
+
+                instrumentControl.loadBank(
+                        bankControl.bank->banks[bankControl()].dir);
+
+            else if (newValue->control == &instrumentControl) {
+
+                Job::push(new NodeJob(this, new NewValueEvent(*newValue)));
+
+            } else {
+
+                std::cout << "Part: NewValueEvent for unknown control" << std::endl;
+
+            }
+        }
     }
 }
 

@@ -8,10 +8,11 @@ UpdateEvent::UpdateEvent()
     :Event(Event::UpdateEvent)
 {}
 
-NewValueEvent::NewValueEvent(GenControl *control, int value)
+NewValueEvent::NewValueEvent(GenControl *control, int value, bool wasChanged)
     :Event(Event::NewValueEvent),
       control(control),
-      value(value)
+      value(value),
+      wasChanged(wasChanged)
 {}
 
 RequestValueEvent::RequestValueEvent()

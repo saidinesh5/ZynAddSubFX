@@ -49,7 +49,7 @@ void Control<T>::setValue(const T &val)
         changed = true;
     }
     if(changed)
-        forward(new NewValueEvent(this, getInt()));
+        forward(new NewValueEvent(this, getInt(), true));
 }
 
 template<class T>

@@ -44,9 +44,10 @@ class UpdateEvent:public Event
 class NewValueEvent:public Event
 {
     public:
-        NewValueEvent(GenControl *control, int value);
+        NewValueEvent(GenControl *control, int value, bool wasChanged = false);
         const GenControl *control;
         int value;
+        bool wasChanged;
 };
 
 /**Event for Child creation*/
