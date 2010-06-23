@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>968</width>
-    <height>576</height>
+    <width>836</width>
+    <height>562</height>
    </rect>
   </property>
   <property name="font">
@@ -112,599 +112,6 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>2</number>
-     </property>
-     <property name="controlId" stdset="0">
-      <string/>
-     </property>
-     <widget class="QWidget" name="tab_5">
-      <property name="controlId" stdset="0">
-       <string>FILTER_PARAMETERS</string>
-      </property>
-      <attribute name="title">
-       <string>Filter Parameters</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="Dial" name="partPan_3">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="pageStep">
-          <number>32</number>
-         </property>
-         <property name="wrapping">
-          <bool>false</bool>
-         </property>
-         <property name="notchTarget">
-          <double>4.699999999999999</double>
-         </property>
-         <property name="notchesVisible">
-          <bool>true</bool>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>center_freq</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>C. freq</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="mastervolume_11">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="pageStep">
-          <number>32</number>
-         </property>
-         <property name="wrapping">
-          <bool>false</bool>
-         </property>
-         <property name="notchTarget">
-          <double>4.699999999999999</double>
-         </property>
-         <property name="notchesVisible">
-          <bool>true</bool>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>freq</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Q</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="mastervolume_12">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="pageStep">
-          <number>32</number>
-         </property>
-         <property name="wrapping">
-          <bool>false</bool>
-         </property>
-         <property name="notchTarget">
-          <double>4.699999999999999</double>
-         </property>
-         <property name="notchesVisible">
-          <bool>true</bool>
-         </property>
-         <property name="controlId" stdset="0">
-          <string/>
-         </property>
-         <property name="caption" stdset="0">
-          <string>V. SnsA</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="mastervolume_13">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="pageStep">
-          <number>32</number>
-         </property>
-         <property name="wrapping">
-          <bool>false</bool>
-         </property>
-         <property name="notchTarget">
-          <double>4.699999999999999</double>
-         </property>
-         <property name="notchesVisible">
-          <bool>true</bool>
-         </property>
-         <property name="controlId" stdset="0">
-          <string/>
-         </property>
-         <property name="caption" stdset="0">
-          <string>V. Sns</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="mastervolume_14">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="pageStep">
-          <number>32</number>
-         </property>
-         <property name="wrapping">
-          <bool>false</bool>
-         </property>
-         <property name="notchTarget">
-          <double>4.699999999999999</double>
-         </property>
-         <property name="notchesVisible">
-          <bool>true</bool>
-         </property>
-         <property name="controlId" stdset="0">
-          <string/>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Freq.tr.</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="mastervolume_15">
-         <property name="maximum">
-          <number>127</number>
-         </property>
-         <property name="pageStep">
-          <number>32</number>
-         </property>
-         <property name="wrapping">
-          <bool>false</bool>
-         </property>
-         <property name="notchTarget">
-          <double>4.699999999999999</double>
-         </property>
-         <property name="notchesVisible">
-          <bool>true</bool>
-         </property>
-         <property name="controlId" stdset="0">
-          <string/>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Gain</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="widget_5" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="margin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Category</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="ComboBox" name="comboBox_5">
-            <property name="controlId" stdset="0">
-             <string>type</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Filtertype</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="ComboBox" name="comboBox_6">
-            <property name="controlId" stdset="0">
-             <string>category</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Stages</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="SpinBox" name="octave_4">
-            <property name="suffix">
-             <string> stage</string>
-            </property>
-            <property name="prefix">
-             <string/>
-            </property>
-            <property name="controlId" stdset="0">
-             <string>Octavedetune</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_16">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_7">
-      <property name="controlId" stdset="0">
-       <string>FILTER_LFO</string>
-      </property>
-      <attribute name="title">
-       <string>Filter LFO</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="Dial" name="a_dt_10">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>freq</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Freq</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="a_dt_11">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>intensity</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Depth</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="d_dt_6">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>start_phase</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Start</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="s_val_14">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>delay</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Delay</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="s_val_15">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>stretch</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>Stretch</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="s_val_16">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>randomness_amplitude</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>A.R.</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="s_val_17">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>randomness_frequency</string>
-         </property>
-         <property name="caption" stdset="0">
-          <string>F.R.</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="widget_8" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="margin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_8">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>type</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="ComboBox" name="comboBox_9">
-            <property name="controlId" stdset="0">
-             <string>lfo_type</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="CheckBox" name="checkBox_10">
-            <property name="text">
-             <string>Continous</string>
-            </property>
-            <property name="controlId" stdset="0">
-             <string>continous</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_11">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_6">
-      <property name="controlId" stdset="0">
-       <string>FILTER_ENVELOPE</string>
-      </property>
-      <attribute name="title">
-       <string>Filter Envelope</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="Dial" name="a_dt_13">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>A_val</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="d_dt_9">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>A_dt</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="d_dt_11">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>D_val</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="d_dt_10">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>D_dt</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="r_dt_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>R_dt</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="r_dt_7">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>R_val</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Dial" name="stretch_9">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="controlId" stdset="0">
-          <string>env_stretch</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="widget_4" native="true">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="margin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="pushButton_6">
-            <property name="text">
-             <string>Env</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="CheckBox" name="checkBox_6">
-            <property name="text">
-             <string>FrcR</string>
-            </property>
-            <property name="controlId" stdset="0">
-             <string>forced_release</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_14">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
    <item row="1" column="1">
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="currentIndex">
@@ -717,8 +124,8 @@
       <attribute name="title">
        <string>Amplitude Envelope</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0">
         <widget class="Dial" name="a_dt">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -734,7 +141,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="0" column="1">
         <widget class="Dial" name="d_dt">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -750,7 +157,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="0" column="2">
         <widget class="Dial" name="s_val">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -766,7 +173,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0">
         <widget class="Dial" name="r_dt">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -782,7 +189,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="1">
         <widget class="Dial" name="stretch">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -798,7 +205,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="2">
         <widget class="QWidget" name="widget_2" native="true">
          <layout class="QVBoxLayout" name="verticalLayout">
           <property name="spacing">
@@ -859,8 +266,8 @@
       <attribute name="title">
        <string>Amplitude LFO</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
         <widget class="Dial" name="a_dt_6">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -873,7 +280,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="0" column="1">
         <widget class="Dial" name="a_dt_7">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -886,7 +293,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="0" column="2">
         <widget class="Dial" name="d_dt_4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -899,7 +306,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="0" column="3">
         <widget class="Dial" name="s_val_4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -912,7 +319,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0">
         <widget class="Dial" name="s_val_5">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -925,7 +332,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="1">
         <widget class="Dial" name="s_val_7">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -938,7 +345,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="2">
         <widget class="Dial" name="s_val_6">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -951,7 +358,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="3">
         <widget class="QWidget" name="widget_6" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -1510,6 +917,599 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="controlId" stdset="0">
+      <string/>
+     </property>
+     <widget class="QWidget" name="tab_5">
+      <property name="controlId" stdset="0">
+       <string>FILTER_PARAMETERS</string>
+      </property>
+      <attribute name="title">
+       <string>Filter Parameters</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="Dial" name="partPan_3">
+         <property name="maximum">
+          <number>127</number>
+         </property>
+         <property name="pageStep">
+          <number>32</number>
+         </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="notchTarget">
+          <double>4.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>center_freq</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>C. freq</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="Dial" name="mastervolume_11">
+         <property name="maximum">
+          <number>127</number>
+         </property>
+         <property name="pageStep">
+          <number>32</number>
+         </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="notchTarget">
+          <double>4.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>freq</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Q</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="Dial" name="mastervolume_12">
+         <property name="maximum">
+          <number>127</number>
+         </property>
+         <property name="pageStep">
+          <number>32</number>
+         </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="notchTarget">
+          <double>4.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+         <property name="controlId" stdset="0">
+          <string/>
+         </property>
+         <property name="caption" stdset="0">
+          <string>V. SnsA</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6" rowspan="2">
+        <widget class="QWidget" name="widget_5" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Category</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="ComboBox" name="comboBox_5">
+            <property name="controlId" stdset="0">
+             <string>type</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Filtertype</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="ComboBox" name="comboBox_6">
+            <property name="controlId" stdset="0">
+             <string>category</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Stages</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="SpinBox" name="octave_4">
+            <property name="suffix">
+             <string> stage</string>
+            </property>
+            <property name="prefix">
+             <string/>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>Octavedetune</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_16">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="Dial" name="mastervolume_13">
+         <property name="maximum">
+          <number>127</number>
+         </property>
+         <property name="pageStep">
+          <number>32</number>
+         </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="notchTarget">
+          <double>4.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+         <property name="controlId" stdset="0">
+          <string/>
+         </property>
+         <property name="caption" stdset="0">
+          <string>V. Sns</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="Dial" name="mastervolume_14">
+         <property name="maximum">
+          <number>127</number>
+         </property>
+         <property name="pageStep">
+          <number>32</number>
+         </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="notchTarget">
+          <double>4.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+         <property name="controlId" stdset="0">
+          <string/>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Freq.tr.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="Dial" name="mastervolume_15">
+         <property name="maximum">
+          <number>127</number>
+         </property>
+         <property name="pageStep">
+          <number>32</number>
+         </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="notchTarget">
+          <double>4.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+         <property name="controlId" stdset="0">
+          <string/>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Gain</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_7">
+      <property name="controlId" stdset="0">
+       <string>FILTER_LFO</string>
+      </property>
+      <attribute name="title">
+       <string>Filter LFO</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="Dial" name="a_dt_10">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>freq</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Freq</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="Dial" name="a_dt_11">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>intensity</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Depth</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="Dial" name="d_dt_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>start_phase</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Start</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="Dial" name="s_val_14">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>delay</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Delay</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="Dial" name="s_val_15">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>stretch</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>Stretch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="Dial" name="s_val_16">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>randomness_amplitude</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>A.R.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="Dial" name="s_val_17">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>randomness_frequency</string>
+         </property>
+         <property name="caption" stdset="0">
+          <string>F.R.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QWidget" name="widget_8" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_8">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>type</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="ComboBox" name="comboBox_9">
+            <property name="controlId" stdset="0">
+             <string>lfo_type</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="CheckBox" name="checkBox_10">
+            <property name="text">
+             <string>Continous</string>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>continous</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_6">
+      <property name="controlId" stdset="0">
+       <string>FILTER_ENVELOPE</string>
+      </property>
+      <attribute name="title">
+       <string>Filter Envelope</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="Dial" name="a_dt_13">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>A_val</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="Dial" name="d_dt_9">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>A_dt</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="Dial" name="d_dt_11">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>D_val</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="Dial" name="d_dt_10">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>D_dt</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="Dial" name="r_dt_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>R_dt</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="Dial" name="r_dt_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>R_val</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="Dial" name="stretch_9">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="controlId" stdset="0">
+          <string>env_stretch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QWidget" name="widget_4" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushButton_6">
+            <property name="text">
+             <string>Env</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="CheckBox" name="checkBox_6">
+            <property name="text">
+             <string>FrcR</string>
+            </property>
+            <property name="controlId" stdset="0">
+             <string>forced_release</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>

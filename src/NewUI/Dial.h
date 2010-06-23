@@ -47,6 +47,8 @@ class Dial:public QDial
         void wheelEvent(class QWheelEvent * event);
         void paintEvent(class QPaintEvent * event);
 
+        void cleanUpString(QString& string);
+
         int m_originalMouseY;
         int m_originalValueOnPress;
         bool m_isConnected;

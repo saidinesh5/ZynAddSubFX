@@ -198,9 +198,12 @@ void Dial::paintEvent(class QPaintEvent * /*event */)
 
         if (caption.isValid()) {
 
+
             int textFlags = Qt::AlignCenter | Qt::TextWordWrap;
             QRect textRect(0, 0, r.width(), labelHeight*2);
+
             QString captionString = caption.toString();
+            cleanUpString(captionString);
 
             textRect = p.boundingRect(textRect, textFlags, captionString);
             textRect.setWidth(textRect.width() * 1.1);
@@ -243,6 +246,27 @@ void Dial::wheelEvent(class QWheelEvent *event)
 {
     QDial::wheelEvent(event);
     emit sliderMoved(value());
+}
+
+void Dial::cleanUpString(QString& string)
+{
+
+    bool makeTitleCase = true;
+    for (
+            QString::iterator it = string.begin();
+            it != string.end();
+            it++
+        )
+    {
+
+        if ((*it) == '_') {
+            makeTitleCase = true;
+            (*it) = ' ';
+        } else if (makeTitleCase) {
+            (*it) = (*it).toTitleCase();
+            makeTitleCase = false;
+        }
+    }
 }
 
 //QSize Dial::minimumSizeHint() const
