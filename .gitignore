@@ -1,4 +1,16 @@
+.kdev4
+CMakeCache.txt
+CMakeFiles/
+CMakeFiles/*
+Makefile
+cmake_install.cmake
 *.o
+install_manifest.txt
+*.exe
+build/*
+inst/*
+*.user
+*.kdev*
 *~
 src/zynaddsubfx
 src/Tests/runner
