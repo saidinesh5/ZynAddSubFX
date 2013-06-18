@@ -24,7 +24,7 @@
 #include "InjFunction.h"
 #include "../globals.h"
 #include <iostream>
-
+#include <cmath>
 template<class T>
 class db2rapInjFunc:public InjFunction<int, T>
 {

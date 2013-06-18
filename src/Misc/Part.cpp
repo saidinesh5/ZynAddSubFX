@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../Misc/Bank.h"
+#include <cmath>
 
 using namespace std;
 

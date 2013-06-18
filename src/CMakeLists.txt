@@ -7,7 +7,7 @@ find_package(zlib REQUIRED)
 find_package(fftw REQUIRED)
 find_package(MXML REQUIRED)
 find_package(PkgConfig REQUIRED)
-#find_package(pthread REQUIRED)
+find_package(Threads REQUIRED)
 FIND_PACKAGE(Qt4)
 #find_package(OSS)
 find_package(Alsa)
@@ -167,7 +167,7 @@ if (QtGui)
 
     add_definitions(-DQT_GUI)
 
-
+  set(GUI_LIBRARIES ${GUI_LIBRARIES} ${QT_LIBRARIES})
 	add_subdirectory(NewUI)
 endif()
 
@@ -247,14 +247,15 @@ add_executable(zynaddsubfx
 )
 
 target_link_libraries(zynaddsubfx
-    ${NONGUI_LIBRARIES}
-	${GUI_LIBRARIES}
+        ${NONGUI_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
         ${zlib_LIBRARIES}
         ${fftw_LIBRARIES}
         ${MXML_LIBRARIES}
         ${NIO_LIBRARIES}
         ${AUDIO_LIBRARIES}
         ${OS_LIBRARIES}
+	${GUI_LIBRARIES}
 	)
 
 install(TARGETS zynaddsubfx
